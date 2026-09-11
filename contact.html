@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>Contact / Internet Guild</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #000;
+      color: #fff;
+      font-family: "Geist", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a:focus-visible {
+      outline: 1px solid #fff;
+      outline-offset: 2px;
+    }
+
+    /* Same position and type as the top of Works */
+    .top {
+      padding: 24px 24px 0;
+    }
+
+    .logo {
+      display: block;
+      width: fit-content;
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .menu a {
+      position: relative;
+      font-weight: 400;
+      font-size: 12px;
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    /* Invisible touch area; stops short of the logo above */
+    .menu a::before {
+      content: "";
+      position: absolute;
+      inset: -8px -8px -14px;
+    }
+
+    .menu a:hover {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+
+    /* Current page */
+    .menu a[aria-current="page"] {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .content {
+      padding: 0 24px 64px;
+    }
+
+    /* Same type as the Works intro: 14px, white for key items, 50% for the rest */
+    /* Same type as About */
+    .text {
+      max-width: 520px;
+      margin-top: 40px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.5);
+      text-wrap: pretty;
+    }
+
+    .text p {
+      margin: 0;
+    }
+
+    .text p + p {
+      margin-top: 14px;
+    }
+
+    .text a {
+      color: #ffffff;
+      text-decoration: none;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .text a:hover {
+      text-decoration-line: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">Internet Guild</a>
+    <nav class="menu" aria-label="Main">
+      <a href="work.html">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <div class="text">
+      <p>Desk is open for new work.</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>Telegram <a href="https://t.me/internetguild" target="_blank" rel="noopener">@internetguild</a></p>
+      <p>Hire the guild.</p>
+    </div>
+  </main>
+</body>
+</html>
