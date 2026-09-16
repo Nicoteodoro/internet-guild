@@ -98,9 +98,9 @@
         padding: 20px;
       }
 
-      /* The written breaks are set for 600px; on a phone they strand
-         single words, so the copy reflows on its own */
-      .lede br {
+      /* This break falls mid-sentence and strands words on a phone;
+         the breaks that end a statement stay */
+      .lede br.wide {
         display: none;
       }
     }
@@ -117,7 +117,7 @@
       </p>
       <p>
         An essentialist practice, made to reduce.<br>
-        We design, build and ship websites, interfaces,<br>
+        We design, build and ship websites, interfaces,<br class="wide">
         and products for founders who choose simplicity.
       </p>
       <p>
