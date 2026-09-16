@@ -30,9 +30,10 @@
     .stack {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       gap: 10px;
-      text-align: center;
+      max-width: 600px;
+      text-align: left;
     }
 
     h1 {
@@ -48,14 +49,14 @@
       font-family: inherit;
       font-weight: 400;
       font-size: 16px;
+      line-height: 1.5;
       color: #000000;
-      max-width: 320px;
     }
 
     .menu {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       gap: 8px 16px;
       margin-top: 18px;
@@ -91,7 +92,10 @@
 <body>
   <div class="stack">
     <h1>internet guild</h1>
-    <p>Design and code studio born on the web,<br>built by hand and armed with AI.</p>
+    <p>Independent design and code studio born on the web, built by hand and armed with AI. An essentialist practice, built to reduce.</p>
+    <p>We design, build, and launch websites, interfaces, and products for founders who choose simplicity.</p>
+    <p>Eleven years of practice. Take everything, or just what you need.</p>
+    <p>Founded and led by Nico Teodoro. Born in Argentina. Raised on the internet. Grown in Azeroth.</p>
     <nav class="menu" aria-label="Main">
       <a href="work.html">Works</a>
       <a href="about.html">About</a>
