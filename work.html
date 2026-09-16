@@ -35,6 +35,13 @@
       box-sizing: border-box;
     }
 
+    .mark {
+      display: block;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+    }
+
     .logo {
       justify-self: start;
       margin-inline: 24px;
@@ -204,7 +211,10 @@
 <body>
   <div class="scroll-space">
     <div class="stage">
-      <a class="logo" href="index.html">Internet Guild</a>
+      <a class="logo" href="index.html">
+        <img class="mark" src="logo.webp" alt="" width="80" height="80" decoding="async">
+        Internet Guild
+      </a>
       <nav class="menu" aria-label="Main">
         <a href="work.html" aria-current="page">Works</a>
         <a href="about.html">About</a>
