@@ -9,66 +9,45 @@
     html,
     body {
       margin: 0;
-      height: 100%;
     }
 
     body {
       min-height: 100vh;
       min-height: 100dvh;
-      display: flex;
       background: #ffffff;
       color: #1a1a1a;
       font-family: "Times New Roman", Times, serif;
-      padding: 24px;
-      box-sizing: border-box;
     }
 
-    .stack {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin: auto;
-      max-width: 600px;
-      text-align: left;
+    a:focus-visible {
+      outline: 1px solid #1a1a1a;
+      outline-offset: 2px;
     }
 
-    h1 {
+    /* Same position and type as the top of Works */
+    .top {
+      padding: 24px 24px 0;
+    }
+
+    .logo {
+      display: block;
+      width: fit-content;
       margin: 0;
-      font-family: inherit;
       font-weight: 500;
       font-size: 20px;
       color: #1a1a1a;
-    }
-
-    p {
-      margin: 0;
-      font-family: inherit;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 20px;
-      color: #666666;
-    }
-
-    /* Statements read as blocks: a blank line between, hard breaks inside */
-    .lede {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-top: 28px;
+      text-decoration: none;
     }
 
     .menu {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 8px 16px;
-      margin-top: 32px;
+      gap: 16px;
+      margin-top: 10px;
     }
 
     .menu a {
       position: relative;
-      font-family: inherit;
       font-weight: 400;
       font-size: 14px;
       color: #757575;
@@ -76,25 +55,47 @@
       transition: color 0.15s ease;
     }
 
-    /* Invisible ~44px touch area, same look */
+    /* Invisible touch area; stops short of the logo above */
     .menu a::before {
       content: "";
       position: absolute;
-      inset: -14px -8px;
+      inset: -8px -8px -14px;
     }
 
     .menu a:hover {
       color: #1a1a1a;
     }
 
-    .menu a:focus-visible {
-      outline: 1px solid #1a1a1a;
-      outline-offset: 2px;
+    .content {
+      padding: 0 24px 64px;
+    }
+
+    /* Same type as About */
+    .lede {
+      max-width: 520px;
+      margin-top: 28px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      color: #666666;
+      text-wrap: pretty;
+    }
+
+    .lede p {
+      margin: 0;
+    }
+
+    .lede p + p {
+      margin-top: 20px;
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 20px;
+      .top {
+        padding: 20px 20px 0;
+      }
+
+      .content {
+        padding: 0 20px 64px;
       }
 
       /* This break falls mid-sentence and strands words on a phone;
@@ -106,8 +107,16 @@
   </style>
 </head>
 <body>
-  <div class="stack">
-    <h1>Internet Guild</h1>
+  <header class="top">
+    <h1 class="logo">Internet Guild</h1>
+    <nav class="menu" aria-label="Main">
+      <a href="work.html">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="content">
     <div class="lede">
       <p>
         A small lab for the open web.<br>
@@ -124,11 +133,6 @@
         Take everything, or just what you need.
       </p>
     </div>
-    <nav class="menu" aria-label="Main">
-      <a href="work.html">Works</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </div>
+  </main>
 </body>
 </html>
