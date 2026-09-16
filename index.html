@@ -53,6 +53,13 @@
       color: #000000;
     }
 
+    /* Statements read as blocks: a blank line between, hard breaks inside */
+    .lede {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
     .menu {
       display: flex;
       flex-wrap: wrap;
@@ -92,10 +99,22 @@
 <body>
   <div class="stack">
     <h1>internet guild</h1>
-    <p>Independent design and code studio born on the web, built by hand and armed with AI. An essentialist practice, built to reduce.</p>
-    <p>We design, build, and launch websites, interfaces, and products for founders who choose simplicity.</p>
-    <p>Eleven years of practice. Take everything, or just what you need.</p>
-    <p>Founded and led by Nico Teodoro. Born in Argentina. Raised on the internet. Grown in Azeroth.</p>
+    <div class="lede">
+      <p>
+        A small lab for the open web.<br>
+        Independent design and code studio.<br>
+        Born on the web, built by hand, armed with AI.
+      </p>
+      <p>
+        An essentialist practice, made to reduce.<br>
+        We design, build and ship websites, interfaces, and products<br>
+        for founders who choose simplicity.
+      </p>
+      <p>
+        Eleven years of daily craft.<br>
+        Take everything, or just what you need.
+      </p>
+    </div>
     <nav class="menu" aria-label="Main">
       <a href="work.html">Works</a>
       <a href="about.html">About</a>
