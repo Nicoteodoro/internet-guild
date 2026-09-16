@@ -50,7 +50,7 @@
       position: relative;
       font-weight: 400;
       font-size: 14px;
-      color: #1a1a1a;
+      color: #757575;
       text-decoration: none;
       transition: color 0.15s ease;
     }
@@ -76,15 +76,14 @@
       padding: 0 24px 64px;
     }
 
-    /* Same type as the Works intro: 14px, white for key items, 50% for the rest */
     /* Same type as About */
     .text {
       max-width: 520px;
-      margin-top: 40px;
+      margin-top: 28px;
       font-weight: 400;
       font-size: 16px;
-      line-height: 1.5;
-      color: #1a1a1a;
+      line-height: 20px;
+      color: #666666;
       text-wrap: pretty;
     }
 
@@ -93,7 +92,7 @@
     }
 
     .text p + p {
-      margin-top: 14px;
+      margin-top: 20px;
     }
 
     .text a {
@@ -106,6 +105,16 @@
     .text a:hover {
       text-decoration-line: underline;
       text-decoration-color: #1a1a1a;
+    }
+
+    @media (max-width: 600px) {
+      .top {
+        padding: 20px 20px 0;
+      }
+
+      .content {
+        padding: 0 20px 64px;
+      }
     }
   </style>
 </head>

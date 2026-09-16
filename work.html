@@ -56,7 +56,7 @@
       position: relative;
       font-weight: 400;
       font-size: 14px;
-      color: #1a1a1a;
+      color: #757575;
       text-decoration: none;
       transition: color 0.15s ease;
     }
@@ -79,12 +79,12 @@
     }
 
     .intro {
-      margin: 40px 24px 0;
+      margin: 28px 24px 0;
       max-width: 520px;
       font-weight: 400;
       font-size: 16px;
-      line-height: 1.5;
-      color: #1a1a1a;
+      line-height: 20px;
+      color: #666666;
     }
 
     .intro a {
@@ -147,6 +147,24 @@
       object-fit: cover;
     }
 
+
+    @media (max-width: 600px) {
+      .logo {
+        margin-inline: 20px;
+      }
+
+      .menu {
+        margin: 10px 20px 0;
+      }
+
+      .intro {
+        margin: 28px 20px 0;
+      }
+
+      .track {
+        padding-inline: 20px;
+      }
+    }
 
     /* Mobile: no scroll-linked gallery, projects stacked one below the other */
     @media (max-width: 720px) {
