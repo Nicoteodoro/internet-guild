@@ -82,11 +82,20 @@
     /* Studio statement; max-width holds the written line breaks on one line */
     .lede {
       margin: 40px 24px 0;
-      max-width: 680px;
+      max-width: 520px;
       font-weight: 400;
       font-size: 16px;
       line-height: 1.5;
       color: #ffffff;
+    }
+
+    .lede p {
+      margin: 0;
+    }
+
+    /* One blank line between statements */
+    .lede p + p {
+      margin-top: 24px;
     }
 
     .intro {
@@ -204,13 +213,26 @@
         <a href="contact.html">Contact</a>
       </nav>
 
-      <p class="lede">
-        Design and code studio born on the web,<br>
-        built by hand and armed with AI. An essentialist practice, built to reduce.<br>
-        We design, build, and launch websites, interfaces, and products for founders who choose simplicity.<br>
-        Eleven years of practice. Take everything, or just what you need.<br>
-        Founded and led by Nico Teodoro. Born in Argentina. Raised on the internet. Grown in Azeroth.
-      </p>
+      <div class="lede">
+        <p>
+          Design and code studio born on the web,<br>
+          built by hand and armed with AI.
+        </p>
+        <p>
+          An essentialist practice, built to reduce.
+        </p>
+        <p>
+          We design, build, and launch websites, interfaces,<br>
+          and products for founders who choose simplicity.
+        </p>
+        <p>
+          Eleven years of practice. Take everything, or just what you need.
+        </p>
+        <p>
+          Founded and led by Nico Teodoro.<br>
+          Born in Argentina. Raised on the internet. Grown in Azeroth.
+        </p>
+      </div>
 
       <p class="intro">
         Latest collaborations:
