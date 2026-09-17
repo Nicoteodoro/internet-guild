@@ -146,6 +146,30 @@
       border-top: 1px solid #e6e6e6;
     }
 
+    .count {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Reads as the text beside it; only the pointer says it is a control */
+    .remix {
+      appearance: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      color: #8a8a8a;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .remix:hover {
+      color: #111111;
+    }
+
     .index {
       row-gap: 24px;
       padding-bottom: 8px;
@@ -217,7 +241,7 @@
 
     <div>
       <p class="muted">Enquiries</p>
-      <p><a href="mailto:webmaster@internetguild.co">E. webmaster@internetguild.co</a></p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
     <div class="spacer"></div>
@@ -231,16 +255,17 @@
 
   <p class="statement">
     Independent design and code studio.<br>
-    Born on the web, built by hand, armed with AI.<br>
     An essentialist practice, made to reduce.<br>
     Websites, interfaces and products for founders who want less.<br>
-    Eleven years of daily craft. We design, build and ship.<br>
-    Take everything, or just what you need.
+    Eleven years of daily craft. We design, build and ship.
   </p>
 
   <div class="bar">
     <p><span class="muted">Selected work /</span> Index</p>
-    <p class="muted">41 Pieces</p>
+    <p class="count">
+      <span class="muted">41 Pieces</span>
+      <button type="button" class="remix">Remix</button>
+    </p>
   </div>
 
   <main class="row index" aria-label="Selected work">
@@ -437,6 +462,26 @@
       video.muted = true;
       videoObserver.observe(video);
       if (video.dataset.poster) posterObserver.observe(video);
+    });
+
+    // Remix deals the same pieces into a new order
+    const index = document.querySelector('.index');
+
+    document.querySelector('.remix').addEventListener('click', () => {
+      const cells = [...index.children];
+
+      for (let i = cells.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cells[i], cells[j]] = [cells[j], cells[i]];
+      }
+
+      index.append(...cells);
+
+      // Moving a film can stop it, so have the observer judge each one afresh
+      index.querySelectorAll('video').forEach((video) => {
+        videoObserver.unobserve(video);
+        videoObserver.observe(video);
+      });
     });
   </script>
 </body>
