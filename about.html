@@ -124,6 +124,9 @@
     .copy {
       grid-column: 4;
       min-width: 0;
+      /* Off the right edge: generous where the screen has room to give,
+         restrained where the column is already tight */
+      padding-right: clamp(16px, 2vw, 40px);
       text-wrap: pretty;
     }
 
@@ -192,8 +195,10 @@
         row-gap: 28px;
       }
 
+      /* Full width here, so it keeps the page's own frame on both sides */
       .copy {
         grid-column: 1;
+        padding-right: 0;
       }
 
       /* Room under the copy so the floating menu never sits on a line */
