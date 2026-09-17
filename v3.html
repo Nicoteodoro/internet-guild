@@ -119,6 +119,12 @@
       transition: color 0.15s ease;
     }
 
+    /* Commas set by the row rather than written into the links, so a phone
+       can drop them without touching the words */
+    .menu a:not(:last-child)::after {
+      content: ",";
+    }
+
     /* Invisible touch area */
     .menu a::before {
       content: "";
@@ -279,6 +285,11 @@
         color: #555555;
       }
 
+      /* Set far enough apart here that they need no commas */
+      .menu a:not(:last-child)::after {
+        content: none;
+      }
+
       /* With scripting it waits out of sight: the page opens without it and
          the first scroll down calls it up. Without scripting it simply stays */
       .js .menu {
@@ -316,8 +327,8 @@
     <div class="spacer"></div>
 
     <nav class="menu" aria-label="Main">
-      <a href="work.html">Works,</a>
-      <a href="about.html">About,</a>
+      <a href="work.html">Works</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
 
