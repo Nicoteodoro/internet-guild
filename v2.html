@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>Internet Guild</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: Geist, system-ui, -apple-system, sans-serif;
+    }
+
+    a:focus-visible {
+      outline: 1px solid #1a1a1a;
+      outline-offset: 2px;
+    }
+
+    /* Same position and type as the top of Works */
+    .top {
+      padding: 24px 24px 0;
+    }
+
+    .mark {
+      display: block;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      display: block;
+      width: fit-content;
+      margin: 0;
+      font-weight: 500;
+      font-size: 20px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .menu a {
+      position: relative;
+      font-weight: 400;
+      font-size: 14px;
+      color: #757575;
+      text-transform: lowercase;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    /* Invisible touch area; stops short of the logo above */
+    .menu a::before {
+      content: "";
+      position: absolute;
+      inset: -8px -8px -14px;
+    }
+
+    .menu a:hover {
+      color: #1a1a1a;
+    }
+
+    .content {
+      padding: 0 24px 64px;
+    }
+
+    /* Same type as About */
+    .lede {
+      max-width: 520px;
+      margin-top: 28px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      color: #666666;
+      text-wrap: pretty;
+    }
+
+    .lede p {
+      margin: 0;
+    }
+
+    .lede p + p {
+      margin-top: 20px;
+    }
+
+    .lede a {
+      color: #1a1a1a;
+      text-decoration: none;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .lede a:hover {
+      text-decoration-line: underline;
+      text-decoration-color: #1a1a1a;
+    }
+
+    @media (max-width: 600px) {
+      .top {
+        padding: 20px 20px 0;
+      }
+
+      .content {
+        padding: 0 20px 64px;
+      }
+
+      /* This break falls mid-sentence and strands words on a phone;
+         the breaks that end a statement stay */
+      .lede br.wide {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <img class="mark" src="logo.webp" alt="" width="80" height="80" decoding="async">
+    <h1 class="logo">Internet Guild</h1>
+    <nav class="menu" aria-label="Main">
+      <a href="work.html">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <div class="lede">
+      <p>
+        A small lab for the open web.<br>
+        Independent design and code studio.<br>
+        Born on the web, built by hand, armed with AI.
+      </p>
+      <p>
+        An essentialist practice, made to reduce.<br>
+        We design, build and ship websites, interfaces,<br class="wide">
+        and products for founders who choose simplicity.
+      </p>
+      <p>
+        Eleven years of daily craft.<br>
+        Take everything, or just what you need.
+      </p>
+      <p>
+        <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a>
+      </p>
+    </div>
+  </main>
+</body>
+</html>
