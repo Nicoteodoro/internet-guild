@@ -183,10 +183,11 @@
         row-gap: 28px;
       }
 
-      /* Full width here, so it keeps the page's own frame on both sides */
+      /* Full width here, but still off the right edge: a line of copy runs
+         the whole way across, and the frame alone leaves it hugging the side */
       .copy {
         grid-column: 1;
-        padding-right: 0;
+        padding-right: 32px;
       }
 
       /* Room under the copy so the floating menu never sits on a line */

@@ -201,10 +201,11 @@
         row-gap: 28px;
       }
 
-      /* Full width here, so it keeps the page's own frame on both sides */
+      /* Full width here, but still off the right edge: a line of copy runs
+         the whole way across, and the frame alone leaves it hugging the side */
       .copy {
         grid-column: 1;
-        padding-right: 0;
+        padding-right: 32px;
       }
 
       /* Room under the copy so the floating menu never sits on a line */
@@ -312,7 +313,7 @@
       </section>
 
       <section class="section" aria-labelledby="collaborations-title">
-        <h2 id="collaborations-title">Selected collaborations</h2>
+        <h2 id="collaborations-title">Latest collaborations</h2>
         <p class="clients">
           <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>,
           <a href="https://www.greatskysolar.com" target="_blank" rel="noopener">Great Sky Solar</a>,
@@ -334,7 +335,7 @@
           <a href="https://www.fanatiz.com" target="_blank" rel="noopener">Fanatiz</a>,
           <a href="https://www.whiteprompt.com" target="_blank" rel="noopener">White Prompt</a>,
           <a href="https://www.cary.health" target="_blank" rel="noopener">Cary Health</a>,
-          <span>Cary RX</span>
+          <span>Cary RX</span>.
         </p>
       </section>
     </div>
