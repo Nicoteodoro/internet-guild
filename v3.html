@@ -7,6 +7,7 @@
   <meta name="robots" content="noindex">
   <title>Internet Guild</title>
   <link rel="preload" href="geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -16,7 +17,7 @@
       margin: 0;
     }
 
-    /* Geist, self-hosted so the type does not wait on a third party */
+    /* Geist and Geist Mono, self-hosted so the type does not wait on a third party */
     @font-face {
       font-family: Geist;
       src: url("geist-latin.woff2") format("woff2");
@@ -39,14 +40,36 @@
                      U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
     }
 
+    @font-face {
+      font-family: "Geist Mono";
+      src: url("geist-mono-latin.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+                     U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+                     U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: "Geist Mono";
+      src: url("geist-mono-latin-ext.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+                     U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+                     U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
     body {
       background: #ffffff;
       color: #111111;
       font-family: Geist, system-ui, -apple-system, sans-serif;
       font-weight: 400;
-      font-size: 12px;
-      line-height: 18px;
-      letter-spacing: 0.04em;
+      font-size: 11px;
+      line-height: 16px;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
     }
@@ -108,7 +131,7 @@
     }
 
     .statement {
-      max-width: 34ch;
+      max-width: 36ch;
       text-wrap: pretty;
     }
 
@@ -126,16 +149,29 @@
       padding-bottom: 8px;
     }
 
-    /* Every piece is squared off and cropped to fill, so the grid never breaks */
     .cell {
       margin: 0;
+      min-width: 0;
+    }
+
+    /* Titles are held to one line, so every cell stands the same height */
+    figcaption {
+      margin-bottom: 8px;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Every piece is squared off and cropped to fill, so the grid never breaks */
+    .media {
       aspect-ratio: 1 / 1;
       background: #f4f4f4;
       overflow: hidden;
     }
 
-    .cell img,
-    .cell video {
+    .media img,
+    .media video {
       display: block;
       width: 100%;
       height: 100%;
@@ -191,47 +227,170 @@
   </div>
 
   <main class="row index" aria-label="Selected work">
-    <figure class="cell"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" decoding="async"></figure>
-    <figure class="cell"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="towerbank-card-colors.mp4" data-poster="poster-towerbank-card-colors.webp" aria-label="Towerbank card colours" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="towerbank-campaign.mp4" data-poster="poster-towerbank-campaign.webp" aria-label="Towerbank campaign screens" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="numia-stationery.webp" alt="Numia stationery" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></figure>
-    <figure class="cell"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="great-sky-solar-calculator.webp" alt="Great Sky Solar savings calculator" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="great-sky-solar-monitoring.webp" alt="Great Sky Solar real-time monitoring cards" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></figure>
-    <figure class="cell"><img src="ids-shopping-bag.webp" alt="Internet Design Studio shopping bag" loading="lazy" decoding="async"></figure>
+    <figure class="cell">
+      <figcaption>Street Poster</figcaption>
+      <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Visa Cards</figcaption>
+      <div class="media"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Card Colours</figcaption>
+      <div class="media"><video src="towerbank-card-colors.mp4" data-poster="poster-towerbank-card-colors.webp" aria-label="Towerbank card colours" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Investments App</figcaption>
+      <div class="media"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Debit Card</figcaption>
+      <div class="media"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Interface</figcaption>
+      <div class="media"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Website, Laptops</figcaption>
+      <div class="media"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Campaign Screens</figcaption>
+      <div class="media"><video src="towerbank-campaign.mp4" data-poster="poster-towerbank-campaign.webp" aria-label="Towerbank campaign screens" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Icon System</figcaption>
+      <div class="media"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Pattern</figcaption>
+      <div class="media"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Poster</figcaption>
+      <div class="media"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Stationery</figcaption>
+      <div class="media"><img src="numia-stationery.webp" alt="Numia stationery" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Website, Laptop</figcaption>
+      <div class="media"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Website, Mobile</figcaption>
+      <div class="media"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Website Sections</figcaption>
+      <div class="media"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Customer Journey</figcaption>
+      <div class="media"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Virtual Assistance</figcaption>
+      <div class="media"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Brand Identity</figcaption>
+      <div class="media"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Website</figcaption>
+      <div class="media"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Website, Spanish</figcaption>
+      <div class="media"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Onboarding</figcaption>
+      <div class="media"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Report Charts</figcaption>
+      <div class="media"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Report, iPad</figcaption>
+      <div class="media"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Homepage</figcaption>
+      <div class="media"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Savings Calculator</figcaption>
+      <div class="media"><img src="great-sky-solar-calculator.webp" alt="Great Sky Solar savings calculator" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Product Cards</figcaption>
+      <div class="media"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Team Page</figcaption>
+      <div class="media"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Monitoring</figcaption>
+      <div class="media"><img src="great-sky-solar-monitoring.webp" alt="Great Sky Solar real-time monitoring cards" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Agent Activity Panel</figcaption>
+      <div class="media"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Token Statement</figcaption>
+      <div class="media"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>xrank.tech</figcaption>
+      <div class="media"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>China.Supply</figcaption>
+      <div class="media"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Journal App</figcaption>
+      <div class="media"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Journal, Close-up</figcaption>
+      <div class="media"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Calm App Login</figcaption>
+      <div class="media"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Music Player</figcaption>
+      <div class="media"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Writing App</figcaption>
+      <div class="media"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Godzilla Minus One</figcaption>
+      <div class="media"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Godzilla, Bus Stop</figcaption>
+      <div class="media"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Nine2Five Spec Sheet</figcaption>
+      <div class="media"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
+    </figure>
+    <figure class="cell">
+      <figcaption>Shopping Bag</figcaption>
+      <div class="media"><img src="ids-shopping-bag.webp" alt="Internet Design Studio shopping bag" loading="lazy" decoding="async"></div>
+    </figure>
   </main>
 
   <script>
@@ -257,7 +416,7 @@
       });
     }, { rootMargin: '100% 0px 100% 0px' });
 
-    document.querySelectorAll('.cell video').forEach((video) => {
+    document.querySelectorAll('.media video').forEach((video) => {
       video.muted = true;
       videoObserver.observe(video);
       if (video.dataset.poster) posterObserver.observe(video);
