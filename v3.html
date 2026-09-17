@@ -18,6 +18,14 @@
       margin: 0;
     }
 
+    /* Keep the scrollbar there whether the page needs it or not, so moving
+       between a long page and a short one does not shift the layout sideways.
+       Preferred over scrollbar-gutter, which reserves a fixed width even where
+       scrollbars overlay the page and take none */
+    html {
+      overflow-y: scroll;
+    }
+
     /* Geist and Geist Mono, self-hosted so the type does not wait on a third party */
     @font-face {
       font-family: Geist;
