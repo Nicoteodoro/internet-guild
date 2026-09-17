@@ -103,7 +103,7 @@
     }
 
     .top {
-      padding-block: 8px 24px;
+      padding-block: 8px 0;
     }
 
     .menu {
@@ -129,11 +129,11 @@
       color: #111111;
     }
 
-    /* Sits under the header, starting where the wordmark does, with room
-       for the breaks it sets itself */
+    /* The hero: sits under the header, starting where the wordmark does,
+       with room for the breaks it sets itself and air on either side */
     .statement {
       margin: 0;
-      padding: 0 12px 40px;
+      padding: 80px 12px;
     }
 
     /* The one rule on the page, naming the view */
@@ -210,10 +210,6 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .top {
-        padding-bottom: 24px;
-      }
-
       /* The empty column only holds the menu out to the fourth slot */
       .spacer {
         display: none;
@@ -227,6 +223,10 @@
 
       .top {
         row-gap: 20px;
+      }
+
+      .statement {
+        padding-block: 56px;
       }
 
       .bar {
