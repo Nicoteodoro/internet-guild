@@ -223,10 +223,11 @@
         grid-template-columns: 1fr;
       }
 
+      /* Every step down the header is set here, one by one, rather than
+         shared out by a row gap. The hero no longer ends the header, so the
+         header itself holds the menu off the rule */
       .top {
-        row-gap: 20px;
-        /* The hero no longer ends the header here, so the header itself
-           holds the menu off the rule */
+        row-gap: 0;
         padding-bottom: 56px;
       }
 
@@ -234,10 +235,11 @@
         order: 1;
       }
 
-      /* 36 plus the row gap either side reads as 56, as it does on a desktop */
+      /* The hero and the address read as one block: close to each other,
+         clear of the wordmark, and clearer still of the menu */
       .statement {
         order: 2;
-        padding-block: 36px;
+        padding-block: 28px 16px;
       }
 
       .enquiries {
@@ -246,6 +248,7 @@
 
       .menu {
         order: 4;
+        margin-top: 56px;
       }
 
       .bar {
@@ -274,8 +277,10 @@
     <p class="statement">
       Independent design and code studio.<br>
       An essentialist practice, made to reduce.<br>
-      Websites, interfaces and products for founders who want less.<br>
-      Eleven years of daily craft. We design, build and ship.
+      Websites, interfaces and products for<br>
+      founders who want less.<br>
+      Eleven years of daily craft.<br>
+      We design, build and ship.
     </p>
   </header>
 
