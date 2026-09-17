@@ -159,8 +159,15 @@
        grid's row gap, which sits above it, so the air reads as 80 either side */
     .statement {
       grid-column: 1 / -1;
+      /* Held to a reading measure rather than the width of the page, so the
+         list wraps into a block the way it does on About */
+      max-width: 62ch;
       margin: 0;
       padding-block: 68px 80px;
+    }
+
+    .statement .clients {
+      margin-top: 16px;
     }
 
     /* The one rule on the page, naming the view */
@@ -343,8 +350,9 @@
       <a href="contact.html">Contact</a>
     </nav>
 
-    <p class="statement">
-      <span class="muted">Latest collaborations:</span>
+    <div class="statement">
+      <p class="muted">Latest collaborations</p>
+      <p class="clients">
       <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>,
       <a href="https://www.greatskysolar.com" target="_blank" rel="noopener">Great Sky Solar</a>,
       <a href="https://www.buenbit.com" target="_blank" rel="noopener">Buenbit</a>&nbsp;(acquired),
@@ -366,7 +374,8 @@
       <a href="https://www.whiteprompt.com" target="_blank" rel="noopener">White Prompt</a>,
       <a href="https://www.cary.health" target="_blank" rel="noopener">Cary Health</a>,
       <span>Cary RX</span>.
-    </p>
+      </p>
+    </div>
   </header>
 
   <div class="bar">
