@@ -129,9 +129,15 @@
       color: #111111;
     }
 
+    /* The studio line sets its own breaks, and needs two columns to hold them */
     .statement {
-      max-width: 36ch;
-      text-wrap: pretty;
+      grid-column: span 2;
+    }
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
     /* The one rule on the page, naming the view */
@@ -208,18 +214,27 @@
   <header class="row top">
     <h1>Internet Guild</h1>
 
-    <p class="statement">An independent design and code studio. An essentialist practice, made to reduce.</p>
+    <p class="statement">
+      Independent design and code studio.<br>
+      Born on the web, built by hand, armed with AI.<br>
+      An essentialist practice, made to reduce.<br>
+      Websites, interfaces and products for founders who want less.<br>
+      Eleven years of daily craft. We design, build and ship.<br>
+      Take everything, or just what you need.
+    </p>
 
-    <div>
-      <p class="muted">Enquiries</p>
-      <p><a href="mailto:webmaster@internetguild.co">E. webmaster@internetguild.co</a></p>
+    <div class="contact">
+      <div>
+        <p class="muted">Enquiries</p>
+        <p><a href="mailto:webmaster@internetguild.co">E. webmaster@internetguild.co</a></p>
+      </div>
+
+      <nav class="menu" aria-label="Main">
+        <a href="work.html">Works,</a>
+        <a href="about.html">About,</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
-
-    <nav class="menu" aria-label="Main">
-      <a href="work.html">Works,</a>
-      <a href="about.html">About,</a>
-      <a href="contact.html">Contact</a>
-    </nav>
   </header>
 
   <div class="bar">
