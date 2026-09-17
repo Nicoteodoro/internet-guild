@@ -124,9 +124,7 @@
     .copy {
       grid-column: 4;
       min-width: 0;
-      /* Off the right edge: generous where the screen has room to give,
-         restrained where the column is already tight */
-      padding-right: clamp(16px, 2vw, 40px);
+      padding-right: 80px;
       text-wrap: pretty;
     }
 
@@ -171,7 +169,7 @@
       }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1200px) {
       .row {
         grid-template-columns: repeat(2, 1fr);
       }
