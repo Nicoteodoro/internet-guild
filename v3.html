@@ -130,6 +130,12 @@
       color: #111111;
     }
 
+    /* Two of the hero's breaks are a phone's alone; wider than that the
+       lines they split run whole */
+    .narrow {
+      display: none;
+    }
+
     /* The hero takes a row of the header to itself, starting where the
        wordmark does. Its top padding is short of its bottom one by the
        grid's row gap, which sits above it, so the air reads as 80 either side */
@@ -238,6 +244,10 @@
         padding-bottom: 56px;
       }
 
+      .narrow {
+        display: inline;
+      }
+
       h1 {
         order: 1;
       }
@@ -314,9 +324,9 @@
     <p class="statement">
       Independent design and code studio.<br>
       An essentialist practice, made to reduce.<br>
-      Websites, interfaces and products for<br>
+      Websites, interfaces and products for<br class="narrow">
       founders who want less.<br>
-      Eleven years of daily craft.<br>
+      Eleven years of daily craft.<br class="narrow">
       We design, build and ship.
     </p>
   </header>
