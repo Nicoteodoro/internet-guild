@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
   <title>Contact / Internet Guild</title>
-  <script>document.documentElement.classList.add('js')</script>
   <link rel="preload" href="geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
@@ -153,12 +152,6 @@
       text-decoration-line: underline;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .menu {
-        transition: none;
-      }
-    }
-
     @media (max-width: 1200px) {
       .row {
         grid-template-columns: repeat(2, 1fr);
@@ -215,20 +208,6 @@
       .menu a:not(:last-child)::after {
         content: none;
       }
-
-      /* With scripting it waits out of sight: the page opens without it and
-         the first scroll down calls it up. Without scripting it simply stays */
-      .js .menu {
-        transform: translateY(100%);
-        visibility: hidden;
-        transition: transform 0.25s ease, visibility 0s 0.25s;
-      }
-
-      .js .menu.here {
-        transform: none;
-        visibility: visible;
-        transition: transform 0.25s ease, visibility 0s;
-      }
     }
   </style>
 </head>
@@ -261,26 +240,5 @@
     </div>
   </main>
 
-  <script>
-    // On a phone the menu rides at the foot of the screen: the page opens
-    // without it, scrolling down calls it up, scrolling back up sends it away
-    const menu = document.querySelector('.menu');
-    const phone = window.matchMedia('(max-width: 560px)');
-    let lastY = window.scrollY;
-
-    window.addEventListener('scroll', () => {
-      // Clamped, so a rubber-band past either end does not read as a direction
-      const y = Math.max(0, window.scrollY);
-      const moved = y - lastY;
-
-      if (Math.abs(moved) < 4) return;
-      lastY = y;
-
-      if (phone.matches) menu.classList.toggle('here', moved > 0);
-    }, { passive: true });
-
-    // Coming back to a phone width opens without it again
-    phone.addEventListener('change', () => menu.classList.remove('here'));
-  </script>
 </body>
 </html>
