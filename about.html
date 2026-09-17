@@ -4,116 +4,140 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
+  <title>About / Internet Guild</title>
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>About / Internet Guild</title>
   <style>
     html,
     body {
       margin: 0;
     }
 
+    /* Geist, self-hosted so the type does not wait on a third party */
+    @font-face {
+      font-family: Geist;
+      src: url("geist-latin.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+                     U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+                     U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: Geist;
+      src: url("geist-latin-ext.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+                     U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+                     U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
     body {
-      min-height: 100vh;
-      min-height: 100dvh;
       background: #ffffff;
-      color: #1a1a1a;
-      font-family: "Times New Roman", Times, serif;
+      color: #111111;
+      font-family: Geist, system-ui, -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 16px;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     a:focus-visible {
-      outline: 1px solid #1a1a1a;
+      outline: 1px solid #111111;
       outline-offset: 2px;
     }
 
-    /* Same position and type as the top of Works */
+    p,
+    h1,
+    h2,
+    dd {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    .muted {
+      color: #8a8a8a;
+    }
+
+    /* Header and content share one four-column measure, 12px in from each edge */
+    .row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding-inline: 12px;
+    }
+
     .top {
-      padding: 24px 24px 0;
-    }
-
-    .mark {
-      display: block;
-      width: 80px;
-      height: 80px;
-      margin-bottom: 16px;
-    }
-
-    .logo {
-      display: block;
-      width: fit-content;
-      font-weight: 500;
-      font-size: 20px;
-      color: #1a1a1a;
-      text-decoration: none;
+      padding-block: 8px 0;
     }
 
     .menu {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 10px;
+      gap: 0 6px;
     }
 
     .menu a {
       position: relative;
-      font-weight: 400;
-      font-size: 14px;
-      color: #757575;
-      text-transform: lowercase;
-      text-decoration: none;
+      color: #8a8a8a;
       transition: color 0.15s ease;
     }
 
-    /* Invisible touch area; stops short of the logo above */
+    /* Commas set by the row rather than written into the links, so a phone
+       can drop them without touching the words */
+    .menu a:not(:last-child)::after {
+      content: ",";
+    }
+
+    /* Invisible touch area */
     .menu a::before {
       content: "";
       position: absolute;
-      inset: -8px -8px -14px;
+      inset: -10px -3px;
     }
 
-    .menu a:hover {
-      color: #1a1a1a;
+    .menu a:hover,
+    .menu a[aria-current] {
+      color: #111111;
     }
 
-
-    /* Current page */
-    .menu a[aria-current="page"] {
-      color: #1a1a1a;
-    }
-
-    .content {
-      padding: 0 24px 64px;
-    }
-
-    /* Same type as the Works intro */
+    /* The copy sits in the last column, starting where the menu starts, and
+       the same 80px below the header as the hero sits on the home */
     .about {
-      max-width: 520px;
-      margin-top: 28px;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 20px;
-      color: #666666;
+      padding-block: 80px;
+    }
+
+    .copy {
+      grid-column: 4;
+      min-width: 0;
       text-wrap: pretty;
     }
 
-    .about p {
-      margin: 0;
-    }
-
-    .about p + p {
-      margin-top: 20px;
+    .copy p + p {
+      margin-top: 16px;
     }
 
     .section {
-      margin-top: 40px;
+      margin-top: 56px;
     }
 
-    /* Headings take the strong value, like the wordmark */
     .section h2 {
-      margin: 0 0 20px;
-      font: inherit;
-      color: #1a1a1a;
+      margin-bottom: 16px;
+      color: #8a8a8a;
     }
 
     .timeline {
@@ -121,51 +145,110 @@
     }
 
     .timeline div + div {
-      margin-top: 20px;
+      margin-top: 16px;
     }
 
     .timeline dt {
-      color: #1a1a1a;
+      color: #8a8a8a;
     }
 
-    .timeline dd {
-      margin: 0;
-    }
-
+    /* Client names read as text until you reach for them */
     .clients a {
-      color: #1a1a1a;
-      text-decoration: none;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
     }
 
     .clients a:hover {
       text-decoration-line: underline;
-      text-decoration-color: #1a1a1a;
     }
 
-    /* Client without a link: same color as the linked names */
-    .clients .client {
-      color: #1a1a1a;
+    @media (prefers-reduced-motion: reduce) {
+      .menu {
+        transition: none;
+      }
     }
 
-    @media (max-width: 600px) {
-      .top {
-        padding: 20px 20px 0;
+    @media (max-width: 900px) {
+      .row {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .content {
-        padding: 0 20px 64px;
+      /* The empty column only holds the menu out to the fourth slot */
+      .spacer {
+        display: none;
+      }
+
+      .copy {
+        grid-column: 2;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .top {
+        row-gap: 28px;
+      }
+
+      .copy {
+        grid-column: 1;
+      }
+
+      /* Room under the copy so the floating menu never sits on a line */
+      .about {
+        padding-block: 56px 64px;
+      }
+
+      /* The menu leaves the header and rides at the foot of the screen,
+         set wider apart and a shade darker to carry on its own */
+      .menu {
+        position: fixed;
+        inset: auto 0 0;
+        justify-content: center;
+        gap: 0 20px;
+        padding: 14px 12px;
+        background: #ffffff;
+        border-top: 1px solid #e6e6e6;
+      }
+
+      .menu a {
+        color: #555555;
+      }
+
+      /* Set far enough apart here that they need no commas */
+      .menu a:not(:last-child)::after {
+        content: none;
+      }
+
+      /* With scripting it waits out of sight: the page opens without it and
+         the first scroll down calls it up. Without scripting it simply stays */
+      .js .menu {
+        transform: translateY(100%);
+        visibility: hidden;
+        transition: transform 0.25s ease, visibility 0s 0.25s;
+      }
+
+      .js .menu.here {
+        transform: none;
+        visibility: visible;
+        transition: transform 0.25s ease, visibility 0s;
       }
     }
   </style>
 </head>
 <body>
-  <header class="top">
-    <a class="logo" href="index.html">
-        <img class="mark" src="logo.webp" alt="" width="80" height="80" decoding="async">
-        Internet Guild
-      </a>
+  <header class="row top">
+    <h1><a href="index.html">Internet Guild</a></h1>
+
+    <div class="contact">
+      <p class="muted">Hire the guild.</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
+
+    <div class="spacer"></div>
+
     <nav class="menu" aria-label="Main">
       <a href="work.html">Works</a>
       <a href="about.html" aria-current="page">About</a>
@@ -173,9 +256,12 @@
     </nav>
   </header>
 
-  <main class="content">
-    <div class="about">
-      <p>Internet Guild is a Tier-S design and code studio.<br>An essentialist practice, built to reduce.</p>
+  <main class="row about">
+    <div class="copy">
+      <p>
+        Internet Guild is a Tier-S design and code studio.<br>
+        An essentialist practice, built to reduce.
+      </p>
       <p>We design, build, and launch websites, interfaces, and products for founders who choose simplicity.</p>
       <p>Eleven years of practice. Take everything, or just what you need.</p>
       <p>Founded and led by Nico Teodoro. Born in Argentina. Raised on the internet. Grown in Azeroth.</p>
@@ -237,10 +323,32 @@
           <a href="https://www.fanatiz.com" target="_blank" rel="noopener">Fanatiz</a>,
           <a href="https://www.whiteprompt.com" target="_blank" rel="noopener">White Prompt</a>,
           <a href="https://www.cary.health" target="_blank" rel="noopener">Cary Health</a>,
-          <span class="client">Cary RX</span>
+          <span>Cary RX</span>
         </p>
       </section>
     </div>
   </main>
+
+  <script>
+    // On a phone the menu rides at the foot of the screen: the page opens
+    // without it, scrolling down calls it up, scrolling back up sends it away
+    const menu = document.querySelector('.menu');
+    const phone = window.matchMedia('(max-width: 560px)');
+    let lastY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      // Clamped, so a rubber-band past either end does not read as a direction
+      const y = Math.max(0, window.scrollY);
+      const moved = y - lastY;
+
+      if (Math.abs(moved) < 4) return;
+      lastY = y;
+
+      if (phone.matches) menu.classList.toggle('here', moved > 0);
+    }, { passive: true });
+
+    // Coming back to a phone width opens without it again
+    phone.addEventListener('change', () => menu.classList.remove('here'));
+  </script>
 </body>
 </html>
