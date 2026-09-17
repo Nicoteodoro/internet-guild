@@ -270,7 +270,7 @@
 
   <main class="row index" aria-label="Selected work">
     <figure class="cell">
-      <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" decoding="async"></div>
+      <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
       <figcaption>Street Poster</figcaption>
     </figure>
     <figure class="cell">
@@ -467,7 +467,7 @@
     // Remix deals the same pieces into a new order
     const index = document.querySelector('.index');
 
-    document.querySelector('.remix').addEventListener('click', () => {
+    function remix() {
       const cells = [...index.children];
 
       for (let i = cells.length - 1; i > 0; i--) {
@@ -477,12 +477,23 @@
 
       index.append(...cells);
 
+      // Whatever lands in the top row is wanted straight away
+      cells.slice(0, 4).forEach((cell) => {
+        const image = cell.querySelector('img');
+        if (image) image.loading = 'eager';
+      });
+
       // Moving a film can stop it, so have the observer judge each one afresh
       index.querySelectorAll('video').forEach((video) => {
         videoObserver.unobserve(video);
         videoObserver.observe(video);
       });
-    });
+    }
+
+    // The gallery opens on a different order every time it is loaded
+    remix();
+
+    document.querySelector('.remix').addEventListener('click', remix);
   </script>
 </body>
 </html>
