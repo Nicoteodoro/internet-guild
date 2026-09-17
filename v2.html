@@ -22,7 +22,10 @@
     body {
       background: #ffffff;
       color: #242424;
-      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      /* SF Mono where the system already has it — Apple's licence rules out
+         shipping the file, so it is named, never served. IBM Plex Mono is
+         the web fallback and only downloads when nothing local matches. */
+      font-family: "SF Mono", SFMono-Regular, ui-monospace, "IBM Plex Mono", Menlo, monospace;
       text-transform: uppercase;
     }
 
