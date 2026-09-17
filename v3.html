@@ -207,6 +207,12 @@
       object-fit: cover;
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .menu {
+        transition: none;
+      }
+    }
+
     @media (max-width: 900px) {
       .row {
         grid-template-columns: repeat(2, 1fr);
@@ -246,9 +252,27 @@
         order: 3;
       }
 
+      /* The menu leaves the header and rides at the foot of the screen */
       .menu {
-        order: 4;
-        margin-top: 56px;
+        position: fixed;
+        inset: auto 0 0;
+        justify-content: center;
+        padding: 14px 12px;
+        background: #ffffff;
+        border-top: 1px solid #e6e6e6;
+        transition: transform 0.25s ease, visibility 0s;
+      }
+
+      /* Scrolling back up sends it away */
+      .menu.away {
+        transform: translateY(100%);
+        visibility: hidden;
+        transition: transform 0.25s ease, visibility 0s 0.25s;
+      }
+
+      /* Room under the last row so the menu never sits on a piece */
+      .index {
+        padding-bottom: 64px;
       }
 
       .bar {
@@ -518,6 +542,26 @@
     remix();
 
     document.querySelector('.remix').addEventListener('click', remix);
+
+    // On a phone the menu rides at the foot of the screen and ducks away
+    // when the page is scrolled back up
+    const menu = document.querySelector('.menu');
+    const phone = window.matchMedia('(max-width: 560px)');
+    let lastY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      // Clamped, so a rubber-band past either end does not read as a direction
+      const y = Math.max(0, window.scrollY);
+      const moved = y - lastY;
+
+      if (Math.abs(moved) < 4) return;
+      lastY = y;
+
+      // At rest at the top it stays put; there is nothing above to go back to
+      if (phone.matches) menu.classList.toggle('away', moved < 0 && y > 0);
+    }, { passive: true });
+
+    phone.addEventListener('change', () => menu.classList.remove('away'));
   </script>
 </body>
 </html>
