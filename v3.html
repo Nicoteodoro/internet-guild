@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="robots" content="noindex">
   <title>Internet Guild</title>
+  <script>document.documentElement.classList.add('js')</script>
   <link rel="preload" href="geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -252,22 +253,34 @@
         order: 3;
       }
 
-      /* The menu leaves the header and rides at the foot of the screen */
+      /* The menu leaves the header and rides at the foot of the screen,
+         set wider apart and a shade darker to carry on its own */
       .menu {
         position: fixed;
         inset: auto 0 0;
         justify-content: center;
+        gap: 0 20px;
         padding: 14px 12px;
         background: #ffffff;
         border-top: 1px solid #e6e6e6;
-        transition: transform 0.25s ease, visibility 0s;
       }
 
-      /* Scrolling back up sends it away */
-      .menu.away {
+      .menu a {
+        color: #555555;
+      }
+
+      /* With scripting it waits out of sight: the page opens without it and
+         the first scroll down calls it up. Without scripting it simply stays */
+      .js .menu {
         transform: translateY(100%);
         visibility: hidden;
         transition: transform 0.25s ease, visibility 0s 0.25s;
+      }
+
+      .js .menu.here {
+        transform: none;
+        visibility: visible;
+        transition: transform 0.25s ease, visibility 0s;
       }
 
       /* Room under the last row so the menu never sits on a piece */
@@ -543,8 +556,8 @@
 
     document.querySelector('.remix').addEventListener('click', remix);
 
-    // On a phone the menu rides at the foot of the screen and ducks away
-    // when the page is scrolled back up
+    // On a phone the menu rides at the foot of the screen: the page opens
+    // without it, scrolling down calls it up, scrolling back up sends it away
     const menu = document.querySelector('.menu');
     const phone = window.matchMedia('(max-width: 560px)');
     let lastY = window.scrollY;
@@ -557,11 +570,11 @@
       if (Math.abs(moved) < 4) return;
       lastY = y;
 
-      // At rest at the top it stays put; there is nothing above to go back to
-      if (phone.matches) menu.classList.toggle('away', moved < 0 && y > 0);
+      if (phone.matches) menu.classList.toggle('here', moved > 0);
     }, { passive: true });
 
-    phone.addEventListener('change', () => menu.classList.remove('away'));
+    // Coming back to a phone width opens without it again
+    phone.addEventListener('change', () => menu.classList.remove('here'));
   </script>
 </body>
 </html>
