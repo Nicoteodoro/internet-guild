@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
   <title>Internet Guild</title>
+  <script>document.documentElement.classList.add('js')</script>
   <link rel="preload" href="geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -99,6 +100,59 @@
 
     .muted {
       color: #949494;
+    }
+
+
+    /* The curtain: a blank page the wordmark types itself onto. It only
+       exists where scripting can lift it, so it can never strand the site */
+    .intro {
+      display: none;
+    }
+
+    .js .intro {
+      display: grid;
+      place-items: center;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: #ffffff;
+      transition: opacity 0.35s ease;
+    }
+
+    .js .intro.done {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* A caret that blinks while the line is still being written */
+    .intro span::after {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 1em;
+      margin-left: 2px;
+      background: #242424;
+      vertical-align: -0.15em;
+      animation: caret 1s steps(2, start) infinite;
+    }
+
+    .intro.typed span::after {
+      display: none;
+    }
+
+    @keyframes caret {
+      50% { opacity: 0; }
+    }
+
+    /* Nothing scrolls behind the curtain */
+    .intro-open body {
+      overflow: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro span::after {
+        animation: none;
+      }
     }
 
     /* Header and grid share one four-column measure, 12px in from each edge */
@@ -304,6 +358,8 @@
   </style>
 </head>
 <body>
+  <div class="intro" aria-hidden="true"><span></span></div>
+
   <header class="row top">
     <h1>Internet Guild</h1>
 
@@ -508,6 +564,38 @@
   </main>
 
   <script>
+    // The wordmark types itself onto a blank page while the grid loads behind
+    (() => {
+      const intro = document.querySelector('.intro');
+      const line = intro.querySelector('span');
+      const word = 'Internet Guild';
+      const root = document.documentElement;
+      root.classList.add('intro-open');
+
+      const lift = () => {
+        intro.classList.add('typed');
+        setTimeout(() => {
+          intro.classList.add('done');
+          root.classList.remove('intro-open');
+          setTimeout(() => intro.remove(), 400);
+        }, 200);
+      };
+
+      // Reduced motion gets the line whole, and the curtain goes at once
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        line.textContent = word;
+        lift();
+        return;
+      }
+
+      let i = 0;
+      const type = () => {
+        line.textContent = word.slice(0, ++i);
+        setTimeout(i < word.length ? type : lift, 60);
+      };
+      setTimeout(type, 120);
+    })();
+
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
