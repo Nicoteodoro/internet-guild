@@ -333,6 +333,13 @@
       /* Every step down the header is set here, one by one, rather than
          shared out by a row gap. The hero no longer ends the header, so the
          header itself holds the menu off the rule */
+      /* Half again the page's size here rather than double: a phone has less
+         room to give, and the line has to clear a 330px window */
+      .intro p {
+        font-size: 16.5px;
+        line-height: 24px;
+      }
+
       .top {
         row-gap: 0;
         padding-bottom: 56px;
