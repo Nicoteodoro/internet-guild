@@ -116,7 +116,7 @@
       inset: 0;
       z-index: 10;
       background: #ffffff;
-      transition: opacity 0.35s ease;
+      transition: opacity 0.5s ease;
     }
 
     .js .intro.done {
@@ -577,8 +577,8 @@
         setTimeout(() => {
           intro.classList.add('done');
           root.classList.remove('intro-open');
-          setTimeout(() => intro.remove(), 400);
-        }, 200);
+          setTimeout(() => intro.remove(), 550);
+        }, 420);
       };
 
       // Reduced motion gets the line whole, and the curtain goes at once
@@ -591,9 +591,9 @@
       let i = 0;
       const type = () => {
         line.textContent = word.slice(0, ++i);
-        setTimeout(i < word.length ? type : lift, 60);
+        setTimeout(i < word.length ? type : lift, 100);
       };
-      setTimeout(type, 120);
+      setTimeout(type, 200);
     })();
 
     // Films play only while on screen, and never with reduced motion
