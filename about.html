@@ -75,6 +75,15 @@
       font-weight: inherit;
     }
 
+
+    /* The drawn wordmark, scaled so its caps stand at the same 8px the set
+       type does, and dropped so its baseline meets the text baseline */
+    .logo {
+      height: 0.7556em;
+      width: auto;
+      vertical-align: -0.0244em;
+    }
+
     /* Inter draws its trademark a quarter smaller than Geist did. This puts it
        back at half the cap height, where it sat before, and on the cap line */
     .tm {
@@ -243,7 +252,7 @@
 </head>
 <body>
   <header class="row top">
-    <h1><a href="index.html">Internet Guild<span class="tm">™</span></a></h1>
+    <h1><a href="index.html"><img class="logo" src="logo.svg" alt="Internet Guild™" width="616" height="50" decoding="async"></a></h1>
 
     <div class="contact">
       <p class="muted">Hire the guild.</p>
