@@ -97,6 +97,14 @@
       font-weight: inherit;
     }
 
+    /* Inter draws its trademark a quarter smaller than Geist did. This puts it
+       back at half the cap height, where it sat before, and on the cap line */
+    .tm {
+      font-size: 1.35em;
+      vertical-align: -0.19em;
+      line-height: 0;
+    }
+
     .muted {
       color: #949494;
     }
@@ -360,7 +368,7 @@
   <div class="intro" aria-hidden="true"><span></span></div>
 
   <header class="row top">
-    <h1>Internet Guild™</h1>
+    <h1>Internet Guild<span class="tm">™</span></h1>
 
     <div class="contact">
       <p class="muted">Hire the guild.</p>
@@ -568,6 +576,7 @@
       const intro = document.querySelector('.intro');
       const line = intro.querySelector('span');
       const word = 'Internet Guild™';
+      const paint = (s) => s.replace('™', '<span class="tm">™</span>');
       const root = document.documentElement;
       root.classList.add('intro-open');
 
@@ -582,14 +591,14 @@
 
       // Reduced motion gets the line whole, and the curtain goes at once
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        line.textContent = word;
+        line.innerHTML = paint(word);
         lift();
         return;
       }
 
       let i = 0;
       const type = () => {
-        line.textContent = word.slice(0, ++i);
+        line.innerHTML = paint(word.slice(0, ++i));
         setTimeout(i < word.length ? type : lift, 80);
       };
       setTimeout(type, 160);
