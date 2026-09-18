@@ -135,6 +135,20 @@
       transition: opacity 0.42s ease;
     }
 
+    /* The same mark the wordmark carries, standing at the cap height of the
+       line it opens and clearing it by the gap it keeps in the lockup */
+    .intro p {
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .intro svg {
+      height: 0.7255em;
+      width: auto;
+      margin-right: 0.18em;
+      vertical-align: baseline;
+    }
+
     .js .intro.done {
       opacity: 0;
       pointer-events: none;
@@ -374,7 +388,7 @@
   </style>
 </head>
 <body>
-  <div class="intro" aria-hidden="true"><span></span></div>
+  <div class="intro" aria-hidden="true"><p><svg viewBox="0 1 72 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3.03158 1L20.8421 14.5C26.1474 18.5213 29.9368 19 33.7263 19H38.2737C42.0632 19 45.8526 18.5213 51.1579 14.5L68.9684 1L72 4.375L54.1895 17.875C48.1263 22.4708 48.1263 27.5292 54.1895 32.125L72 45.625L68.9684 49L51.1579 35.5C45.8526 31.4787 42.0632 31 38.2737 31H33.7263C29.9368 31 26.1474 31.4787 20.8421 35.5L3.03158 49L0 45.625L17.8105 32.125C23.8737 27.5292 23.8737 22.4708 17.8105 17.875L0 4.375L3.03158 1Z" fill="#FAEA00"/></svg><span></span></p></div>
 
   <header class="row top">
     <h1><img class="logo" src="logo.svg" alt="Internet Guild™" width="616" height="50" decoding="async"></h1>
