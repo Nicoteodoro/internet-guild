@@ -141,8 +141,8 @@
       margin: 0;
       /* Twice the page's 11 on 16, so the mark, the caret and the trademark
          all follow: every measure inside this line is set in ems */
-      font-size: 22px;
-      line-height: 32px;
+      font-size: 20px;
+      line-height: 29px;
       white-space: nowrap;
     }
 
@@ -336,8 +336,8 @@
       /* Half again the page's size here rather than double: a phone has less
          room to give, and the line has to clear a 330px window */
       .intro p {
-        font-size: 16.5px;
-        line-height: 24px;
+        font-size: 14px;
+        line-height: 20px;
       }
 
       .top {
@@ -633,7 +633,7 @@
       let i = 0;
       const type = () => {
         line.innerHTML = paint(word.slice(0, ++i));
-        setTimeout(i < word.length ? type : lift, 80);
+        setTimeout(i < word.length ? type : lift, 70);
       };
       setTimeout(type, 160);
     })();
