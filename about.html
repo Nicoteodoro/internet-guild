@@ -242,17 +242,21 @@
         max-width: calc(100% - 24px);
         justify-content: center;
         gap: 0;
-        padding: 5px;
-        border: 1px solid rgba(255, 255, 255, 0.7);
+        padding: 6px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.62);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
         backdrop-filter: blur(20px) saturate(180%);
+        /* The rim is drawn by the shadow rather than a border, because a
+           border cannot go under a whole pixel: at 1px it stacked with the
+           highlight beneath it into a 2px band of white. Half a pixel of
+           each reads as the one hairline it should be */
         box-shadow:
           0 1px 2px rgba(36, 36, 36, 0.05),
           0 5px 14px rgba(36, 36, 36, 0.07),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+          inset 0 0 0 0.5px rgba(255, 255, 255, 0.7),
+          inset 0 0.5px 0 rgba(255, 255, 255, 0.9),
+          inset 0 -0.5px 0 rgba(255, 255, 255, 0.4);
       }
 
       /* Where the glass cannot blur it thickens instead, so the words never
