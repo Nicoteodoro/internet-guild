@@ -619,12 +619,23 @@
       const line = intro.querySelector('span');
       const word = 'INTERNET GUILD';
       const root = document.documentElement;
+
+      /* A phone tints its own bars, above the page and below it, and works
+         that colour out for itself unless it is told. Left alone it reads the
+         blue off the curtain and is slow to notice the white underneath, so
+         the bars hang on after the curtain has gone. Told outright, they turn
+         with it: blue while it stands, white the moment it starts to fade. */
+      const chrome = document.querySelector('meta[name="theme-color"]');
+      const tint = (colour) => { if (chrome) chrome.content = colour; };
+
       root.classList.add('intro-open');
+      tint('#071DFF');
 
       const lift = () => {
         intro.classList.add('typed');
         setTimeout(() => {
           intro.classList.add('done');
+          tint('#ffffff');
           root.classList.remove('intro-open');
           setTimeout(() => intro.remove(), 480);
         }, 310);
