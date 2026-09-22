@@ -58,7 +58,6 @@
 
     body {
       background: #ffffff;
-      transition: background-color 0.42s ease;
       color: #242424;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
@@ -186,20 +185,6 @@
       overflow: hidden;
     }
 
-    /* The page's own background goes blue with the curtain, and comes back
-       white with it. The curtain is only an overlay: the strips a phone
-       paints above the document and below it, and the tint it gives its own
-       bars, come from the page behind, which stayed white the whole time.
-       That is what was still blue after the curtain had gone */
-    html,
-    .intro-open body {
-      transition: background-color 0.42s ease;
-    }
-
-    .intro-open,
-    .intro-open body {
-      background-color: #071DFF;
-    }
 
     @media (prefers-reduced-motion: reduce) {
       .intro span::after {
@@ -647,23 +632,12 @@
       const line = intro.querySelector('span');
       const word = 'INTERNET GUILD';
       const root = document.documentElement;
-
-      /* A phone tints its own bars, above the page and below it, and works
-         that colour out for itself unless it is told. Left alone it reads the
-         blue off the curtain and is slow to notice the white underneath, so
-         the bars hang on after the curtain has gone. Told outright, they turn
-         with it: blue while it stands, white the moment it starts to fade. */
-      const chrome = document.querySelector('meta[name="theme-color"]');
-      const tint = (colour) => { if (chrome) chrome.content = colour; };
-
       root.classList.add('intro-open');
-      tint('#071DFF');
 
       const lift = () => {
         intro.classList.add('typed');
         setTimeout(() => {
           intro.classList.add('done');
-          tint('#ffffff');
           root.classList.remove('intro-open');
           setTimeout(() => intro.remove(), 700);
         }, 310);
