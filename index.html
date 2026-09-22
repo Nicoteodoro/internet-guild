@@ -116,7 +116,7 @@
       z-index: 10;
       background: #071DFF;
       color: #ffffff;
-      transition: opacity 0.42s ease;
+      transition: background-color 0.42s ease;
     }
 
     /* The same mark the wordmark carries, standing at the cap height of the
@@ -143,9 +143,21 @@
       fill: currentColor;
     }
 
+    /* The curtain does not fade away, it turns white where it stands, and the
+       line goes with it. A phone's bars sample the page behind them through
+       their own blur, which lags the page by a few frames; fading the whole
+       thing out leaves them holding the blue after it has gone. Turning white
+       first lets them catch up while the curtain is still there, and by the
+       time it is taken away it matches the page underneath exactly, so its
+       going is invisible */
     .js .intro.done {
-      opacity: 0;
+      background: #ffffff;
       pointer-events: none;
+    }
+
+    .js .intro.done p {
+      opacity: 0;
+      transition: opacity 0.26s ease;
     }
 
     /* A caret that blinks while the line is still being written */
@@ -637,7 +649,7 @@
           intro.classList.add('done');
           tint('#ffffff');
           root.classList.remove('intro-open');
-          setTimeout(() => intro.remove(), 480);
+          setTimeout(() => intro.remove(), 700);
         }, 310);
       };
 
