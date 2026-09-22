@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PRUEBA</title>
+  <meta name="description" content="Essentialist design studio. Websites, interfaces, and products for founders who value simplicity. We design, build and ship.">
+  <link rel="canonical" href="https://internetguild.co/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Internet Guild">
+  <meta property="og:url" content="https://internetguild.co/">
+  <meta property="og:title" content="Internet Guild">
+  <meta property="og:description" content="Essentialist design studio. Websites, interfaces, and products for founders who value simplicity. We design, build and ship.">
+  <meta property="og:image" content="https://internetguild.co/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A typed page of the studio’s lines: Internet Guild, independent design and code studio.">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    /* Keep the scrollbar there whether the page needs it or not, so moving
+       between a long page and a short one does not shift the layout sideways.
+       Preferred over scrollbar-gutter, which reserves a fixed width even where
+       scrollbars overlay the page and take none */
+    html {
+      overflow-y: scroll;
+    }
+
+    /* PP Neue Montreal, self-hosted in the two weights the site uses, each
+       converted from the delivered outlines and cut to the Latin set */
+    @font-face {
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-medium.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+
+
+    body {
+      background: #ffffff;
+      color: #242424;
+      font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 17px;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible {
+      outline: 1px solid #242424;
+      outline-offset: 2px;
+    }
+
+    p,
+    h1 {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+
+    /* The wordmark is set, not drawn, so it takes the face the rest of the
+       page does. Only the mark stays a drawing, standing at the cap height
+       of the line it opens and holding the gap it holds in the lockup */
+    .mark {
+      height: 0.715em;
+      width: auto;
+      margin-right: 0.18em;
+      vertical-align: baseline;
+    }
+
+
+    .muted {
+      color: #949494;
+    }
+
+
+    /* The curtain: a blue page the wordmark types itself onto in white. It
+       only exists where scripting can lift it, so it can never strand the
+       site */
+    .intro {
+      display: none;
+    }
+
+    .js .intro {
+      display: grid;
+      place-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      /* The dynamic viewport, so a phone's own bars cannot crop it */
+      height: 100dvh;
+      z-index: 10;
+      background: #FF0000;
+      color: #ffffff;
+      transition: background-color 0.42s ease;
+    }
+
+    /* The same mark the wordmark carries, standing at the cap height of the
+       line it opens and clearing it by the gap it keeps in the lockup */
+    .intro p {
+      margin: 0;
+      /* The page's own size: every measure inside this line is set in ems,
+         so the mark and the caret follow it */
+      font-size: 12px;
+      line-height: 17px;
+      white-space: nowrap;
+    }
+
+    .intro svg {
+      height: 0.715em;
+      width: auto;
+      margin-right: 0.18em;
+      vertical-align: baseline;
+    }
+
+    /* The mark is drawn in the blue it stands on here, so it takes the line's
+       colour instead */
+    .intro svg path {
+      fill: currentColor;
+    }
+
+    /* The curtain does not fade away, it turns white where it stands, and the
+       line goes with it. A phone's bars sample the page behind them through
+       their own blur, which lags the page by a few frames; fading the whole
+       thing out leaves them holding the blue after it has gone. Turning white
+       first lets them catch up while the curtain is still there, and by the
+       time it is taken away it matches the page underneath exactly, so its
+       going is invisible */
+    .js .intro.done {
+      background: #ffffff;
+      pointer-events: none;
+    }
+
+    .js .intro.done p {
+      opacity: 0;
+      transition: opacity 0.26s ease;
+    }
+
+    /* A caret that blinks while the line is still being written */
+    .intro span::after {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 1em;
+      margin-left: 0.143em;
+      background: currentColor;
+      vertical-align: -0.15em;
+      animation: caret 1s steps(2, start) infinite;
+    }
+
+    .intro.typed span::after {
+      display: none;
+    }
+
+    @keyframes caret {
+      50% { opacity: 0; }
+    }
+
+    /* Nothing scrolls behind the curtain */
+    .intro-open body {
+      overflow: hidden;
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro span::after {
+        animation: none;
+      }
+    }
+
+    /* Header and grid share one four-column measure, 12px in from each edge */
+    .row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding-inline: 12px;
+    }
+
+    .top {
+      padding-block: 8px 0;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 6px;
+    }
+
+    .menu a {
+      position: relative;
+      color: #949494;
+      transition: color 0.15s ease;
+    }
+
+    /* Commas set by the row rather than written into the links, so a phone
+       can drop them without touching the words */
+    .menu a:not(:last-child)::after {
+      content: ",";
+    }
+
+    /* Invisible touch area */
+    .menu a::before {
+      content: "";
+      position: absolute;
+      inset: -10px -3px;
+    }
+
+    .menu a:hover {
+      color: #242424;
+    }
+
+    /* Two of the hero's breaks are a phone's alone; wider than that the
+       lines they split run whole */
+    .narrow {
+      display: none;
+    }
+
+    /* The hero takes a row of the header to itself, starting where the
+       wordmark does. Its top padding is short of its bottom one by the
+       grid's row gap, which sits above it, so the air reads as 80 either side */
+    .statement {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding-block: 68px 80px;
+    }
+
+    /* The one rule on the page, naming the view */
+    .bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      margin-inline: 12px;
+      padding-block: 8px 12px;
+      border-top: 1px solid #e6e6e6;
+    }
+
+    .count {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Reads as the text beside it; only the pointer says it is a control */
+    .remix {
+      appearance: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      color: #949494;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .remix:hover {
+      color: #242424;
+    }
+
+    .index {
+      row-gap: 24px;
+      padding-bottom: 8px;
+    }
+
+    .cell {
+      margin: 0;
+      min-width: 0;
+    }
+
+    /* Titles are held to one line, so every cell stands the same height */
+    figcaption {
+      margin-top: 8px;
+      color: #949494;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Every piece is squared off and cropped to fill, so the grid never breaks */
+    .media {
+      aspect-ratio: 1 / 1;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+
+    .media img,
+    .media video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 900px) {
+      .row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* The empty column only holds the menu out to the fourth slot */
+      .spacer {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      /* Every step down the header is set here, one by one, rather than
+         shared out by a row gap. The hero no longer ends the header, so the
+         header itself holds the menu off the rule */
+      .top {
+        row-gap: 0;
+        padding-bottom: 56px;
+      }
+
+      .narrow {
+        display: inline;
+      }
+
+      h1 {
+        order: 1;
+      }
+
+      /* The hero and the address read as one block: close to each other,
+         clear of the wordmark, and clearer still of the menu. Off the right
+         edge too, since a line of copy can run the full width here */
+      .statement {
+        order: 2;
+        padding-block: 28px 16px;
+        padding-right: 32px;
+      }
+
+      .contact {
+        order: 3;
+      }
+
+      /* The menu leaves the header and floats at the foot of the screen as
+         a pill of glass: translucent, blurring whatever scrolls beneath it,
+         lit along the top edge and resting on its own shadow */
+      .menu {
+        position: fixed;
+        top: auto;
+        right: auto;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        transform: translateX(-50%);
+        flex-wrap: nowrap;
+        width: max-content;
+        max-width: calc(100% - 24px);
+        justify-content: center;
+        gap: 0;
+        padding: 6px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.62);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        backdrop-filter: blur(20px) saturate(180%);
+        /* The rim is drawn by the shadow rather than a border, because a
+           border cannot go under a whole pixel: at 1px it stacked with the
+           highlight beneath it into a 2px band of white. Half a pixel of
+           each reads as the one hairline it should be */
+        box-shadow:
+          0 1px 2px rgba(36, 36, 36, 0.05),
+          0 5px 14px rgba(36, 36, 36, 0.07),
+          inset 0 0 0 0.5px rgba(255, 255, 255, 0.7),
+          inset 0 0.5px 0 rgba(255, 255, 255, 0.9),
+          inset 0 -0.5px 0 rgba(255, 255, 255, 0.4);
+      }
+
+      /* Where the glass cannot blur it thickens instead, so the words never
+         come to rest on a moving picture */
+      @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .menu {
+          background: rgba(255, 255, 255, 0.93);
+        }
+      }
+
+      /* Each word holds its own tap target here, so the invisible one the
+         header hands out comes off. Full-strength text, since the glass is
+         thin enough for a dark piece to show through it */
+      .menu a {
+        color: #242424;
+        padding: 9px 14px;
+        border-radius: 999px;
+      }
+
+      .menu a::before {
+        content: none;
+      }
+
+      /* Narrower than a small phone the four words no longer fit the pill's
+         own measure, and with nothing to wrap they would push past it. They
+         give back four pixels of padding each side instead */
+      @media (max-width: 340px) {
+        .menu a {
+          padding-inline: 10px;
+        }
+      }
+
+      /* Set far enough apart here that they need no commas */
+      .menu a:not(:last-child)::after {
+        content: none;
+      }
+
+      /* Room under the last row so the menu never sits on a piece */
+      .index {
+        padding-bottom: 88px;
+      }
+
+      .bar {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="intro" aria-hidden="true"><p><svg viewBox="0 0 475 317" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 0L137.5 89.1562C172.5 115.714 197.5 118.875 222.5 118.875H252.5C277.5 118.875 302.5 115.714 337.5 89.1562L455 0L475 22.2891L357.5 111.445C317.5 141.797 317.5 175.203 357.5 205.555L475 294.711L455 317L337.5 227.844C302.5 201.286 277.5 198.125 252.5 198.125H222.5C197.5 198.125 172.5 201.286 137.5 227.844L20 317L0 294.711L117.5 205.555C157.5 175.203 157.5 141.797 117.5 111.445L0 22.2891L20 0Z" fill="#071DFF"/></svg><span></span></p></div>
+
+  <header class="row top">
+    <h1><svg class="mark" viewBox="0 0 475 317" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 0L137.5 89.1562C172.5 115.714 197.5 118.875 222.5 118.875H252.5C277.5 118.875 302.5 115.714 337.5 89.1562L455 0L475 22.2891L357.5 111.445C317.5 141.797 317.5 175.203 357.5 205.555L475 294.711L455 317L337.5 227.844C302.5 201.286 277.5 198.125 252.5 198.125H222.5C197.5 198.125 172.5 201.286 137.5 227.844L20 317L0 294.711L117.5 205.555C157.5 175.203 157.5 141.797 117.5 111.445L0 22.2891L20 0Z" fill="#071DFF"/></svg>INTERNET GUILD</h1>
+
+    <div class="contact">
+      <p class="muted">Hire the guild.</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
+
+    <div class="spacer"></div>
+
+    <nav class="menu" aria-label="Main">
+      <a href="index.html" aria-current="page">index</a>
+      <a href="work.html">works</a>
+      <a href="about.html">about</a>
+      <a href="contact.html">contact</a>
+    </nav>
+
+    <p class="statement">
+      Essentialist design studio<br>
+      Eleven years of daily practice, born to reduce.<br>
+      Websites, interfaces, and products for<br class="narrow">
+      founders who value simplicity.<br>
+      We design, build and ship.<br class="narrow">
+      Take everything, or just what you need.<br>
+      Less noise, more signal.
+    </p>
+  </header>
+
+  <div class="bar">
+    <p><span class="muted">Selected work /</span> Index</p>
+    <p class="count">
+      <button type="button" class="remix">Remix</button>
+      <span class="muted">36 Pieces</span>
+    </p>
+  </div>
+
+  <main class="row index" aria-label="Selected work">
+    <figure class="cell">
+      <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
+      <figcaption>Street Poster</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
+      <figcaption>Visa Cards</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
+      <figcaption>Investments App</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
+      <figcaption>Debit Card</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
+      <figcaption>Interface</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
+      <figcaption>Website, Laptops</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
+      <figcaption>Icon System</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
+      <figcaption>Pattern</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
+      <figcaption>Poster</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
+      <figcaption>Website, Laptop</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
+      <figcaption>Website, Mobile</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
+      <figcaption>Website Sections</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
+      <figcaption>Customer Journey</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
+      <figcaption>Virtual Assistance</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
+      <figcaption>Brand Identity</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
+      <figcaption>Website</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
+      <figcaption>Website, Spanish</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
+      <figcaption>Onboarding</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
+      <figcaption>Report Charts</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
+      <figcaption>Report, iPad</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
+      <figcaption>Homepage</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
+      <figcaption>Product Cards</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
+      <figcaption>Team Page</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
+      <figcaption>Agent Activity Panel</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
+      <figcaption>Token Statement</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
+      <figcaption>xrank.tech</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
+      <figcaption>China.Supply</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
+      <figcaption>Journal App</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
+      <figcaption>Journal, Close-up</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
+      <figcaption>Calm App Login</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
+      <figcaption>Music Player</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
+      <figcaption>Writing App</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
+      <figcaption>Godzilla Minus One</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
+      <figcaption>Godzilla, Bus Stop</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
+      <figcaption>Nine2Five Spec Sheet</figcaption>
+    </figure>
+    <figure class="cell">
+      <div class="media"><img src="ids-shopping-bag.webp" alt="Internet Design Studio shopping bag" loading="lazy" decoding="async"></div>
+      <figcaption>Shopping Bag</figcaption>
+    </figure>
+  </main>
+
+  <script>
+    // The wordmark types itself onto a blank page while the grid loads behind
+    (() => {
+      const intro = document.querySelector('.intro');
+      const line = intro.querySelector('span');
+      const word = 'INTERNET GUILD';
+      const root = document.documentElement;
+      root.classList.add('intro-open');
+
+      const lift = () => {
+        intro.classList.add('typed');
+        setTimeout(() => {
+          intro.classList.add('done');
+          root.classList.remove('intro-open');
+          setTimeout(() => {
+            intro.remove();
+
+            /* Safari works the tint for its own bars out of the page at the
+               top and bottom edges, and only looks again once the page has
+               scrolled. Nothing has scrolled — the curtain held it still —
+               so it is left holding the blue the curtain put there, over a
+               page that is already white. A pixel down and straight back is
+               the look it is waiting for. */
+            if (window.scrollY === 0) {
+              window.scrollTo(0, 1);
+              requestAnimationFrame(() => window.scrollTo(0, 0));
+            }
+          }, 700);
+        }, 310);
+      };
+
+      // Reduced motion gets the line whole, and the curtain goes at once
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        line.textContent = word;
+        lift();
+        return;
+      }
+
+      let i = 0;
+      const type = () => {
+        line.textContent = word.slice(0, ++i);
+        setTimeout(i < word.length ? type : lift, 70);
+      };
+      setTimeout(type, 160);
+    })();
+
+    // Films play only while on screen, and never with reduced motion
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (isIntersecting && !reduceMotion.matches) {
+          target.play().catch(() => {});
+        } else {
+          target.pause();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Posters load about one screen ahead of the scroll
+    const posterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting) return;
+        target.poster = target.dataset.poster;
+        observer.unobserve(target);
+      });
+    }, { rootMargin: '100% 0px 100% 0px' });
+
+    document.querySelectorAll('.media video').forEach((video) => {
+      video.muted = true;
+      videoObserver.observe(video);
+      if (video.dataset.poster) posterObserver.observe(video);
+    });
+
+    // Remix deals the same pieces into a new order
+    const index = document.querySelector('.index');
+
+    function remix() {
+      const cells = [...index.children];
+
+      for (let i = cells.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cells[i], cells[j]] = [cells[j], cells[i]];
+      }
+
+      index.append(...cells);
+
+      // Whatever lands in the top row is wanted straight away
+      cells.slice(0, 4).forEach((cell) => {
+        const image = cell.querySelector('img');
+        if (image) image.loading = 'eager';
+      });
+
+      // Moving a film can stop it, so have the observer judge each one afresh
+      index.querySelectorAll('video').forEach((video) => {
+        videoObserver.unobserve(video);
+        videoObserver.observe(video);
+      });
+    }
+
+    // The gallery opens on a different order every time it is loaded
+    remix();
+
+    document.querySelector('.remix').addEventListener('click', remix);
+  </script>
+</body>
+</html>
