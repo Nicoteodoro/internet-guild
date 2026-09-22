@@ -58,6 +58,7 @@
 
     body {
       background: #ffffff;
+      transition: background-color 0.42s ease;
       color: #242424;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
@@ -183,6 +184,21 @@
     /* Nothing scrolls behind the curtain */
     .intro-open body {
       overflow: hidden;
+    }
+
+    /* The page's own background goes blue with the curtain, and comes back
+       white with it. The curtain is only an overlay: the strips a phone
+       paints above the document and below it, and the tint it gives its own
+       bars, come from the page behind, which stayed white the whole time.
+       That is what was still blue after the curtain had gone */
+    html,
+    .intro-open body {
+      transition: background-color 0.42s ease;
+    }
+
+    .intro-open,
+    .intro-open body {
+      background-color: #071DFF;
     }
 
     @media (prefers-reduced-motion: reduce) {
