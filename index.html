@@ -101,8 +101,9 @@
     }
 
 
-    /* The curtain: a blank page the wordmark types itself onto. It only
-       exists where scripting can lift it, so it can never strand the site */
+    /* The curtain: a blue page the wordmark types itself onto in white. It
+       only exists where scripting can lift it, so it can never strand the
+       site */
     .intro {
       display: none;
     }
@@ -113,7 +114,8 @@
       position: fixed;
       inset: 0;
       z-index: 10;
-      background: #ffffff;
+      background: #071DFF;
+      color: #ffffff;
       transition: opacity 0.42s ease;
     }
 
@@ -135,6 +137,12 @@
       vertical-align: baseline;
     }
 
+    /* The mark is drawn in the blue it stands on here, so it takes the line's
+       colour instead */
+    .intro svg path {
+      fill: currentColor;
+    }
+
     .js .intro.done {
       opacity: 0;
       pointer-events: none;
@@ -147,7 +155,7 @@
       width: 0.5em;
       height: 1em;
       margin-left: 0.143em;
-      background: #242424;
+      background: currentColor;
       vertical-align: -0.15em;
       animation: caret 1s steps(2, start) infinite;
     }
