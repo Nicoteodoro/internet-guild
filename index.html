@@ -107,20 +107,24 @@
       display: none;
     }
 
+    /* Absolute, not fixed. Safari on iOS 26 paints its own bars with the
+       colour of any fixed element touching the top or bottom of the screen,
+       and does not let go of it once that element has gone. A block that
+       merely sits at the top of the page, a screen tall, is not one Safari
+       looks at, so its bars stay the page's white from start to finish */
     .js .intro {
       display: grid;
       place-items: center;
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
+      right: 0;
       height: 100vh;
-      /* The dynamic viewport, so a phone's own bars cannot crop it */
       height: 100dvh;
       z-index: 10;
       background: #071DFF;
       color: #ffffff;
-      transition: background-color 0.42s ease;
+      transition: opacity 0.42s ease;
     }
 
     /* The same mark the wordmark carries, standing at the cap height of the
@@ -147,21 +151,9 @@
       fill: currentColor;
     }
 
-    /* The curtain does not fade away, it turns white where it stands, and the
-       line goes with it. A phone's bars sample the page behind them through
-       their own blur, which lags the page by a few frames; fading the whole
-       thing out leaves them holding the blue after it has gone. Turning white
-       first lets them catch up while the curtain is still there, and by the
-       time it is taken away it matches the page underneath exactly, so its
-       going is invisible */
     .js .intro.done {
-      background: #ffffff;
-      pointer-events: none;
-    }
-
-    .js .intro.done p {
       opacity: 0;
-      transition: opacity 0.26s ease;
+      pointer-events: none;
     }
 
     /* A caret that blinks while the line is still being written */
@@ -643,20 +635,7 @@
         setTimeout(() => {
           intro.classList.add('done');
           root.classList.remove('intro-open');
-          setTimeout(() => {
-            intro.remove();
-
-            /* Safari works the tint for its own bars out of the page at the
-               top and bottom edges, and only looks again once the page has
-               scrolled. Nothing has scrolled — the curtain held it still —
-               so it is left holding the blue the curtain put there, over a
-               page that is already white. A pixel down and straight back is
-               the look it is waiting for. */
-            if (window.scrollY === 0) {
-              window.scrollTo(0, 1);
-              requestAnimationFrame(() => window.scrollTo(0, 0));
-            }
-          }, 700);
+          setTimeout(() => intro.remove(), 480);
         }, 310);
       };
 
