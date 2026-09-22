@@ -639,7 +639,20 @@
         setTimeout(() => {
           intro.classList.add('done');
           root.classList.remove('intro-open');
-          setTimeout(() => intro.remove(), 700);
+          setTimeout(() => {
+            intro.remove();
+
+            /* Safari works the tint for its own bars out of the page at the
+               top and bottom edges, and only looks again once the page has
+               scrolled. Nothing has scrolled — the curtain held it still —
+               so it is left holding the blue the curtain put there, over a
+               page that is already white. A pixel down and straight back is
+               the look it is waiting for. */
+            if (window.scrollY === 0) {
+              window.scrollTo(0, 1);
+              requestAnimationFrame(() => window.scrollTo(0, 0));
+            }
+          }, 700);
         }, 310);
       };
 
