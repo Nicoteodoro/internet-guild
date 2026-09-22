@@ -17,7 +17,6 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="A typed page of the studio’s lines: Internet Guild, independent design and code studio.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
@@ -58,7 +57,7 @@
       background: #ffffff;
       color: #242424;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
-      font-weight: 400;
+      font-weight: 500;
       font-size: 12px;
       line-height: 17px;
       text-transform: uppercase;
@@ -86,10 +85,6 @@
     /* The wordmark is set, not drawn, so it takes the face the rest of the
        page does. Only the mark stays a drawing, standing at the cap height
        of the line it opens and holding the gap it holds in the lockup */
-    h1 {
-      font-weight: 500;
-    }
-
     .mark {
       height: 0.715em;
       width: auto;
@@ -267,6 +262,15 @@
 
       .menu a::before {
         content: none;
+      }
+
+      /* Narrower than a small phone the four words no longer fit the pill's
+         own measure, and with nothing to wrap they would push past it. They
+         give back four pixels of padding each side instead */
+      @media (max-width: 340px) {
+        .menu a {
+          padding-inline: 10px;
+        }
       }
 
       /* Set far enough apart here that they need no commas */
