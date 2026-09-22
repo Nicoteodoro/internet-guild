@@ -17,7 +17,8 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="A typed page of the studio’s lines: Internet Guild, independent design and code studio.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="sf-pro-display-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="sf-pro-display-medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -35,12 +36,20 @@
       overflow-y: scroll;
     }
 
-    /* Inter, self-hosted so the type does not wait on a third party. One file:
-       the site uses nothing outside the Latin subset */
+    /* SF Pro Display, self-hosted in the two weights the site uses. On an
+       Apple device -apple-system is the same face, so the fallback matches */
     @font-face {
-      font-family: Inter;
-      src: url("inter-latin.woff2") format("woff2");
-      font-weight: 100 900;
+      font-family: "SF Pro Display";
+      src: url("sf-pro-display-regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "SF Pro Display";
+      src: url("sf-pro-display-medium.woff2") format("woff2");
+      font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
@@ -48,11 +57,10 @@
     body {
       background: #ffffff;
       color: #242424;
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      font-weight: 600;
-      font-size: 11px;
-      line-height: 16px;
-      text-transform: uppercase;
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -76,21 +84,20 @@
     }
 
 
-    /* The drawn wordmark, scaled so its caps stand at the same 8px the set
-       type does, and dropped so its baseline meets the text baseline */
-    .logo {
-      height: 0.7556em;
-      width: auto;
-      vertical-align: -0.0244em;
+    /* The wordmark is set, not drawn, so it takes the face the rest of the
+       page does. Only the mark stays a drawing, standing at the cap height
+       of the line it opens and holding the gap it holds in the lockup */
+    h1 {
+      font-weight: 500;
     }
 
-    /* Inter draws its trademark a quarter smaller than Geist did. This puts it
-       back at half the cap height, where it sat before, and on the cap line */
-    .tm {
-      font-size: 1.35em;
-      vertical-align: -0.19em;
-      line-height: 0;
+    .mark {
+      height: 0.7046em;
+      width: auto;
+      margin-right: 0.18em;
+      vertical-align: baseline;
     }
+
 
     .muted {
       color: #949494;
@@ -163,6 +170,7 @@
 
     .lead {
       color: #242424;
+      font-weight: 500;
     }
 
     .section {
@@ -184,6 +192,7 @@
 
     .timeline dt {
       color: #242424;
+      font-weight: 500;
     }
 
     .timeline dd {
@@ -303,7 +312,7 @@
 </head>
 <body>
   <header class="row top">
-    <h1><a href="index.html"><img class="logo" src="logo.svg" alt="Internet Guild™" width="616" height="50" decoding="async"></a></h1>
+    <h1><a href="index.html"><svg class="mark" viewBox="0 1 72 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3.03158 1L20.8421 14.5C26.1474 18.5213 29.9368 19 33.7263 19H38.2737C42.0632 19 45.8526 18.5213 51.1579 14.5L68.9684 1L72 4.375L54.1895 17.875C48.1263 22.4708 48.1263 27.5292 54.1895 32.125L72 45.625L68.9684 49L51.1579 35.5C45.8526 31.4787 42.0632 31 38.2737 31H33.7263C29.9368 31 26.1474 31.4787 20.8421 35.5L3.03158 49L0 45.625L17.8105 32.125C23.8737 27.5292 23.8737 22.4708 17.8105 17.875L0 4.375L3.03158 1Z" fill="#FAEA00"/></svg>Internet Guild&#8482;</a></h1>
 
     <div class="contact">
       <p class="muted">Hire the guild.</p>
@@ -323,7 +332,7 @@
   <main class="row page">
     <div class="copy">
       <p>
-        <span class="lead">Internet Guild<span class="tm">™</span> is a Tier S design and code studio.</span><br>
+        <span class="lead">Internet Guild™ is a Tier S design and code studio.</span><br>
         We make things simple.<br>
         We keep only what matters.
       </p>
@@ -378,7 +387,7 @@
           </div>
           <div>
             <dt>April 11, 2025</dt>
-            <dd>After a meeting in Kyoto, Internet Guild<span class="tm">™</span> is born.</dd>
+            <dd>After a meeting in Kyoto, Internet Guild™ is born.</dd>
           </div>
           <div>
             <dt>Now</dt>
