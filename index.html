@@ -107,15 +107,13 @@
       display: none;
     }
 
-    /* Absolute, not fixed. Safari on iOS 26 paints its own bars with the
-       colour of any fixed element touching the top or bottom of the screen,
-       and does not let go of it once that element has gone. A block that
-       merely sits at the top of the page, a screen tall, is not one Safari
-       looks at, so its bars stay the page's white from start to finish */
+    /* Fixed while it types, so Safari on iOS 26 paints its own bars in the
+       curtain's blue and the whole screen is blue. Safari takes that colour
+       from any fixed element touching the top or bottom of the screen */
     .js .intro {
       display: grid;
       place-items: center;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
@@ -124,7 +122,7 @@
       z-index: 10;
       background: #071DFF;
       color: #ffffff;
-      transition: opacity 0.42s ease;
+      transition: opacity var(--fade, 800ms) ease;
     }
 
     /* The same mark the wordmark carries, standing at the cap height of the
@@ -151,7 +149,11 @@
       fill: currentColor;
     }
 
+    /* On the way out it stops being fixed, so Safari starts letting go of
+       its bars at the same moment the fade begins, and the fade is held long
+       enough for both to finish together */
     .js .intro.done {
+      position: absolute;
       opacity: 0;
       pointer-events: none;
     }
@@ -630,12 +632,20 @@
       const root = document.documentElement;
       root.classList.add('intro-open');
 
+      // How long the curtain takes to go. ?fade= overrides it, in
+      // milliseconds, for tuning against Safari on the phone
+      const asked = Number(new URLSearchParams(location.search).get('fade'));
+      const fade = asked > 0 ? asked : 800;
+      intro.style.setProperty('--fade', fade + 'ms');
+
       const lift = () => {
         intro.classList.add('typed');
         setTimeout(() => {
+          // Pinned where it stands, so letting go of fixed does not move it
+          intro.style.top = window.scrollY + 'px';
           intro.classList.add('done');
           root.classList.remove('intro-open');
-          setTimeout(() => intro.remove(), 480);
+          setTimeout(() => intro.remove(), fade + 60);
         }, 310);
       };
 
