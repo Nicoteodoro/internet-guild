@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
   <title>Internet Guild</title>
   <meta name="description" content="Essentialist design studio. Websites, interfaces, and products for founders who value simplicity. We design, build and ship.">
   <link rel="canonical" href="https://internetguild.co/">
@@ -112,7 +111,12 @@
       display: grid;
       place-items: center;
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      /* The dynamic viewport, so a phone's own bars cannot crop it */
+      height: 100dvh;
       z-index: 10;
       background: #071DFF;
       color: #ffffff;
