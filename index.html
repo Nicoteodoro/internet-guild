@@ -221,11 +221,9 @@
     /* The hero takes a row of the header to itself, starting where the
        wordmark does. Its top padding is short of its bottom one by the
        grid's row gap, which sits above it, so the air reads as 80 either side */
-    /* One paragraph now, so it takes a measure of its own rather than the
-       breaks it used to be written with */
+    /* Broken by hand, so it runs as wide as it needs rather than to a measure */
     .statement {
       grid-column: 1 / -1;
-      max-width: 56ch;
       margin: 0;
       padding-block: 68px 80px;
     }
@@ -430,10 +428,9 @@
     </nav>
 
     <p class="statement">
-      We’re an essentialist design studio shaped by eleven years of daily
-      practice. Born to reduce, we design, build and ship websites, interfaces
-      and products for founders who value simplicity. Take the whole studio, or
-      just what you need. Less noise, more signal.
+      We’re an essentialist design studio shaped by eleven years of daily practice.<br>
+      Born to reduce, we design, build and ship websites, interfaces and products for founders who value simplicity.<br>
+      Take the whole studio, or just what you need. Less noise, more signal.
     </p>
   </header>
 
