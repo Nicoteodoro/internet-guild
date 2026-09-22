@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Internet Guild — wordmark loop</title>
+  <!--
+    The site's opening animation on its own, looping, for screen capture.
+
+    It fills whatever window it is in, so the shape of the window is the
+    shape of the recording: a phone held upright gives a 9:16 reel, a
+    browser window squared off gives 1:1. Nothing else is ever on screen.
+
+    Three things can be tuned from the address bar:
+      ?speed=70    milliseconds per letter   (the site runs 70)
+      ?hold=1600   milliseconds the finished line stays up
+      ?gap=700     milliseconds of blank page before it types again
+
+    The type is set in ems off one font-size, so the mark, the caret and
+    the trademark all keep the proportions they hold on the site at any
+    size. Reduced motion is deliberately not honoured here: the animation
+    is the whole point of the file.
+  -->
+  <link rel="preload" href="inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: Inter;
+      src: url("inter-latin.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      color: #242424;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* Width sets the size until the window is wider than it is tall, so the
+       line lands on about 70% of the frame in every Instagram shape */
+    p {
+      margin: 0;
+      font-size: min(7vw, 11vh);
+      line-height: 1.43;
+      white-space: nowrap;
+    }
+
+    /* The mark stands at the cap height of the line it opens */
+    svg {
+      height: 0.7255em;
+      width: auto;
+      margin-right: 0.18em;
+      vertical-align: baseline;
+    }
+
+    .tm {
+      font-size: 1.35em;
+      vertical-align: -0.19em;
+      line-height: 0;
+    }
+
+    /* A caret that blinks while the line is still being written */
+    span::after {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 1em;
+      margin-left: 0.143em;
+      background: #242424;
+      vertical-align: -0.15em;
+      animation: caret 1s steps(2, start) infinite;
+    }
+
+    .typed span::after {
+      display: none;
+    }
+
+    @keyframes caret {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <p><svg viewBox="0 1 72 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3.03158 1L20.8421 14.5C26.1474 18.5213 29.9368 19 33.7263 19H38.2737C42.0632 19 45.8526 18.5213 51.1579 14.5L68.9684 1L72 4.375L54.1895 17.875C48.1263 22.4708 48.1263 27.5292 54.1895 32.125L72 45.625L68.9684 49L51.1579 35.5C45.8526 31.4787 42.0632 31 38.2737 31H33.7263C29.9368 31 26.1474 31.4787 20.8421 35.5L3.03158 49L0 45.625L17.8105 32.125C23.8737 27.5292 23.8737 22.4708 17.8105 17.875L0 4.375L3.03158 1Z" fill="#FAEA00"/></svg><span></span></p>
+
+  <script>
+    (() => {
+      const p = document.querySelector('p');
+      const line = p.querySelector('span');
+      const word = 'Internet Guild™';
+      const paint = (s) => s.replace('™', '<span class="tm">™</span>');
+
+      const q = new URLSearchParams(location.search);
+      const ms = (key, fallback) => {
+        const n = Number(q.get(key));
+        return Number.isFinite(n) && n > 0 ? n : fallback;
+      };
+      const speed = ms('speed', 70);
+      const hold  = ms('hold', 1600);
+      const gap   = ms('gap', 700);
+
+      // Wait for the face itself, so the first pass is never set in a
+      // fallback and then reflowed mid-capture
+      const ready = document.fonts ? document.fonts.ready : Promise.resolve();
+
+      const run = () => {
+        let i = 0;
+        p.classList.remove('typed');
+
+        const type = () => {
+          line.innerHTML = paint(word.slice(0, ++i));
+
+          if (i < word.length) {
+            setTimeout(type, speed);
+            return;
+          }
+
+          // The caret goes once the line is whole, the line holds, and the
+          // page is blank again for a beat before it starts over
+          setTimeout(() => p.classList.add('typed'), 310);
+          setTimeout(() => {
+            line.textContent = '';
+            setTimeout(run, gap);
+          }, hold);
+        };
+
+        setTimeout(type, 160);
+      };
+
+      ready.then(run);
+    })();
+  </script>
+</body>
+</html>
