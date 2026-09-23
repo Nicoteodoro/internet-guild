@@ -60,8 +60,8 @@
       color: #242424;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 16px;
+      line-height: 23px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -83,11 +83,13 @@
     }
 
 
-    /* The wordmark is set type only, two sizes up from the page, on the
-       page's own line so the header row keeps its rhythm */
-    h1 {
-      font-size: 16px;
-      line-height: 20px;
+    /* The nav reads a size up from the page: the wordmark, set type only,
+       the address, and the menu, wherever it sits */
+    h1,
+    .contact,
+    .menu {
+      font-size: 18px;
+      line-height: 26px;
     }
 
 
@@ -127,8 +129,8 @@
       margin: 0;
       /* The wordmark's size, since this is the wordmark typing itself; the
          caret is set in ems and follows it */
-      font-size: 16px;
-      line-height: 20px;
+      font-size: 18px;
+      line-height: 26px;
       white-space: nowrap;
     }
 
@@ -170,16 +172,16 @@
       }
     }
 
-    /* Header and grid share one four-column measure, 12px in from each edge */
+    /* Header and grid share one four-column measure, 20px in from each edge */
     .row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
-      padding-inline: 12px;
+      padding-inline: 20px;
     }
 
     .top {
-      padding-block: 8px 0;
+      padding-block: 20px 0;
     }
 
     /* No commas: the words are held apart by space alone, twice what a
@@ -187,7 +189,7 @@
     .menu {
       display: flex;
       flex-wrap: wrap;
-      gap: 0 20px;
+      gap: 0 26px;
     }
 
     .menu a {
@@ -210,14 +212,14 @@
 
     /* The hero takes a row of the header to itself, starting where the
        wordmark does. Its top padding is short of its bottom one by the
-       grid's row gap, which sits above it, so the air reads as 100 either side */
+       grid's row gap, which sits above it, so the air reads as 120 either side */
     .statement {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px 12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 23px 12px;
       margin: 0;
-      padding-block: 88px 100px;
+      padding-block: 108px 120px;
     }
 
     /* Two columns on the page's own grid: the lines under the wordmark, and
@@ -239,7 +241,7 @@
       display: flex;
       justify-content: space-between;
       gap: 24px;
-      margin-inline: 12px;
+      margin-inline: 20px;
       padding-block: 8px 12px;
       border-top: 1px solid #e6e6e6;
     }
@@ -268,9 +270,12 @@
       color: #242424;
     }
 
+    /* Three pieces to a row, with twice the air they had: 24 across, 48
+       down. Narrower screens take two, then one, from the grid's own steps */
     .index {
-      row-gap: 24px;
-      padding-bottom: 8px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 48px 24px;
+      padding-bottom: 20px;
     }
 
     .cell {
@@ -302,9 +307,29 @@
       object-fit: cover;
     }
 
+    /* A quarter of the page is too narrow for the menu at 18 below 1200, so
+       it takes the last two quarters and sits against the right edge, with
+       the empty column that normally holds it off gone */
+    @media (min-width: 901px) and (max-width: 1219px) {
+      .spacer {
+        display: none;
+      }
+
+      .menu {
+        grid-column: 3 / -1;
+        justify-content: flex-end;
+      }
+    }
+
     @media (max-width: 900px) {
       .row {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Half the page cannot always hold the menu either, so it takes the
+         full row under the wordmark */
+      .menu {
+        grid-column: 1 / -1;
       }
 
       .statement {
@@ -368,7 +393,7 @@
         position: fixed;
         inset: auto 0 0;
         justify-content: center;
-        gap: 0 20px;
+        gap: 0 26px;
         padding: 14px 12px;
         background: #ffffff;
         border-top: 1px solid #e6e6e6;
@@ -397,7 +422,7 @@
 
       /* Room under the last row so the menu never sits on a piece */
       .index {
-        padding-bottom: 64px;
+        padding-bottom: 72px;
       }
 
       .bar {
