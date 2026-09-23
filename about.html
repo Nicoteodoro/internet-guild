@@ -54,7 +54,7 @@
 
     body {
       background: #fefefe;
-      color: #2A2622;
+      color: #434343;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
       font-size: 12px;
@@ -68,7 +68,7 @@
     }
 
     a:focus-visible {
-      outline: 1px solid #2A2622;
+      outline: 1px solid #434343;
       outline-offset: 2px;
     }
 
@@ -85,6 +85,11 @@
 
     .muted {
       color: #949494;
+    }
+
+    /* The nav is one colour throughout, the address's note included */
+    .contact .muted {
+      color: inherit;
     }
 
     /* Header and content share one four-column measure, 20px in from each edge */
@@ -116,6 +121,7 @@
 
       .menu {
         gap: 0 10px;
+        font-size: 10px;
       }
 
       .menu > a {
@@ -135,8 +141,6 @@
 
     .menu a {
       position: relative;
-      color: #949494;
-      transition: color 0.15s ease;
     }
 
     /* Invisible touch area */
@@ -146,10 +150,6 @@
       inset: -10px -3px;
     }
 
-    .menu a:hover,
-    .menu a[aria-current] {
-      color: #2A2622;
-    }
 
     /* The copy sits in the last column, starting where the menu starts, and
        the same 80px below the header as the hero sits on the home */
@@ -175,7 +175,7 @@
     }
 
     .lead {
-      color: #2A2622;
+      color: #434343;
     }
 
     .section {
@@ -196,7 +196,7 @@
     }
 
     .timeline dt {
-      color: #2A2622;
+      color: #434343;
     }
 
     .timeline dd {
@@ -222,6 +222,43 @@
 
       .copy {
         grid-column: 2;
+      }
+    }
+
+    /* On a desk the wordmark, the address and the menu stay put while the
+       page runs under them; the line scrolls away with it. They invert over
+       what they cross: #bbb in difference reads #434343 on the white page
+       and light over anything dark */
+    @media (min-width: 901px) {
+      .top {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .top h1,
+      .top .contact,
+      .top .menu {
+        position: fixed;
+        top: 20px;
+        z-index: 5;
+        width: calc((100% - 76px) / 4);
+        color: #bbbbbb;
+        mix-blend-mode: difference;
+      }
+
+      .top h1 {
+        left: 20px;
+      }
+
+      .top .contact {
+        left: calc(20px + (100% - 76px) / 4 + 12px);
+      }
+
+      .top .menu {
+        left: calc(20px + (100% - 76px) * 3 / 4 + 36px);
+      }
+
+      .tagline {
+        grid-column: 3;
       }
     }
 
@@ -276,7 +313,7 @@
         border: 0;
         background: none;
         font: inherit;
-        color: #2A2622;
+        color: #434343;
         cursor: pointer;
       }
 
@@ -320,7 +357,7 @@
 
       .menu-head a,
       .menu > a {
-        color: #2A2622;
+        color: #434343;
       }
 
       .menu > a {
