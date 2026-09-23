@@ -89,8 +89,8 @@
     .tagline,
     .contact,
     .menu {
-      font-size: 16px;
-      line-height: 23px;
+      font-size: 12px;
+      line-height: 17px;
     }
 
 
@@ -194,6 +194,20 @@
       gap: 0 23px;
     }
 
+    @media (min-width: 561px) {
+      .menu {
+        gap: 0 10px;
+      }
+
+      .menu > a {
+        text-transform: uppercase;
+      }
+
+      .menu > a:not(:last-child)::after {
+        content: ",";
+      }
+    }
+
     /* The phone's own menu controls; the wide header needs neither */
     .menu-head,
     .menu-open {
@@ -282,14 +296,6 @@
       object-fit: cover;
     }
 
-    /* Below 1100 a quarter of the page cannot hold the menu at 16, so the
-       header goes to two columns: the wordmark and the line above, the
-       address and the menu below */
-    @media (max-width: 1099px) {
-      .top {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
 
     @media (max-width: 900px) {
       .row {
@@ -467,7 +473,6 @@
     <h1>The Internet Guild</h1>
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
-    <p class="tagline">Essentialist design studio. Design, build &amp; ship<br>From websites to AI. Eleven years of daily practice,<br>born to reduce, made for founders who value simplicity.</p>
 
     <div class="contact">
       <p class="muted">Hire the guild.</p>
@@ -485,6 +490,7 @@
       <a href="about.html">Info</a>
       <a href="contact.html">Contact</a>
     </nav>
+    <p class="tagline">Essentialist design studio. Design, build &amp; ship<br>From websites to AI. Eleven years of daily practice,<br>born to reduce, made for founders who value simplicity.</p>
 
   </header>
 
