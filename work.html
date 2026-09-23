@@ -109,22 +109,18 @@
       padding-block: 8px 0;
     }
 
+    /* No commas: the words are held apart by space alone, twice what a
+       comma and its gap used to take */
     .menu {
       display: flex;
       flex-wrap: wrap;
-      gap: 0 6px;
+      gap: 0 17px;
     }
 
     .menu a {
       position: relative;
       color: #949494;
       transition: color 0.15s ease;
-    }
-
-    /* Commas set by the row rather than written into the links, so a phone
-       can drop them without touching the words */
-    .menu a:not(:last-child)::after {
-      content: ",";
     }
 
     /* Invisible touch area */
@@ -306,11 +302,6 @@
           background: #ffffff;
           z-index: 11;
         }
-      }
-
-      /* Set far enough apart here that they need no commas */
-      .menu a:not(:last-child)::after {
-        content: none;
       }
 
       /* Room under the last row so the menu never sits on a piece */
