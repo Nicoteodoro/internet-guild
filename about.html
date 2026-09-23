@@ -240,86 +240,39 @@
 
       /* Room under the copy so the floating menu never sits on a line */
       .page {
-        padding-block: 56px 88px;
+        padding-block: 56px 64px;
       }
 
-      /* The menu leaves the header and floats at the foot of the screen as
-         a pill of glass: translucent, blurring whatever scrolls beneath it,
-         lit along the top edge and resting on its own shadow */
+      /* The menu leaves the header and rides at the foot of the screen,
+         set wider apart and a shade darker to carry on its own */
       .menu {
         position: fixed;
-        top: auto;
-        right: auto;
-        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-        left: 50%;
-        transform: translateX(-50%);
-        flex-wrap: nowrap;
-        width: max-content;
-        max-width: calc(100% - 24px);
+        inset: auto 0 0;
         justify-content: center;
-        gap: 0;
-        padding: 6px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.62);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        backdrop-filter: blur(20px) saturate(180%);
-        /* The rim is drawn by the shadow rather than a border, because a
-           border cannot go under a whole pixel: at 1px it stacked with the
-           highlight beneath it into a 2px band of white. Half a pixel of
-           each reads as the one hairline it should be */
-        box-shadow:
-          0 1px 2px rgba(36, 36, 36, 0.05),
-          0 5px 14px rgba(36, 36, 36, 0.07),
-          inset 0 0 0 0.5px rgba(255, 255, 255, 0.7),
-          inset 0 0.5px 0 rgba(255, 255, 255, 0.9),
-          inset 0 -0.5px 0 rgba(255, 255, 255, 0.4);
+        gap: 0 20px;
+        padding: 14px 12px;
+        background: #ffffff;
+        border-top: 1px solid #e6e6e6;
       }
 
-      /* Where the glass cannot blur it thickens instead, so the words never
-         come to rest on a moving picture */
-      @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-        .menu {
-          background: rgba(255, 255, 255, 0.93);
-        }
-      }
-
-      /* Each word holds its own tap target here, so the invisible one the
-         header hands out comes off. Full-strength text, since the glass is
-         thin enough for a dark piece to show through it */
       .menu a {
-        color: #242424;
-        padding: 9px 14px;
-        border-radius: 999px;
+        color: #555555;
       }
 
-      .menu a::before {
-        content: none;
-      }
-
-      /* iPhone only. Safari on iOS 26 shows whatever scrolls beneath its
-         bottom bar, unless a fixed element touches the bottom of the screen,
-         in which case it fills the bar's area with that element's colour.
-         This strip is that element: white, the width of the screen, as deep
-         as the gap under the menu, so the menu rests on it. Above the
-         curtain too, so the colour Safari takes never changes */
+      /* iPhone only. Safari on iOS 26 fills the area under its own bottom bar
+         with the colour of a fixed element touching the bottom of the screen.
+         The menu bar does that once the page is showing; while the curtain is
+         up it covers the bar, so this strip, above the curtain and inside the
+         bar's lower padding, keeps the colour Safari takes white throughout */
       @supports (-webkit-touch-callout: none) {
         .edge {
           position: fixed;
           left: 0;
           right: 0;
           bottom: 0;
-          height: 12px;
+          height: 4px;
           background: #ffffff;
           z-index: 11;
-        }
-      }
-
-      /* Narrower than a small phone the four words no longer fit the pill's
-         own measure, and with nothing to wrap they would push past it. They
-         give back four pixels of padding each side instead */
-      @media (max-width: 340px) {
-        .menu a {
-          padding-inline: 10px;
         }
       }
 
