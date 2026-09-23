@@ -55,12 +55,12 @@
 
 
     body {
-      background: #ffffff;
-      color: #242424;
+      background: #fefefe;
+      color: #2A2622;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      font-size: 16px;
-      line-height: 23px;
+      font-size: 14px;
+      line-height: 20px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -70,7 +70,7 @@
     }
 
     a:focus-visible {
-      outline: 1px solid #242424;
+      outline: 1px solid #2A2622;
       outline-offset: 2px;
     }
 
@@ -87,8 +87,8 @@
     h1,
     .contact,
     .menu {
-      font-size: 18px;
-      line-height: 26px;
+      font-size: 16px;
+      line-height: 23px;
     }
 
     .muted {
@@ -112,7 +112,7 @@
     .menu {
       display: flex;
       flex-wrap: wrap;
-      gap: 0 26px;
+      gap: 0 23px;
     }
 
     /* The phone's own menu controls; the wide header needs neither */
@@ -135,7 +135,7 @@
     }
 
     .menu a:hover {
-      color: #242424;
+      color: #2A2622;
     }
 
 
@@ -162,7 +162,7 @@
     }
 
     .statement .clients {
-      margin-top: 23px;
+      margin-top: 20px;
     }
 
     /* The one rule on the page, naming the view */
@@ -196,7 +196,7 @@
     }
 
     .remix:hover {
-      color: #242424;
+      color: #2A2622;
     }
 
     /* Three pieces to a row, with twice the air they had: 24 across, 48
@@ -228,10 +228,10 @@
       object-fit: cover;
     }
 
-    /* A quarter of the page is too narrow for the menu at 18 below 1200, so
+    /* A quarter of the page is too narrow for the menu at 16 below 1100, so
        it takes the last two quarters and sits against the right edge, with
        the empty column that normally holds it off gone */
-    @media (min-width: 901px) and (max-width: 1219px) {
+    @media (min-width: 901px) and (max-width: 1099px) {
       .spacer {
         display: none;
       }
@@ -290,6 +290,14 @@
         order: 3;
       }
 
+      /* On a phone everything is one size */
+      h1,
+      .contact,
+      .menu {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
       /* The menu leaves the header for a sheet of its own. Closed, it is
          rolled up out of sight; Menu at the top right pulls it down over the
          page, and the words follow it in one after another */
@@ -304,7 +312,7 @@
         border: 0;
         background: none;
         font: inherit;
-        color: #242424;
+        color: #2A2622;
         cursor: pointer;
       }
 
@@ -313,8 +321,8 @@
         position: absolute;
         top: 20px;
         right: 20px;
-        font-size: 18px;
-        line-height: 26px;
+        font-size: 14px;
+        line-height: 20px;
       }
 
       .menu {
@@ -326,7 +334,7 @@
         align-items: flex-start;
         gap: 0;
         padding: 20px;
-        background: #ffffff;
+        background: #fefefe;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
         transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
@@ -348,11 +356,11 @@
 
       .menu-head a,
       .menu > a {
-        color: #242424;
+        color: #2A2622;
       }
 
       .menu > a {
-        line-height: 32px;
+        line-height: 28px;
         opacity: 0;
         transform: translateY(10px);
         transition: opacity 0.3s ease, transform 0.3s ease;
@@ -395,7 +403,7 @@
           right: 0;
           bottom: 0;
           height: 4px;
-          background: #ffffff;
+          background: #fefefe;
           z-index: 11;
         }
       }
