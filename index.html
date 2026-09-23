@@ -86,6 +86,7 @@
     /* The nav reads a size up from the page: the wordmark, set type only,
        the address, and the menu, wherever it sits */
     h1,
+    .tagline,
     .contact,
     .menu {
       font-size: 16px;
@@ -180,8 +181,9 @@
       padding-inline: 20px;
     }
 
+    /* With no hero, the header holds the 120 of air the hero used to */
     .top {
-      padding-block: 20px 0;
+      padding-block: 20px 120px;
     }
 
     /* No commas: the words are held apart by space alone, twice what a
@@ -216,30 +218,6 @@
     }
 
 
-    /* The hero takes a row of the header to itself, starting where the
-       wordmark does. Its top padding is short of its bottom one by the
-       grid's row gap, which sits above it, so the air reads as 120 either side */
-    .statement {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 20px 12px;
-      margin: 0;
-      padding-block: 108px 120px;
-    }
-
-    /* Two columns on the page's own grid: the lines under the wordmark, and
-       the paragraph under the address */
-    .lede {
-      grid-column: 1;
-    }
-
-    /* Held to the measure it was written at, so it breaks where it was
-       broken, after "design and code" */
-    .blurb {
-      grid-column: 2 / -1;
-      max-width: 28em;
-    }
 
     /* The one rule on the page, naming the view */
     .bar {
@@ -304,41 +282,18 @@
       object-fit: cover;
     }
 
-    /* A quarter of the page is too narrow for the menu at 16 below 1100, so
-       it takes the last two quarters and sits against the right edge, with
-       the empty column that normally holds it off gone */
-    @media (min-width: 901px) and (max-width: 1099px) {
-      .spacer {
-        display: none;
-      }
-
-      .menu {
-        grid-column: 3 / -1;
-        justify-content: flex-end;
+    /* Below 1100 a quarter of the page cannot hold the menu at 16, so the
+       header goes to two columns: the wordmark and the line above, the
+       address and the menu below */
+    @media (max-width: 1099px) {
+      .top {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
     @media (max-width: 900px) {
       .row {
         grid-template-columns: repeat(2, 1fr);
-      }
-
-      /* Half the page cannot always hold the menu either, so it takes the
-         full row under the wordmark */
-      .menu {
-        grid-column: 1 / -1;
-      }
-
-      .statement {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .lede {
-        grid-column: 1;
-      }
-
-      .blurb {
-        grid-column: 2;
       }
 
       /* The empty column only holds the menu out to the fourth slot */
@@ -365,19 +320,12 @@
         order: 1;
       }
 
-      /* The hero and the address read as one block: close to each other,
-         clear of the wordmark, and clearer still of the menu. Off the right
-         edge too, since a line of copy can run the full width here */
-      .statement {
+      /* The line sits under the wordmark, off the right edge, since it
+         runs the full width here */
+      .tagline {
         order: 2;
-        grid-template-columns: 1fr;
-        padding-block: 28px 16px;
+        padding-top: 28px;
         padding-right: 32px;
-      }
-
-      .lede,
-      .blurb {
-        grid-column: 1;
       }
 
       /* The address goes on a phone: the menu carries Contact */
@@ -387,6 +335,7 @@
 
       /* On a phone everything is one size */
       h1,
+      .tagline,
       .contact,
       .menu,
       .intro p {
@@ -518,12 +467,13 @@
     <h1>The Internet Guild</h1>
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
+    <p class="tagline">Essentialist design studio. Design, build &amp; ship<br>From websites to AI. Eleven years of daily practice, born to reduce, made for founders who value simplicity.</p>
+
     <div class="contact">
       <p class="muted">Hire the guild.</p>
       <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
-    <div class="spacer"></div>
 
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
@@ -536,10 +486,6 @@
       <a href="contact.html">Contact</a>
     </nav>
 
-    <div class="statement">
-      <p class="lede">Essentialist design studio<br>Design, build &amp; ship<br>From websites to AI</p>
-      <p class="blurb">Eleven years of daily practice, born to reduce. Design and code for the internet, made for founders who value simplicity.</p>
-    </div>
   </header>
 
   <div class="bar">
