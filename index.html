@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Internet Guild</title>
+  <title>Internet Design Studio</title>
   <meta name="description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
   <link rel="canonical" href="https://internetguild.co/">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Internet Guild">
+  <meta property="og:site_name" content="Internet Design Studio">
   <meta property="og:url" content="https://internetguild.co/">
-  <meta property="og:title" content="Internet Guild">
+  <meta property="og:title" content="Internet Design Studio">
   <meta property="og:description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
   <meta property="og:image" content="https://internetguild.co/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="A typed page of the studio’s lines: Internet Guild, independent design and code studio.">
+  <meta property="og:image:alt" content="A typed page of the studio’s lines: Internet Design Studio, independent design and code studio.">
   <meta name="twitter:card" content="summary_large_image">
   <script>document.documentElement.classList.add('js')</script>
   <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -60,9 +60,8 @@
       color: #242424;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      font-size: 12px;
-      line-height: 17px;
-      text-transform: uppercase;
+      font-size: 14px;
+      line-height: 20px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -84,14 +83,11 @@
     }
 
 
-    /* The wordmark is set, not drawn, so it takes the face the rest of the
-       page does. Only the mark stays a drawing, standing at the cap height
-       of the line it opens and holding the gap it holds in the lockup */
-    .mark {
-      height: 0.715em;
-      width: auto;
-      margin-right: 0.18em;
-      vertical-align: baseline;
+    /* The wordmark is set type only, two sizes up from the page, on the
+       page's own line so the header row keeps its rhythm */
+    h1 {
+      font-size: 16px;
+      line-height: 20px;
     }
 
 
@@ -107,11 +103,10 @@
       display: none;
     }
 
-    /* Absolute, not fixed. Safari on iOS 26 paints its own bars with the
-       colour of any fixed element touching the top or bottom of the screen,
-       and does not let go of it once that element has gone. A block that
-       merely sits at the top of the page, a screen tall, is not one Safari
-       looks at, so its bars stay the page's white from start to finish */
+    /* White, as the page is. Absolute rather than fixed: Safari on iOS 26
+       paints its own bars with the colour of any fixed element touching the
+       top or bottom of the screen, and a block that merely sits at the top
+       of the page is not one it looks at */
     .js .intro {
       display: grid;
       place-items: center;
@@ -122,8 +117,7 @@
       height: 100vh;
       height: 100dvh;
       z-index: 10;
-      background: #071DFF;
-      color: #ffffff;
+      background: #ffffff;
       transition: opacity 0.42s ease;
     }
 
@@ -131,25 +125,13 @@
        line it opens and clearing it by the gap it keeps in the lockup */
     .intro p {
       margin: 0;
-      /* The page's own size: every measure inside this line is set in ems,
-         so the mark and the caret follow it */
-      font-size: 12px;
-      line-height: 17px;
+      /* The wordmark's size, since this is the wordmark typing itself; the
+         caret is set in ems and follows it */
+      font-size: 16px;
+      line-height: 20px;
       white-space: nowrap;
     }
 
-    .intro svg {
-      height: 0.715em;
-      width: auto;
-      margin-right: 0.18em;
-      vertical-align: baseline;
-    }
-
-    /* The mark is drawn in the blue it stands on here, so it takes the line's
-       colour instead */
-    .intro svg path {
-      fill: currentColor;
-    }
 
     .js .intro.done {
       opacity: 0;
@@ -205,7 +187,7 @@
     .menu {
       display: flex;
       flex-wrap: wrap;
-      gap: 0 17px;
+      gap: 0 20px;
     }
 
     .menu a {
@@ -233,7 +215,7 @@
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 17px 12px;
+      gap: 20px 12px;
       margin: 0;
       padding-block: 88px 100px;
     }
@@ -245,10 +227,11 @@
     }
 
     /* Held to the measure it was written at, so it breaks where it was
-       broken: after "design and code" and after "take" */
+       broken: after "design and code" and after "take". In sentence case at
+       this size that happens between 378 and 397px */
     .blurb {
       grid-column: 2 / -1;
-      max-width: 36em;
+      max-width: 28em;
     }
 
     /* The one rule on the page, naming the view */
@@ -425,10 +408,10 @@
 </head>
 <body>
   <div class="edge" aria-hidden="true"></div>
-  <div class="intro" aria-hidden="true"><p><svg viewBox="0 0 475 317" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 0L137.5 89.1562C172.5 115.714 197.5 118.875 222.5 118.875H252.5C277.5 118.875 302.5 115.714 337.5 89.1562L455 0L475 22.2891L357.5 111.445C317.5 141.797 317.5 175.203 357.5 205.555L475 294.711L455 317L337.5 227.844C302.5 201.286 277.5 198.125 252.5 198.125H222.5C197.5 198.125 172.5 201.286 137.5 227.844L20 317L0 294.711L117.5 205.555C157.5 175.203 157.5 141.797 117.5 111.445L0 22.2891L20 0Z" fill="#071DFF"/></svg><span></span></p></div>
+  <div class="intro" aria-hidden="true"><p><span></span></p></div>
 
   <header class="row top">
-    <h1><svg class="mark" viewBox="0 0 475 317" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 0L137.5 89.1562C172.5 115.714 197.5 118.875 222.5 118.875H252.5C277.5 118.875 302.5 115.714 337.5 89.1562L455 0L475 22.2891L357.5 111.445C317.5 141.797 317.5 175.203 357.5 205.555L475 294.711L455 317L337.5 227.844C302.5 201.286 277.5 198.125 252.5 198.125H222.5C197.5 198.125 172.5 201.286 137.5 227.844L20 317L0 294.711L117.5 205.555C157.5 175.203 157.5 141.797 117.5 111.445L0 22.2891L20 0Z" fill="#071DFF"/></svg>INTERNET GUILD</h1>
+    <h1>Internet Design Studio</h1>
 
     <div class="contact">
       <p class="muted">Hire the guild.</p>
@@ -438,10 +421,10 @@
     <div class="spacer"></div>
 
     <nav class="menu" aria-label="Main">
-      <a href="index.html" aria-current="page">index</a>
-      <a href="work.html">works</a>
-      <a href="about.html">about</a>
-      <a href="contact.html">contact</a>
+      <a href="index.html" aria-current="page">Index</a>
+      <a href="work.html">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
     </nav>
 
     <div class="statement">
@@ -454,7 +437,7 @@
     <p><span class="muted">Selected work /</span> Index</p>
     <p class="count">
       <button type="button" class="remix">Remix</button>
-      <span class="muted">36 Pieces</span>
+      <span class="muted">36 pieces</span>
     </p>
   </div>
 
@@ -610,7 +593,7 @@
     (() => {
       const intro = document.querySelector('.intro');
       const line = intro.querySelector('span');
-      const word = 'INTERNET GUILD';
+      const word = 'Internet Design Studio';
       const root = document.documentElement;
       root.classList.add('intro-open');
 
