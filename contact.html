@@ -192,40 +192,11 @@
       }
     }
 
-    /* On a desk the wordmark, the address and the menu stay put while the
-       page runs under them; the line scrolls away with it. They invert over
-       what they cross: #bbb in difference reads #434343 on the white page
-       and light over anything dark */
+    /* The header keeps its four quarters on a desk and scrolls away with
+       the page, so nothing sits over the reading */
     @media (min-width: 901px) {
       .top {
         grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .top h1,
-      .top .contact,
-      .top .menu {
-        position: fixed;
-        top: 20px;
-        z-index: 5;
-        width: calc((100% - 76px) / 4);
-        color: #bbbbbb;
-        mix-blend-mode: difference;
-      }
-
-      .top h1 {
-        left: 20px;
-      }
-
-      .top .contact {
-        left: calc(20px + (100% - 76px) / 4 + 12px);
-      }
-
-      .top .menu {
-        left: calc(20px + (100% - 76px) * 3 / 4 + 36px);
-      }
-
-      .tagline {
-        grid-column: 3;
       }
     }
 
