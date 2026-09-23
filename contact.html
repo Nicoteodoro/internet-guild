@@ -263,6 +263,24 @@
         content: none;
       }
 
+      /* iPhone only. Safari on iOS 26 shows whatever scrolls beneath its
+         bottom bar, unless a fixed element touches the bottom of the screen,
+         in which case it fills the bar's area with that element's colour.
+         This strip is that element: white, the width of the screen, as deep
+         as the gap under the menu, so the menu rests on it. Above the
+         curtain too, so the colour Safari takes never changes */
+      @supports (-webkit-touch-callout: none) {
+        .edge {
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 12px;
+          background: #ffffff;
+          z-index: 11;
+        }
+      }
+
       /* Narrower than a small phone the four words no longer fit the pill's
          own measure, and with nothing to wrap they would push past it. They
          give back four pixels of padding each side instead */
@@ -280,6 +298,7 @@
   </style>
 </head>
 <body>
+  <div class="edge" aria-hidden="true"></div>
   <header class="row top">
     <h1><a href="index.html"><svg class="mark" viewBox="0 0 475 317" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 0L137.5 89.1562C172.5 115.714 197.5 118.875 222.5 118.875H252.5C277.5 118.875 302.5 115.714 337.5 89.1562L455 0L475 22.2891L357.5 111.445C317.5 141.797 317.5 175.203 357.5 205.555L475 294.711L455 317L337.5 227.844C302.5 201.286 277.5 198.125 252.5 198.125H222.5C197.5 198.125 172.5 201.286 137.5 227.844L20 317L0 294.711L117.5 205.555C157.5 175.203 157.5 141.797 117.5 111.445L0 22.2891L20 0Z" fill="#071DFF"/></svg>INTERNET GUILD</a></h1>
 
