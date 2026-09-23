@@ -17,7 +17,8 @@
   <meta property="og:image:alt" content="A typed page of the studio’s lines: The Internet Guild, independent design and code studio.">
   <meta name="twitter:card" content="summary_large_image">
   <script>document.documentElement.classList.add('js')</script>
-  <link rel="preload" href="inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -35,12 +36,20 @@
       overflow-y: scroll;
     }
 
-    /* Inter, self-hosted: one variable file draws every weight the site
-       uses, cut to the Latin set */
+    /* PP Neue Montreal, self-hosted in the two weights the site uses, each
+       converted from the delivered outlines and cut to the Latin set */
     @font-face {
-      font-family: Inter;
-      src: url("inter-latin.woff2") format("woff2");
-      font-weight: 100 900;
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-medium.woff2") format("woff2");
+      font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
@@ -50,7 +59,7 @@
     body {
       background: #fefefe;
       color: #2A2622;
-      font-family: Inter, system-ui, -apple-system, sans-serif;
+      font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 400;
       font-size: 14px;
       line-height: 20px;
