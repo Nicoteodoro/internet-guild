@@ -82,13 +82,11 @@
     }
 
 
-    /* The nav reads a size up from the page: the wordmark, set type only,
-       the address, and the menu, wherever it sits */
-    h1,
-    .contact,
+    /* The nav: the wordmark, the address and the line at the page's size,
+       the menu set small, in capitals */
     .menu {
-      font-size: 16px;
-      line-height: 23px;
+      font-size: 10px;
+      line-height: 14px;
     }
 
 
@@ -114,6 +112,26 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0 23px;
+    }
+
+    /* Wide, the menu runs in capitals held apart by commas, and the four
+       parts of the header sit on one baseline */
+    @media (min-width: 561px) {
+      .top {
+        align-items: baseline;
+      }
+
+      .menu {
+        gap: 0 8px;
+      }
+
+      .menu > a {
+        text-transform: uppercase;
+      }
+
+      .menu > a:not(:last-child)::after {
+        content: ",";
+      }
     }
 
     /* The phone's own menu controls; the wide header needs neither */
@@ -207,16 +225,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      /* Half the page cannot always hold the menu at 18, so it takes the
-         full row under the wordmark */
-      .menu {
-        grid-column: 1 / -1;
-      }
 
-      /* The empty column only holds the menu out to the fourth slot */
-      .spacer {
-        display: none;
-      }
 
       .copy {
         grid-column: 2;
@@ -245,6 +254,11 @@
       }
       .page {
         padding-block: 56px;
+      }
+
+      /* The line under the wordmark is the home's alone on a phone */
+      .tagline {
+        display: none;
       }
 
       /* On a phone everything is one size */
@@ -378,8 +392,6 @@
       <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
-    <div class="spacer"></div>
-
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
         <a href="index.html">The Internet Guild</a>
@@ -390,6 +402,7 @@
       <a href="about.html" aria-current="page">Info</a>
       <a href="contact.html">Contact</a>
     </nav>
+    <p class="tagline">Essentialist design studio. Design, build &amp; ship<br>From websites to AI. Eleven years of daily practice,<br>born to reduce, made for founders who value simplicity.</p>
   </header>
 
   <main class="row page">

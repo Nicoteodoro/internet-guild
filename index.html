@@ -83,14 +83,11 @@
     }
 
 
-    /* The nav reads a size up from the page: the wordmark, set type only,
-       the address, and the menu, wherever it sits */
-    h1,
-    .tagline,
-    .contact,
+    /* The nav: the wordmark, the address and the line at the page's size,
+       the menu set small, in capitals */
     .menu {
-      font-size: 12px;
-      line-height: 17px;
+      font-size: 10px;
+      line-height: 14px;
     }
 
 
@@ -130,8 +127,8 @@
       margin: 0;
       /* The wordmark's size, since this is the wordmark typing itself; the
          caret is set in ems and follows it */
-      font-size: 16px;
-      line-height: 23px;
+      font-size: 14px;
+      line-height: 20px;
       white-space: nowrap;
     }
 
@@ -194,9 +191,15 @@
       gap: 0 23px;
     }
 
+    /* Wide, the menu runs in capitals held apart by commas, and the four
+       parts of the header sit on one baseline */
     @media (min-width: 561px) {
+      .top {
+        align-items: baseline;
+      }
+
       .menu {
-        gap: 0 10px;
+        gap: 0 8px;
       }
 
       .menu > a {
@@ -300,11 +303,6 @@
     @media (max-width: 900px) {
       .row {
         grid-template-columns: repeat(2, 1fr);
-      }
-
-      /* The empty column only holds the menu out to the fourth slot */
-      .spacer {
-        display: none;
       }
     }
 
