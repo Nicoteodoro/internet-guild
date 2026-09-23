@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Internet Guild</title>
-  <meta name="description" content="Essentialist design studio. Websites, interfaces, and products for founders who value simplicity. We design, build and ship.">
+  <meta name="description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
   <link rel="canonical" href="https://internetguild.co/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Internet Guild">
   <meta property="og:url" content="https://internetguild.co/">
   <meta property="og:title" content="Internet Guild">
-  <meta property="og:description" content="Essentialist design studio. Websites, interfaces, and products for founders who value simplicity. We design, build and ship.">
+  <meta property="og:description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
   <meta property="og:image" content="https://internetguild.co/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -229,19 +229,35 @@
       color: #242424;
     }
 
-    /* Two of the hero's breaks are a phone's alone; wider than that the
-       lines they split run whole */
-    .narrow {
-      display: none;
-    }
 
     /* The hero takes a row of the header to itself, starting where the
        wordmark does. Its top padding is short of its bottom one by the
        grid's row gap, which sits above it, so the air reads as 80 either side */
     .statement {
       grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 17px 12px;
       margin: 0;
       padding-block: 68px 80px;
+    }
+
+    /* Two columns on the page's own grid: the lines on the left half, under
+       the wordmark, and the paragraph on the right half */
+    .lede {
+      grid-column: 1 / 3;
+    }
+
+    /* A blank line between the studio's name and what it does */
+    .lede p + p {
+      margin-top: 17px;
+    }
+
+    /* Held to the measure it was written at, so it breaks where it was
+       broken: after "design and code" and after "take" */
+    .blurb {
+      grid-column: 3 / -1;
+      max-width: 36em;
     }
 
     /* The one rule on the page, naming the view */
@@ -317,6 +333,18 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .statement {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .lede {
+        grid-column: 1;
+      }
+
+      .blurb {
+        grid-column: 2;
+      }
+
       /* The empty column only holds the menu out to the fourth slot */
       .spacer {
         display: none;
@@ -336,9 +364,6 @@
         padding-bottom: 56px;
       }
 
-      .narrow {
-        display: inline;
-      }
 
       h1 {
         order: 1;
@@ -349,8 +374,14 @@
          edge too, since a line of copy can run the full width here */
       .statement {
         order: 2;
+        grid-template-columns: 1fr;
         padding-block: 28px 16px;
         padding-right: 32px;
+      }
+
+      .lede,
+      .blurb {
+        grid-column: 1;
       }
 
       .contact {
@@ -427,15 +458,13 @@
       <a href="contact.html">contact</a>
     </nav>
 
-    <p class="statement">
-      Essentialist design studio<br>
-      Eleven years of daily practice, born to reduce.<br>
-      Websites, interfaces, and products for<br class="narrow">
-      founders who value simplicity.<br>
-      We design, build and ship.<br class="narrow">
-      Take everything, or just what you need.<br>
-      Less noise, more signal.
-    </p>
+    <div class="statement">
+      <div class="lede">
+        <p>Essentialist design studio</p>
+        <p>Design, build &amp; ship<br>From websites to AI</p>
+      </div>
+      <p class="blurb">Eleven years of daily practice, born to reduce. Design and code for the internet, made for founders who value simplicity. Take everything, or just what you need. Less noise, more signal.</p>
+    </div>
   </header>
 
   <div class="bar">
