@@ -170,9 +170,19 @@
       padding-inline: 20px;
     }
 
-    /* With no hero, the header holds the 180 of air the hero used to */
     .top {
-      padding-block: 20px 180px;
+      padding-block: 20px 0;
+    }
+
+    /* The line stands on its own between the nav and the work, as the hero
+       did: 100 under the nav, 180 over the work, across the first two
+       quarters so its lines run whole */
+    .hero {
+      padding-block: 100px 180px;
+    }
+
+    .tagline {
+      grid-column: 1 / span 2;
     }
 
     /* No commas: the words are held apart by space alone, twice what a
@@ -325,8 +335,9 @@
         left: calc(20px + (100% - 76px) * 3 / 4 + 36px);
       }
 
-      .tagline {
-        grid-column: 3;
+      /* The nav is fixed, so the header holds its two lines of room */
+      .top {
+        min-height: 36px;
       }
     }
 
@@ -335,12 +346,12 @@
         grid-template-columns: 1fr;
       }
 
-      /* Every step down the header is set here, one by one, rather than
-         shared out by a row gap. The hero no longer ends the header, so the
-         header itself holds the menu off the rule */
       .top {
         row-gap: 0;
-        padding-bottom: 112px;
+      }
+
+      .hero {
+        padding-block: 28px 112px;
       }
 
 
@@ -351,8 +362,7 @@
       /* The line sits under the wordmark, off the right edge, since it
          runs the full width here */
       .tagline {
-        order: 2;
-        padding-top: 28px;
+        grid-column: 1;
         padding-right: 32px;
       }
 
@@ -500,8 +510,6 @@
     </div>
 
 
-    <p class="tagline">Essentialist design studio. Design, build &amp; ship,<br>from websites to AI. Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
-
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
         <a href="index.html">Internet Guild</a>
@@ -514,6 +522,10 @@
     </nav>
 
   </header>
+
+  <div class="row hero">
+    <p class="tagline">Essentialist design studio. Design, build &amp; ship,<br>from websites to AI. Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
+  </div>
 
   <div class="bar">
     <p><span class="muted">Selected work /</span> Index</p>
