@@ -56,8 +56,8 @@
 
 
     body {
-      background: #fefefe;
-      color: #434343;
+      background: #ffffff;
+      color: #000000;
       font-family: "Work Sans", system-ui, -apple-system, sans-serif;
       font-weight: 400;
       text-transform: uppercase;
@@ -73,7 +73,7 @@
     }
 
     a:focus-visible {
-      outline: 1px solid #434343;
+      outline: 1px solid #000000;
       outline-offset: 2px;
     }
 
@@ -221,7 +221,7 @@
     }
 
     .remix:hover {
-      color: #434343;
+      color: #000000;
     }
 
     /* Three pieces to a row, with twice the air they had: 24 across, 48
@@ -263,8 +263,8 @@
 
     /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them; the line scrolls away with it. They invert over
-       what they cross: #bbb in difference reads #434343 on the white page
-       and light over anything dark */
+       what they cross: white in difference reads black on the white page
+       and white over anything black */
     @media (min-width: 901px) {
       .top {
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -277,7 +277,7 @@
         top: 20px;
         z-index: 5;
         width: calc((100% - 76px) / 4);
-        color: #bbbbbb;
+        color: #ffffff;
         mix-blend-mode: difference;
       }
 
@@ -356,7 +356,7 @@
         border: 0;
         background: none;
         font: inherit;
-        color: #434343;
+        color: #000000;
         cursor: pointer;
       }
 
@@ -378,7 +378,7 @@
         align-items: flex-start;
         gap: 0;
         padding: 20px;
-        background: #fefefe;
+        background: #ffffff;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
         transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
@@ -400,7 +400,7 @@
 
       .menu-head a,
       .menu > a {
-        color: #434343;
+        color: #000000;
       }
 
       .menu > a {
@@ -447,7 +447,7 @@
           right: 0;
           bottom: 0;
           height: 4px;
-          background: #fefefe;
+          background: #ffffff;
           z-index: 11;
         }
       }
