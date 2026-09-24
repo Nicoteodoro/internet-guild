@@ -185,6 +185,19 @@
       grid-column: 1 / span 2;
     }
 
+    /* The line breaks one way on a desk and another on a phone */
+    @media (min-width: 561px) {
+      .tagline .m {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .tagline .d {
+        display: none;
+      }
+    }
+
     /* No commas: the words are held apart by space alone, twice what a
        comma and its gap used to take */
     .menu {
@@ -365,11 +378,10 @@
         order: 1;
       }
 
-      /* The line sits under the wordmark, off the right edge, since it
-         runs the full width here */
+      /* The line sits under the wordmark, full width, so each of its lines
+         runs whole where it can */
       .tagline {
         grid-column: 1;
-        padding-right: 32px;
       }
 
       /* The address goes on a phone: the menu carries Contact */
@@ -530,7 +542,7 @@
   </header>
 
   <div class="row hero">
-    <p class="tagline">Essentialist design studio. Design, build &amp; ship,<br>from websites to AI. Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
+    <p class="tagline">Essentialist design studio.<br class="m"> Design, build &amp; ship,<br class="d"> from websites to AI.<br class="m"> Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
   </div>
 
   <div class="bar">
