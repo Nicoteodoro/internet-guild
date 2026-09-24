@@ -16,7 +16,8 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: The Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="work-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="work-sans-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -34,19 +35,19 @@
       overflow-y: scroll;
     }
 
-    /* PP Neue Montreal, self-hosted in the two weights the site uses, each
-       converted from the delivered outlines and cut to the Latin set */
+    /* Work Sans, self-hosted in the two weights the site uses, cut to the
+       Latin set (SIL Open Font License, work-sans-OFL.txt) */
     @font-face {
-      font-family: "PP Neue Montreal";
-      src: url("neue-montreal-regular.woff2") format("woff2");
+      font-family: "Work Sans";
+      src: url("work-sans-400.woff2") format("woff2");
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
 
     @font-face {
-      font-family: "PP Neue Montreal";
-      src: url("neue-montreal-medium.woff2") format("woff2");
+      font-family: "Work Sans";
+      src: url("work-sans-500.woff2") format("woff2");
       font-weight: 500;
       font-style: normal;
       font-display: swap;
@@ -55,10 +56,11 @@
     body {
       background: #fefefe;
       color: #434343;
-      font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 17px;
+      font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      font-size: 13px;
+      line-height: 18px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -79,6 +81,16 @@
       margin: 0;
       font-size: inherit;
       font-weight: inherit;
+    }
+
+    /* The wordmark alone stands at 500, in the header and in the phone's menu */
+    h1,
+    .menu-head a {
+      font-weight: 500;
+    }
+
+    button {
+      text-transform: inherit;
     }
 
 
@@ -121,7 +133,6 @@
 
       .menu {
         gap: 0 10px;
-        font-size: 10px;
       }
 
       .menu > a {
@@ -234,12 +245,6 @@
     }
 
     @media (max-width: 560px) {
-      /* A phone reads at 14 throughout */
-      body {
-        font-size: 14px;
-        line-height: 20px;
-      }
-
       .row {
         grid-template-columns: 1fr;
       }
@@ -272,8 +277,8 @@
       h1,
       .contact,
       .menu {
-        font-size: 14px;
-        line-height: 20px;
+        font-size: 13px;
+        line-height: 18px;
       }
 
       /* The menu leaves the header for a sheet of its own. Closed, it is
@@ -299,8 +304,8 @@
         position: absolute;
         top: 20px;
         right: 20px;
-        font-size: 14px;
-        line-height: 20px;
+        font-size: 13px;
+        line-height: 18px;
       }
 
       .menu {
