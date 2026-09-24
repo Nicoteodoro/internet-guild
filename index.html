@@ -175,10 +175,11 @@
     }
 
     /* The line stands on its own between the nav and the work, as the hero
-       did: 100 under the nav, 180 over the work, across the first two
-       quarters so its lines run whole */
+       did: half the screen tall with the line centred in it, across the
+       first two quarters so its lines run whole */
     .hero {
-      padding-block: 100px 180px;
+      min-height: 50vh;
+      align-content: center;
     }
 
     .tagline {
@@ -370,6 +371,7 @@
       }
 
       .hero {
+        min-height: 0;
         padding-block: 56px 112px;
       }
 
