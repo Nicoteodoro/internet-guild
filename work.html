@@ -293,8 +293,10 @@
         left: calc(20px + (100% - 76px) * 3 / 4 + 36px);
       }
 
-      .tagline {
-        grid-column: 3;
+      /* The nav is fixed, so the hero holds its two lines and the row gap
+         above the 68 it keeps under them */
+      .statement {
+        padding-top: 116px;
       }
     }
 
@@ -327,11 +329,6 @@
 
       .contact {
         order: 3;
-      }
-
-      /* The line under the wordmark is the home's alone on a phone */
-      .tagline {
-        display: none;
       }
 
       /* On a phone everything is one size */
@@ -469,7 +466,6 @@
       <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
-    <p class="tagline">Essentialist design studio. Design, build &amp; ship,<br>from websites to AI. Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
 
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">

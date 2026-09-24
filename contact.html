@@ -211,6 +211,10 @@
       .top {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
+
+      .menu {
+        grid-column: 4;
+      }
     }
 
     @media (max-width: 560px) {
@@ -235,11 +239,6 @@
       }
       .page {
         padding-block: 56px;
-      }
-
-      /* The line under the wordmark is the home's alone on a phone */
-      .tagline {
-        display: none;
       }
 
       /* On a phone everything is one size */
@@ -373,7 +372,6 @@
       <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
-    <p class="tagline">Essentialist design studio. Design, build &amp; ship,<br>from websites to AI. Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
 
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
