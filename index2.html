@@ -147,9 +147,9 @@
       padding-block: 20px;
     }
 
-    /* The rule over the work, naming the view. It stays at the top of the
-       screen, 20 down as the wordmark is, while the work runs under it; a
-       white band fills the 20 above so nothing shows over the rule */
+    /* The line naming the view, level with the wordmark. It stays at the
+       top of the screen, 20 down, while the work runs under it; a white band
+       fills the 20 above so nothing shows over it */
     .bar {
       position: sticky;
       top: 20px;
@@ -157,8 +157,7 @@
       display: flex;
       justify-content: space-between;
       gap: 24px;
-      padding-block: 8px 12px;
-      border-top: 1px solid #e6e6e6;
+      padding-block: 0 12px;
       background: #ffffff;
     }
 
@@ -167,7 +166,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: calc(100% + 1px);
+      bottom: 100%;
       height: 20px;
       background: #ffffff;
     }
