@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="robots" content="noindex">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Index 2 / Internet Guild</title>
+  <title>Information 2 / Internet Guild</title>
   <meta name="description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
   <link rel="canonical" href="https://internetguild.co/">
   <meta property="og:type" content="website">
@@ -259,6 +259,48 @@
     }
 
     /* On a phone the studio comes first, in the flow, and the work under it */
+    /* Here the side can run longer than the screen: it holds at least the
+       screen's height, keeps its groups apart, and scrolls with the page
+       until its foot is in view, then stays */
+    .side {
+      height: auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      top: var(--stick, 0px);
+      gap: 60px;
+    }
+
+    /* Two colours carry the hierarchy. Black states, grey explains: every
+       block opens with its claim, and the lines under it enlarge on it */
+    .copy > p,
+    .timeline dd,
+    .section h2 {
+      color: #949494;
+    }
+
+    .lead,
+    .timeline dt {
+      color: #000000;
+    }
+
+    .section {
+      margin-top: 45px;
+    }
+
+    .section h2 {
+      margin: 0 0 15px;
+      font: inherit;
+    }
+
+    .timeline,
+    .timeline dd {
+      margin: 0;
+    }
+
+    .timeline div + div {
+      margin-top: 15px;
+    }
+
     @media (max-width: 560px) {
       body {
         font-size: 14px;
@@ -272,6 +314,7 @@
       .side {
         position: static;
         height: auto;
+        min-height: 0;
         gap: 56px;
       }
 
@@ -293,15 +336,104 @@
 <body>
   <div class="page">
     <aside class="side">
-      <h1>Internet Guild</h1>
+      <h1><a href="index2.html">Internet Guild</a></h1>
 
-      <div class="about">
-        <p>Essentialist design studio.<br>From websites to AI. Design, build &amp; ship</p>
-        <p>Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
+      <div class="about copy">
+        <p>
+          <span class="lead">Internet Guild is a Tier S design and code studio.</span><br>
+          We make things simple.<br>
+          We keep only what matters.
+        </p>
+        <p>
+          <span class="lead">Every detail has a reason to be there.</span><br>
+          Color, type, space, and motion help people find their way.<br>
+          They also give each product its own style.<br>
+          If something helps, we keep it. If it gets in the way, we remove it.<br>
+          The goal: easy to understand, easy to use.
+        </p>
+        <p>
+          <span class="lead">Design and code are one process.</span><br>
+          We work with you from the first idea to the live product.<br>
+          We care about how it looks and how it works.<br>
+          People make the decisions. AI helps us work faster.
+        </p>
+        <p>
+          <span class="lead">Why a guild?</span><br>
+          In the old days, a guild was a group of people who shared the same work and the same high standards.<br>
+          In online games, it’s the team you trust in the hardest fights.<br>
+          We are both.
+        </p>
+        <p>
+          <span class="lead">Founded and led by Nico Teodoro.</span><br>
+          Born in Argentina.<br>
+          Raised on the internet.<br>
+          Grown in Azeroth.
+        </p>
+
+        <section class="section" aria-labelledby="timeline-title">
+          <h2 id="timeline-title">Timeline</h2>
+          <dl class="timeline">
+            <div>
+              <dt>Age 13</dt>
+              <dd>First jobs: websites for the game servers of local cybercafés. Mu Online, Lineage 2, Argentum Online. Design and code start here.</dd>
+            </div>
+            <div>
+              <dt>2015</dt>
+              <dd>Starts working on his own. First clients from other countries, through freelance websites. Design and code, all remote.</dd>
+            </div>
+            <div>
+              <dt>2020</dt>
+              <dd>During the pandemic, freelance work becomes a studio: Simplify Computer. Projects in fintech, crypto, health, investment, energy, and early AI.</dd>
+            </div>
+            <div>
+              <dt>2024</dt>
+              <dd>Simplify closes. Back to working alone. Fewer projects, more care.</dd>
+            </div>
+            <div>
+              <dt>2025</dt>
+              <dd>A trip to Japan. Kyoto, its culture, and the idea of doing more with less. Everything learned over the years comes together in one idea: simple is not a style. It’s the standard.</dd>
+            </div>
+            <div>
+              <dt>April 11, 2025</dt>
+              <dd>After a meeting in Kyoto, Internet Guild is born.</dd>
+            </div>
+            <div>
+              <dt>Now</dt>
+              <dd>Building products for AI, fintech, crypto, health, and real estate companies, and for other agencies.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="section" aria-labelledby="collaborations-title">
+          <h2 id="collaborations-title">Latest collaborations</h2>
+          <p class="clients">
+            <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>,
+            <a href="https://www.greatskysolar.com" target="_blank" rel="noopener">Great Sky Solar</a>,
+            <a href="https://www.buenbit.com" target="_blank" rel="noopener">Buenbit</a>&nbsp;(acquired),
+            <a href="https://numia.co" target="_blank" rel="noopener">Numia</a>,
+            <a href="https://www.towerbank.com" target="_blank" rel="noopener">Towerbank</a>,
+            <a href="https://papayadash.com" target="_blank" rel="noopener">Papayadash</a>,
+            <a href="https://www.kstreet.vc" target="_blank" rel="noopener">K Street VC</a>,
+            <a href="https://www.peigo.com.ec" target="_blank" rel="noopener">peiGo</a>,
+            <a href="https://eurekalabs.io" target="_blank" rel="noopener">Eureka Labs</a>,
+            <a href="https://www.emilabs.ai" target="_blank" rel="noopener">Emilabs</a>,
+            <a href="https://www.aquicore.com" target="_blank" rel="noopener">Aquicore</a>&nbsp;(acquired),
+            <a href="https://www.complif.com" target="_blank" rel="noopener">Complif</a>,
+            <a href="https://www.bonumcoaching.com" target="_blank" rel="noopener">Bonum</a>,
+            <a href="https://www.waterplan.com" target="_blank" rel="noopener">Waterplan</a>,
+            <a href="https://www.lupastudio.co" target="_blank" rel="noopener">Lupa Studio</a>,
+            <a href="https://www.fzsports.com" target="_blank" rel="noopener">FZ Sports</a>,
+            <a href="https://www.1190sports.com" target="_blank" rel="noopener">1190 Sports</a>,
+            <a href="https://www.fanatiz.com" target="_blank" rel="noopener">Fanatiz</a>,
+            <a href="https://www.whiteprompt.com" target="_blank" rel="noopener">White Prompt</a>,
+            <a href="https://www.cary.health" target="_blank" rel="noopener">Cary Health</a>,
+            <span>Cary RX</span>.
+          </p>
+        </section>
 
         <nav class="menu" aria-label="Main">
-          <a href="index2.html" aria-current="page">Index</a>
-          <a href="information2.html">Information</a>
+          <a href="index2.html">Index</a>
+          <a href="information2.html" aria-current="page">Information</a>
           <a href="contact2.html">Contact</a>
         </nav>
       </div>
@@ -444,6 +576,15 @@
   </div>
 
   <script>
+    // The side stays put once its foot reaches the bottom of the screen
+    const side = document.querySelector('.side');
+    const stick = () => {
+      side.style.setProperty('--stick', Math.min(0, innerHeight - side.offsetHeight) + 'px');
+    };
+    stick();
+    addEventListener('resize', stick);
+    addEventListener('load', stick);
+
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 

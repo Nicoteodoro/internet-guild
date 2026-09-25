@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="robots" content="noindex">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Index 2 / Internet Guild</title>
+  <title>Contact 2 / Internet Guild</title>
   <meta name="description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
   <link rel="canonical" href="https://internetguild.co/">
   <meta property="og:type" content="website">
@@ -259,6 +259,17 @@
     }
 
     /* On a phone the studio comes first, in the flow, and the work under it */
+    /* Here the side can run longer than the screen: it holds at least the
+       screen's height, keeps its groups apart, and scrolls with the page
+       until its foot is in view, then stays */
+    .side {
+      height: auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      top: var(--stick, 0px);
+      gap: 60px;
+    }
+
     @media (max-width: 560px) {
       body {
         font-size: 14px;
@@ -272,6 +283,7 @@
       .side {
         position: static;
         height: auto;
+        min-height: 0;
         gap: 56px;
       }
 
@@ -293,20 +305,9 @@
 <body>
   <div class="page">
     <aside class="side">
-      <h1>Internet Guild</h1>
+      <h1><a href="index2.html">Internet Guild</a></h1>
 
       <div class="about">
-        <p>Essentialist design studio.<br>From websites to AI. Design, build &amp; ship</p>
-        <p>Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
-
-        <nav class="menu" aria-label="Main">
-          <a href="index2.html" aria-current="page">Index</a>
-          <a href="information2.html">Information</a>
-          <a href="contact2.html">Contact</a>
-        </nav>
-      </div>
-
-      <div class="foot">
         <p>
           <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
           <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
@@ -317,6 +318,15 @@
           <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
           <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
         </p>
+
+        <nav class="menu" aria-label="Main">
+          <a href="index2.html">Index</a>
+          <a href="information2.html">Information</a>
+          <a href="contact2.html" aria-current="page">Contact</a>
+        </nav>
+      </div>
+
+      <div class="foot">
         <p class="muted">Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
       </div>
     </aside>
@@ -444,6 +454,15 @@
   </div>
 
   <script>
+    // The side stays put once its foot reaches the bottom of the screen
+    const side = document.querySelector('.side');
+    const stick = () => {
+      side.style.setProperty('--stick', Math.min(0, innerHeight - side.offsetHeight) + 'px');
+    };
+    stick();
+    addEventListener('resize', stick);
+    addEventListener('load', stick);
+
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
