@@ -53,7 +53,7 @@
       background: #ffffff;
       color: #000000;
       font-family: "Work Sans", system-ui, -apple-system, sans-serif;
-      font-weight: 400;
+      font-weight: 500;
       text-transform: uppercase;
       letter-spacing: -0.4px;
       font-size: 13px;
@@ -92,7 +92,7 @@
     }
 
     /* Two sides on the site's four-column measure: the studio down the
-       first quarter, held to the height of the screen, and the work down
+       first half, held to the height of the screen, and the work down
        the last two, one piece under another */
     .page {
       display: grid;
@@ -101,10 +101,10 @@
       padding-inline: 20px;
     }
 
-    /* The wordmark at the top, the copyright at the foot, and the line,
-       the address and the menu held between them */
+    /* The wordmark at the top, the contacts and the copyright at the foot,
+       and the line and the menu held between them */
     .side {
-      grid-column: 1;
+      grid-column: 1 / span 2;
       position: sticky;
       top: 0;
       box-sizing: border-box;
@@ -116,15 +116,16 @@
       justify-content: space-between;
     }
 
-    .about p + p {
-      margin-top: 20px;
+    /* A blank line between the blocks of each group, as typed */
+    .side p + p,
+    .about .menu {
+      margin-top: 15px;
     }
 
     .menu {
       display: flex;
       flex-wrap: wrap;
       gap: 0 10px;
-      margin-top: 40px;
     }
 
     .menu a {
@@ -225,6 +226,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .side {
+        grid-column: 1;
+      }
+
       .work {
         grid-column: 2;
       }
@@ -247,6 +252,11 @@
         gap: 56px;
       }
 
+      .side p + p,
+      .about .menu {
+        margin-top: 18px;
+      }
+
       .work {
         grid-column: 1;
         padding-top: 56px;
@@ -260,8 +270,8 @@
       <h1>Internet Guild</h1>
 
       <div class="about">
-        <p>Essentialist design studio.<br>Design, build &amp; ship, from websites to AI.<br>Eleven years of daily practice.<br>Born to reduce, made for founders<br>who value simplicity.</p>
-        <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+        <p>Essentialist design studio.<br>From websites to AI. Design, build &amp; ship</p>
+        <p>Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
 
         <nav class="menu" aria-label="Main">
           <a href="index.html">Index</a>
@@ -270,7 +280,19 @@
         </nav>
       </div>
 
-      <p>&copy; 2026 Internet Guild</p>
+      <div class="foot">
+        <p>
+          <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
+          <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
+          <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">W +54 911 33932087</a>
+        </p>
+        <p>
+          <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br>
+          <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
+          <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+        </p>
+        <p>Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
+      </div>
     </aside>
 
     <div class="work">
