@@ -260,14 +260,23 @@
 
     /* On a phone the studio comes first, in the flow, and the work under it */
     /* Here the side can run longer than the screen: it holds at least the
-       screen's height, keeps its groups apart, and scrolls with the page
-       until its foot is in view, then stays */
+       screen's height (never the work's, which it would otherwise stretch
+       to), keeps its groups apart, and scrolls with the page until its
+       foot is in view, then stays */
     .side {
+      align-self: start;
+      justify-content: flex-start;
       height: auto;
       min-height: 100vh;
       min-height: 100dvh;
       top: var(--stick, 0px);
       gap: 60px;
+    }
+
+    /* The content sits right under the wordmark; the foot keeps to the
+       bottom of the screen */
+    .foot {
+      margin-top: auto;
     }
 
     /* Two colours carry the hierarchy. Black states, grey explains: every
