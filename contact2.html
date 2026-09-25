@@ -148,10 +148,11 @@
       margin-top: 45px;
     }
 
+    /* The menu stands as a column, one word under another */
     .menu {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0 10px;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     /* The menu reads in grey, so under the pointer it goes black instead */
@@ -170,10 +171,6 @@
       content: "";
       position: absolute;
       inset: -10px -3px;
-    }
-
-    .menu > a:not(:last-child)::after {
-      content: ",";
     }
 
     .work {
