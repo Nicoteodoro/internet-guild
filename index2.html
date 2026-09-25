@@ -128,10 +128,14 @@
       justify-content: space-between;
     }
 
-    /* A blank line between the blocks of each group, as typed */
-    .side p + p,
-    .about .menu {
+    /* A blank line between the blocks of each group, as typed; the menu
+       stands three lines off the text */
+    .side p + p {
       margin-top: 15px;
+    }
+
+    .about .menu {
+      margin-top: 45px;
     }
 
     .menu {
@@ -264,9 +268,12 @@
         gap: 56px;
       }
 
-      .side p + p,
-      .about .menu {
+      .side p + p {
         margin-top: 18px;
+      }
+
+      .about .menu {
+        margin-top: 54px;
       }
 
       .work {
