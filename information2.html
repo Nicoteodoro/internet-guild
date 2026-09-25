@@ -303,6 +303,17 @@
       margin-top: 15px;
     }
 
+    /* The text keeps Information's measure: a quarter of the page, held 80
+       off its right edge */
+    .side {
+      grid-column: 1;
+    }
+
+    .copy {
+      padding-right: 80px;
+      text-wrap: pretty;
+    }
+
     @media (max-width: 560px) {
       body {
         font-size: 14px;
@@ -318,6 +329,10 @@
         height: auto;
         min-height: 0;
         gap: 56px;
+      }
+
+      .copy {
+        padding-right: 32px;
       }
 
       .side p + p {
