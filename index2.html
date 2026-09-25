@@ -635,8 +635,8 @@
 
     document.querySelector('.remix').addEventListener('click', remix);
 
-    // The work scrolls itself, slowly, until the visitor takes over: the
-    // first wheel, touch, click or key hands the page back for good
+    // The work scrolls itself from the moment the page opens until the
+    // visitor takes over: the first wheel, touch, click or key hands the page back for good
     (() => {
       if (reduceMotion.matches) return;
       const speed = 120; // px a second
@@ -662,11 +662,8 @@
         requestAnimationFrame(step);
       };
 
-      setTimeout(() => {
-        if (!running) return;
-        y = scrollY;
-        requestAnimationFrame(step);
-      }, 1200);
+      y = scrollY;
+      requestAnimationFrame(step);
     })();
   </script>
   <script>
