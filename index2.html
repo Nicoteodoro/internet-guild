@@ -259,6 +259,13 @@
     }
 
     /* On a phone the studio comes first, in the flow, and the work under it */
+    /* A break for the phone alone */
+    @media (min-width: 561px) {
+      .m {
+        display: none;
+      }
+    }
+
     /* The phone's own menu controls; the wide page needs neither */
     .menu-head,
     .menu-open {
@@ -409,7 +416,7 @@
 
       <div class="about">
         <p>Essentialist design studio.<br>From websites to AI. Design, build &amp; ship</p>
-        <p>Eleven years of daily practice.<br>Born to reduce, made for founders who value simplicity.</p>
+        <p>Eleven years of daily practice.<br>Born to reduce, made for founders<br class="m"> who value simplicity.</p>
 
         <nav class="menu" id="menu" aria-label="Main">
           <div class="menu-head">
