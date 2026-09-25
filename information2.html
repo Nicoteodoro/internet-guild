@@ -113,10 +113,12 @@
       padding-inline: 20px;
     }
 
-    /* The wordmark and the menu on one line, 40 apart */
+    /* The wordmark and the menu on one line: the wordmark at the start of
+       the side, the menu at its end */
     .head {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
       align-items: baseline;
       gap: 0 40px;
     }
