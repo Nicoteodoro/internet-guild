@@ -109,8 +109,16 @@
     .page {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      column-gap: 40px;
       padding-inline: 20px;
+    }
+
+    /* The wordmark and the menu on one line, 40 apart */
+    .head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 40px;
     }
 
     /* The wordmark at the top, the contacts and the copyright at the foot,
@@ -411,13 +419,9 @@
 <body>
   <div class="page">
     <aside class="side">
-      <h1>Internet Guild</h1>
-      <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
-
-      <div class="about">
-        <p>Essentialist design studio.<br>From websites to AI. Design, build &amp; ship</p>
-        <p>Eleven years of daily practice.<br>Born to reduce, made for founders<br class="m"> who value simplicity.</p>
-
+      <div class="head">
+        <h1>Internet Guild</h1>
+        <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
         <nav class="menu" id="menu" aria-label="Main">
           <div class="menu-head">
             <a href="index2.html">Internet Guild</a>
@@ -427,6 +431,11 @@
           <a href="information2.html">Information</a>
           <a href="contact2.html">Contact</a>
         </nav>
+      </div>
+
+      <div class="about">
+        <p>Essentialist design studio.<br>From websites to AI. Design, build &amp; ship</p>
+        <p>Eleven years of daily practice.<br>Born to reduce, made for founders<br class="m"> who value simplicity.</p>
       </div>
 
       <div class="foot">

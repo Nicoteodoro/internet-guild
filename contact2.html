@@ -109,8 +109,16 @@
     .page {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      column-gap: 40px;
       padding-inline: 20px;
+    }
+
+    /* The wordmark and the menu on one line, 40 apart */
+    .head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 40px;
     }
 
     /* The wordmark at the top, the contacts and the copyright at the foot,
@@ -417,8 +425,19 @@
 <body>
   <div class="page">
     <aside class="side">
-      <h1><a href="index2.html">Internet Guild</a></h1>
-      <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
+      <div class="head">
+        <h1><a href="index2.html">Internet Guild</a></h1>
+        <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
+        <nav class="menu" id="menu" aria-label="Main">
+          <div class="menu-head">
+            <a href="index2.html">Internet Guild</a>
+            <button type="button" class="menu-close">Close</button>
+          </div>
+          <a href="index2.html">Index</a>
+          <a href="information2.html">Information</a>
+          <a href="contact2.html" aria-current="page">Contact</a>
+        </nav>
+      </div>
 
       <div class="about">
         <p>
@@ -431,16 +450,6 @@
           <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
           <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
         </p>
-
-        <nav class="menu" id="menu" aria-label="Main">
-          <div class="menu-head">
-            <a href="index2.html">Internet Guild</a>
-            <button type="button" class="menu-close">Close</button>
-          </div>
-          <a href="index2.html">Index</a>
-          <a href="information2.html">Information</a>
-          <a href="contact2.html" aria-current="page">Contact</a>
-        </nav>
       </div>
 
       <div class="foot">

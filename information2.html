@@ -109,8 +109,16 @@
     .page {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      column-gap: 40px;
       padding-inline: 20px;
+    }
+
+    /* The wordmark and the menu on one line, 40 apart */
+    .head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 40px;
     }
 
     /* The wordmark at the top, the contacts and the copyright at the foot,
@@ -303,15 +311,17 @@
       margin-top: 15px;
     }
 
-    /* The text keeps Information's measure: a quarter of the page, held 80
-       off its right edge */
-    .side {
-      grid-column: 1;
+    /* The side keeps both quarters, so the wordmark and the menu share a
+       line; the text keeps Information's measure, a quarter held 80 short */
+    .copy {
+      max-width: calc((100% - 40px) / 2 - 80px);
+      text-wrap: pretty;
     }
 
-    .copy {
-      padding-right: 80px;
-      text-wrap: pretty;
+    @media (max-width: 900px) {
+      .copy {
+        max-width: none;
+      }
     }
 
     /* The phone's own menu controls; the wide page needs neither */
@@ -458,18 +468,19 @@
 <body>
   <div class="page">
     <aside class="side">
-      <h1><a href="index2.html">Internet Guild</a></h1>
-      <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
-
-      <nav class="menu" id="menu" aria-label="Main">
-        <div class="menu-head">
-          <a href="index2.html">Internet Guild</a>
-          <button type="button" class="menu-close">Close</button>
-        </div>
-        <a href="index2.html">Index</a>
-        <a href="information2.html" aria-current="page">Information</a>
-        <a href="contact2.html">Contact</a>
-      </nav>
+      <div class="head">
+        <h1><a href="index2.html">Internet Guild</a></h1>
+        <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
+        <nav class="menu" id="menu" aria-label="Main">
+          <div class="menu-head">
+            <a href="index2.html">Internet Guild</a>
+            <button type="button" class="menu-close">Close</button>
+          </div>
+          <a href="index2.html">Index</a>
+          <a href="information2.html" aria-current="page">Information</a>
+          <a href="contact2.html">Contact</a>
+        </nav>
+      </div>
 
       <div class="about copy">
         <p>
