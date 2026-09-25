@@ -147,9 +147,21 @@
       margin-top: 48px;
     }
 
-    /* The addresses sit under the line, held well off it */
+    /* The addresses sit under the line, held well off it, in grey; being
+       grey already, they go black under the pointer */
     .reach {
       margin-top: 48px;
+      color: #949494;
+    }
+
+    .reach a:hover {
+      color: #000000;
+    }
+
+    /* The collaborations keep to the width of the line above them rather
+       than running the whole side */
+    .foot p:first-child {
+      max-width: 480px;
     }
 
     /* The menu stands as a column, one word under another */
