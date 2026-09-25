@@ -338,6 +338,52 @@
       }
     }
 
+    /* As the curtain lifts, the page comes in around the wordmark, which
+       never moves: each part fades up into place a beat after the one
+       before, the menu first and the work last */
+    .js .side > :not(.head),
+    .js .menu-open,
+    .js .bar,
+    .js .index {
+      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .intro-open .side > :not(.head),
+    .intro-open .menu-open,
+    .intro-open .bar,
+    .intro-open .index {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .js .menu-open { transition-delay: 0.08s; }
+    .js .side .about { transition-delay: 0.1s; }
+    .js .side .foot { transition-delay: 0.2s; }
+    .js .bar { transition-delay: 0.28s; }
+    .js .index { transition-delay: 0.38s; }
+
+    /* On a desk the menu joins in; on a phone it is a sheet of its own */
+    @media (min-width: 561px) {
+      .js .head .menu {
+        transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .intro-open .head .menu {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .side > :not(.head),
+      .js .menu-open,
+      .js .bar,
+      .js .index,
+      .js .head .menu {
+        transition: none;
+      }
+    }
+
     /* A break for the phone alone */
     @media (min-width: 561px) {
       .m {
@@ -722,10 +768,9 @@
           root.classList.remove('intro-open');
           // The page only moves once the curtain is fully gone, or the
           // curtain's name would ride up the screen over the real one
-          setTimeout(() => {
-            intro.remove();
-            document.dispatchEvent(new Event('intro-done'));
-          }, 480);
+          setTimeout(() => intro.remove(), 480);
+          // The work sets off once the page has come in
+          setTimeout(() => document.dispatchEvent(new Event('intro-done')), 1100);
         }, 310);
       };
 
