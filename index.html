@@ -345,7 +345,7 @@
     .js .menu-open,
     .js .bar,
     .js .index {
-      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .intro-open .side > :not(.head),
@@ -356,16 +356,16 @@
       transform: translateY(12px);
     }
 
-    .js .menu-open { transition-delay: 0.08s; }
-    .js .side .about { transition-delay: 0.1s; }
-    .js .side .foot { transition-delay: 0.2s; }
-    .js .bar { transition-delay: 0.28s; }
-    .js .index { transition-delay: 0.38s; }
+    .js .menu-open { transition-delay: 0.12s; }
+    .js .side .about { transition-delay: 0.15s; }
+    .js .side .foot { transition-delay: 0.3s; }
+    .js .bar { transition-delay: 0.42s; }
+    .js .index { transition-delay: 0.57s; }
 
     /* On a desk the menu joins in; on a phone it is a sheet of its own */
     @media (min-width: 561px) {
       .js .head .menu {
-        transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       .intro-open .head .menu {
@@ -770,7 +770,7 @@
           // curtain's name would ride up the screen over the real one
           setTimeout(() => intro.remove(), 480);
           // The work sets off once the page has come in
-          setTimeout(() => document.dispatchEvent(new Event('intro-done')), 1100);
+          setTimeout(() => document.dispatchEvent(new Event('intro-done')), 1700);
         }, 310);
       };
 

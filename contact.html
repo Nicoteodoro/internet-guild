@@ -283,6 +283,43 @@
       margin-top: auto;
     }
 
+    /* The page comes in from the top down: each part fades up into place a
+       beat after the one above it, as the home does when its curtain lifts */
+    @keyframes arrive {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+    }
+
+    .head h1,
+    .menu-open,
+    .side .about,
+    .side .foot {
+      animation: arrive 1.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    .menu-open { animation-delay: 0.12s; }
+    .side .about { animation-delay: 0.24s; }
+    .side .foot { animation-delay: 0.36s; }
+
+    /* On a desk the menu joins in; on a phone it is a sheet of its own */
+    @media (min-width: 561px) {
+      .head .menu {
+        animation: arrive 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.12s backwards;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .head h1,
+      .menu-open,
+      .side .about,
+      .side .foot,
+      .head .menu {
+        animation: none;
+      }
+    }
+
     /* The phone's own menu controls; the wide page needs neither */
     .menu-head,
     .menu-open {
