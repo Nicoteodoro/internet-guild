@@ -66,6 +66,18 @@
       text-decoration: none;
     }
 
+    /* Links underline and go grey under the pointer */
+    a {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: #949494;
+      text-decoration-line: underline;
+    }
+
     a:focus-visible {
       outline: 1px solid #000000;
       outline-offset: 2px;
@@ -291,7 +303,7 @@
           <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
           <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
         </p>
-        <p>Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
+        <p class="muted">Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
       </div>
     </aside>
 
