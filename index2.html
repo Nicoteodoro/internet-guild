@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Index 2 / Internet Guild</title>
+  <meta name="description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
+  <link rel="canonical" href="https://internetguild.co/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Internet Guild">
+  <meta property="og:url" content="https://internetguild.co/">
+  <meta property="og:title" content="Internet Guild">
+  <meta property="og:description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
+  <meta property="og:image" content="https://internetguild.co/og2.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="work-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="work-sans-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
+  <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    html {
+      overflow-y: scroll;
+    }
+
+    @font-face {
+      font-family: "Work Sans";
+      src: url("work-sans-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Work Sans";
+      src: url("work-sans-500.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    body {
+      background: #ffffff;
+      color: #000000;
+      font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: -0.4px;
+      font-size: 13px;
+      line-height: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible {
+      outline: 1px solid #000000;
+      outline-offset: 2px;
+    }
+
+    p,
+    h1 {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    h1 {
+      font-weight: 500;
+    }
+
+    button {
+      letter-spacing: inherit;
+      text-transform: inherit;
+    }
+
+    .muted {
+      color: #949494;
+    }
+
+    /* Two sides on the site's four-column measure: the studio down the
+       first quarter, held to the height of the screen, and the work down
+       the last, one piece under another */
+    .page {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      padding-inline: 20px;
+    }
+
+    /* The wordmark at the top, the copyright at the foot, and the line,
+       the address and the menu held between them */
+    .side {
+      grid-column: 1;
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+      height: 100vh;
+      height: 100dvh;
+      padding-block: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .about p + p {
+      margin-top: 20px;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 10px;
+      margin-top: 40px;
+    }
+
+    .menu a {
+      position: relative;
+    }
+
+    /* Invisible touch area */
+    .menu a::before {
+      content: "";
+      position: absolute;
+      inset: -10px -3px;
+    }
+
+    .menu > a:not(:last-child)::after {
+      content: ",";
+    }
+
+    .work {
+      grid-column: 4;
+      padding-block: 20px;
+    }
+
+    /* The rule over the work, naming the view */
+    .bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-block: 8px 12px;
+      border-top: 1px solid #e6e6e6;
+    }
+
+    .count {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Reads as the text beside it; only the pointer says it is a control */
+    .remix {
+      appearance: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      color: #949494;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .remix:hover {
+      color: #000000;
+    }
+
+    /* One column of work, a piece to a row */
+    .index {
+      display: grid;
+      gap: 24px;
+    }
+
+    .cell {
+      margin: 0;
+      min-width: 0;
+    }
+
+    /* Every piece is squared off and cropped to fill */
+    .media {
+      aspect-ratio: 1 / 1;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+
+    .media img,
+    .media video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Narrower, the page halves: the studio on the left, the work on the right */
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .work {
+        grid-column: 2;
+      }
+    }
+
+    /* On a phone the studio comes first, in the flow, and the work under it */
+    @media (max-width: 560px) {
+      body {
+        font-size: 14px;
+        line-height: 18px;
+      }
+
+      .page {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .side {
+        position: static;
+        height: auto;
+        gap: 56px;
+      }
+
+      .work {
+        grid-column: 1;
+        padding-top: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="side">
+      <h1>Internet Guild</h1>
+
+      <div class="about">
+        <p>Essentialist design studio.<br>Design, build &amp; ship, from websites to AI.<br>Eleven years of daily practice.<br>Born to reduce, made for founders<br>who value simplicity.</p>
+        <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+
+        <nav class="menu" aria-label="Main">
+          <a href="index.html">Index</a>
+          <a href="work.html">Archive</a>
+          <a href="about.html">Information</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+
+      <p>&copy; 2026 Internet Guild</p>
+    </aside>
+
+    <div class="work">
+    <div class="bar">
+      <p><span class="muted">Selected work /</span> Index</p>
+      <p class="count">
+        <button type="button" class="remix">Remix</button>
+        <span class="muted">36 pieces</span>
+      </p>
+    </div>
+
+    <main class="index" aria-label="Selected work">
+      <figure class="cell">
+        <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
+      </figure>
+    </main>
+    </div>
+  </div>
+
+  <script>
+    // Films play only while on screen, and never with reduced motion
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (isIntersecting && !reduceMotion.matches) {
+          target.play().catch(() => {});
+        } else {
+          target.pause();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Posters load about one screen ahead of the scroll
+    const posterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting) return;
+        target.poster = target.dataset.poster;
+        observer.unobserve(target);
+      });
+    }, { rootMargin: '100% 0px 100% 0px' });
+
+    document.querySelectorAll('.media video').forEach((video) => {
+      video.muted = true;
+      videoObserver.observe(video);
+      if (video.dataset.poster) posterObserver.observe(video);
+    });
+
+    // Remix deals the same pieces into a new order
+    const index = document.querySelector('.index');
+
+    function remix() {
+      const cells = [...index.children];
+
+      for (let i = cells.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cells[i], cells[j]] = [cells[j], cells[i]];
+      }
+
+      index.append(...cells);
+
+      // Whatever lands in the top row is wanted straight away
+      cells.slice(0, 4).forEach((cell) => {
+        const image = cell.querySelector('img');
+        if (image) image.loading = 'eager';
+      });
+
+      // Moving a film can stop it, so have the observer judge each one afresh
+      index.querySelectorAll('video').forEach((video) => {
+        videoObserver.unobserve(video);
+        videoObserver.observe(video);
+      });
+    }
+
+    // The gallery opens on a different order every time it is loaded
+    remix();
+
+    document.querySelector('.remix').addEventListener('click', remix);
+  </script>
+</body>
+</html>
