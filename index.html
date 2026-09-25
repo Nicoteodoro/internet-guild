@@ -16,10 +16,9 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <script>document.documentElement.classList.add('js', 'intro-open')</script>
+  <script>document.documentElement.classList.add('js', 'intro-open'); history.scrollRestoration = 'manual';</script>
   <link rel="preload" href="work-sans-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="work-sans-500.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="work-sans-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
@@ -29,16 +28,10 @@
       margin: 0;
     }
 
-    /* Keep the scrollbar there whether the page needs it or not, so moving
-       between a long page and a short one does not shift the layout sideways.
-       Preferred over scrollbar-gutter, which reserves a fixed width even where
-       scrollbars overlay the page and take none */
     html {
       overflow-y: scroll;
     }
 
-    /* Work Sans, self-hosted in the two weights the site uses, cut to the
-       Latin set (SIL Open Font License, work-sans-OFL.txt) */
     @font-face {
       font-family: "Work Sans";
       src: url("work-sans-400.woff2") format("woff2");
@@ -55,22 +48,11 @@
       font-display: swap;
     }
 
-    /* A step heavier, for the wordmark typing itself in the intro alone */
-    @font-face {
-      font-family: "Work Sans";
-      src: url("work-sans-600.woff2") format("woff2");
-      font-weight: 600;
-      font-style: normal;
-      font-display: swap;
-    }
-
-
-
     body {
       background: #ffffff;
       color: #000000;
       font-family: "Work Sans", system-ui, -apple-system, sans-serif;
-      font-weight: 400;
+      font-weight: 500;
       text-transform: uppercase;
       letter-spacing: -0.4px;
       font-size: 13px;
@@ -81,6 +63,18 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    /* Links underline and go grey under the pointer */
+    a {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: #949494;
+      text-decoration-line: underline;
     }
 
     a:focus-visible {
@@ -95,9 +89,7 @@
       font-weight: inherit;
     }
 
-    /* The wordmark alone stands at 500, in the header and in the phone's menu */
-    h1,
-    .menu-head a {
+    h1 {
       font-weight: 500;
     }
 
@@ -106,47 +98,200 @@
       text-transform: inherit;
     }
 
-
-
     .muted {
       color: #949494;
     }
 
-    /* The nav is one colour throughout, the address's note included */
-    .contact .muted {
-      color: inherit;
+    /* Two sides on the site's four-column measure: the studio down the
+       first half, held to the height of the screen, and the work down
+       the last two, one piece under another */
+    .page {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 60px;
+      padding-inline: 20px;
     }
 
+    /* The wordmark and the menu on one line: the wordmark at the start of
+       the side, the menu at its end */
+    .head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0 40px;
+    }
 
-    /* The curtain: a white page the wordmark types itself onto. It only
-       exists where scripting can lift it, so it can never strand the site */
+    /* The wordmark at the top, the contacts and the copyright at the foot,
+       and the line and the menu held between them */
+    .side {
+      grid-column: 1 / span 2;
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+      height: 100vh;
+      height: 100dvh;
+      padding-block: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* A blank line between the blocks of each group, as typed; the menu
+       stands three lines off the text */
+    .side p + p {
+      margin-top: 15px;
+    }
+
+    .about .menu {
+      margin-top: 45px;
+    }
+
+    /* The menu stands as a column, one word under another */
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    /* The menu reads in grey, so under the pointer it goes black instead */
+    .menu a {
+      position: relative;
+      color: #949494;
+    }
+
+    .menu a:hover,
+    .menu a[aria-current] {
+      color: #000000;
+    }
+
+    /* Invisible touch area */
+    .menu a::before {
+      content: "";
+      position: absolute;
+      inset: -10px -3px;
+    }
+
+    .work {
+      grid-column: 3 / -1;
+      padding-block: 20px;
+    }
+
+    /* The line naming the view, level with the wordmark. It stays at the
+       top of the screen, 20 down, while the work runs under it; a white band
+       fills the 20 above so nothing shows over it */
+    .bar {
+      position: sticky;
+      top: 20px;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-block: 0 12px;
+      background: #ffffff;
+    }
+
+    .bar::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 100%;
+      height: 20px;
+      background: #ffffff;
+    }
+
+    .count {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Reads as the text beside it; only the pointer says it is a control */
+    .remix {
+      appearance: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      color: #949494;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .remix:hover {
+      color: #000000;
+    }
+
+    /* One column of work, a piece to a row */
+    .index {
+      display: grid;
+      gap: 24px;
+    }
+
+    .cell {
+      margin: 0;
+      min-width: 0;
+    }
+
+    /* Every piece is squared off and cropped to fill */
+    .media {
+      aspect-ratio: 1 / 1;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+
+    .media img,
+    .media video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Narrower, the page halves: the studio on the left, the work on the right */
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .side {
+        grid-column: 1;
+      }
+
+      .work {
+        grid-column: 2;
+      }
+    }
+
+    /* On a phone the studio comes first, in the flow, and the work under it */
+    /* The curtain: a white page the wordmark types itself onto, exactly
+       where the wordmark stands on the page, so when the curtain lifts the
+       name stays put and the page arrives around it. Only where scripting
+       can lift it. Absolute rather than fixed, which Safari on iOS would
+       take as its bar colour */
     .intro {
       display: none;
     }
 
-    /* Absolute rather than fixed: Safari on iOS 26 paints its own bars with
-       the colour of any fixed element touching the top or bottom of the
-       screen, and a block that merely sits at the top of the page is not
-       one it looks at */
     .js .intro {
-      display: grid;
-      place-items: center;
+      display: block;
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 100vh;
       height: 100dvh;
-      z-index: 10;
+      z-index: 30;
       background: #ffffff;
       transition: opacity 0.42s ease;
     }
 
-    /* The wordmark at the page's size and in its capitals, a step heavier
-       than the header sets it */
     .intro p {
-      margin: 0;
-      font-weight: 600;
+      position: absolute;
+      top: 20px;
+      left: 20px;
       white-space: nowrap;
     }
 
@@ -155,7 +300,7 @@
       pointer-events: none;
     }
 
-    /* A caret that blinks while the line is still being written */
+    /* A caret that blinks while the name is still being written */
     .intro span::after {
       content: "";
       display: inline-block;
@@ -175,9 +320,16 @@
       50% { opacity: 0; }
     }
 
-    /* Nothing scrolls behind the curtain */
+    /* Nothing scrolls behind the curtain: the page is locked, the curtain
+       takes no gestures, and the page always opens at its top rather than
+       where it was left, so the curtain is always the first thing seen */
+    .intro-open,
     .intro-open body {
       overflow: hidden;
+    }
+
+    .js .intro {
+      touch-action: none;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -186,311 +338,58 @@
       }
     }
 
-    /* The page comes in from the top down as the curtain lifts, each part
-       rising into place a beat after the one above it. Held on its first
-       frame while the curtain is up, so the arrival is seen, not missed */
-    @keyframes arrive {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-    }
-
-    h1,
-    .contact,
-    .tagline,
-    .menu-open,
-    .bar,
-    .index > .cell {
-      animation: arrive 1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-    }
-
-    .contact { animation-delay: 0.07s; }
-    .tagline { animation-delay: 0.14s; }
-    .menu-open { animation-delay: 0.07s; }
-    .bar { animation-delay: 0.28s; }
-    .index > .cell { animation-delay: 1s; }
-    .index > .cell:nth-child(1) { animation-delay: 0.38s; }
-    .index > .cell:nth-child(2) { animation-delay: 0.45s; }
-    .index > .cell:nth-child(3) { animation-delay: 0.52s; }
-    .index > .cell:nth-child(4) { animation-delay: 0.6s; }
-    .index > .cell:nth-child(5) { animation-delay: 0.67s; }
-    .index > .cell:nth-child(6) { animation-delay: 0.74s; }
-    .index > .cell:nth-child(7) { animation-delay: 0.82s; }
-    .index > .cell:nth-child(8) { animation-delay: 0.89s; }
-    .index > .cell:nth-child(9) { animation-delay: 0.96s; }
-
-    /* The menu comes in with the header where it sits in it; on a phone it
-       is a sheet of its own, and Menu stands in for it */
+    /* A break for the phone alone */
     @media (min-width: 561px) {
-      .menu {
-        animation: arrive 1s cubic-bezier(0.22, 1, 0.36, 1) 0.21s backwards;
-      }
-    }
-
-    .intro-open h1,
-    .intro-open .contact,
-    .intro-open .tagline,
-    .intro-open .menu,
-    .intro-open .menu-open,
-    .intro-open .bar,
-    .intro-open .index > .cell {
-      animation-play-state: paused;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      h1,
-      .contact,
-      .tagline,
-      .menu,
-      .menu-open,
-      .bar,
-      .index > .cell {
-        animation: none;
-      }
-    }
-
-    /* Header and grid share one four-column measure, 20px in from each edge */
-    .row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      padding-inline: 20px;
-    }
-
-    .top {
-      padding-block: 20px 0;
-    }
-
-    /* The line stands on its own between the nav and the work, as the hero
-       did: 40% of the screen tall with the line centred in it, across the
-       first two quarters so its lines run whole */
-    .hero {
-      min-height: 40vh;
-      align-content: center;
-    }
-
-    .tagline {
-      grid-column: 1 / span 2;
-    }
-
-    /* The line breaks one way on a desk and another on a phone */
-    @media (min-width: 561px) {
-      .tagline .m {
+      .m {
         display: none;
       }
     }
 
-    @media (max-width: 560px) {
-      .tagline .d {
-        display: none;
-      }
-    }
-
-    /* No commas: the words are held apart by space alone, twice what a
-       comma and its gap used to take */
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0 23px;
-    }
-
-    /* Wide, the menu runs in capitals held apart by commas, and the four
-       parts of the header sit on one baseline */
-    @media (min-width: 561px) {
-      .top {
-        align-items: baseline;
-      }
-
-      .menu {
-        gap: 0 10px;
-      }
-
-      .menu > a {
-        text-transform: uppercase;
-      }
-
-      .menu > a:not(:last-child)::after {
-        content: ",";
-      }
-    }
-
-    /* The phone's own menu controls; the wide header needs neither */
+    /* The phone's own menu controls; the wide page needs neither */
     .menu-head,
     .menu-open {
       display: none;
     }
 
-    .menu a {
-      position: relative;
-    }
-
-    /* Invisible touch area */
-    .menu a::before {
-      content: "";
-      position: absolute;
-      inset: -10px -3px;
-    }
-
-
-
-
-    /* The one rule on the page, naming the view */
-    .bar {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      margin-inline: 20px;
-      padding-block: 8px 12px;
-      border-top: 1px solid #e6e6e6;
-    }
-
-    .count {
-      display: flex;
-      gap: 12px;
-    }
-
-    /* Reads as the text beside it; only the pointer says it is a control */
-    .remix {
-      appearance: none;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      background: none;
-      font: inherit;
-      letter-spacing: inherit;
-      text-transform: inherit;
-      color: #949494;
-      cursor: pointer;
-      transition: color 0.15s ease;
-    }
-
-    .remix:hover {
-      color: #000000;
-    }
-
-    /* Three pieces to a row, with twice the air they had: 24 across, 48
-       down. Narrower screens take two, then one, from the grid's own steps */
-    .index {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 48px 24px;
-      padding-bottom: 20px;
-    }
-
-    .cell {
-      margin: 0;
-      min-width: 0;
-    }
-
-
-    /* Every piece is squared off and cropped to fill, so the grid never breaks */
-    .media {
-      aspect-ratio: 1 / 1;
-      background: #f4f4f4;
-      overflow: hidden;
-    }
-
-    .media img,
-    .media video {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-
-    @media (max-width: 900px) {
-      .row {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    /* On a desk the wordmark, the address and the menu stay put while the
-       page runs under them; the line scrolls away with it. They invert over
-       what they cross: white in difference reads black on the white page
-       and white over anything black */
-    @media (min-width: 901px) {
-      .top {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .top h1,
-      .top .contact,
-      .top .menu {
-        position: fixed;
-        top: 20px;
-        z-index: 5;
-        width: calc((100% - 76px) / 4);
-        color: #ffffff;
-        mix-blend-mode: difference;
-      }
-
-      .top h1 {
-        left: 20px;
-      }
-
-      .top .contact {
-        left: calc(20px + (100% - 76px) / 4 + 12px);
-      }
-
-      .top .menu {
-        left: calc(20px + (100% - 76px) * 3 / 4 + 36px);
-      }
-
-      /* The nav is fixed, so the header holds its two lines of room */
-      .top {
-        min-height: 30px;
-      }
-    }
-
     @media (max-width: 560px) {
-      /* A phone reads at 14 throughout */
       body {
         font-size: 14px;
         line-height: 18px;
       }
 
-      .row {
-        grid-template-columns: 1fr;
+      .page {
+        grid-template-columns: minmax(0, 1fr);
       }
 
-      .top {
-        row-gap: 0;
+      .side {
+        position: static;
+        height: auto;
+        gap: 56px;
       }
 
-      .hero {
-        min-height: 50vh;
+      .side p + p {
+        margin-top: 18px;
       }
 
-
-      h1 {
-        order: 1;
+      .about .menu {
+        margin-top: 54px;
       }
 
-      /* The line sits under the wordmark, full width, so each of its lines
-         runs whole where it can */
-      .tagline {
+      .work {
         grid-column: 1;
+        padding-top: 56px;
       }
 
-      /* The address goes on a phone: the menu carries Contact */
-      .contact {
+      /* On a phone the home keeps to its line and its work; the contacts
+         stay on Contact */
+      .foot {
         display: none;
       }
 
-      /* On a phone everything is one size */
-      h1,
-      .tagline,
-      .contact,
-      .menu {
-        font-size: 14px;
-        line-height: 18px;
-      }
-
-      /* The menu leaves the header for a sheet of its own. Closed, it is
-         rolled up out of sight; Menu at the top right pulls it down over the
-         page, and the words follow it in one after another */
-      .top {
+      /* The menu leaves the side for a sheet of its own, as on the home:
+         Menu at the top right pulls it down over the page, and the words
+         follow it in one after another */
+      .page {
         position: relative;
       }
 
@@ -510,8 +409,10 @@
         position: absolute;
         top: 20px;
         right: 20px;
-        font-size: 14px;
-        line-height: 18px;
+      }
+
+      .about .menu {
+        margin-top: 0;
       }
 
       .menu {
@@ -555,6 +456,10 @@
         transition: opacity 0.3s ease, transform 0.3s ease;
       }
 
+      .menu > a:not(:last-child)::after {
+        content: none;
+      }
+
       .menu-is-open .menu > a {
         opacity: 1;
         transform: none;
@@ -564,7 +469,6 @@
       .menu-is-open .menu > a:nth-of-type(1) { transition-delay: 0.22s; }
       .menu-is-open .menu > a:nth-of-type(2) { transition-delay: 0.3s; }
       .menu-is-open .menu > a:nth-of-type(3) { transition-delay: 0.38s; }
-      .menu-is-open .menu > a:nth-of-type(4) { transition-delay: 0.46s; }
 
       /* Nothing scrolls behind the sheet */
       .menu-is-open,
@@ -580,213 +484,170 @@
           transition: none;
         }
       }
-
-      /* iPhone only. Safari on iOS 26 fills the area under its own bottom bar
-         with the colour of a fixed element touching the bottom of the screen.
-         This strip is that element, so what scrolls does not show under the
-         address bar; above the curtain too, so the colour stays white */
-      @supports (-webkit-touch-callout: none) {
-        .edge {
-          position: fixed;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 4px;
-          background: #ffffff;
-          z-index: 11;
-        }
-      }
-
-      .bar {
-        gap: 12px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="edge" aria-hidden="true"></div>
   <div class="intro" aria-hidden="true"><p><span></span></p></div>
+  <div class="page">
+    <aside class="side">
+      <div class="head">
+        <h1>Internet Guild</h1>
+        <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
+        <nav class="menu" id="menu" aria-label="Main">
+          <div class="menu-head">
+            <a href="index.html">Internet Guild</a>
+            <button type="button" class="menu-close">Close</button>
+          </div>
+          <a href="index.html" aria-current="page">Index</a>
+          <a href="about.html">Information</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
 
-  <header class="row top">
-    <h1>Internet Guild</h1>
-    <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
+      <div class="about">
+        <p>Essentialist design studio.<br>From websites to AI. Design, build &amp; ship</p>
+        <p>Eleven years of daily practice.<br>Born to reduce, made for founders<br class="m"> who value simplicity.</p>
+      </div>
 
+      <div class="foot">
+        <p>
+          <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
+          <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
+          <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">W +54 911 33932087</a>
+        </p>
+        <p>
+          <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br>
+          <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
+          <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+        </p>
+        <p class="muted">Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
+      </div>
+    </aside>
 
-    <div class="contact">
-      <p class="muted">Hire the guild.</p>
-      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    <div class="work">
+    <div class="bar">
+      <p class="muted">Selected work</p>
+      <p class="count">
+        <button type="button" class="remix">Remix</button>
+        <span class="muted">36 pieces</span>
+      </p>
     </div>
 
-
-    <nav class="menu" id="menu" aria-label="Main">
-      <div class="menu-head">
-        <a href="index.html">Internet Guild</a>
-        <button type="button" class="menu-close">Close</button>
-      </div>
-      <a href="index.html" aria-current="page">Index</a>
-      <a href="work.html">Archive</a>
-      <a href="about.html">Information</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-
-  </header>
-
-  <div class="row hero">
-    <p class="tagline">Essentialist design studio.<br class="m"> Design, build &amp; ship,<br class="d"> from websites to AI.<br class="m"> Eleven years of daily practice.<br>Born to reduce, made for founders<br class="m"> who value simplicity.</p>
+    <main class="index" aria-label="Selected work">
+      <figure class="cell">
+        <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
+      </figure>
+      <figure class="cell">
+        <div class="media"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
+      </figure>
+    </main>
+    </div>
   </div>
-
-  <div class="bar">
-    <p><span class="muted">Selected work /</span> Index</p>
-    <p class="count">
-      <button type="button" class="remix">Remix</button>
-      <span class="muted">36 pieces</span>
-    </p>
-  </div>
-
-  <main class="row index" aria-label="Selected work">
-    <figure class="cell">
-      <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
-    </figure>
-    <figure class="cell">
-      <div class="media"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
-    </figure>
-  </main>
 
   <script>
-    // The wordmark types itself onto a blank page while the grid loads behind
-    (() => {
-      const intro = document.querySelector('.intro');
-      const line = intro.querySelector('span');
-      const word = 'Internet Guild';
-      const root = document.documentElement;
-      root.classList.add('intro-open');
-
-      const lift = () => {
-        intro.classList.add('typed');
-        setTimeout(() => {
-          intro.classList.add('done');
-          root.classList.remove('intro-open');
-          setTimeout(() => intro.remove(), 480);
-        }, 310);
-      };
-
-      // Reduced motion gets the line whole, and the curtain goes at once
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        line.textContent = word;
-        lift();
-        return;
-      }
-
-      let i = 0;
-      const type = () => {
-        line.textContent = word.slice(0, ++i);
-        setTimeout(i < word.length ? type : lift, 70);
-      };
-      setTimeout(type, 160);
-    })();
-
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -845,6 +706,83 @@
     remix();
 
     document.querySelector('.remix').addEventListener('click', remix);
+
+    // The wordmark types itself where it stands, then the curtain lifts
+    // around it and the page is handed on
+    (() => {
+      const intro = document.querySelector('.intro');
+      const line = intro.querySelector('span');
+      const word = 'Internet Guild';
+      const root = document.documentElement;
+
+      const lift = () => {
+        intro.classList.add('typed');
+        setTimeout(() => {
+          intro.classList.add('done');
+          root.classList.remove('intro-open');
+          // The page only moves once the curtain is fully gone, or the
+          // curtain's name would ride up the screen over the real one
+          setTimeout(() => {
+            intro.remove();
+            document.dispatchEvent(new Event('intro-done'));
+          }, 480);
+        }, 310);
+      };
+
+      // Reduced motion gets the name whole, and the curtain goes at once
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        line.textContent = word;
+        lift();
+        return;
+      }
+
+      let i = 0;
+      const type = () => {
+        line.textContent = word.slice(0, ++i);
+        setTimeout(i < word.length ? type : lift, 70);
+      };
+      setTimeout(type, 160);
+    })();
+
+    // The work scrolls itself from the moment the page opens until the
+    // visitor takes over: the first wheel, touch, click or key hands the page back for good
+    (() => {
+      if (reduceMotion.matches) return;
+      const speed = 120; // px a second
+      const takeover = ['wheel', 'touchstart', 'pointerdown', 'keydown'];
+      let running = true;
+      let y = 0;
+      let last = null;
+
+      const stop = () => {
+        running = false;
+        takeover.forEach((type) => removeEventListener(type, stop));
+      };
+      takeover.forEach((type) => addEventListener(type, stop, { passive: true }));
+
+      const step = (t) => {
+        if (!running) return;
+        if (last !== null) {
+          y += speed * (t - last) / 1000;
+          if (y >= document.documentElement.scrollHeight - innerHeight) return stop();
+          scrollTo(0, y);
+        }
+        last = t;
+        requestAnimationFrame(step);
+      };
+
+      // It sets off once the curtain has gone
+      const start = () => {
+        if (!running) return;
+        y = scrollY;
+        requestAnimationFrame(step);
+      };
+      if (document.documentElement.classList.contains('intro-open')) {
+        document.addEventListener('intro-done', start, { once: true });
+      } else {
+        start();
+      }
+    })();
   </script>
   <script>
     // The phone menu: Menu pulls the sheet down, Close or Escape rolls it up
