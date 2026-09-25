@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Guild Is Open / Internet Guild</title>
+  <link rel="preload" href="work-sans-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
+  <style>
+    @font-face {
+      font-family: "Work Sans";
+      src: url("work-sans-500.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: block;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+    }
+
+    /* The site's type: Work Sans at 500, 14 on 16, capitals, tracked in */
+    body {
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      color: #000000;
+      font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      letter-spacing: -0.4px;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      cursor: default;
+      user-select: none;
+    }
+
+    .card {
+      margin: 0;
+      text-align: center;
+    }
+
+    .card p {
+      margin: 0;
+    }
+
+    .card p + p {
+      margin-top: 16px;
+    }
+
+    /* Each line holds its full width from the start, the unwritten part
+       invisible, so the centred lines never shift as they are typed */
+    .rest {
+      visibility: hidden;
+    }
+
+    .typed {
+      position: relative;
+    }
+
+    /* The caret rides the end of the line being written, outside the flow
+       so it never moves the centring either */
+    .active .typed::after {
+      content: "";
+      position: absolute;
+      left: 100%;
+      bottom: 0.08em;
+      width: 0.5em;
+      height: 1em;
+      margin-left: 0.143em;
+      background: currentColor;
+      animation: caret 1s steps(2, start) infinite;
+    }
+
+    .typing .typed::after {
+      animation: none;
+    }
+
+    @keyframes caret {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" aria-label="The guild is open. Let’s build together.">
+    <p><span class="typed"></span><span class="rest">The guild is open</span></p>
+    <p><span class="typed"></span><span class="rest">Let’s build together.</span></p>
+  </div>
+
+  <script>
+    // Types the two lines in turn, the site's 70ms a letter; a click or any
+    // key plays it again from the start, for another take
+    (() => {
+      const lines = [...document.querySelectorAll('.card p')].map((p) => ({
+        p,
+        typed: p.querySelector('.typed'),
+        rest: p.querySelector('.rest'),
+        text: p.querySelector('.rest').textContent,
+      }));
+      let timers = [];
+
+      const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+      const play = () => {
+        timers.forEach(clearTimeout);
+        timers = [];
+        lines.forEach((l) => {
+          l.typed.textContent = '';
+          l.rest.textContent = l.text;
+          l.p.classList.remove('active', 'typing');
+        });
+
+        let t = 900;
+        lines.forEach((l, n) => {
+          later(() => {
+            lines.forEach((o) => o.p.classList.remove('active'));
+            l.p.classList.add('active');
+          }, t);
+          for (let i = 1; i <= l.text.length; i++) {
+            later(() => {
+              l.p.classList.add('typing');
+              l.typed.textContent = l.text.slice(0, i);
+              l.rest.textContent = l.text.slice(i);
+            }, t + 160 + i * 70);
+          }
+          t += 160 + l.text.length * 70;
+          later(() => l.p.classList.remove('typing'), t + 1);
+          if (n < lines.length - 1) t += 700;
+        });
+      };
+
+      document.fonts.ready.then(play);
+      addEventListener('click', play);
+      addEventListener('keydown', play);
+    })();
+  </script>
+</body>
+</html>
