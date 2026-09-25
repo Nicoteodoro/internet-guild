@@ -259,17 +259,15 @@
     }
 
     /* On a phone the studio comes first, in the flow, and the work under it */
-    /* Here the side can run longer than the screen: it holds at least the
-       screen's height (never the work's, which it would otherwise stretch
-       to), keeps its groups apart, and scrolls with the page until its
-       foot is in view, then stays */
+    /* No work here: the side is the page, in the flow, at least the
+       screen's height, its groups kept apart */
     .side {
       align-self: start;
       justify-content: flex-start;
       height: auto;
       min-height: 100vh;
       min-height: 100dvh;
-      top: var(--stick, 0px);
+      position: static;
       gap: 60px;
     }
 
@@ -340,196 +338,7 @@
       </div>
     </aside>
 
-    <div class="work">
-    <div class="bar">
-      <p><span class="muted">Selected work /</span> Index</p>
-      <p class="count">
-        <button type="button" class="remix">Remix</button>
-        <span class="muted">36 pieces</span>
-      </p>
-    </div>
-
-    <main class="index" aria-label="Selected work">
-      <figure class="cell">
-        <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
-      </figure>
-      <figure class="cell">
-        <div class="media"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
-      </figure>
-    </main>
-    </div>
   </div>
 
-  <script>
-    // The side stays put once its foot reaches the bottom of the screen
-    const side = document.querySelector('.side');
-    const stick = () => {
-      side.style.setProperty('--stick', Math.min(0, innerHeight - side.offsetHeight) + 'px');
-    };
-    stick();
-    addEventListener('resize', stick);
-    addEventListener('load', stick);
-
-    // Films play only while on screen, and never with reduced motion
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(({ target, isIntersecting }) => {
-        if (isIntersecting && !reduceMotion.matches) {
-          target.play().catch(() => {});
-        } else {
-          target.pause();
-        }
-      });
-    }, { threshold: 0.1 });
-
-    // Posters load about one screen ahead of the scroll
-    const posterObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(({ target, isIntersecting }) => {
-        if (!isIntersecting) return;
-        target.poster = target.dataset.poster;
-        observer.unobserve(target);
-      });
-    }, { rootMargin: '100% 0px 100% 0px' });
-
-    document.querySelectorAll('.media video').forEach((video) => {
-      video.muted = true;
-      videoObserver.observe(video);
-      if (video.dataset.poster) posterObserver.observe(video);
-    });
-
-    // Remix deals the same pieces into a new order
-    const index = document.querySelector('.index');
-
-    function remix() {
-      const cells = [...index.children];
-
-      for (let i = cells.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [cells[i], cells[j]] = [cells[j], cells[i]];
-      }
-
-      index.append(...cells);
-
-      // Whatever lands in the top row is wanted straight away
-      cells.slice(0, 4).forEach((cell) => {
-        const image = cell.querySelector('img');
-        if (image) image.loading = 'eager';
-      });
-
-      // Moving a film can stop it, so have the observer judge each one afresh
-      index.querySelectorAll('video').forEach((video) => {
-        videoObserver.unobserve(video);
-        videoObserver.observe(video);
-      });
-    }
-
-    // The gallery opens on a different order every time it is loaded
-    remix();
-
-    document.querySelector('.remix').addEventListener('click', remix);
-  </script>
 </body>
 </html>
