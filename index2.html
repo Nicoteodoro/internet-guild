@@ -721,8 +721,12 @@
         setTimeout(() => {
           intro.classList.add('done');
           root.classList.remove('intro-open');
-          document.dispatchEvent(new Event('intro-done'));
-          setTimeout(() => intro.remove(), 480);
+          // The page only moves once the curtain is fully gone, or the
+          // curtain's name would ride up the screen over the real one
+          setTimeout(() => {
+            intro.remove();
+            document.dispatchEvent(new Event('intro-done'));
+          }, 480);
         }, 310);
       };
 
@@ -768,7 +772,7 @@
         requestAnimationFrame(step);
       };
 
-      // It sets off as the curtain lifts
+      // It sets off once the curtain has gone
       const start = () => {
         if (!running) return;
         y = scrollY;
