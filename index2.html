@@ -17,7 +17,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>document.documentElement.classList.add('js', 'intro-open')</script>
   <link rel="preload" href="work-sans-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="work-sans-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
@@ -267,6 +267,71 @@
     }
 
     /* On a phone the studio comes first, in the flow, and the work under it */
+    /* The curtain: a white page the wordmark types itself onto, exactly
+       where the wordmark stands on the page, so when the curtain lifts the
+       name stays put and the page arrives around it. Only where scripting
+       can lift it. Absolute rather than fixed, which Safari on iOS would
+       take as its bar colour */
+    .intro {
+      display: none;
+    }
+
+    .js .intro {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 30;
+      background: #ffffff;
+      transition: opacity 0.42s ease;
+    }
+
+    .intro p {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      white-space: nowrap;
+    }
+
+    .js .intro.done {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* A caret that blinks while the name is still being written */
+    .intro span::after {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 1em;
+      margin-left: 0.143em;
+      background: currentColor;
+      vertical-align: -0.15em;
+      animation: caret 1s steps(2, start) infinite;
+    }
+
+    .intro.typed span::after {
+      display: none;
+    }
+
+    @keyframes caret {
+      50% { opacity: 0; }
+    }
+
+    /* Nothing scrolls behind the curtain */
+    .intro-open body {
+      overflow: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro span::after {
+        animation: none;
+      }
+    }
+
     /* A break for the phone alone */
     @media (min-width: 561px) {
       .m {
@@ -417,6 +482,7 @@
   </style>
 </head>
 <body>
+  <div class="intro" aria-hidden="true"><p><span></span></p></div>
   <div class="page">
     <aside class="side">
       <div class="head">
@@ -635,6 +701,39 @@
 
     document.querySelector('.remix').addEventListener('click', remix);
 
+    // The wordmark types itself where it stands, then the curtain lifts
+    // around it and the page is handed on
+    (() => {
+      const intro = document.querySelector('.intro');
+      const line = intro.querySelector('span');
+      const word = 'Internet Guild';
+      const root = document.documentElement;
+
+      const lift = () => {
+        intro.classList.add('typed');
+        setTimeout(() => {
+          intro.classList.add('done');
+          root.classList.remove('intro-open');
+          document.dispatchEvent(new Event('intro-done'));
+          setTimeout(() => intro.remove(), 480);
+        }, 310);
+      };
+
+      // Reduced motion gets the name whole, and the curtain goes at once
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        line.textContent = word;
+        lift();
+        return;
+      }
+
+      let i = 0;
+      const type = () => {
+        line.textContent = word.slice(0, ++i);
+        setTimeout(i < word.length ? type : lift, 70);
+      };
+      setTimeout(type, 160);
+    })();
+
     // The work scrolls itself from the moment the page opens until the
     // visitor takes over: the first wheel, touch, click or key hands the page back for good
     (() => {
@@ -662,8 +761,17 @@
         requestAnimationFrame(step);
       };
 
-      y = scrollY;
-      requestAnimationFrame(step);
+      // It sets off as the curtain lifts
+      const start = () => {
+        if (!running) return;
+        y = scrollY;
+        requestAnimationFrame(step);
+      };
+      if (document.documentElement.classList.contains('intro-open')) {
+        document.addEventListener('intro-done', start, { once: true });
+      } else {
+        start();
+      }
     })();
   </script>
   <script>
