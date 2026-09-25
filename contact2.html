@@ -277,6 +277,12 @@
       margin-top: auto;
     }
 
+    /* The phone's own menu controls; the wide page needs neither */
+    .menu-head,
+    .menu-open {
+      display: none;
+    }
+
     @media (max-width: 560px) {
       body {
         font-size: 14px;
@@ -306,6 +312,105 @@
         grid-column: 1;
         padding-top: 56px;
       }
+
+      /* The menu leaves the side for a sheet of its own, as on the home:
+         Menu at the top right pulls it down over the page, and the words
+         follow it in one after another */
+      .page {
+        position: relative;
+      }
+
+      .menu-open,
+      .menu-close {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        color: #000000;
+        cursor: pointer;
+      }
+
+      .menu-open {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+      .about .menu {
+        margin-top: 0;
+      }
+
+      .menu {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: 0;
+        padding: 20px;
+        background: #ffffff;
+        visibility: hidden;
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
+      }
+
+      .menu-is-open .menu {
+        visibility: visible;
+        clip-path: inset(0);
+        transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1);
+      }
+
+      /* The wordmark and Close stand where the wordmark and Menu stood */
+      .menu-head {
+        display: flex;
+        justify-content: space-between;
+        align-self: stretch;
+        margin-bottom: 22vh;
+      }
+
+      .menu-head a,
+      .menu > a {
+        color: #000000;
+      }
+
+      .menu > a {
+        line-height: 36px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .menu > a:not(:last-child)::after {
+        content: none;
+      }
+
+      .menu-is-open .menu > a {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+
+      .menu-is-open .menu > a:nth-of-type(1) { transition-delay: 0.22s; }
+      .menu-is-open .menu > a:nth-of-type(2) { transition-delay: 0.3s; }
+      .menu-is-open .menu > a:nth-of-type(3) { transition-delay: 0.38s; }
+
+      /* Nothing scrolls behind the sheet */
+      .menu-is-open,
+      .menu-is-open body {
+        overflow: hidden;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu,
+        .menu > a,
+        .menu-is-open .menu,
+        .menu-is-open .menu > a {
+          transition: none;
+        }
+      }
     }
   </style>
 </head>
@@ -313,6 +418,7 @@
   <div class="page">
     <aside class="side">
       <h1><a href="index2.html">Internet Guild</a></h1>
+      <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
       <div class="about">
         <p>
@@ -326,7 +432,11 @@
           <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
         </p>
 
-        <nav class="menu" aria-label="Main">
+        <nav class="menu" id="menu" aria-label="Main">
+          <div class="menu-head">
+            <a href="index2.html">Internet Guild</a>
+            <button type="button" class="menu-close">Close</button>
+          </div>
           <a href="index2.html">Index</a>
           <a href="information2.html">Information</a>
           <a href="contact2.html" aria-current="page">Contact</a>
@@ -340,5 +450,29 @@
 
   </div>
 
+  <script>
+    // The phone menu: Menu pulls the sheet down, Close or Escape rolls it up
+    (() => {
+      const root = document.documentElement;
+      const open = document.querySelector('.menu-open');
+      const close = document.querySelector('.menu-close');
+      const set = (on) => {
+        root.classList.toggle('menu-is-open', on);
+        open.setAttribute('aria-expanded', String(on));
+        (on ? close : open).focus({ preventScroll: true });
+      };
+      open.addEventListener('click', () => set(true));
+      close.addEventListener('click', () => set(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && root.classList.contains('menu-is-open')) set(false);
+      });
+      // Coming back to the page from history, the sheet is rolled up again
+      addEventListener('pageshow', (e) => {
+        if (!e.persisted) return;
+        root.classList.remove('menu-is-open');
+        open.setAttribute('aria-expanded', 'false');
+      });
+    })();
+  </script>
 </body>
 </html>
