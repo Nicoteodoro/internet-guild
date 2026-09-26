@@ -58,25 +58,35 @@
       visibility: hidden;
     }
 
-    .typed {
+    /* The caret sits in the line itself, between what is written and what
+       is not, so it moves with the text on every browser. It takes no width,
+       drawing its block just past its own place, so the centring never
+       shifts; only the line being written shows it */
+    .caret {
+      display: inline-block;
       position: relative;
+      width: 0;
+      height: 1em;
+      vertical-align: -0.15em;
+      visibility: hidden;
     }
 
-    /* The caret rides the end of the line being written, outside the flow
-       so it never moves the centring either */
-    .active .typed::after {
+    .caret::before {
       content: "";
       position: absolute;
-      left: 100%;
-      bottom: 0.08em;
+      top: 0;
+      left: 0.143em;
       width: 0.5em;
       height: 1em;
-      margin-left: 0.143em;
       background: currentColor;
       animation: caret 1s steps(2, start) infinite;
     }
 
-    .typing .typed::after {
+    .active .caret {
+      visibility: visible;
+    }
+
+    .typing .caret::before {
       animation: none;
     }
 
@@ -87,8 +97,8 @@
 </head>
 <body>
   <div class="card" aria-label="The guild is open. Let’s build together.">
-    <p><span class="typed"></span><span class="rest">The guild is open</span></p>
-    <p><span class="typed"></span><span class="rest">Let’s build together.</span></p>
+    <p><span class="typed"></span><span class="caret"></span><span class="rest">The guild is open</span></p>
+    <p><span class="typed"></span><span class="caret"></span><span class="rest">Let’s build together.</span></p>
   </div>
 
   <script>
