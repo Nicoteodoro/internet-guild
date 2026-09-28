@@ -18,8 +18,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="work-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="work-sans-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
@@ -33,17 +32,10 @@
       overflow-y: scroll;
     }
 
+    /* PP Neue Montreal, self-hosted at the one weight the site uses */
     @font-face {
-      font-family: "Work Sans";
-      src: url("work-sans-400.woff2") format("woff2");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "Work Sans";
-      src: url("work-sans-500.woff2") format("woff2");
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-medium.woff2") format("woff2");
       font-weight: 500;
       font-style: normal;
       font-display: swap;
@@ -52,12 +44,12 @@
     body {
       background: #ffffff;
       color: #000000;
-      font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+      font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: -0.4px;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: 12px;
+      line-height: 14px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -141,11 +133,11 @@
     /* A blank line between the blocks of each group, as typed; the menu
        stands three lines off the text */
     .side p + p {
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .about .menu {
-      margin-top: 48px;
+      margin-top: 42px;
     }
 
     /* The menu stands as a column, one word under another */
@@ -330,8 +322,8 @@
 
     @media (max-width: 560px) {
       body {
-        font-size: 14px;
-        line-height: 18px;
+        font-size: 12px;
+        line-height: 16px;
       }
 
       .page {
@@ -346,11 +338,11 @@
       }
 
       .side p + p {
-        margin-top: 18px;
+        margin-top: 16px;
       }
 
       .about .menu {
-        margin-top: 54px;
+        margin-top: 48px;
       }
 
       .work {
