@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact 2 / Internet Guild</title>
+  <link rel="canonical" href="https://internetguild.co/">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
+  <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    html {
+      overflow-y: scroll;
+    }
+
+    /* DM Mono, self-hosted at the one weight used (SIL Open Font License,
+       dm-mono-OFL.txt) */
+    @font-face {
+      font-family: "DM Mono";
+      src: url("dm-mono-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    body {
+      background: #ffffff;
+      color: #000000;
+      font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01px;
+      font-size: 11px;
+      line-height: 13px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:focus-visible {
+      outline: 1px solid #000000;
+      outline-offset: 2px;
+    }
+
+    p,
+    h1,
+    figure {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    /* Five columns, 11px in from each edge, 12 between; the work below runs
+       on the same lines */
+    .top,
+    .intro,
+    .foot {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      column-gap: 12px;
+      padding-inline: 11px;
+    }
+
+    /* The wordmark at the start; the menu across the third and fourth
+       columns; Hire the guild and the address in the last */
+    .top {
+      padding-top: 11px;
+    }
+
+    .menu {
+      grid-column: 3 / span 2;
+      display: flex;
+      gap: 12px;
+    }
+
+    .hire {
+      grid-column: 5;
+    }
+
+    .menu a[aria-current] {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    /* The page as a list, as a colophon: what each part is in the third
+       column, the part itself across the fourth and fifth */
+    .info {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      column-gap: 12px;
+      row-gap: 22px;
+      margin: 0;
+      padding: 150px 11px 60px;
+    }
+
+    .info dt {
+      grid-column: 3;
+    }
+
+    .info dd {
+      grid-column: 4 / span 2;
+      margin: 0;
+    }
+
+    /* Pairs keep to the fourth and fifth columns: a name and its value */
+    .pairs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+    }
+
+    .pairs.spaced {
+      row-gap: 13px;
+    }
+
+    /* Narrower, the names take the first two columns and the parts the rest */
+    @media (max-width: 900px) {
+      .info dt {
+        grid-column: 1 / span 2;
+      }
+
+      .info dd {
+        grid-column: 3 / -1;
+      }
+    }
+
+    /* A phone: each name over its part */
+    @media (max-width: 560px) {
+      .top {
+        row-gap: 11px;
+      }
+
+      .top h1,
+      .menu,
+      .hire {
+        grid-column: 1 / -1;
+      }
+
+      .info {
+        row-gap: 4px;
+        padding-top: 56px;
+      }
+
+      .info dt,
+      .info dd {
+        grid-column: 1 / -1;
+      }
+
+      .info dt:not(:first-child) {
+        margin-top: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <h1><a href="index2.html">Internet Guild</a></h1>
+    <nav class="menu" aria-label="Main">
+      <a href="index2.html">Index</a>
+      <a href="information2.html">Information</a>
+      <a href="contact2.html" aria-current="page">Contact</a>
+    </nav>
+    <div class="hire">
+      <p>Hire the guild</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
+  </header>
+
+  <dl class="info">
+    <dt>Description</dt>
+    <dd>Desk is open for new work.</dd>
+    <dt>Email</dt>
+    <dd><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br><a href="mailto:n@internetguild.co">n@internetguild.co</a></dd>
+    <dt>WhatsApp</dt>
+    <dd><a href="https://wa.me/5491133932087" target="_blank" rel="noopener">+54 911 33932087</a></dd>
+    <dt>Social</dt>
+    <dd><a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br><a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br><a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a></dd>
+    <dt>Location</dt>
+    <dd>Buenos Aires, Republic of Argentina.</dd>
+    <dt>Legal</dt>
+    <dd>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</dd>
+  </dl>
+</body>
+</html>
