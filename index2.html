@@ -76,8 +76,7 @@
     }
 
     /* The wordmark alone stands at 500 */
-    h1,
-    .card .name {
+    h1 {
       font-weight: 500;
     }
 
@@ -163,70 +162,6 @@
       padding-top: 6px;
     }
 
-    /* The first card: the studio's name over black, two columns wide and
-       square, its own lines beneath */
-    .card {
-      container-type: inline-size;
-      position: relative;
-      aspect-ratio: 1 / 1;
-      background: #000000;
-      color: #ffffff;
-    }
-
-    /* All laid out from the card's own edges; a container's padding cannot
-       be set in its own units, so nothing here uses it */
-    .card .small {
-      position: absolute;
-      font-size: max(8px, 1.6cqw);
-      line-height: 1.1;
-    }
-
-    .card .small:nth-child(1) {
-      top: 4cqw;
-      left: 4cqw;
-    }
-
-    .card .small:nth-child(2) {
-      top: 4cqw;
-      left: 50%;
-      width: 40%;
-    }
-
-    .card .small:nth-child(3) {
-      top: 40cqw;
-      left: 4cqw;
-      width: 34%;
-    }
-
-    .card .small:nth-child(4) {
-      top: 40cqw;
-      left: 50%;
-    }
-
-    .card .name {
-      position: absolute;
-      left: 4cqw;
-      right: 4cqw;
-      bottom: 4cqw;
-      font-size: 19cqw;
-      line-height: 0.98;
-      letter-spacing: -0.02em;
-    }
-
-    .dot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      margin-right: 8px;
-      border-radius: 50%;
-      background: #000000;
-    }
-
-    .cell figcaption .more {
-      display: block;
-      margin-top: 8px;
-    }
-
     /* The foot: the ways to reach, the clients, the small print */
     .foot {
       padding-block: 120px 11px;
@@ -300,18 +235,6 @@
   </div>
 
   <main class="grid" aria-label="Selected work">
-      <figure class="cell" data-span="1">
-        <div class="card">
-          <p class="small">Internet Guild</p>
-          <p class="small">Essentialist design studio. Design, build &amp; ship</p>
-          <p class="small">From websites to AI. Eleven years of daily practice.</p>
-          <p class="small">Open for new work</p>
-          <p class="name">Internet<br>Guild</p>
-        </div>
-        <figcaption>Essentialist design studio. Design, build &amp; ship, from websites to AI. Open for new work.
-          <a class="more" href="mailto:webmaster@internetguild.co"><span class="dot"></span>Hire the guild</a>
-        </figcaption>
-      </figure>
       <figure class="cell" data-span="1">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
         <figcaption>Towerbank / Street Poster</figcaption>
