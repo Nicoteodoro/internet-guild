@@ -310,9 +310,9 @@
     }
 
     /* The side keeps both quarters, so the wordmark and the menu share a
-       line; the text runs across both, held 80 short of the side's edge */
+       line; the text takes half of that, less 40 */
     .copy {
-      max-width: calc(100% - 80px);
+      max-width: calc((100% - 80px) / 2);
       text-wrap: pretty;
     }
 
