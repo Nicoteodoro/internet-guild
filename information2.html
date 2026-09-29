@@ -7,8 +7,7 @@
   <title>Information 2 / Internet Guild</title>
   <link rel="canonical" href="https://internetguild.co/">
   <script>document.documentElement.classList.add('js')</script>
-  <link rel="preload" href="work-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="work-sans-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fragment-mono-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
@@ -22,20 +21,12 @@
       overflow-y: scroll;
     }
 
-    /* Work Sans, self-hosted: 400 for the page, 500 for the wordmark (SIL
-       Open Font License, work-sans-OFL.txt) */
+    /* Fragment Mono, self-hosted; it comes in one weight, 400 (SIL Open
+       Font License, fragment-mono-OFL.txt) */
     @font-face {
-      font-family: "Work Sans";
-      src: url("work-sans-400.woff2") format("woff2");
+      font-family: "Fragment Mono";
+      src: url("fragment-mono-400.woff2") format("woff2");
       font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "Work Sans";
-      src: url("work-sans-500.woff2") format("woff2");
-      font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
@@ -43,12 +34,12 @@
     body {
       background: #ffffff;
       color: #000000;
-      font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+      font-family: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.01px;
-      font-size: 11px;
-      line-height: 13px;
+      font-size: 12px;
+      line-height: 14px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -76,10 +67,6 @@
       font-weight: inherit;
     }
 
-    /* The wordmark alone stands at 500 */
-    h1 {
-      font-weight: 500;
-    }
 
     /* Five columns, 11px in from each edge, 12 between; the work below runs
        on the same lines */
@@ -252,7 +239,7 @@
         <div class="pairs">
           <span>Studio</span><span>Internet Guild</span>
           <span>Based in</span><span>Buenos Aires, Republic of Argentina</span>
-          <span>Typeface</span><span>Work Sans</span>
+          <span>Typeface</span><span>Fragment Mono</span>
           <span>Design and code</span><span>Internet Guild</span>
         </div>
       </dd>
