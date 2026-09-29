@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Index 2 / Internet Guild</title>
+  <link rel="canonical" href="https://internetguild.co/">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="dm-mono-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
+  <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    html {
+      overflow-y: scroll;
+    }
+
+    /* DM Mono, self-hosted at the one weight used (SIL Open Font License,
+       dm-mono-OFL.txt) */
+    @font-face {
+      font-family: "DM Mono";
+      src: url("dm-mono-500.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    body {
+      background: #ffffff;
+      color: #000000;
+      font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 12px;
+      line-height: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:focus-visible {
+      outline: 1px solid #000000;
+      outline-offset: 2px;
+    }
+
+    p,
+    h1,
+    figure {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    /* Eight columns, 20px in from each edge, 12 between */
+    .top,
+    .intro,
+    .foot {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      column-gap: 12px;
+      padding-inline: 20px;
+    }
+
+    /* The wordmark at the start; the menu across, from the fourth column */
+    .top {
+      padding-top: 20px;
+    }
+
+    .menu {
+      grid-column: 4 / -1;
+      display: flex;
+      gap: 12px;
+    }
+
+    .menu a[aria-current] {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    /* The line, three columns wide under the menu */
+    .intro {
+      padding-block: 100px 60px;
+    }
+
+    .intro p {
+      grid-column: 4 / span 3;
+    }
+
+    /* The work: pieces of one or two columns, each with its line beneath,
+       set into the shortest place as they come. Placed by the script; without
+       it they simply stack in four columns */
+    .grid {
+      margin-inline: 20px;
+      columns: 4;
+      column-gap: 12px;
+    }
+
+    .js .grid {
+      position: relative;
+      columns: auto;
+      opacity: 0;
+    }
+
+    .js .grid.ready {
+      opacity: 1;
+      transition: opacity 0.8s ease;
+    }
+
+    .cell {
+      break-inside: avoid;
+      margin-bottom: 40px;
+    }
+
+    .js .cell {
+      position: absolute;
+      margin: 0;
+    }
+
+    .media {
+      background: #f4f4f4;
+    }
+
+    .media img,
+    .media video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      padding-top: 6px;
+    }
+
+    /* The first card: the studio's name over black, two columns wide and
+       square, its own lines beneath */
+    .card {
+      container-type: inline-size;
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #000000;
+      color: #ffffff;
+    }
+
+    /* All laid out from the card's own edges; a container's padding cannot
+       be set in its own units, so nothing here uses it */
+    .card .small {
+      position: absolute;
+      font-size: 8px;
+      line-height: 9px;
+    }
+
+    .card .small:nth-child(1) {
+      top: 4cqw;
+      left: 4cqw;
+    }
+
+    .card .small:nth-child(2) {
+      top: 4cqw;
+      left: 50%;
+      width: 40%;
+    }
+
+    .card .small:nth-child(3) {
+      top: 40cqw;
+      left: 4cqw;
+      width: 34%;
+    }
+
+    .card .small:nth-child(4) {
+      top: 40cqw;
+      left: 50%;
+    }
+
+    .card .name {
+      position: absolute;
+      left: 4cqw;
+      right: 4cqw;
+      bottom: 4cqw;
+      font-size: 19cqw;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: #000000;
+    }
+
+    .cell figcaption .more {
+      display: block;
+      margin-top: 8px;
+    }
+
+    /* The foot: the ways to reach, the clients, the small print */
+    .foot {
+      padding-block: 120px 20px;
+      row-gap: 40px;
+    }
+
+    .foot > :nth-child(1) {
+      grid-column: 1 / span 3;
+    }
+
+    .foot > :nth-child(2) {
+      grid-column: 4 / span 3;
+    }
+
+    .foot > :nth-child(3) {
+      grid-column: 8;
+    }
+
+    .muted {
+      color: #949494;
+    }
+
+    /* A phone: two columns, the menu under the wordmark */
+    @media (max-width: 900px) {
+      .menu {
+        grid-column: 3 / -1;
+      }
+
+      .intro p {
+        grid-column: 3 / -1;
+      }
+
+      .foot > :nth-child(1),
+      .foot > :nth-child(2) {
+        grid-column: 1 / -1;
+      }
+
+      .foot > :nth-child(3) {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        font-size: 14px;
+        line-height: 18px;
+      }
+
+      .top {
+        row-gap: 14px;
+      }
+
+      .top h1,
+      .menu {
+        grid-column: 1 / -1;
+      }
+
+      .intro {
+        padding-block: 56px 40px;
+      }
+
+      .intro p {
+        grid-column: 1 / -1;
+      }
+
+      .card .small {
+        font-size: 9px;
+        line-height: 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .grid.ready {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <h1><a href="index2.html">Internet Guild</a></h1>
+    <nav class="menu" aria-label="Main">
+      <a href="index2.html" aria-current="page">Index</a>
+      <a href="about.html">Information</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <p>Essentialist design studio. From websites to AI. Eleven years of daily practice, born to reduce, made for founders who value simplicity.</p>
+  </div>
+
+  <main class="grid" aria-label="Selected work">
+      <figure class="cell" data-span="2">
+        <div class="card">
+          <p class="small">Internet Guild</p>
+          <p class="small">Essentialist design studio. Design, build &amp; ship</p>
+          <p class="small">From websites to AI. Eleven years of daily practice.</p>
+          <p class="small">Open for new work</p>
+          <p class="name">Internet<br>Guild</p>
+        </div>
+        <figcaption>Essentialist design studio. Design, build &amp; ship, from websites to AI. Open for new work.
+          <a class="more" href="mailto:webmaster@internetguild.co"><span class="dot"></span>Hire the guild</a>
+        </figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
+        <figcaption>Towerbank / Street Poster</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
+        <figcaption>Towerbank / Visa Cards</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Towerbank / Investments App</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 720 / 1080"><video width="720" height="1080" src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
+        <figcaption>Towerbank / Debit Card</figcaption>
+      </figure>
+      <figure class="cell" data-span="2">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
+        <figcaption>Towerbank / Interface</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
+        <figcaption>Towerbank / Website, Laptops</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
+        <figcaption>Numia / Icon System</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
+        <figcaption>Numia / Pattern</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
+        <figcaption>Numia / Poster</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
+        <figcaption>Numia / Website, Laptop</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Numia / Website, Mobile</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
+        <figcaption>Numia / Website Sections</figcaption>
+      </figure>
+      <figure class="cell" data-span="2">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
+        <figcaption>Numia / Customer Journey</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 630 / 880"><video width="630" height="880" src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
+        <figcaption>Numia / Virtual Assistance</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
+        <figcaption>Emi / Brand Identity</figcaption>
+      </figure>
+      <figure class="cell" data-span="2">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
+        <figcaption>Emi / Website</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
+        <figcaption>Emi / Website, Spanish</figcaption>
+      </figure>
+      <figure class="cell" data-span="2">
+        <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
+        <figcaption>Emi / Onboarding</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 720 / 1080"><video width="720" height="1080" src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
+        <figcaption>Emi / Report Charts</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
+        <figcaption>Emi / Report, iPad</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
+        <figcaption>Great Sky Solar / Homepage</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
+        <figcaption>Great Sky Solar / Product Cards</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
+        <figcaption>Great Sky Solar / Team Page</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
+        <figcaption>Agent Activity Panel</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
+        <figcaption>Token Statement</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
+        <figcaption>xrank.tech</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
+        <figcaption>China.Supply</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
+        <figcaption>Journal App</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
+        <figcaption>Journal, Close-up</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Calm App Login</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
+        <figcaption>Music Player</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
+        <figcaption>Writing App</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
+        <figcaption>Godzilla Minus One</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
+        <figcaption>Godzilla, Bus Stop</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
+        <figcaption>Nine2Five / Spec Sheet</figcaption>
+      </figure>
+      <figure class="cell" data-span="1">
+        <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
+        <figcaption>Internet Guild / Shopping Bag</figcaption>
+      </figure>
+  </main>
+
+  <footer class="foot">
+    <p>
+      <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
+      <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
+      <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">W +54 911 33932087</a><br>
+      <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br>
+      <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
+      <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+    </p>
+    <p><span class="muted">Latest collaborations</span><br>
+      Aerolab, Great Sky Solar, Buenbit&nbsp;(acquired), Numia, Towerbank, Papayadash, K Street VC, peiGo, Eureka Labs, Emilabs, Aquicore&nbsp;(acquired), Complif, Bonum, Waterplan, Lupa Studio, FZ Sports, 1190 Sports, Fanatiz, White Prompt, Cary Health, Cary RX.</p>
+    <p class="muted">Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Films play only while on screen, and never with reduced motion
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (isIntersecting && !reduceMotion.matches) {
+          target.play().catch(() => {});
+        } else {
+          target.pause();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Posters load about one screen ahead of the scroll
+    const posterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting) return;
+        target.poster = target.dataset.poster;
+        observer.unobserve(target);
+      });
+    }, { rootMargin: '100% 0px 100% 0px' });
+
+    document.querySelectorAll('.media video').forEach((video) => {
+      video.muted = true;
+      videoObserver.observe(video);
+      if (video.dataset.poster) posterObserver.observe(video);
+    });
+
+    // Lays the work out like a wall of prints: each piece goes where its
+    // column, or pair of columns, is lowest, so the bottom edge stays ragged
+    (() => {
+      const grid = document.querySelector('.grid');
+      const cells = [...grid.children];
+      const gapX = 12;
+      const gapY = 40;
+
+      const columnsFor = (width) => {
+        if (width > 1200) return 8;
+        if (width > 900) return 6;
+        if (width > 560) return 4;
+        return 2;
+      };
+
+      const layout = () => {
+        const width = grid.clientWidth;
+        const count = columnsFor(innerWidth);
+        const colW = (width - gapX * (count - 1)) / count;
+        const heights = new Array(count).fill(0);
+
+        cells.forEach((cell) => {
+          const span = Math.min(Number(cell.dataset.span) || 1, count);
+          cell.style.width = (colW * span + gapX * (span - 1)) + 'px';
+
+          let best = 0;
+          let bestTop = Infinity;
+          for (let c = 0; c + span <= count; c++) {
+            const top = Math.max(...heights.slice(c, c + span));
+            if (top < bestTop) { bestTop = top; best = c; }
+          }
+
+          cell.style.left = (best * (colW + gapX)) + 'px';
+          cell.style.top = bestTop + 'px';
+
+          const bottom = bestTop + cell.offsetHeight + gapY;
+          for (let c = best; c < best + span; c++) heights[c] = bottom;
+        });
+
+        grid.style.height = (Math.max(...heights) - gapY) + 'px';
+        grid.classList.add('ready');
+      };
+
+      let timer;
+      addEventListener('resize', () => {
+        clearTimeout(timer);
+        timer = setTimeout(layout, 80);
+      });
+
+      layout();
+      if (document.fonts) document.fonts.ready.then(layout);
+    })();
+  </script>
+</body>
+</html>
