@@ -80,13 +80,13 @@
       font-weight: 500;
     }
 
-    /* Four columns, 11px in from each edge, 12 between; the work below runs
+    /* Five columns, 11px in from each edge, 12 between; the work below runs
        on the same lines */
     .top,
     .intro,
     .foot {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       column-gap: 12px;
       padding-inline: 11px;
     }
@@ -108,7 +108,7 @@
       text-underline-offset: 3px;
     }
 
-    /* The line, three columns wide under the menu */
+    /* The line, two columns wide under the menu */
     .intro {
       padding-block: 100px 60px;
     }
@@ -122,7 +122,7 @@
        it they simply stack in four columns */
     .grid {
       margin-inline: 11px;
-      columns: 4;
+      columns: 5;
       column-gap: 12px;
     }
 
@@ -147,8 +147,98 @@
       margin: 0;
     }
 
+    .cell {
+      cursor: zoom-in;
+    }
+
+    .cell:focus-visible {
+      outline: 1px solid #000000;
+      outline-offset: 3px;
+    }
+
     .media {
       background: #f4f4f4;
+    }
+
+    /* A piece opened full size: a white page over the site, the piece whole
+       and as large as the screen allows, its line and place in the set
+       above, and Close */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 11px;
+      padding: 11px;
+      background: #ffffff;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    }
+
+    .viewer-open .viewer {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease;
+    }
+
+    .viewer-open,
+    .viewer-open body {
+      overflow: hidden;
+    }
+
+    .viewer-bar {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      column-gap: 12px;
+    }
+
+    .viewer-title {
+      grid-column: 1 / span 2;
+    }
+
+    .viewer-count {
+      grid-column: 3;
+    }
+
+    .viewer-close {
+      grid-column: 5;
+      justify-self: end;
+      appearance: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .viewer-close:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    /* The piece is pinned inside the space left under the bar, so it can
+       never run past the bottom of the screen */
+    .viewer-stage {
+      position: relative;
+      min-height: 0;
+      cursor: zoom-out;
+    }
+
+    .viewer-stage img,
+    .viewer-stage video {
+      position: absolute;
+      inset: 0;
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
     }
 
     .media img,
@@ -173,11 +263,11 @@
     }
 
     .foot > :nth-child(2) {
-      grid-column: 2 / span 2;
+      grid-column: 3 / span 2;
     }
 
     .foot > :nth-child(3) {
-      grid-column: 4;
+      grid-column: 5;
     }
 
     .muted {
@@ -214,7 +304,9 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .js .grid.ready {
+      .js .grid.ready,
+      .viewer,
+      .viewer-open .viewer {
         transition: none;
       }
     }
@@ -235,151 +327,160 @@
   </div>
 
   <main class="grid" aria-label="Selected work">
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
         <figcaption>Towerbank / Street Poster</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
         <figcaption>Towerbank / Visa Cards</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Towerbank / Investments App</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 720 / 1080"><video width="720" height="1080" src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
         <figcaption>Towerbank / Debit Card</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
         <figcaption>Towerbank / Interface</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
         <figcaption>Towerbank / Website, Laptops</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
         <figcaption>Numia / Icon System</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
         <figcaption>Numia / Pattern</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
         <figcaption>Numia / Poster</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
         <figcaption>Numia / Website, Laptop</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Numia / Website, Mobile</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
         <figcaption>Numia / Website Sections</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
         <figcaption>Numia / Customer Journey</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 630 / 880"><video width="630" height="880" src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
         <figcaption>Numia / Virtual Assistance</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
         <figcaption>Emi / Brand Identity</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
         <figcaption>Emi / Website</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
         <figcaption>Emi / Website, Spanish</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1920 / 1080"><video width="1920" height="1080" src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
         <figcaption>Emi / Onboarding</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 720 / 1080"><video width="720" height="1080" src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
         <figcaption>Emi / Report Charts</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
         <figcaption>Emi / Report, iPad</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
         <figcaption>Great Sky Solar / Homepage</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
         <figcaption>Great Sky Solar / Product Cards</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
         <figcaption>Great Sky Solar / Team Page</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
         <figcaption>Agent Activity Panel</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
         <figcaption>Token Statement</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
         <figcaption>xrank.tech</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
         <figcaption>China.Supply</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
         <figcaption>Journal App</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
         <figcaption>Journal, Close-up</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Calm App Login</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
         <figcaption>Music Player</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
         <figcaption>Writing App</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
         <figcaption>Godzilla Minus One</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
         <figcaption>Godzilla, Bus Stop</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
         <figcaption>Nine2Five / Spec Sheet</figcaption>
       </figure>
-      <figure class="cell" data-span="1">
+      <figure class="cell" data-span="1" tabindex="0">
         <div class="media" style="aspect-ratio: 1500 / 1500"><img width="1500" height="1500" src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
         <figcaption>Internet Guild / Shopping Bag</figcaption>
       </figure>
   </main>
+
+  <div class="viewer" role="dialog" aria-modal="true" aria-label="Piece">
+    <div class="viewer-bar">
+      <p class="viewer-title"></p>
+      <p class="viewer-count"></p>
+      <button type="button" class="viewer-close">Close</button>
+    </div>
+    <div class="viewer-stage"></div>
+  </div>
 
   <footer class="foot">
     <p>
@@ -433,7 +534,7 @@
       const gapY = 40;
 
       const columnsFor = (width) => {
-        if (width > 900) return 4;
+        if (width > 900) return 5;
         if (width > 560) return 3;
         return 2;
       };
@@ -474,6 +575,86 @@
 
       layout();
       if (document.fonts) document.fonts.ready.then(layout);
+    })();
+
+    // A piece opens full size on a white page; Close, Escape or a click on
+    // the piece puts it back, and the arrow keys walk the set
+    (() => {
+      const root = document.documentElement;
+      const grid = document.querySelector('.grid');
+      const viewer = document.querySelector('.viewer');
+      const stage = viewer.querySelector('.viewer-stage');
+      const title = viewer.querySelector('.viewer-title');
+      const count = viewer.querySelector('.viewer-count');
+      const close = viewer.querySelector('.viewer-close');
+      const cells = [...grid.querySelectorAll('.cell')];
+      let current = null;
+      let opener = null;
+
+      const show = (cell) => {
+        current = cell;
+        const source = cell.querySelector('img, video');
+        let piece;
+        if (source.tagName === 'IMG') {
+          piece = document.createElement('img');
+          piece.src = source.currentSrc || source.src;
+          piece.alt = source.alt;
+        } else {
+          piece = document.createElement('video');
+          piece.src = source.currentSrc || source.src;
+          piece.poster = source.dataset.poster || '';
+          piece.muted = true;
+          piece.loop = true;
+          piece.playsInline = true;
+          piece.setAttribute('aria-label', source.getAttribute('aria-label') || '');
+          if (!reduceMotion.matches) piece.autoplay = true;
+        }
+        stage.replaceChildren(piece);
+        title.textContent = cell.querySelector('figcaption').textContent;
+        count.textContent = (cells.indexOf(cell) + 1) + ' / ' + cells.length;
+      };
+
+      const open = (cell) => {
+        opener = cell;
+        show(cell);
+        root.classList.add('viewer-open');
+        close.focus({ preventScroll: true });
+      };
+
+      const shut = () => {
+        root.classList.remove('viewer-open');
+        stage.replaceChildren();
+        current = null;
+        if (opener) opener.focus({ preventScroll: true });
+      };
+
+      const step = (by) => {
+        const i = (cells.indexOf(current) + by + cells.length) % cells.length;
+        show(cells[i]);
+      };
+
+      grid.addEventListener('click', (e) => {
+        const cell = e.target.closest('.cell');
+        if (cell) open(cell);
+      });
+
+      grid.addEventListener('keydown', (e) => {
+        const cell = e.target.closest('.cell');
+        if (cell && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          open(cell);
+        }
+      });
+
+      close.addEventListener('click', shut);
+      stage.addEventListener('click', shut);
+
+      document.addEventListener('keydown', (e) => {
+        if (!current) return;
+        if (e.key === 'Escape') shut();
+        if (e.key === 'ArrowRight') step(1);
+        if (e.key === 'ArrowLeft') step(-1);
+      });
     })();
   </script>
 </body>
