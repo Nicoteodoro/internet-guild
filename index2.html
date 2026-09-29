@@ -7,6 +7,7 @@
   <title>Index 2 / Internet Guild</title>
   <link rel="canonical" href="https://internetguild.co/">
   <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="dm-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
@@ -21,8 +22,16 @@
       overflow-y: scroll;
     }
 
-    /* DM Mono, self-hosted at the one weight used (SIL Open Font License,
-       dm-mono-OFL.txt) */
+    /* DM Mono, self-hosted at the two weights used, 400 for the page and 500
+       for the wordmark (SIL Open Font License, dm-mono-OFL.txt) */
+    @font-face {
+      font-family: "DM Mono";
+      src: url("dm-mono-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
     @font-face {
       font-family: "DM Mono";
       src: url("dm-mono-500.woff2") format("woff2");
@@ -35,10 +44,10 @@
       background: #ffffff;
       color: #000000;
       font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-weight: 500;
+      font-weight: 400;
       text-transform: uppercase;
-      font-size: 12px;
-      line-height: 14px;
+      font-size: 11px;
+      line-height: 1;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -66,23 +75,30 @@
       font-weight: inherit;
     }
 
-    /* Eight columns, 20px in from each edge, 12 between */
+    /* The wordmark alone stands at 500 */
+    h1,
+    .card .name {
+      font-weight: 500;
+    }
+
+    /* Four columns, 11px in from each edge, 12 between; the work below runs
+       on the same lines */
     .top,
     .intro,
     .foot {
       display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       column-gap: 12px;
-      padding-inline: 20px;
+      padding-inline: 11px;
     }
 
-    /* The wordmark at the start; the menu across, from the fourth column */
+    /* The wordmark at the start; the menu across, from the third column */
     .top {
-      padding-top: 20px;
+      padding-top: 11px;
     }
 
     .menu {
-      grid-column: 4 / -1;
+      grid-column: 3 / -1;
       display: flex;
       gap: 12px;
     }
@@ -99,14 +115,14 @@
     }
 
     .intro p {
-      grid-column: 4 / span 3;
+      grid-column: 3 / span 2;
     }
 
     /* The work: pieces of one or two columns, each with its line beneath,
        set into the shortest place as they come. Placed by the script; without
        it they simply stack in four columns */
     .grid {
-      margin-inline: 20px;
+      margin-inline: 11px;
       columns: 4;
       column-gap: 12px;
     }
@@ -161,8 +177,8 @@
        be set in its own units, so nothing here uses it */
     .card .small {
       position: absolute;
-      font-size: 8px;
-      line-height: 9px;
+      font-size: max(8px, 1.6cqw);
+      line-height: 1.1;
     }
 
     .card .small:nth-child(1) {
@@ -213,20 +229,20 @@
 
     /* The foot: the ways to reach, the clients, the small print */
     .foot {
-      padding-block: 120px 20px;
+      padding-block: 120px 11px;
       row-gap: 40px;
     }
 
     .foot > :nth-child(1) {
-      grid-column: 1 / span 3;
+      grid-column: 1;
     }
 
     .foot > :nth-child(2) {
-      grid-column: 4 / span 3;
+      grid-column: 2 / span 2;
     }
 
     .foot > :nth-child(3) {
-      grid-column: 8;
+      grid-column: 4;
     }
 
     .muted {
@@ -235,32 +251,16 @@
 
     /* A phone: two columns, the menu under the wordmark */
     @media (max-width: 900px) {
-      .menu {
-        grid-column: 3 / -1;
-      }
-
-      .intro p {
-        grid-column: 3 / -1;
-      }
-
       .foot > :nth-child(1),
-      .foot > :nth-child(2) {
-        grid-column: 1 / -1;
-      }
-
+      .foot > :nth-child(2),
       .foot > :nth-child(3) {
         grid-column: 1 / -1;
       }
     }
 
     @media (max-width: 560px) {
-      body {
-        font-size: 14px;
-        line-height: 18px;
-      }
-
       .top {
-        row-gap: 14px;
+        row-gap: 11px;
       }
 
       .top h1,
@@ -276,10 +276,6 @@
         grid-column: 1 / -1;
       }
 
-      .card .small {
-        font-size: 9px;
-        line-height: 10px;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -514,9 +510,8 @@
       const gapY = 40;
 
       const columnsFor = (width) => {
-        if (width > 1200) return 8;
-        if (width > 900) return 6;
-        if (width > 560) return 4;
+        if (width > 900) return 4;
+        if (width > 560) return 3;
         return 2;
       };
 
