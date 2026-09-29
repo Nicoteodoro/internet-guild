@@ -91,15 +91,31 @@
       padding-inline: 11px;
     }
 
-    /* The wordmark at the start; the menu across, from the third column */
+    /* The wordmark at the start; the menu across the third and fourth
+       columns; Hire the guild and the address in the last */
     .top {
       padding-top: 11px;
     }
 
     .menu {
-      grid-column: 3 / -1;
+      grid-column: 3 / span 2;
       display: flex;
       gap: 12px;
+    }
+
+    .hire {
+      grid-column: 5;
+    }
+
+    /* A small black dot ahead of Hire the guild */
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: #000000;
+      vertical-align: 0.05em;
     }
 
     .menu a[aria-current] {
@@ -289,7 +305,8 @@
       }
 
       .top h1,
-      .menu {
+      .menu,
+      .hire {
         grid-column: 1 / -1;
       }
 
@@ -320,6 +337,10 @@
       <a href="about.html">Information</a>
       <a href="contact.html">Contact</a>
     </nav>
+    <div class="hire">
+      <p><span class="dot"></span>Hire the guild</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
   </header>
 
   <div class="intro">
