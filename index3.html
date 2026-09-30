@@ -30,7 +30,7 @@
       color: #ffffff;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      letter-spacing: 0;
+      letter-spacing: 0.01px;
       font-size: 14px;
       line-height: 16px;
       -webkit-font-smoothing: antialiased;
@@ -50,6 +50,19 @@
 
     p {
       margin: 0;
+    }
+
+    /* The engraving above the text, on the text's left edge. It is drawn dark
+       on white, so it is inverted for the black page, and screened so nothing
+       but its lines shows */
+    .logo {
+      display: block;
+      width: 240px;
+      max-width: 100%;
+      height: auto;
+      margin: 0 0 32px;
+      filter: invert(1);
+      mix-blend-mode: screen;
     }
 
     /* One blank line between the two blocks */
@@ -77,6 +90,7 @@
 <body>
   <div class="screen">
     <div>
+      <img class="logo" src="logo-arco.webp" alt="Internet Guild" width="900" height="822">
       <p>Essentialist studio x designed to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.<br>Take everything, or just what you need.</p>
       <p>Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
