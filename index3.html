@@ -26,8 +26,8 @@
     }
 
     body {
-      background: #000000;
-      color: #ffffff;
+      background: #ffffff;
+      color: #000000;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
       letter-spacing: 0.01px;
@@ -37,7 +37,7 @@
     }
 
     /* The whole page is one screen tall, the block of text in the middle of
-       it both ways, its lines set to the left */
+       it both ways, its lines centred */
     .screen {
       box-sizing: border-box;
       display: grid;
@@ -45,24 +45,21 @@
       height: 100vh;
       height: 100dvh;
       padding: 20px;
-      text-align: left;
+      text-align: center;
     }
 
     p {
       margin: 0;
     }
 
-    /* The engraving above the text, on the text's left edge. It is drawn dark
-       on white, so it is inverted for the black page, and screened so nothing
-       but its lines shows */
+    /* The engraving above the text, centred with it. It is drawn dark on a
+       clear ground, so it needs nothing done to it on the white page */
     .logo {
       display: block;
       width: 240px;
       max-width: 100%;
       height: auto;
-      margin: 0 0 32px;
-      filter: invert(1);
-      mix-blend-mode: screen;
+      margin: 0 auto 32px;
     }
 
     /* One blank line between the two blocks */
@@ -82,7 +79,7 @@
     }
 
     a:focus-visible {
-      outline: 1px solid #ffffff;
+      outline: 1px solid #000000;
       outline-offset: 2px;
     }
   </style>
@@ -90,7 +87,7 @@
 <body>
   <div class="screen">
     <div>
-      <img class="logo" src="logo-arco.webp" alt="Internet Guild" width="900" height="822">
+      <img class="logo" src="logo-black.webp" alt="Internet Guild" width="900" height="822">
       <p>Essentialist studio x designed to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.<br>Take everything, or just what you need.</p>
       <p>Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
