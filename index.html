@@ -49,8 +49,8 @@
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
       letter-spacing: 0.1px;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: 12px;
+      line-height: 14px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -124,7 +124,7 @@
     .mark {
       position: absolute;
       left: 20px;
-      top: 23px;
+      top: calc(27px - 0.357em);
       height: 0.715em;
       width: auto;
       pointer-events: none;
@@ -293,12 +293,6 @@
     }
 
     @media (max-width: 560px) {
-      /* A phone reads at 14 throughout */
-      body {
-        font-size: 14px;
-        line-height: 18px;
-      }
-
       .row {
         grid-template-columns: 1fr;
       }
@@ -309,14 +303,10 @@
       }
 
       /* The line sits under the wordmark, full width, so each of its lines
-         runs whole where it can; the mark follows the taller line */
+         runs whole where it can */
       .tagline {
         grid-column: 1;
         padding-top: 56px;
-      }
-
-      .mark {
-        top: 24px;
       }
 
       .menu-head .mark-sheet {
@@ -328,15 +318,6 @@
       /* The address goes on a phone: the menu carries Contact */
       .contact {
         display: none;
-      }
-
-      /* On a phone everything is one size */
-      h1,
-      .tagline,
-      .contact,
-      .menu {
-        font-size: 14px;
-        line-height: 18px;
       }
 
       /* The menu leaves the header for a sheet of its own. Closed, it is
@@ -362,8 +343,6 @@
         position: absolute;
         top: 20px;
         right: 20px;
-        font-size: 14px;
-        line-height: 18px;
       }
 
       .menu {
