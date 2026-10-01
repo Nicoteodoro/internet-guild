@@ -92,9 +92,11 @@
       color: #949494;
     }
 
-    /* The nav is one colour throughout, the address's note included */
+    /* The nav is one colour throughout, the address's note included. The
+       note is in capitals; the address itself stays as it is written */
     .contact .muted {
       color: inherit;
+      text-transform: uppercase;
     }
 
     /* Header and grid share one four-column measure, 20px in from each edge */
@@ -109,12 +111,6 @@
       position: relative;
       padding-block: 20px 240px;
       column-gap: 24px;
-    }
-
-    /* The nav reads across: the wordmark, the line, the menu, the address.
-       The line takes the second quarter and scrolls away with the page */
-    .tagline {
-      grid-column: 2;
     }
 
     /* The mark stands left of the wordmark at the height of its capitals,
@@ -168,6 +164,12 @@
       position: relative;
     }
 
+    /* The menu is set smaller than the rest, on the same 14 line. The
+       phone's wordmark in the sheet is not one of its links */
+    .menu > a {
+      font-size: 10px;
+    }
+
     /* Invisible touch area */
     .menu a::before {
       content: "";
@@ -186,6 +188,7 @@
       margin-inline: 20px;
       padding-block: 8px 12px;
       border-top: 1px solid #e6e6e6;
+      text-transform: uppercase;
     }
 
     .count {
@@ -283,11 +286,17 @@
         left: 20px;
       }
 
-      .top .menu {
-        left: calc(20px + (100% - 112px) / 2 + 48px);
+      /* The nav reads across: the wordmark, the address, the line, the menu.
+         The line takes the third quarter and scrolls away with the page */
+      .top .contact {
+        left: calc(20px + (100% - 112px) / 4 + 24px);
       }
 
-      .top .contact {
+      .tagline {
+        grid-column: 3;
+      }
+
+      .top .menu {
         left: calc(20px + (100% - 112px) * 3 / 4 + 72px);
       }
     }
@@ -442,6 +451,11 @@
     <h1>Internet Guild™</h1>
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
+    <div class="contact">
+      <p class="muted">Hire the guild.</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
+
     <p class="tagline">Essentialist design practice, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.</p>
 
     <nav class="menu" id="menu" aria-label="Main">
@@ -453,11 +467,6 @@
       <a href="about.html">Information</a>
       <a href="contact.html">Contact</a>
     </nav>
-
-    <div class="contact">
-      <p class="muted">Hire the guild.</p>
-      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
-    </div>
   </header>
 
   <div class="bar">
