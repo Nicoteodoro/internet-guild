@@ -105,19 +105,31 @@
     }
 
     .top {
-      padding-block: 20px 0;
+      position: relative;
+      padding-block: 20px 120px;
     }
 
-    /* The line stands on its own between the nav and the work, as the hero
-       did: 40% of the screen tall with the line centred in it, across the
-       first two quarters so its lines run whole */
-    .hero {
-      min-height: 40vh;
-      align-content: center;
-    }
-
+    /* The nav reads across: the wordmark, the line, the menu, the address.
+       The line takes the second quarter and scrolls away with the page */
     .tagline {
-      grid-column: 1 / span 2;
+      grid-column: 2;
+    }
+
+    /* The mark stands left of the wordmark at the height of its capitals,
+       its foot on the wordmark's baseline. It is its own element, outside
+       the wordmark's blend, so its yellow stays yellow. The wordmark makes
+       room for it: the mark's width, 414 by 215, and a gap of 0.6em */
+    .mark {
+      position: absolute;
+      left: 20px;
+      top: 23px;
+      height: 0.715em;
+      width: auto;
+      pointer-events: none;
+    }
+
+    .top h1 {
+      padding-left: calc(0.715em * 414 / 215 + 0.6em);
     }
 
     /* No commas: the words are held apart by space alone, twice what a
@@ -240,10 +252,10 @@
       }
     }
 
-    /* On a desk the wordmark, the address and the menu stay put while the
+    /* On a desk the wordmark, the menu and the address stay put while the
        page runs under them; the line scrolls away with it. They invert over
        what they cross: white in difference reads black on the white page
-       and white over anything black */
+       and white over anything black. The mark stays as drawn */
     @media (min-width: 901px) {
       .top {
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -260,21 +272,21 @@
         mix-blend-mode: difference;
       }
 
+      .mark {
+        position: fixed;
+        z-index: 6;
+      }
+
       .top h1 {
         left: 20px;
       }
 
-      .top .contact {
-        left: calc(20px + (100% - 76px) / 4 + 12px);
-      }
-
       .top .menu {
-        left: calc(20px + (100% - 76px) * 3 / 4 + 36px);
+        left: calc(20px + (100% - 76px) / 2 + 24px);
       }
 
-      /* The nav is fixed, so the header holds its two lines of room */
-      .top {
-        min-height: 32px;
+      .top .contact {
+        left: calc(20px + (100% - 76px) * 3 / 4 + 36px);
       }
     }
 
@@ -291,21 +303,24 @@
 
       .top {
         row-gap: 0;
-      }
-
-      .hero {
-        min-height: 50vh;
-      }
-
-
-      h1 {
-        order: 1;
+        padding-block: 20px 112px;
       }
 
       /* The line sits under the wordmark, full width, so each of its lines
-         runs whole where it can */
+         runs whole where it can; the mark follows the taller line */
       .tagline {
         grid-column: 1;
+        padding-top: 56px;
+      }
+
+      .mark {
+        top: 24px;
+      }
+
+      .menu-head .mark-sheet {
+        height: 0.715em;
+        width: auto;
+        margin-right: 0.6em;
       }
 
       /* The address goes on a phone: the menu carries Contact */
@@ -442,19 +457,15 @@
   <div class="edge" aria-hidden="true"></div>
 
   <header class="row top">
+    <img class="mark" src="logo.svg" alt="" width="414" height="215">
     <h1>Internet Guild™</h1>
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
-
-    <div class="contact">
-      <p class="muted">Hire the guild.</p>
-      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
-    </div>
-
+    <p class="tagline">Essentialist design practice, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.</p>
 
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
-        <a href="index.html">Internet Guild™</a>
+        <a href="index.html"><img class="mark-sheet" src="logo.svg" alt="" width="414" height="215">Internet Guild™</a>
         <button type="button" class="menu-close">Close</button>
       </div>
       <a href="index.html" aria-current="page">Index</a>
@@ -462,11 +473,11 @@
       <a href="contact.html">Contact</a>
     </nav>
 
+    <div class="contact">
+      <p class="muted">Hire the guild.</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
   </header>
-
-  <div class="row hero">
-    <p class="tagline">Essentialist design practice, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.</p>
-  </div>
 
   <div class="bar">
     <p><span class="muted">Selected work /</span> Index</p>
