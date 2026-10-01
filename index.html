@@ -99,29 +99,29 @@
       text-transform: uppercase;
     }
 
-    /* Header and grid share one four-column measure, 20px in from each edge */
+    /* Header and grid share one four-column measure, 12px in from each edge */
     .row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
-      padding-inline: 20px;
+      padding-inline: 12px;
     }
 
     .top {
       position: relative;
-      padding-block: 20px 120px;
-      column-gap: 24px;
+      padding-block: 12px 120px;
+      column-gap: 16px;
     }
 
     /* The mark stands left of the wordmark at the height of its capitals,
-       its foot on the wordmark's baseline, 30 down (10 on a 12 line, the
-       line 20 down). It is its own element, apart from the wordmark. The
+       its foot on the wordmark's baseline, 22 down (10 on a 12 line, the
+       line 12 down). It is its own element, apart from the wordmark. The
        wordmark makes room for it: the mark's width, 414 by 215, and a gap
        of 2px */
     .mark {
       position: absolute;
-      left: 20px;
-      top: calc(30px - 0.715em);
+      left: 12px;
+      top: calc(22px - 0.715em);
       height: 0.715em;
       width: auto;
       pointer-events: none;
@@ -185,7 +185,7 @@
       display: flex;
       justify-content: space-between;
       gap: 24px;
-      margin-inline: 20px;
+      margin-inline: 12px;
       padding-block: 8px 12px;
       border-top: 1px solid #e6e6e6;
       text-transform: uppercase;
@@ -219,8 +219,8 @@
        down. Narrower screens take three, two, then one */
     .index {
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 48px 24px;
-      padding-bottom: 20px;
+      gap: 20px 16px;
+      padding-bottom: 12px;
     }
 
     @media (max-width: 1100px) {
@@ -271,9 +271,9 @@
       .top .contact,
       .top .menu {
         position: fixed;
-        top: 20px;
+        top: 12px;
         z-index: 5;
-        width: calc((100% - 112px) / 4);
+        width: calc((100% - 72px) / 4);
         color: #cccccc;
         mix-blend-mode: difference;
       }
@@ -286,13 +286,13 @@
       }
 
       .top h1 {
-        left: 20px;
+        left: 12px;
       }
 
       /* The nav reads across: the wordmark, the address, the line, the menu.
          The line takes the third quarter and scrolls away with the page */
       .top .contact {
-        left: calc(20px + (100% - 112px) / 4 + 24px);
+        left: calc(12px + (100% - 72px) / 4 + 16px);
       }
 
       /* On 14 its first line stands 1px lower than the nav's; it comes up by
@@ -303,7 +303,7 @@
       }
 
       .top .menu {
-        left: calc(20px + (100% - 112px) * 3 / 4 + 72px);
+        left: calc(12px + (100% - 72px) * 3 / 4 + 48px);
       }
     }
 
@@ -314,7 +314,7 @@
 
       .top {
         row-gap: 0;
-        padding-block: 20px 112px;
+        padding-block: 12px 112px;
       }
 
       /* The line sits under the wordmark, full width, so each of its lines
@@ -356,8 +356,8 @@
       .menu-open {
         display: block;
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 12px;
+        right: 12px;
       }
 
       .menu {
@@ -368,7 +368,7 @@
         flex-wrap: nowrap;
         align-items: flex-start;
         gap: 0;
-        padding: 20px;
+        padding: 12px;
         background: #ffffff;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
