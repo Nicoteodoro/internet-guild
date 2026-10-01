@@ -16,7 +16,6 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <script>document.documentElement.classList.add('js', 'intro-open')</script>
   <link rel="preload" href="neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
@@ -59,7 +58,6 @@
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 400;
       text-transform: uppercase;
-      letter-spacing: -0.4px;
       font-size: 12px;
       line-height: 14px;
       -webkit-font-smoothing: antialiased;
@@ -102,139 +100,6 @@
     /* The nav is one colour throughout, the address's note included */
     .contact .muted {
       color: inherit;
-    }
-
-
-    /* The curtain: a white page the wordmark types itself onto. It only
-       exists where scripting can lift it, so it can never strand the site */
-    .intro {
-      display: none;
-    }
-
-    /* Absolute rather than fixed: Safari on iOS 26 paints its own bars with
-       the colour of any fixed element touching the top or bottom of the
-       screen, and a block that merely sits at the top of the page is not
-       one it looks at */
-    .js .intro {
-      display: grid;
-      place-items: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100vh;
-      height: 100dvh;
-      z-index: 10;
-      background: #ffffff;
-      transition: opacity 0.42s ease;
-    }
-
-    /* The wordmark at the page's size and in its capitals, as the header sets
-       it */
-    .intro p {
-      margin: 0;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    .js .intro.done {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* A caret that blinks while the line is still being written */
-    .intro span::after {
-      content: "";
-      display: inline-block;
-      width: 0.5em;
-      height: 1em;
-      margin-left: 0.143em;
-      background: currentColor;
-      vertical-align: -0.15em;
-      animation: caret 1s steps(2, start) infinite;
-    }
-
-    .intro.typed span::after {
-      display: none;
-    }
-
-    @keyframes caret {
-      50% { opacity: 0; }
-    }
-
-    /* Nothing scrolls behind the curtain */
-    .intro-open body {
-      overflow: hidden;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .intro span::after {
-        animation: none;
-      }
-    }
-
-    /* The page comes in from the top down as the curtain lifts, each part
-       rising into place a beat after the one above it. Held on its first
-       frame while the curtain is up, so the arrival is seen, not missed */
-    @keyframes arrive {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-    }
-
-    h1,
-    .contact,
-    .tagline,
-    .menu-open,
-    .bar,
-    .index > .cell {
-      animation: arrive 1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-    }
-
-    .contact { animation-delay: 0.07s; }
-    .tagline { animation-delay: 0.14s; }
-    .menu-open { animation-delay: 0.07s; }
-    .bar { animation-delay: 0.28s; }
-    .index > .cell { animation-delay: 1s; }
-    .index > .cell:nth-child(1) { animation-delay: 0.38s; }
-    .index > .cell:nth-child(2) { animation-delay: 0.45s; }
-    .index > .cell:nth-child(3) { animation-delay: 0.52s; }
-    .index > .cell:nth-child(4) { animation-delay: 0.6s; }
-    .index > .cell:nth-child(5) { animation-delay: 0.67s; }
-    .index > .cell:nth-child(6) { animation-delay: 0.74s; }
-    .index > .cell:nth-child(7) { animation-delay: 0.82s; }
-    .index > .cell:nth-child(8) { animation-delay: 0.89s; }
-    .index > .cell:nth-child(9) { animation-delay: 0.96s; }
-
-    /* The menu comes in with the header where it sits in it; on a phone it
-       is a sheet of its own, and Menu stands in for it */
-    @media (min-width: 561px) {
-      .menu {
-        animation: arrive 1s cubic-bezier(0.22, 1, 0.36, 1) 0.21s backwards;
-      }
-    }
-
-    .intro-open h1,
-    .intro-open .contact,
-    .intro-open .tagline,
-    .intro-open .menu,
-    .intro-open .menu-open,
-    .intro-open .bar,
-    .intro-open .index > .cell {
-      animation-play-state: paused;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      h1,
-      .contact,
-      .tagline,
-      .menu,
-      .menu-open,
-      .bar,
-      .index > .cell {
-        animation: none;
-      }
     }
 
     /* Header and grid share one four-column measure, 20px in from each edge */
@@ -585,7 +450,6 @@
 </head>
 <body>
   <div class="edge" aria-hidden="true"></div>
-  <div class="intro" aria-hidden="true"><p><span></span></p></div>
 
   <header class="row top">
     <h1>Internet Guild</h1>
@@ -734,38 +598,6 @@
   </main>
 
   <script>
-    // The wordmark types itself onto a blank page while the grid loads behind
-    (() => {
-      const intro = document.querySelector('.intro');
-      const line = intro.querySelector('span');
-      const word = 'Internet Guild';
-      const root = document.documentElement;
-      root.classList.add('intro-open');
-
-      const lift = () => {
-        intro.classList.add('typed');
-        setTimeout(() => {
-          intro.classList.add('done');
-          root.classList.remove('intro-open');
-          setTimeout(() => intro.remove(), 480);
-        }, 310);
-      };
-
-      // Reduced motion gets the line whole, and the curtain goes at once
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        line.textContent = word;
-        lift();
-        return;
-      }
-
-      let i = 0;
-      const type = () => {
-        line.textContent = word.slice(0, ++i);
-        setTimeout(i < word.length ? type : lift, 70);
-      };
-      setTimeout(type, 160);
-    })();
-
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
