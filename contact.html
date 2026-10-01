@@ -128,6 +128,7 @@
     }
 
     .top h1 {
+      box-sizing: border-box;
       padding-left: calc(0.715em * 414 / 215 + 2px);
     }
 
@@ -187,8 +188,12 @@
        and light over anything dark. The mark is drawn #333333 and inverted
        to #cccccc, so it goes through the same blend and does the same */
     @media (min-width: 901px) {
+      /* --col is one column of the nav's measure: the width less the two 12
+         edges and the 16 between n columns, shared out */
       .top {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        --n: 4;
+        --col: calc((100% - 24px - (var(--n) - 1) * 16px) / var(--n));
+        grid-template-columns: repeat(var(--n), minmax(0, 1fr));
       }
 
       .top h1,
@@ -197,7 +202,7 @@
         position: fixed;
         top: 12px;
         z-index: 5;
-        width: calc((100% - 72px) / 4);
+        width: var(--col);
         color: #cccccc;
         mix-blend-mode: difference;
       }
@@ -216,11 +221,32 @@
       /* The nav reads across: the wordmark, the address, the menu. The line
          of the home has no place here; the text takes the last quarter */
       .top .contact {
-        left: calc(12px + (100% - 72px) / 4 + 16px);
+        left: calc(12px + var(--col) + 16px);
       }
 
       .top .menu {
-        left: calc(12px + (100% - 72px) * 3 / 4 + 48px);
+        left: calc(12px + 3 * (var(--col) + 16px));
+      }
+    }
+
+    /* Over 1100 the nav is six columns: the wordmark one, the address one,
+       the menu the last two. The text takes those two, under the menu */
+    @media (min-width: 1101px) {
+      .top {
+        --n: 6;
+      }
+
+      .top .menu {
+        left: calc(12px + 4 * (var(--col) + 16px));
+        width: calc(2 * var(--col) + 16px);
+      }
+
+      .info {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .info .copy {
+        grid-column: 5 / span 2;
       }
     }
 
