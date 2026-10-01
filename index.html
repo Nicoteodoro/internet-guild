@@ -45,7 +45,7 @@
 
     body {
       background: #ffffff;
-      color: #000000;
+      color: #434343;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
       letter-spacing: 0.1px;
@@ -89,7 +89,7 @@
 
 
     .muted {
-      color: #949494;
+      color: #434343;
     }
 
     /* The nav is one colour throughout, the address's note included. The
@@ -115,9 +115,9 @@
 
     /* The mark stands left of the wordmark at the height of its capitals,
        its foot on the wordmark's baseline, 30 down (10 on a 12 line, the
-       line 20 down). It is its own element, outside
-       the wordmark's blend, so its yellow stays yellow. The wordmark makes
-       room for it: the mark's width, 414 by 215, and a gap of 2px */
+       line 20 down). It is its own element, apart from the wordmark. The
+       wordmark makes room for it: the mark's width, 414 by 215, and a gap
+       of 2px */
     .mark {
       position: absolute;
       left: 20px;
@@ -129,6 +129,11 @@
 
     .top h1 {
       padding-left: calc(0.715em * 414 / 215 + 2px);
+    }
+
+    /* The line alone reads on 14, two more than the rest */
+    .tagline {
+      line-height: 14px;
     }
 
     /* No commas: the words are held apart by space alone, twice what a
@@ -201,7 +206,7 @@
       font: inherit;
       letter-spacing: inherit;
       text-transform: inherit;
-      color: #949494;
+      color: #434343;
       cursor: pointer;
       transition: color 0.15s ease;
     }
@@ -252,10 +257,11 @@
       }
     }
 
-    /* On a desk the wordmark, the menu and the address stay put while the
+    /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them; the line scrolls away with it. They invert over
-       what they cross: white in difference reads black on the white page
-       and white over anything black. The mark stays as drawn */
+       what they cross: #bcbcbc in difference reads #434343 on the white page
+       and light over anything dark. The mark is drawn #434343 and inverted
+       to #bcbcbc, so it goes through the same blend and does the same */
     @media (min-width: 901px) {
       .top {
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -268,13 +274,15 @@
         top: 20px;
         z-index: 5;
         width: calc((100% - 112px) / 4);
-        color: #ffffff;
+        color: #bcbcbc;
         mix-blend-mode: difference;
       }
 
       .mark {
         position: fixed;
         z-index: 6;
+        filter: invert(1);
+        mix-blend-mode: difference;
       }
 
       .top h1 {
@@ -287,8 +295,11 @@
         left: calc(20px + (100% - 112px) / 4 + 24px);
       }
 
+      /* On 14 its first line stands 1px lower than the nav's; it comes up by
+         that, so all four share a baseline */
       .tagline {
         grid-column: 3;
+        margin-top: -1px;
       }
 
       .top .menu {
@@ -338,7 +349,7 @@
         border: 0;
         background: none;
         font: inherit;
-        color: #000000;
+        color: #434343;
         cursor: pointer;
       }
 
@@ -380,7 +391,7 @@
 
       .menu-head a,
       .menu > a {
-        color: #000000;
+        color: #434343;
       }
 
       .menu > a {
