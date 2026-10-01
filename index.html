@@ -45,7 +45,7 @@
 
     body {
       background: #ffffff;
-      color: #434343;
+      color: #333333;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
       letter-spacing: 0.1px;
@@ -89,7 +89,7 @@
 
 
     .muted {
-      color: #434343;
+      color: #333333;
     }
 
     /* The nav is one colour throughout, the address's note included. The
@@ -109,7 +109,7 @@
 
     .top {
       position: relative;
-      padding-block: 20px 240px;
+      padding-block: 20px 120px;
       column-gap: 24px;
     }
 
@@ -206,7 +206,7 @@
       font: inherit;
       letter-spacing: inherit;
       text-transform: inherit;
-      color: #434343;
+      color: #333333;
       cursor: pointer;
       transition: color 0.15s ease;
     }
@@ -259,9 +259,9 @@
 
     /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them; the line scrolls away with it. They invert over
-       what they cross: #bcbcbc in difference reads #434343 on the white page
-       and light over anything dark. The mark is drawn #434343 and inverted
-       to #bcbcbc, so it goes through the same blend and does the same */
+       what they cross: #cccccc in difference reads #333333 on the white page
+       and light over anything dark. The mark is drawn #333333 and inverted
+       to #cccccc, so it goes through the same blend and does the same */
     @media (min-width: 901px) {
       .top {
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -274,7 +274,7 @@
         top: 20px;
         z-index: 5;
         width: calc((100% - 112px) / 4);
-        color: #bcbcbc;
+        color: #cccccc;
         mix-blend-mode: difference;
       }
 
@@ -314,7 +314,7 @@
 
       .top {
         row-gap: 0;
-        padding-block: 20px 224px;
+        padding-block: 20px 112px;
       }
 
       /* The line sits under the wordmark, full width, so each of its lines
@@ -349,7 +349,7 @@
         border: 0;
         background: none;
         font: inherit;
-        color: #434343;
+        color: #333333;
         cursor: pointer;
       }
 
@@ -391,7 +391,7 @@
 
       .menu-head a,
       .menu > a {
-        color: #434343;
+        color: #333333;
       }
 
       .menu > a {
@@ -453,7 +453,7 @@
   <div class="edge" aria-hidden="true"></div>
 
   <header class="row top">
-    <img class="mark" src="logo.svg" alt="" width="414" height="215">
+    <img class="mark" src="logo.svg?v=ink" alt="" width="414" height="215">
     <h1>Internet Guild™</h1>
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
@@ -466,7 +466,7 @@
 
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
-        <a href="index.html"><img class="mark-sheet" src="logo.svg" alt="" width="414" height="215">Internet Guild™</a>
+        <a href="index.html"><img class="mark-sheet" src="logo.svg?v=ink" alt="" width="414" height="215">Internet Guild™</a>
         <button type="button" class="menu-close">Close</button>
       </div>
       <a href="index.html" aria-current="page">Work</a>
