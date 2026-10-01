@@ -89,7 +89,7 @@
 
 
     .muted {
-      color: #333333;
+      color: #949494;
     }
 
     /* The nav is one colour throughout, the address's note included. The
@@ -179,6 +179,19 @@
       font-size: 10px;
     }
 
+    /* The menu and the address go grey under the pointer */
+    .menu > a,
+    .contact a {
+      transition: color 0.15s ease;
+    }
+
+    @media (hover: hover) {
+      .menu > a:hover,
+      .contact a:hover {
+        color: #949494;
+      }
+    }
+
     /* Invisible touch area */
     .menu a::before {
       content: "";
@@ -215,13 +228,13 @@
       font: inherit;
       letter-spacing: inherit;
       text-transform: inherit;
-      color: #333333;
+      color: #949494;
       cursor: pointer;
       transition: color 0.15s ease;
     }
 
     .remix:hover {
-      color: #000000;
+      color: #333333;
     }
 
     /* Six pieces to a row, 16 across and 40 down. Narrower screens take
@@ -247,6 +260,7 @@
        stands the same height */
     figcaption {
       margin-top: 4px;
+      color: #949494;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -305,6 +319,15 @@
         z-index: 6;
         filter: invert(1);
         mix-blend-mode: difference;
+      }
+
+      /* In the blend the grey is set as its inverse: #6b6b6b in difference
+         reads #949494 on the white page */
+      @media (hover: hover) {
+        .top .menu > a:hover,
+        .top .contact a:hover {
+          color: #6b6b6b;
+        }
       }
 
       .top h1 {
