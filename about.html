@@ -93,9 +93,11 @@
     }
 
     /* The nav is one colour throughout, the address's note included. The
-       note is in capitals; the address itself stays as it is written */
+       note is in capitals, a point under the rest; the address itself stays
+       as it is written */
     .contact .muted {
       color: inherit;
+      font-size: 10px;
       text-transform: uppercase;
     }
 
@@ -164,6 +166,12 @@
 
     .menu a {
       position: relative;
+    }
+
+    /* The menu is set a point under the rest. The phone's wordmark in the
+       sheet is not one of its links */
+    .menu > a {
+      font-size: 10px;
     }
 
     /* Invisible touch area */
