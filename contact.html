@@ -26,19 +26,15 @@
       margin: 0;
     }
 
+    /* Keep the scrollbar there whether the page needs it or not, so moving
+       between a long page and a short one does not shift the layout sideways.
+       Preferred over scrollbar-gutter, which reserves a fixed width even where
+       scrollbars overlay the page and take none */
     html {
       overflow-y: scroll;
     }
 
-    /* PP Neue Montreal, self-hosted in the two weights the site uses */
-    @font-face {
-      font-family: "PP Neue Montreal";
-      src: url("neue-montreal-regular.woff2") format("woff2");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
+    /* PP Neue Montreal, self-hosted at the one weight the page uses */
     @font-face {
       font-family: "PP Neue Montreal";
       src: url("neue-montreal-medium.woff2") format("woff2");
@@ -52,28 +48,15 @@
       color: #000000;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: -0.4px;
-      font-size: 12px;
-      line-height: 14px;
+      letter-spacing: 0.1px;
+      font-size: 10px;
+      line-height: 12px;
       -webkit-font-smoothing: antialiased;
     }
 
     a {
       color: inherit;
       text-decoration: none;
-    }
-
-    /* Links underline and go grey under the pointer */
-    a {
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-      transition: color 0.15s ease;
-    }
-
-    a:hover {
-      color: #949494;
-      text-decoration-line: underline;
     }
 
     a:focus-visible {
@@ -88,8 +71,14 @@
       font-weight: inherit;
     }
 
-    h1 {
+    /* The wordmark and the menu are in capitals, in the header and in the
+       phone's sheet; the rest reads as it is written */
+    h1,
+    .menu a,
+    .menu-open,
+    .menu-close {
       font-weight: 500;
+      text-transform: uppercase;
     }
 
     button {
@@ -97,72 +86,83 @@
       text-transform: inherit;
     }
 
+
+
     .muted {
       color: #949494;
     }
 
-    /* Two sides on the site's four-column measure: the studio down the
-       first half, held to the height of the screen, and the work down
-       the last two, one piece under another */
-    .page {
+    /* The nav is one colour throughout, the address's note included. The
+       note is in capitals; the address itself stays as it is written */
+    .contact .muted {
+      color: inherit;
+      text-transform: uppercase;
+    }
+
+    /* Header and grid share one four-column measure, 20px in from each edge */
+    .row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      column-gap: 60px;
+      gap: 12px;
       padding-inline: 20px;
     }
 
-    /* The wordmark and the menu on one line: the wordmark at the start of
-       the side, the menu at its end */
-    .head {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 0 40px;
+    .top {
+      position: relative;
+      padding-block: 20px 240px;
+      column-gap: 24px;
     }
 
-    /* The wordmark at the top, the contacts and the copyright at the foot,
-       and the line and the menu held between them */
-    .side {
-      grid-column: 1 / span 2;
-      position: sticky;
-      top: 0;
-      box-sizing: border-box;
-      height: 100vh;
-      height: 100dvh;
-      padding-block: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+    /* The mark stands left of the wordmark at the height of its capitals,
+       its foot on the wordmark's baseline, 30 down (10 on a 12 line, the
+       line 20 down). It is its own element, outside
+       the wordmark's blend, so its yellow stays yellow. The wordmark makes
+       room for it: the mark's width, 414 by 215, and a gap of 2px */
+    .mark {
+      position: absolute;
+      left: 20px;
+      top: calc(30px - 0.715em);
+      height: 0.715em;
+      width: auto;
+      pointer-events: none;
     }
 
-    /* A blank line between the blocks of each group, as typed; the menu
-       stands three lines off the text */
-    .side p + p {
-      margin-top: 14px;
+    .top h1 {
+      padding-left: calc(0.715em * 414 / 215 + 2px);
     }
 
-    .about .menu {
-      margin-top: 42px;
-    }
-
-    /* The menu stands as a column, one word under another */
+    /* No commas: the words are held apart by space alone, twice what a
+       comma and its gap used to take */
     .menu {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
+      flex-wrap: wrap;
+      gap: 0 23px;
     }
 
-    /* The menu reads in grey, so under the pointer it goes black instead */
+    /* Wide, the menu runs in capitals held apart by commas, and the four
+       parts of the header sit on one baseline */
+    @media (min-width: 561px) {
+      .top {
+        align-items: baseline;
+      }
+
+      .menu {
+        gap: 0 10px;
+      }
+
+      .menu > a:not(:last-child)::after {
+        content: ",";
+      }
+    }
+
+    /* The phone's own menu controls; the wide header needs neither */
+    .menu-head,
+    .menu-open {
+      display: none;
+    }
+
     .menu a {
       position: relative;
-      color: #949494;
-    }
-
-    .menu a:hover,
-    .menu a[aria-current] {
-      color: #000000;
     }
 
     /* Invisible touch area */
@@ -172,194 +172,80 @@
       inset: -10px -3px;
     }
 
-    .work {
-      grid-column: 3 / -1;
-      padding-block: 20px;
-    }
 
-    /* The line naming the view, level with the wordmark. It stays at the
-       top of the screen, 20 down, while the work runs under it; a white band
-       fills the 20 above so nothing shows over it */
-    .bar {
-      position: sticky;
-      top: 20px;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      padding-block: 0 12px;
-      background: #ffffff;
-    }
 
-    .bar::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 100%;
-      height: 20px;
-      background: #ffffff;
-    }
 
-    .count {
-      display: flex;
-      gap: 12px;
-    }
-
-    /* Reads as the text beside it; only the pointer says it is a control */
-    .remix {
-      appearance: none;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      background: none;
-      font: inherit;
-      color: #949494;
-      cursor: pointer;
-      transition: color 0.15s ease;
-    }
-
-    .remix:hover {
-      color: #000000;
-    }
-
-    /* One column of work, a piece to a row */
-    .index {
-      display: grid;
-      gap: 24px;
-    }
-
-    .cell {
-      margin: 0;
-      min-width: 0;
-    }
-
-    /* Every piece is squared off and cropped to fill */
-    .media {
-      aspect-ratio: 1 / 1;
-      background: #f4f4f4;
-      overflow: hidden;
-    }
-
-    .media img,
-    .media video {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Narrower, the page halves: the studio on the left, the work on the right */
     @media (max-width: 900px) {
-      .page {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .side {
-        grid-column: 1;
-      }
-
-      .work {
-        grid-column: 2;
+      .row {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    /* On a phone the studio comes first, in the flow, and the work under it */
-    /* No work here: the side is the page, in the flow, at least the
-       screen's height, its groups kept apart */
-    .side {
-      align-self: start;
-      justify-content: flex-start;
-      height: auto;
-      min-height: 100vh;
-      min-height: 100dvh;
-      position: static;
-      gap: 60px;
-    }
-
-    /* The content sits right under the wordmark; the foot keeps to the
-       bottom of the screen */
-    .foot {
-      margin-top: auto;
-    }
-
-    /* The page comes in from the top down: each part fades up into place a
-       beat after the one above it, as the home does when its curtain lifts */
-    @keyframes arrive {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
+    /* On a desk the wordmark, the menu and the address stay put while the
+       page runs under them; the line scrolls away with it. They invert over
+       what they cross: white in difference reads black on the white page
+       and white over anything black. The mark stays as drawn */
+    @media (min-width: 901px) {
+      .top {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
-    }
 
-    .head h1,
-    .menu-open,
-    .side .about,
-    .side .foot {
-      animation: arrive 1.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-    }
-
-    .menu-open { animation-delay: 0.12s; }
-    .side .about { animation-delay: 0.24s; }
-    .side .foot { animation-delay: 0.36s; }
-
-    /* On a desk the menu joins in; on a phone it is a sheet of its own */
-    @media (min-width: 561px) {
-      .head .menu {
-        animation: arrive 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.12s backwards;
+      .top h1,
+      .top .contact,
+      .top .menu {
+        position: fixed;
+        top: 20px;
+        z-index: 5;
+        width: calc((100% - 112px) / 4);
+        color: #ffffff;
+        mix-blend-mode: difference;
       }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-      .head h1,
-      .menu-open,
-      .side .about,
-      .side .foot,
-      .head .menu {
-        animation: none;
+      .mark {
+        position: fixed;
+        z-index: 6;
       }
-    }
 
-    /* The phone's own menu controls; the wide page needs neither */
-    .menu-head,
-    .menu-open {
-      display: none;
+      .top h1 {
+        left: 20px;
+      }
+
+      /* The nav reads across: the wordmark, the address, the menu. The line
+         of the home has no place here; the text takes the last quarter */
+      .top .contact {
+        left: calc(20px + (100% - 112px) / 4 + 24px);
+      }
+
+      .top .menu {
+        left: calc(20px + (100% - 112px) * 3 / 4 + 72px);
+      }
     }
 
     @media (max-width: 560px) {
-      body {
-        font-size: 12px;
-        line-height: 16px;
+      .row {
+        grid-template-columns: 1fr;
       }
 
-      .page {
-        grid-template-columns: minmax(0, 1fr);
+      .top {
+        row-gap: 0;
+        padding-block: 20px 224px;
       }
 
-      .side {
-        position: static;
-        height: auto;
-        min-height: 0;
-        gap: 56px;
+      .menu-head .mark-sheet {
+        height: 0.715em;
+        width: auto;
+        margin-right: 2px;
       }
 
-      .side p + p {
-        margin-top: 16px;
+      /* The address goes on a phone: the menu carries Contact */
+      .contact {
+        display: none;
       }
 
-      .about .menu {
-        margin-top: 48px;
-      }
-
-      .work {
-        grid-column: 1;
-        padding-top: 56px;
-      }
-
-      /* The menu leaves the side for a sheet of its own, as on the home:
-         Menu at the top right pulls it down over the page, and the words
-         follow it in one after another */
-      .page {
+      /* The menu leaves the header for a sheet of its own. Closed, it is
+         rolled up out of sight; Menu at the top right pulls it down over the
+         page, and the words follow it in one after another */
+      .top {
         position: relative;
       }
 
@@ -379,10 +265,6 @@
         position: absolute;
         top: 20px;
         right: 20px;
-      }
-
-      .about .menu {
-        margin-top: 0;
       }
 
       .menu {
@@ -426,10 +308,6 @@
         transition: opacity 0.3s ease, transform 0.3s ease;
       }
 
-      .menu > a:not(:last-child)::after {
-        content: none;
-      }
-
       .menu-is-open .menu > a {
         opacity: 1;
         transform: none;
@@ -439,6 +317,7 @@
       .menu-is-open .menu > a:nth-of-type(1) { transition-delay: 0.22s; }
       .menu-is-open .menu > a:nth-of-type(2) { transition-delay: 0.3s; }
       .menu-is-open .menu > a:nth-of-type(3) { transition-delay: 0.38s; }
+      .menu-is-open .menu > a:nth-of-type(4) { transition-delay: 0.46s; }
 
       /* Nothing scrolls behind the sheet */
       .menu-is-open,
@@ -454,45 +333,131 @@
           transition: none;
         }
       }
+
+      /* iPhone only. Safari on iOS 26 fills the area under its own bottom bar
+         with the colour of a fixed element touching the bottom of the screen.
+         This strip is that element, so what scrolls does not show under the
+         address bar; above the curtain too, so the colour stays white */
+      @supports (-webkit-touch-callout: none) {
+        .edge {
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 4px;
+          background: #ffffff;
+          z-index: 11;
+        }
+      }
     }
+
+    /* The page is text, in the last quarter of the measure under the nav, at
+       the foot of the same room the home leaves above its work */
+    .info {
+      column-gap: 24px;
+      padding-bottom: 20px;
+    }
+
+    .copy {
+      grid-column: 4;
+      min-width: 0;
+      text-wrap: pretty;
+    }
+
+    /* A blank line between the blocks, one line high */
+    .copy p + p {
+      margin-top: 12px;
+    }
+
+    /* Links in the text underline and go grey under the pointer */
+    .copy a {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: color 0.15s ease;
+    }
+
+    .copy a:hover {
+      color: #949494;
+      text-decoration-line: underline;
+    }
+
+    .foot {
+      color: #949494;
+    }
+
+    /* The text runs under the fixed nav as it scrolls, so on a desk the nav
+       keeps a white band behind it and the text goes out of sight there */
+    @media (min-width: 901px) {
+      .top::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        background: #ffffff;
+        z-index: 4;
+      }
+    }
+
+    /* Narrower, the text takes the right half, then the whole width */
+    @media (max-width: 900px) {
+      .top {
+        padding-block: 20px 56px;
+      }
+
+      .copy {
+        grid-column: 2;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .copy {
+        grid-column: 1;
+      }
+    }
+
   </style>
 </head>
 <body>
-  <div class="page">
-    <aside class="side">
-      <div class="head">
-        <h1><a href="index.html">Internet Guild</a></h1>
-        <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
-        <nav class="menu" id="menu" aria-label="Main">
-          <div class="menu-head">
-            <a href="index.html">Internet Guild</a>
-            <button type="button" class="menu-close">Close</button>
-          </div>
-          <a href="index.html">Index</a>
-          <a href="about.html">Information</a>
-          <a href="contact.html" aria-current="page">Contact</a>
-        </nav>
-      </div>
+  <div class="edge" aria-hidden="true"></div>
 
-      <div class="about">
-        <p>
-          <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
-          <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
-          <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">W +54 911 33932087</a>
-        </p>
-        <p>
-          <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br>
-          <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
-          <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
-        </p>
-      </div>
+  <header class="row top">
+    <img class="mark" src="logo.svg" alt="" width="414" height="215">
+    <h1><a href="index.html">Internet Guild™</a></h1>
+    <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
-      <div class="foot">
-        <p class="muted">Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
-      </div>
-    </aside>
+    <div class="contact">
+      <p class="muted">Hire the guild.</p>
+      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
 
-  </div>
+    <nav class="menu" id="menu" aria-label="Main">
+      <div class="menu-head">
+        <a href="index.html"><img class="mark-sheet" src="logo.svg" alt="" width="414" height="215">Internet Guild™</a>
+        <button type="button" class="menu-close">Close</button>
+      </div>
+      <a href="index.html">Work</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </header>
+
+  <main class="row info">
+    <div class="copy">
+      <p>
+        <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
+        <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
+        <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">W +54 911 33932087</a>
+      </p>
+      <p>
+        <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br>
+        <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
+        <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+      </p>
+      <p class="foot">Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
+    </div>
+  </main>
 
   <script>
     // The phone menu: Menu pulls the sheet down, Close or Escape rolls it up
