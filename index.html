@@ -16,6 +16,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="neue-haas-display-roman.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="dm-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
@@ -34,8 +35,16 @@
       overflow-y: scroll;
     }
 
-    /* DM Sans, one variable file, self-hosted: 400 for the page, 600 for
-       the wordmark */
+    /* Neue Haas Grotesk Display Roman for the page, and DM Sans, one variable
+       file, for the wordmark alone at 600; both self-hosted */
+    @font-face {
+      font-family: "Neue Haas Display";
+      src: url("neue-haas-display-roman.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
     @font-face {
       font-family: "DM Sans";
       src: url("dm-sans.woff2") format("woff2");
@@ -47,7 +56,7 @@
     body {
       background: #ffffff;
       color: #000000;
-      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      font-family: "Neue Haas Display", system-ui, -apple-system, sans-serif;
       font-weight: 400;
       letter-spacing: 0.1px;
       font-size: 12px;
@@ -132,6 +141,7 @@
        and in the phone's sheet */
     .top h1,
     .menu-head a {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
       font-weight: 600;
       letter-spacing: -0.5px;
       color: #f43b00;
