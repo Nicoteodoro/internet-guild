@@ -238,39 +238,68 @@
       color: #1c1c1c;
     }
 
-    /* Four pieces to a row, 16 across and 40 down. Narrower screens take
-       three, two, then one */
-    .index {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* The work is a masonry: eight columns from 1360, then four, three, two.
+       Each piece keeps its own proportions and takes one, two or three
+       columns; the cell opens with its title under it, close. Before the
+       script sets them down (or without it) the cells run in a plain grid.
+       16 across, 40 down */
+    .row.index {
+      --cols: 2;
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
       gap: 40px 16px;
       padding-bottom: 12px;
+      position: relative;
     }
 
-    @media (max-width: 1100px) {
-      .index {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+    @media (min-width: 560px) {
+      .row.index {
+        --cols: 3;
+      }
+    }
+
+    @media (min-width: 1000px) {
+      .row.index {
+        --cols: 4;
+      }
+    }
+
+    @media (min-width: 1360px) {
+      .row.index {
+        --cols: 8;
       }
     }
 
     .cell {
+      --s: var(--span, 1);
+      grid-column: span var(--s);
       margin: 0;
       min-width: 0;
     }
 
-    /* Titles stand under their piece, close, held to one line, so every cell
-       stands the same height */
+    @media (min-width: 1360px) {
+      .cell {
+        --s: var(--span8, var(--span, 1));
+      }
+    }
+
+    .index.is-packed {
+      display: block;
+    }
+
+    .index.is-packed .cell {
+      position: absolute;
+    }
+
+    /* Titles stand under their piece, close, and run on as many lines as
+       they need */
     figcaption {
       margin-top: 4px;
       color: #949494;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-
-    /* Every piece is squared off and cropped to fill, so the grid never breaks */
+    /* Every piece keeps its own proportions */
     .media {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: var(--ar, 1 / 1);
       background: #f4f4f4;
       overflow: hidden;
     }
@@ -281,6 +310,34 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    /* The first cell is a card of its own, with no film in it: the studio's
+       latest collaborations, set in the ink's own black */
+    .card {
+      box-sizing: border-box;
+      aspect-ratio: 1 / 1;
+      padding: 12px;
+      background: #1c1c1c;
+      color: #ffffff;
+    }
+
+    .card p + p {
+      margin-top: 16px;
+    }
+
+    .card-title {
+      color: #949494;
+    }
+
+    .card a {
+      transition: color 0.15s ease;
+    }
+
+    @media (hover: hover) {
+      .card a:hover {
+        color: #949494;
+      }
     }
 
 
@@ -522,148 +579,174 @@
   </div>
 
   <main class="row index" aria-label="Selected work">
-    <figure class="cell">
-      <div class="media"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
+    <div class="cell card" style="--span: 2; --span8: 2">
+      <p class="card-title">Latest collaborations</p>
+      <p>
+        <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>,
+        <a href="https://www.greatskysolar.com" target="_blank" rel="noopener">Great Sky Solar</a>,
+        <a href="https://www.buenbit.com" target="_blank" rel="noopener">Buenbit</a>&nbsp;(acquired),
+        <a href="https://numia.co" target="_blank" rel="noopener">Numia</a>,
+        <a href="https://www.towerbank.com" target="_blank" rel="noopener">Towerbank</a>,
+        <a href="https://papayadash.com" target="_blank" rel="noopener">Papayadash</a>,
+        <a href="https://www.kstreet.vc" target="_blank" rel="noopener">K Street VC</a>,
+        <a href="https://www.peigo.com.ec" target="_blank" rel="noopener">peiGo</a>,
+        <a href="https://eurekalabs.io" target="_blank" rel="noopener">Eureka Labs</a>,
+        <a href="https://www.emilabs.ai" target="_blank" rel="noopener">Emilabs</a>,
+        <a href="https://www.aquicore.com" target="_blank" rel="noopener">Aquicore</a>&nbsp;(acquired),
+        <a href="https://www.complif.com" target="_blank" rel="noopener">Complif</a>,
+        <a href="https://www.bonumcoaching.com" target="_blank" rel="noopener">Bonum</a>,
+        <a href="https://www.waterplan.com" target="_blank" rel="noopener">Waterplan</a>,
+        <a href="https://www.lupastudio.co" target="_blank" rel="noopener">Lupa Studio</a>,
+        <a href="https://www.fzsports.com" target="_blank" rel="noopener">FZ Sports</a>,
+        <a href="https://www.1190sports.com" target="_blank" rel="noopener">1190 Sports</a>,
+        <a href="https://www.fanatiz.com" target="_blank" rel="noopener">Fanatiz</a>,
+        <a href="https://www.whiteprompt.com" target="_blank" rel="noopener">White Prompt</a>,
+        <a href="https://www.cary.health" target="_blank" rel="noopener">Cary Health</a>,
+        <span>Cary RX</span>.
+      </p>
+    </div>
+    <figure class="cell" style="--span: 2; --span8: 2">
+      <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
       <figcaption>Street Poster</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
       <figcaption>Visa Cards</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Investments App</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 720 / 1080"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
       <figcaption>Debit Card</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
       <figcaption>Interface</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
       <figcaption>Website, Laptops</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
       <figcaption>Icon System</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 2; --span8: 2">
+      <div class="media" style="--ar: 1500 / 1500"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
       <figcaption>Pattern</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
       <figcaption>Poster</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>Website, Laptop</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Website, Mobile</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 2; --span8: 2">
+      <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
       <figcaption>Website Sections</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
       <figcaption>Customer Journey</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 630 / 880"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
       <figcaption>Virtual Assistance</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
       <figcaption>Brand Identity</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
       <figcaption>Website</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
       <figcaption>Website, Spanish</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 2; --span8: 3">
+      <div class="media" style="--ar: 1920 / 1080"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
       <figcaption>Onboarding</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 720 / 1080"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
       <figcaption>Report Charts</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
       <figcaption>Report, iPad</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 2; --span8: 2">
+      <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
       <figcaption>Homepage</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
       <figcaption>Product Cards</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
       <figcaption>Team Page</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
       <figcaption>Agent Activity Panel</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 2; --span8: 2">
+      <div class="media" style="--ar: 1500 / 1500"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
       <figcaption>Token Statement</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>xrank.tech</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>China.Supply</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
       <figcaption>Journal App</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
       <figcaption>Journal, Close-up</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Calm App Login</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
       <figcaption>Music Player</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>Writing App</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 2; --span8: 2">
+      <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
       <figcaption>Godzilla Minus One</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
       <figcaption>Godzilla, Bus Stop</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
       <figcaption>Nine2Five Spec Sheet</figcaption>
     </figure>
-    <figure class="cell">
-      <div class="media"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
+    <figure class="cell" style="--span: 1; --span8: 1">
+      <div class="media" style="--ar: 1500 / 1500"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
       <figcaption>Shopping Bag</figcaption>
     </figure>
   </main>
@@ -697,11 +780,69 @@
       if (video.dataset.poster) posterObserver.observe(video);
     });
 
-    // Remix deals the same pieces into a new order
+    // The masonry: the cells go down in order, but each time the packer looks
+    // a few cells ahead for the one that sits lowest and leaves the least
+    // hole under it, so the gaps a wide piece would leave get filled
     const index = document.querySelector('.index');
+    const LOOKAHEAD = 12;
 
+    function pack() {
+      const style = getComputedStyle(index);
+      const cols = parseInt(style.getPropertyValue('--cols'), 10) || 2;
+      const gapX = parseFloat(style.columnGap) || 0;
+      const gapY = parseFloat(style.rowGap) || 0;
+      const edge = parseFloat(style.paddingLeft) || 0;
+      const colW = (index.clientWidth - 2 * edge - (cols - 1) * gapX) / cols;
+      const heights = new Array(cols).fill(0);
+
+      index.classList.add('is-packed');
+
+      // Each cell takes its width first, so its height is known
+      const queue = [...index.children].map((cell) => {
+        const span = Math.min(cols, parseInt(getComputedStyle(cell).getPropertyValue('--s'), 10) || 1);
+        cell.style.width = `${span * colW + (span - 1) * gapX}px`;
+        return { cell, span, height: cell.offsetHeight };
+      });
+
+      // The lowest place for a cell: where its columns all stand clear
+      const place = ({ span }) => {
+        let col = 0;
+        let top = Infinity;
+        let waste = 0;
+        for (let c = 0; c <= cols - span; c++) {
+          const run = heights.slice(c, c + span);
+          const y = Math.max(...run);
+          if (y < top - 0.5) {
+            top = y;
+            col = c;
+            waste = run.reduce((sum, h) => sum + (y - h), 0) / span;
+          }
+        }
+        return { col, top, waste };
+      };
+
+      while (queue.length) {
+        let pick = 0;
+        let best = Infinity;
+        for (let i = 0; i < Math.min(LOOKAHEAD, queue.length); i++) {
+          const { top, waste } = place(queue[i]);
+          const score = top + waste * 0.5 + i * 6;
+          if (score < best) { best = score; pick = i; }
+        }
+
+        const [item] = queue.splice(pick, 1);
+        const { col, top } = place(item);
+        item.cell.style.left = `${edge + col * (colW + gapX)}px`;
+        item.cell.style.top = `${top}px`;
+        for (let c = col; c < col + item.span; c++) heights[c] = top + item.height + gapY;
+      }
+
+      index.style.height = `${Math.max(...heights) - gapY}px`;
+    }
+
+    // Remix deals the same pieces into a new order; the card stays first
     function remix() {
-      const cells = [...index.children];
+      const cells = [...index.children].filter((cell) => !cell.classList.contains('card'));
 
       for (let i = cells.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -710,8 +851,8 @@
 
       index.append(...cells);
 
-      // Whatever lands in the top row is wanted straight away
-      cells.slice(0, 4).forEach((cell) => {
+      // Whatever lands up top is wanted straight away
+      cells.slice(0, 8).forEach((cell) => {
         const image = cell.querySelector('img');
         if (image) image.loading = 'eager';
       });
@@ -721,12 +862,22 @@
         videoObserver.unobserve(video);
         videoObserver.observe(video);
       });
+
+      pack();
     }
 
     // The gallery opens on a different order every time it is loaded
     remix();
 
     document.querySelector('.remix').addEventListener('click', remix);
+
+    // The titles wrap by the font, and the columns by the width
+    document.fonts.ready.then(pack);
+    let packing;
+    addEventListener('resize', () => {
+      cancelAnimationFrame(packing);
+      packing = requestAnimationFrame(pack);
+    });
   </script>
   <script>
     // The phone menu: Menu pulls the sheet down, Close or Escape rolls it up
