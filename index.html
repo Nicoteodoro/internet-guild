@@ -16,7 +16,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
@@ -34,10 +34,10 @@
       overflow-y: scroll;
     }
 
-    /* PP Neue Montreal, self-hosted at the one weight the page uses */
+    /* IBM Plex Mono, self-hosted at the one weight the page uses */
     @font-face {
-      font-family: "PP Neue Montreal";
-      src: url("neue-montreal-medium.woff2") format("woff2");
+      font-family: "IBM Plex Mono";
+      src: url("ibm-plex-mono-500.woff2") format("woff2");
       font-weight: 500;
       font-style: normal;
       font-display: swap;
@@ -46,11 +46,12 @@
     body {
       background: #ffffff;
       color: #333333;
-      font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
+      font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       font-weight: 500;
       letter-spacing: 0.1px;
-      font-size: 11px;
-      line-height: 12px;
+      font-size: 14px;
+      line-height: 16px;
+      text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -71,16 +72,6 @@
       font-weight: inherit;
     }
 
-    /* The wordmark and the menu are in capitals, in the header and in the
-       phone's sheet; the rest reads as it is written */
-    h1,
-    .menu a,
-    .menu-open,
-    .menu-close {
-      font-weight: 500;
-      text-transform: uppercase;
-    }
-
     button {
       letter-spacing: inherit;
       text-transform: inherit;
@@ -92,13 +83,9 @@
       color: #949494;
     }
 
-    /* The nav is one colour throughout, the address's note included. The
-       note is in capitals, a point under the rest; the address itself stays
-       as it is written */
+    /* The nav is one colour throughout, the address's note included */
     .contact .muted {
       color: inherit;
-      font-size: 10px;
-      text-transform: uppercase;
     }
 
     /* Header and grid share one four-column measure, 12px in from each edge */
@@ -113,30 +100,6 @@
       position: relative;
       padding-block: 12px 120px;
       column-gap: 16px;
-    }
-
-    /* The mark stands left of the wordmark at the height of its capitals,
-       its foot on the wordmark's baseline, 22 down (11 on a 12 line, the
-       line 12 down). It is its own element, apart from the wordmark. The
-       wordmark makes room for it: the mark's width, 414 by 215, and a gap
-       of 2px */
-    .mark {
-      position: absolute;
-      left: 12px;
-      top: calc(22px - 0.715em);
-      height: 0.715em;
-      width: auto;
-      pointer-events: none;
-    }
-
-    .top h1 {
-      box-sizing: border-box;
-      padding-left: calc(0.715em * 414 / 215 + 2px);
-    }
-
-    /* The line alone reads on 14, two more than the rest */
-    .tagline {
-      line-height: 14px;
     }
 
     /* No commas: the words are held apart by space alone, twice what a
@@ -173,12 +136,6 @@
       position: relative;
     }
 
-    /* The menu is set a point under the rest. The phone's wordmark in the
-       sheet is not one of its links */
-    .menu > a {
-      font-size: 10px;
-    }
-
     /* The menu and the address go grey under the pointer */
     .menu > a,
     .contact a {
@@ -210,7 +167,6 @@
       margin-inline: 12px;
       padding-block: 8px 12px;
       border-top: 1px solid #e6e6e6;
-      text-transform: uppercase;
     }
 
     .count {
@@ -289,12 +245,19 @@
       }
     }
 
+    /* Between 901 and 999 the header holds two columns, as on a tablet: the
+       address, 221px of mono capitals, needs a column of that much */
+    @media (min-width: 901px) and (max-width: 999px) {
+      .top {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them; the line scrolls away with it. They invert over
        what they cross: #cccccc in difference reads #333333 on the white page
-       and light over anything dark. The mark is drawn #333333 and inverted
-       to #cccccc, so it goes through the same blend and does the same */
-    @media (min-width: 901px) {
+       and light over anything dark */
+    @media (min-width: 1000px) {
       /* --col is one column of the nav's measure: the width less the two 12
          edges and the 16 between n columns, shared out */
       .top {
@@ -311,13 +274,6 @@
         z-index: 5;
         width: var(--col);
         color: #cccccc;
-        mix-blend-mode: difference;
-      }
-
-      .mark {
-        position: fixed;
-        z-index: 6;
-        filter: invert(1);
         mix-blend-mode: difference;
       }
 
@@ -340,11 +296,8 @@
         left: calc(12px + var(--col) + 16px);
       }
 
-      /* On 14 its first line stands 1px lower than the nav's; it comes up by
-         that, so all four share a baseline */
       .tagline {
         grid-column: 3;
-        margin-top: -1px;
       }
 
       .top .menu {
@@ -353,10 +306,31 @@
     }
 
     /* Over 1100 the work below is six columns, and the nav stands on them:
-       the wordmark one, the address one, the line two, the menu two */
+       the wordmark one, the address two (a column under 1440 is narrower than
+       the address), the line two, the menu one */
     @media (min-width: 1101px) {
       .top {
         --n: 6;
+      }
+
+      .top .contact {
+        width: calc(2 * var(--col) + 16px);
+      }
+
+      .tagline {
+        grid-column: 4 / span 2;
+      }
+
+      .top .menu {
+        left: calc(12px + 5 * (var(--col) + 16px));
+      }
+    }
+
+    /* From 1440 the address fits a column of its own: the wordmark one, the
+       address one, the line two, the menu two */
+    @media (min-width: 1440px) {
+      .top .contact {
+        width: var(--col);
       }
 
       .tagline {
@@ -384,12 +358,6 @@
       .tagline {
         grid-column: 1;
         padding-top: 56px;
-      }
-
-      .menu-head .mark-sheet {
-        height: 0.715em;
-        width: auto;
-        margin-right: 2px;
       }
 
       /* The address goes on a phone: the menu carries Contact */
@@ -515,7 +483,6 @@
   <div class="edge" aria-hidden="true"></div>
 
   <header class="row top">
-    <img class="mark" src="logo.svg?v=ink" alt="" width="414" height="215">
     <h1>Internet Guild™</h1>
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
@@ -528,7 +495,7 @@
 
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
-        <a href="index.html"><img class="mark-sheet" src="logo.svg?v=ink" alt="" width="414" height="215">Internet Guild™</a>
+        <a href="index.html">Internet Guild™</a>
         <button type="button" class="menu-close">Close</button>
       </div>
       <a href="index.html" aria-current="page">Work</a>
