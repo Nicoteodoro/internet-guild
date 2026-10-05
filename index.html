@@ -44,7 +44,7 @@
     }
 
     body {
-      background: #ffffff;
+      background: #f7f7f7;
       color: #333333;
       font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       font-weight: 500;
@@ -100,6 +100,12 @@
       position: relative;
       padding-block: 12px 120px;
       column-gap: 16px;
+    }
+
+    /* The wordmark is blue, here and in the phone's sheet */
+    .top h1,
+    .menu-head a {
+      color: #007bbb;
     }
 
     /* No commas: the words are held apart by space alone, twice what a
@@ -254,9 +260,10 @@
     }
 
     /* On a desk the wordmark, the address and the menu stay put while the
-       page runs under them; the line scrolls away with it. They invert over
-       what they cross: #cccccc in difference reads #333333 on the white page
-       and light over anything dark */
+       page runs under them; the line scrolls away with it. The address and
+       the menu invert over what they cross: #c4c4c4 in difference reads
+       #333333 on the #f7f7f7 page and light over anything dark. The wordmark
+       keeps its blue over all of it */
     @media (min-width: 1000px) {
       /* --col is one column of the nav's measure: the width less the two 12
          edges and the 16 between n columns, shared out */
@@ -273,16 +280,20 @@
         top: 12px;
         z-index: 5;
         width: var(--col);
-        color: #cccccc;
+      }
+
+      .top .contact,
+      .top .menu {
+        color: #c4c4c4;
         mix-blend-mode: difference;
       }
 
-      /* In the blend the grey is set as its inverse: #6b6b6b in difference
-         reads #949494 on the white page */
+      /* In the blend the grey is set as its inverse: #636363 in difference
+         reads #949494 on the #f7f7f7 page */
       @media (hover: hover) {
         .top .menu > a:hover,
         .top .contact a:hover {
-          color: #6b6b6b;
+          color: #636363;
         }
       }
 
@@ -399,7 +410,7 @@
         align-items: flex-start;
         gap: 0;
         padding: 12px;
-        background: #ffffff;
+        background: #f7f7f7;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
         transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
@@ -419,7 +430,6 @@
         margin-bottom: 22vh;
       }
 
-      .menu-head a,
       .menu > a {
         color: #333333;
       }
@@ -468,7 +478,7 @@
           right: 0;
           bottom: 0;
           height: 4px;
-          background: #ffffff;
+          background: #f7f7f7;
           z-index: 11;
         }
       }
