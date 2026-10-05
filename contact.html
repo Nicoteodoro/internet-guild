@@ -150,16 +150,28 @@
       position: relative;
     }
 
-    /* The menu and the address go grey under the pointer */
-    .menu > a,
+    /* The address goes grey under the pointer; the menu underlines, and the
+       page you are on stays underlined */
     .contact a {
       transition: color 0.15s ease;
     }
 
+    .menu > a {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .menu > a[aria-current] {
+      text-decoration-line: underline;
+    }
+
     @media (hover: hover) {
-      .menu > a:hover,
       .contact a:hover {
         color: #949494;
+      }
+
+      .menu > a:hover {
+        text-decoration-line: underline;
       }
     }
 
@@ -228,7 +240,6 @@
       /* In the blend the grey is set as its inverse: #6b6b6b in difference
          reads #949494 on the #ffffff page */
       @media (hover: hover) {
-        .top .menu > a:hover,
         .top .contact a:hover {
           color: #6b6b6b;
         }
@@ -452,8 +463,7 @@
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
     <div class="contact">
-      <p class="muted">Hire the guild.</p>
-      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+      <p><span class="muted">Hire the guild.</span> <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
     <nav class="menu" id="menu" aria-label="Main">
@@ -461,7 +471,8 @@
         <a href="index.html">Internet Guild™</a>
         <button type="button" class="menu-close">Close</button>
       </div>
-      <a href="index.html">Work</a>
+      <a href="index.html">Index</a>
+      <a href="index.html#work">Work</a>
       <a href="about.html">About</a>
       <a href="contact.html" aria-current="page">Contact</a>
     </nav>

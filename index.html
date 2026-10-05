@@ -116,7 +116,7 @@
        did: 40% of the screen tall with the line centred in it, across the
        first columns so its lines run whole */
     .hero {
-      min-height: 40vh;
+      min-height: 20vh;
       align-content: center;
       column-gap: 16px;
     }
@@ -175,16 +175,28 @@
       position: relative;
     }
 
-    /* The menu and the address go grey under the pointer */
-    .menu > a,
+    /* The address goes grey under the pointer; the menu underlines, and the
+       page you are on stays underlined */
     .contact a {
       transition: color 0.15s ease;
     }
 
+    .menu > a {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .menu > a[aria-current] {
+      text-decoration-line: underline;
+    }
+
     @media (hover: hover) {
-      .menu > a:hover,
       .contact a:hover {
         color: #949494;
+      }
+
+      .menu > a:hover {
+        text-decoration-line: underline;
       }
     }
 
@@ -198,22 +210,15 @@
 
 
 
-    /* The one rule on the page, naming the view */
+    /* Remix alone, at the right, with no rule over it */
     .bar {
       display: flex;
-      justify-content: space-between;
-      gap: 24px;
+      justify-content: flex-end;
       margin-inline: 12px;
       padding-block: 8px 12px;
-      border-top: 1px solid #e6e6e6;
     }
 
-    .count {
-      display: flex;
-      gap: 12px;
-    }
-
-    /* Reads as the text beside it; only the pointer says it is a control */
+    /* Reads as the text around it; only the pointer says it is a control */
     .remix {
       appearance: none;
       margin: 0;
@@ -223,13 +228,14 @@
       font: inherit;
       letter-spacing: inherit;
       text-transform: inherit;
-      color: #949494;
+      color: inherit;
       cursor: pointer;
-      transition: color 0.15s ease;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
     }
 
     .remix:hover {
-      color: #000000;
+      text-decoration-line: underline;
     }
 
     /* The work is a masonry: eight columns from 1360, then four, three, two.
@@ -304,6 +310,82 @@
       object-fit: cover;
     }
 
+    /* A piece opens large: it fills the screen, its title above it at the
+       left and Close at the right. Click anywhere, or Escape, to put it away;
+       the arrows step through the work */
+    .cell:not(.card) .media {
+      cursor: zoom-in;
+    }
+
+    .media:focus-visible,
+    .viewer-close:focus-visible,
+    .remix:focus-visible {
+      outline: 1px solid #000000;
+      outline-offset: 2px;
+    }
+
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: 12px;
+      background: #ffffff;
+    }
+
+    .viewer.is-open {
+      display: flex;
+    }
+
+    .viewer-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .viewer-close {
+      appearance: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .viewer-close:hover {
+      text-decoration-line: underline;
+    }
+
+    .viewer-stage {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 12px;
+      cursor: zoom-out;
+    }
+
+    .viewer-stage img,
+    .viewer-stage video {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    html.viewer-is-open {
+      overflow: hidden;
+    }
+
     /* The first cell is a card of its own, with no film in it: the studio's
        latest collaborations, set in the ink's own black */
     .card {
@@ -314,8 +396,12 @@
       color: #ffffff;
     }
 
+    .card p {
+      line-height: 18px;
+    }
+
     .card p + p {
-      margin-top: 14px;
+      margin-top: 18px;
     }
 
     .card-title {
@@ -323,6 +409,9 @@
     }
 
     .card a {
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
       transition: color 0.15s ease;
     }
 
@@ -387,7 +476,6 @@
       /* In the blend the grey is set as its inverse: #6b6b6b in difference
          reads #949494 on the #ffffff page */
       @media (hover: hover) {
-        .top .menu > a:hover,
         .top .contact a:hover {
           color: #6b6b6b;
         }
@@ -416,7 +504,7 @@
       }
 
       .hero {
-        min-height: 50vh;
+        min-height: 25vh;
       }
 
       /* The address goes on a phone: the menu carries Contact */
@@ -545,8 +633,7 @@
     <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
 
     <div class="contact">
-      <p class="muted">Hire the guild.</p>
-      <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+      <p><span class="muted">Hire the guild.</span> <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
     <nav class="menu" id="menu" aria-label="Main">
@@ -554,7 +641,8 @@
         <a href="index.html">Internet Guild™</a>
         <button type="button" class="menu-close">Close</button>
       </div>
-      <a href="index.html" aria-current="page">Work</a>
+      <a href="index.html" aria-current="page">Index</a>
+      <a href="index.html#work">Work</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
@@ -564,12 +652,8 @@
     <p class="tagline">Essentialist design practice, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.</p>
   </div>
 
-  <div class="bar">
-    <p><span class="muted">Selected work /</span> Index</p>
-    <p class="count">
-      <button type="button" class="remix">Remix</button>
-      <span class="muted">36 pieces</span>
-    </p>
+  <div class="bar" id="work">
+    <button type="button" class="remix">Remix</button>
   </div>
 
   <main class="row index" aria-label="Selected work">
@@ -745,6 +829,14 @@
     </figure>
   </main>
 
+  <div class="viewer" role="dialog" aria-modal="true" aria-label="Piece, large">
+    <div class="viewer-bar">
+      <span class="viewer-caption"></span>
+      <button type="button" class="viewer-close">Close</button>
+    </div>
+    <div class="viewer-stage"></div>
+  </div>
+
   <script>
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -864,6 +956,94 @@
     remix();
 
     document.querySelector('.remix').addEventListener('click', remix);
+
+    // A piece opens large on a click, or Enter on it; the arrows step on and
+    // back through the work as it stands on the page
+    const viewer = document.querySelector('.viewer');
+    const stage = viewer.querySelector('.viewer-stage');
+    const viewerCaption = viewer.querySelector('.viewer-caption');
+    const viewerClose = viewer.querySelector('.viewer-close');
+    let opener = null;
+    let shown = null;
+
+    const pieces = () => [...index.querySelectorAll('.cell:not(.card)')]
+      .sort((a, b) => a.offsetTop - b.offsetTop || a.offsetLeft - b.offsetLeft);
+
+    function show(cell) {
+      const source = cell.querySelector('video, img');
+      let large;
+
+      if (source.tagName === 'VIDEO') {
+        large = document.createElement('video');
+        large.src = source.getAttribute('src');
+        if (source.poster) large.poster = source.poster;
+        large.muted = true;
+        large.loop = true;
+        large.autoplay = true;
+        large.playsInline = true;
+        large.setAttribute('aria-label', source.getAttribute('aria-label') || '');
+        large.play().catch(() => {});
+      } else {
+        large = document.createElement('img');
+        large.src = source.currentSrc || source.src;
+        large.alt = source.alt;
+      }
+
+      stage.replaceChildren(large);
+      viewerCaption.textContent = cell.querySelector('figcaption').textContent;
+      shown = cell;
+    }
+
+    function openViewer(cell) {
+      opener = document.activeElement;
+      show(cell);
+      viewer.classList.add('is-open');
+      document.documentElement.classList.add('viewer-is-open');
+      viewerClose.focus({ preventScroll: true });
+    }
+
+    function closeViewer() {
+      viewer.classList.remove('is-open');
+      document.documentElement.classList.remove('viewer-is-open');
+      stage.replaceChildren();
+      shown = null;
+      if (opener) opener.focus({ preventScroll: true });
+    }
+
+    function step(by) {
+      const all = pieces();
+      const at = all.indexOf(shown);
+      show(all[(at + by + all.length) % all.length]);
+    }
+
+    pieces().forEach((cell) => {
+      const media = cell.querySelector('.media');
+      media.tabIndex = 0;
+      media.setAttribute('role', 'button');
+      media.setAttribute('aria-label', `Open ${cell.querySelector('figcaption').textContent}`);
+    });
+
+    index.addEventListener('click', (e) => {
+      const media = e.target.closest('.media');
+      if (media && !media.closest('.card')) openViewer(media.closest('.cell'));
+    });
+
+    index.addEventListener('keydown', (e) => {
+      const media = e.target.closest('.media');
+      if (media && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        openViewer(media.closest('.cell'));
+      }
+    });
+
+    viewer.addEventListener('click', closeViewer);
+
+    document.addEventListener('keydown', (e) => {
+      if (!viewer.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeViewer();
+      if (e.key === 'ArrowRight') step(1);
+      if (e.key === 'ArrowLeft') step(-1);
+    });
 
     // The titles wrap by the font, and the columns by the width
     document.fonts.ready.then(pack);
