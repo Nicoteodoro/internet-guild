@@ -54,13 +54,13 @@
     }
 
     body {
-      background: #0c0c0c;
-      color: #f7f7f7;
+      background: #ffffff;
+      color: #000000;
       font-family: "Neue Haas Display", system-ui, -apple-system, sans-serif;
       font-weight: 400;
       letter-spacing: 0.1px;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: 12px;
+      line-height: 14px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
     }
@@ -71,7 +71,7 @@
     }
 
     a:focus-visible {
-      outline: 1px solid #f7f7f7;
+      outline: 1px solid #000000;
       outline-offset: 2px;
     }
 
@@ -210,9 +210,8 @@
 
     /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them. The address and the menu invert over what they
-       cross: #ffffff in difference reads #f3f3f3 on the #0c0c0c page (the
-       most that blend can reach, a step under #f7f7f7) and dark over anything
-       light. The wordmark keeps its orange over all of it.
+       cross: #ffffff in difference reads #000000 on the #ffffff page and
+       light over anything dark. The wordmark keeps its orange over all of it.
        The nav stands on the work's four columns: the wordmark the first, the
        second left empty, the address the third, the menu the fourth. From
        1360 the work has eight, and those four slots fall on its first, fifth
@@ -220,7 +219,7 @@
     @media (min-width: 1000px) {
       .top {
         --col: calc((100% - 72px) / 4);
-        min-height: 32px;
+        min-height: 28px;
       }
 
       .top h1,
@@ -238,16 +237,15 @@
         mix-blend-mode: difference;
       }
 
-      /* In the blend the grey is set as its inverse: #a0a0a0 in difference
-         reads #949494 on the #0c0c0c page */
+      /* In the blend the grey is set as its inverse: #6b6b6b in difference
+         reads #949494 on the #ffffff page */
       @media (hover: hover) {
         .top .contact a:hover {
-          color: #a0a0a0;
+          color: #6b6b6b;
         }
       }
 
       .top h1 {
-        top: 11px;
         left: 12px;
       }
 
@@ -288,7 +286,7 @@
         border: 0;
         background: none;
         font: inherit;
-        color: #f7f7f7;
+        color: #000000;
         cursor: pointer;
       }
 
@@ -308,7 +306,7 @@
         align-items: flex-start;
         gap: 0;
         padding: 12px;
-        background: #0c0c0c;
+        background: #ffffff;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
         transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
@@ -323,14 +321,13 @@
       /* The wordmark and Close stand where the wordmark and Menu stood */
       .menu-head {
         display: flex;
-        align-items: baseline;
         justify-content: space-between;
         align-self: stretch;
         margin-bottom: 22vh;
       }
 
       .menu > a {
-        color: #f7f7f7;
+        color: #000000;
       }
 
       .menu > a {
@@ -377,7 +374,7 @@
           right: 0;
           bottom: 0;
           height: 4px;
-          background: #0c0c0c;
+          background: #ffffff;
           z-index: 11;
         }
       }
@@ -408,7 +405,7 @@
 
     /* A blank line between the blocks, one line high */
     .copy p + p {
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     /* Links in the text underline and go grey under the pointer */
@@ -434,7 +431,7 @@
         left: 0;
         right: 0;
         height: 48px;
-        background: #0c0c0c;
+        background: #ffffff;
         z-index: 4;
       }
     }
