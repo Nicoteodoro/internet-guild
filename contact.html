@@ -202,8 +202,8 @@
        light over anything dark. The wordmark keeps its orange over all of it.
        The nav stands on the work's four columns: the wordmark the first, the
        second left empty, the address the third, the menu the fourth. From
-       1360 the work has six, and the nav stands on those: the wordmark the
-       first, the address the fourth, the menu the sixth */
+       1360 the work has eight, and those four slots fall on its first, fifth
+       and seventh columns */
     @media (min-width: 1000px) {
       .top {
         --col: calc((100% - 72px) / 4);
@@ -244,20 +244,6 @@
 
       .top .menu {
         left: calc(12px + 3 * (var(--col) + 16px));
-      }
-    }
-
-    @media (min-width: 1360px) {
-      .top {
-        --col: calc((100% - 104px) / 6);
-      }
-
-      .top .contact {
-        left: calc(12px + 3 * (var(--col) + 16px));
-      }
-
-      .top .menu {
-        left: calc(12px + 5 * (var(--col) + 16px));
       }
     }
 
@@ -450,16 +436,6 @@
     @media (min-width: 1000px) {
       .info .copy {
         grid-column: 4;
-      }
-    }
-
-    @media (min-width: 1360px) {
-      .info {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-      }
-
-      .info .copy {
-        grid-column: 6;
       }
     }
 
