@@ -59,8 +59,8 @@
       font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       font-weight: 400;
       letter-spacing: 0.1px;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: 12px;
+      line-height: 14px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
     }
@@ -122,27 +122,21 @@
       color: #f43b00;
     }
 
-    /* No commas: the words are held apart by space alone, twice what a
-       comma and its gap used to take */
     .menu {
       display: flex;
       flex-wrap: wrap;
       gap: 0 23px;
     }
 
-    /* Wide, the menu runs in capitals held apart by commas, and the four
-       parts of the header sit on one baseline */
+    /* Wide, the menu runs on one line with no commas, its words 34px apart,
+       and the parts of the header sit on one baseline */
     @media (min-width: 561px) {
       .top {
         align-items: baseline;
       }
 
       .menu {
-        gap: 0 10px;
-      }
-
-      .menu > a:not(:last-child)::after {
-        content: ",";
+        gap: 0 34px;
       }
     }
 
@@ -205,13 +199,15 @@
     /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them. The address and the menu invert over what they
        cross: #ffffff in difference reads #000000 on the #ffffff page and
-       light over anything dark. The wordmark keeps its blue over all of it.
+       light over anything dark. The wordmark keeps its orange over all of it.
        The nav stands on the work's four columns: the wordmark the first, the
-       second left empty, the address the third, the menu the fourth */
+       second left empty, the address the third, the menu the fourth. From
+       1360 the work has six, and the nav stands on those: the wordmark the
+       first, the address the fourth, the menu the sixth */
     @media (min-width: 1000px) {
       .top {
         --col: calc((100% - 72px) / 4);
-        min-height: 32px;
+        min-height: 28px;
       }
 
       .top h1,
@@ -248,6 +244,20 @@
 
       .top .menu {
         left: calc(12px + 3 * (var(--col) + 16px));
+      }
+    }
+
+    @media (min-width: 1360px) {
+      .top {
+        --col: calc((100% - 104px) / 6);
+      }
+
+      .top .contact {
+        left: calc(12px + 3 * (var(--col) + 16px));
+      }
+
+      .top .menu {
+        left: calc(12px + 5 * (var(--col) + 16px));
       }
     }
 
@@ -398,7 +408,7 @@
 
     /* A blank line between the blocks, one line high */
     .copy p + p {
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     /* Links in the text underline and go grey under the pointer */
@@ -440,6 +450,16 @@
     @media (min-width: 1000px) {
       .info .copy {
         grid-column: 4;
+      }
+    }
+
+    @media (min-width: 1360px) {
+      .info {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .info .copy {
+        grid-column: 6;
       }
     }
 

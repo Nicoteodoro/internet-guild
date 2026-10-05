@@ -59,8 +59,8 @@
       font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       font-weight: 400;
       letter-spacing: 0.1px;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: 12px;
+      line-height: 14px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
     }
@@ -147,27 +147,21 @@
       color: #f43b00;
     }
 
-    /* No commas: the words are held apart by space alone, twice what a
-       comma and its gap used to take */
     .menu {
       display: flex;
       flex-wrap: wrap;
       gap: 0 23px;
     }
 
-    /* Wide, the menu runs in capitals held apart by commas, and the four
-       parts of the header sit on one baseline */
+    /* Wide, the menu runs on one line with no commas, its words 34px apart,
+       and the parts of the header sit on one baseline */
     @media (min-width: 561px) {
       .top {
         align-items: baseline;
       }
 
       .menu {
-        gap: 0 10px;
-      }
-
-      .menu > a:not(:last-child)::after {
-        content: ",";
+        gap: 0 34px;
       }
     }
 
@@ -238,11 +232,10 @@
       color: #000000;
     }
 
-    /* The work is a masonry: eight columns from 1360, then four, three, two.
-       Each piece keeps its own proportions and takes one, two or three
-       columns; the cell opens with its title under it, close. Before the
-       script sets them down (or without it) the cells run in a plain grid.
-       16 across, 40 down */
+    /* The work is a masonry: six columns from 1360, then four, three, two.
+       Each piece keeps its own proportions and takes one or two columns, its
+       title under it, close. Before the script sets them down (or without
+       it) the cells run in a plain grid. 16 across, 40 down */
     .row.index {
       --cols: 2;
       grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
@@ -265,21 +258,14 @@
 
     @media (min-width: 1360px) {
       .row.index {
-        --cols: 8;
+        --cols: 6;
       }
     }
 
     .cell {
-      --s: var(--span, 1);
-      grid-column: span var(--s);
+      grid-column: span var(--span, 1);
       margin: 0;
       min-width: 0;
-    }
-
-    @media (min-width: 1360px) {
-      .cell {
-        --s: var(--span8, var(--span, 1));
-      }
     }
 
     .index.is-packed {
@@ -294,7 +280,6 @@
        they need */
     figcaption {
       margin-top: 4px;
-      color: #949494;
     }
 
     /* Every piece keeps its own proportions */
@@ -323,7 +308,7 @@
     }
 
     .card p + p {
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .card-title {
@@ -366,13 +351,15 @@
     /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them. The address and the menu invert over what they
        cross: #ffffff in difference reads #000000 on the #ffffff page and
-       light over anything dark. The wordmark keeps its blue over all of it.
+       light over anything dark. The wordmark keeps its orange over all of it.
        The nav stands on the work's four columns: the wordmark the first, the
-       second left empty, the address the third, the menu the fourth */
+       second left empty, the address the third, the menu the fourth. From
+       1360 the work has six, and the nav stands on those: the wordmark the
+       first, the address the fourth, the menu the sixth */
     @media (min-width: 1000px) {
       .top {
         --col: calc((100% - 72px) / 4);
-        min-height: 32px;
+        min-height: 28px;
       }
 
       .top h1,
@@ -409,6 +396,20 @@
 
       .top .menu {
         left: calc(12px + 3 * (var(--col) + 16px));
+      }
+    }
+
+    @media (min-width: 1360px) {
+      .top {
+        --col: calc((100% - 104px) / 6);
+      }
+
+      .top .contact {
+        left: calc(12px + 3 * (var(--col) + 16px));
+      }
+
+      .top .menu {
+        left: calc(12px + 5 * (var(--col) + 16px));
       }
     }
 
@@ -579,7 +580,7 @@
   </div>
 
   <main class="row index" aria-label="Selected work">
-    <div class="cell card" style="--span: 2; --span8: 2">
+    <div class="cell card" style="--span: 2">
       <p class="card-title">Latest collaborations</p>
       <p>
         <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>,
@@ -605,147 +606,147 @@
         <span>Cary RX</span>.
       </p>
     </div>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
       <figcaption>Street Poster</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
       <figcaption>Visa Cards</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Investments App</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 720 / 1080"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
       <figcaption>Debit Card</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
       <figcaption>Interface</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
       <figcaption>Website, Laptops</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
       <figcaption>Icon System</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
       <figcaption>Pattern</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
       <figcaption>Poster</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>Website, Laptop</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Website, Mobile</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
       <figcaption>Website Sections</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
       <figcaption>Customer Journey</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 630 / 880"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
       <figcaption>Virtual Assistance</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
       <figcaption>Brand Identity</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
       <figcaption>Website</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
       <figcaption>Website, Spanish</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
       <figcaption>Onboarding</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 720 / 1080"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
       <figcaption>Report Charts</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
       <figcaption>Report, iPad</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
       <figcaption>Homepage</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
       <figcaption>Product Cards</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
       <figcaption>Team Page</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
       <figcaption>Agent Activity Panel</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
       <figcaption>Token Statement</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>xrank.tech</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>China.Supply</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
       <figcaption>Journal App</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
       <figcaption>Journal, Close-up</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Calm App Login</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
       <figcaption>Music Player</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>Writing App</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
       <figcaption>Godzilla Minus One</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
       <figcaption>Godzilla, Bus Stop</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
       <figcaption>Nine2Five Spec Sheet</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
       <figcaption>Shopping Bag</figcaption>
     </figure>
@@ -799,7 +800,7 @@
 
       // Each cell takes its width first, so its height is known
       const queue = [...index.children].map((cell) => {
-        const span = Math.min(cols, parseInt(getComputedStyle(cell).getPropertyValue('--s'), 10) || 1);
+        const span = Math.min(cols, parseInt(getComputedStyle(cell).getPropertyValue('--span'), 10) || 1);
         cell.style.width = `${span * colW + (span - 1) * gapX}px`;
         return { cell, span, height: cell.offsetHeight };
       });
