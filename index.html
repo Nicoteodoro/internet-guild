@@ -54,13 +54,13 @@
     }
 
     body {
-      background: #ffffff;
-      color: #000000;
+      background: #0c0c0c;
+      color: #f7f7f7;
       font-family: "Neue Haas Display", system-ui, -apple-system, sans-serif;
       font-weight: 400;
       letter-spacing: 0.1px;
-      font-size: 12px;
-      line-height: 14px;
+      font-size: 14px;
+      line-height: 16px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
     }
@@ -71,7 +71,7 @@
     }
 
     a:focus-visible {
-      outline: 1px solid #000000;
+      outline: 1px solid #f7f7f7;
       outline-offset: 2px;
     }
 
@@ -238,14 +238,16 @@
       text-decoration-line: underline;
     }
 
-    /* The work is a masonry: eight columns from 1360, then four, three, two.
-       Each piece keeps its own proportions and takes one, two or three
-       columns, its title under it, close. Before the script sets them down
-       (or without it) the cells run in a plain grid. 16 across, 40 down */
+    /* The work is scattered over four columns from 1000, then three, two.
+       Each piece keeps its own proportions and takes one or two columns, its
+       title under it, close, but is set smaller than its place, pushed to
+       one side of it and dropped a little, so the rows do not line up and
+       the pieces have air about them. Before the script sets them down (or
+       without it) the cells run in a plain grid */
     .row.index {
       --cols: 2;
       grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
-      gap: 40px 16px;
+      gap: 72px 16px;
       padding-bottom: 12px;
       position: relative;
     }
@@ -262,23 +264,10 @@
       }
     }
 
-    @media (min-width: 1360px) {
-      .row.index {
-        --cols: 8;
-      }
-    }
-
     .cell {
-      --s: var(--span, 1);
-      grid-column: span var(--s);
+      grid-column: span var(--span, 1);
       margin: 0;
       min-width: 0;
-    }
-
-    @media (min-width: 1360px) {
-      .cell {
-        --s: var(--span8, var(--span, 1));
-      }
     }
 
     .index.is-packed {
@@ -298,7 +287,7 @@
     /* Every piece keeps its own proportions */
     .media {
       aspect-ratio: var(--ar, 1 / 1);
-      background: #f4f4f4;
+      background: #1a1a1a;
       overflow: hidden;
     }
 
@@ -320,7 +309,7 @@
     .media:focus-visible,
     .viewer-close:focus-visible,
     .remix:focus-visible {
-      outline: 1px solid #000000;
+      outline: 1px solid #f7f7f7;
       outline-offset: 2px;
     }
 
@@ -332,7 +321,7 @@
       flex-direction: column;
       box-sizing: border-box;
       padding: 12px;
-      background: #ffffff;
+      background: #0c0c0c;
     }
 
     .viewer.is-open {
@@ -387,25 +376,31 @@
     }
 
     /* The first cell is a card of its own, with no film in it: the studio's
-       latest collaborations, set in the ink's own black */
+       latest collaborations, set in the ink's own light on the dark page */
     .card {
       box-sizing: border-box;
       aspect-ratio: 1 / 1;
       padding: 12px;
-      background: #000000;
-      color: #ffffff;
+      background: #f7f7f7;
+      color: #0c0c0c;
+    }
+
+    @media (max-width: 999px) {
+      .card {
+        --span: 2 !important;
+      }
     }
 
     .card p {
-      line-height: 18px;
+      line-height: 20px;
     }
 
     .card p + p {
-      margin-top: 18px;
+      margin-top: 20px;
     }
 
     .card-title {
-      color: #949494;
+      color: #6b6b6b;
     }
 
     .card a {
@@ -446,8 +441,9 @@
 
     /* On a desk the wordmark, the address and the menu stay put while the
        page runs under them. The address and the menu invert over what they
-       cross: #ffffff in difference reads #000000 on the #ffffff page and
-       light over anything dark. The wordmark keeps its orange over all of it.
+       cross: #ffffff in difference reads #f3f3f3 on the #0c0c0c page (the
+       most that blend can reach, a step under #f7f7f7) and dark over anything
+       light. The wordmark keeps its orange over all of it.
        The nav stands on the work's four columns: the wordmark the first, the
        second left empty, the address the third, the menu the fourth. From
        1360 the work has eight, and those four slots fall on its first, fifth
@@ -455,7 +451,7 @@
     @media (min-width: 1000px) {
       .top {
         --col: calc((100% - 72px) / 4);
-        min-height: 28px;
+        min-height: 32px;
       }
 
       .top h1,
@@ -473,15 +469,16 @@
         mix-blend-mode: difference;
       }
 
-      /* In the blend the grey is set as its inverse: #6b6b6b in difference
-         reads #949494 on the #ffffff page */
+      /* In the blend the grey is set as its inverse: #a0a0a0 in difference
+         reads #949494 on the #0c0c0c page */
       @media (hover: hover) {
         .top .contact a:hover {
-          color: #6b6b6b;
+          color: #a0a0a0;
         }
       }
 
       .top h1 {
+        top: 11px;
         left: 12px;
       }
 
@@ -526,7 +523,7 @@
         border: 0;
         background: none;
         font: inherit;
-        color: #000000;
+        color: #f7f7f7;
         cursor: pointer;
       }
 
@@ -546,7 +543,7 @@
         align-items: flex-start;
         gap: 0;
         padding: 12px;
-        background: #ffffff;
+        background: #0c0c0c;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
         transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
@@ -561,13 +558,14 @@
       /* The wordmark and Close stand where the wordmark and Menu stood */
       .menu-head {
         display: flex;
+        align-items: baseline;
         justify-content: space-between;
         align-self: stretch;
         margin-bottom: 22vh;
       }
 
       .menu > a {
-        color: #000000;
+        color: #f7f7f7;
       }
 
       .menu > a {
@@ -614,7 +612,7 @@
           right: 0;
           bottom: 0;
           height: 4px;
-          background: #ffffff;
+          background: #0c0c0c;
           z-index: 11;
         }
       }
@@ -657,7 +655,7 @@
   </div>
 
   <main class="row index" aria-label="Selected work">
-    <div class="cell card" style="--span: 2; --span8: 2">
+    <div class="cell card" style="--span: 1">
       <p class="card-title">Latest collaborations</p>
       <p>
         <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>,
@@ -683,147 +681,147 @@
         <span>Cary RX</span>.
       </p>
     </div>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
       <figcaption>Street Poster</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
       <figcaption>Visa Cards</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Investments App</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 720 / 1080"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
       <figcaption>Debit Card</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
       <figcaption>Interface</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
       <figcaption>Website, Laptops</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
       <figcaption>Icon System</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
       <figcaption>Pattern</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
       <figcaption>Poster</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>Website, Laptop</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Website, Mobile</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
       <figcaption>Website Sections</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
       <figcaption>Customer Journey</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 630 / 880"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
       <figcaption>Virtual Assistance</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
       <figcaption>Brand Identity</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
       <figcaption>Website</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
       <figcaption>Website, Spanish</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1920 / 1080"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
       <figcaption>Onboarding</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 720 / 1080"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
       <figcaption>Report Charts</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
       <figcaption>Report, iPad</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
       <figcaption>Homepage</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
       <figcaption>Product Cards</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
       <figcaption>Team Page</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
       <figcaption>Agent Activity Panel</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
       <figcaption>Token Statement</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>xrank.tech</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>China.Supply</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
       <figcaption>Journal App</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
       <figcaption>Journal, Close-up</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
       <figcaption>Calm App Login</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
       <figcaption>Music Player</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
       <figcaption>Writing App</figcaption>
     </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
+    <figure class="cell" style="--span: 2">
       <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
       <figcaption>Godzilla Minus One</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
       <figcaption>Godzilla, Bus Stop</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
       <figcaption>Nine2Five Spec Sheet</figcaption>
     </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
+    <figure class="cell" style="--span: 1">
       <div class="media" style="--ar: 1500 / 1500"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
       <figcaption>Shopping Bag</figcaption>
     </figure>
@@ -866,11 +864,20 @@
       if (video.dataset.poster) posterObserver.observe(video);
     });
 
-    // The masonry: the cells go down in order, but each time the packer looks
-    // a few cells ahead for the one that sits lowest and leaves the least
-    // hole under it, so the gaps a wide piece would leave get filled
+    // The scatter: the cells go down in order, each to the lowest place its
+    // columns allow, but each is set smaller than that place, pushed to one
+    // side of it and dropped a little. A cell keeps its own three throws
+    // (size, side, drop) until it is dealt again, so a resize only refits them
     const index = document.querySelector('.index');
     const LOOKAHEAD = 12;
+    const SMALLEST = 0.6;
+    const DROP = 110;
+
+    function throwDice(cell) {
+      cell.dataset.size = Math.random();
+      cell.dataset.side = Math.random();
+      cell.dataset.drop = Math.random();
+    }
 
     function pack() {
       const style = getComputedStyle(index);
@@ -885,9 +892,18 @@
 
       // Each cell takes its width first, so its height is known
       const queue = [...index.children].map((cell) => {
-        const span = Math.min(cols, parseInt(getComputedStyle(cell).getPropertyValue('--s'), 10) || 1);
-        cell.style.width = `${span * colW + (span - 1) * gapX}px`;
-        return { cell, span, height: cell.offsetHeight };
+        const span = Math.min(cols, parseInt(getComputedStyle(cell).getPropertyValue('--span'), 10) || 1);
+        const room = span * colW + (span - 1) * gapX;
+        const size = cell.classList.contains('card') ? 1 : SMALLEST + (1 - SMALLEST) * (+cell.dataset.size || 0);
+        const width = room * size;
+        cell.style.width = `${width}px`;
+        return {
+          cell,
+          span,
+          side: (room - width) * (+cell.dataset.side || 0),
+          drop: cell.classList.contains('card') ? 0 : DROP * (+cell.dataset.drop || 0),
+          height: cell.offsetHeight,
+        };
       });
 
       // The lowest place for a cell: where its columns all stand clear
@@ -918,9 +934,10 @@
 
         const [item] = queue.splice(pick, 1);
         const { col, top } = place(item);
-        item.cell.style.left = `${edge + col * (colW + gapX)}px`;
-        item.cell.style.top = `${top}px`;
-        for (let c = col; c < col + item.span; c++) heights[c] = top + item.height + gapY;
+        const y = top + item.drop;
+        item.cell.style.left = `${edge + col * (colW + gapX) + item.side}px`;
+        item.cell.style.top = `${y}px`;
+        for (let c = col; c < col + item.span; c++) heights[c] = y + item.height + gapY;
       }
 
       index.style.height = `${Math.max(...heights) - gapY}px`;
@@ -929,6 +946,7 @@
     // Remix deals the same pieces into a new order; the card stays first
     function remix() {
       const cells = [...index.children].filter((cell) => !cell.classList.contains('card'));
+      cells.forEach(throwDice);
 
       for (let i = cells.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
