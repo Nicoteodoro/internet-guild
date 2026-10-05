@@ -54,7 +54,7 @@
     }
 
     body {
-      background: #f7f7f7;
+      background: #fffffb;
       color: #333333;
       font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       font-weight: 400;
@@ -108,8 +108,33 @@
 
     .top {
       position: relative;
-      padding-block: 12px 120px;
+      padding-block: 12px 0;
       column-gap: 16px;
+    }
+
+    /* The line stands on its own between the nav and the work, as the hero
+       did: 40% of the screen tall with the line centred in it, across the
+       first columns so its lines run whole */
+    .hero {
+      min-height: 40vh;
+      align-content: center;
+      column-gap: 16px;
+    }
+
+    .tagline {
+      grid-column: 1 / -1;
+    }
+
+    @media (min-width: 901px) {
+      .tagline {
+        grid-column: 1 / span 3;
+      }
+    }
+
+    @media (min-width: 1101px) {
+      .tagline {
+        grid-column: 1 / span 2;
+      }
     }
 
     /* The wordmark is blue, in Geist SemiBold, drawn in a half point tighter,
@@ -213,10 +238,10 @@
       color: #333333;
     }
 
-    /* Six pieces to a row, 16 across and 40 down. Narrower screens take
+    /* Four pieces to a row, 16 across and 40 down. Narrower screens take
        three, two, then one */
     .index {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 40px 16px;
       padding-bottom: 12px;
     }
@@ -273,18 +298,24 @@
       }
     }
 
+    /* Under 1000 the nav is in the flow: the wordmark and the address across
+       the top, the menu under the address */
+    @media (max-width: 999px) {
+      .menu {
+        grid-column: 2;
+      }
+    }
+
     /* On a desk the wordmark, the address and the menu stay put while the
-       page runs under them; the line scrolls away with it. The address and
-       the menu invert over what they cross: #c4c4c4 in difference reads
-       #333333 on the #f7f7f7 page and light over anything dark. The wordmark
-       keeps its blue over all of it */
+       page runs under them. The address and the menu invert over what they
+       cross: #ccccc8 in difference reads #333333 on the #fffffb page and
+       light over anything dark. The wordmark keeps its blue over all of it.
+       The nav stands on the work's four columns: the wordmark the first, the
+       second left empty, the address the third, the menu the fourth */
     @media (min-width: 1000px) {
-      /* --col is one column of the nav's measure: the width less the two 12
-         edges and the 16 between n columns, shared out */
       .top {
-        --n: 4;
-        --col: calc((100% - 24px - (var(--n) - 1) * 16px) / var(--n));
-        grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+        --col: calc((100% - 72px) / 4);
+        min-height: 32px;
       }
 
       .top h1,
@@ -298,16 +329,16 @@
 
       .top .contact,
       .top .menu {
-        color: #c4c4c4;
+        color: #ccccc8;
         mix-blend-mode: difference;
       }
 
-      /* In the blend the grey is set as its inverse: #636363 in difference
-         reads #949494 on the #f7f7f7 page */
+      /* In the blend the grey is set as its inverse: #6b6b67 in difference
+         reads #949494 on the #fffffb page */
       @media (hover: hover) {
         .top .menu > a:hover,
         .top .contact a:hover {
-          color: #636363;
+          color: #6b6b67;
         }
       }
 
@@ -315,56 +346,12 @@
         left: 12px;
       }
 
-      /* The nav reads across: the wordmark, the address, the line, the menu.
-         The line takes the third quarter and scrolls away with the page */
       .top .contact {
-        left: calc(12px + var(--col) + 16px);
-      }
-
-      .tagline {
-        grid-column: 3;
+        left: calc(12px + 2 * (var(--col) + 16px));
       }
 
       .top .menu {
         left: calc(12px + 3 * (var(--col) + 16px));
-      }
-    }
-
-    /* Over 1100 the work below is six columns, and the nav stands on them:
-       the wordmark one, the address two (a column under 1440 is narrower than
-       the address), the line two, the menu one */
-    @media (min-width: 1101px) {
-      .top {
-        --n: 6;
-      }
-
-      .top .contact {
-        width: calc(2 * var(--col) + 16px);
-      }
-
-      .tagline {
-        grid-column: 4 / span 2;
-      }
-
-      .top .menu {
-        left: calc(12px + 5 * (var(--col) + 16px));
-      }
-    }
-
-    /* From 1440 the address fits a column of its own: the wordmark one, the
-       address one, the line two, the menu two */
-    @media (min-width: 1440px) {
-      .top .contact {
-        width: var(--col);
-      }
-
-      .tagline {
-        grid-column: 3 / span 2;
-      }
-
-      .top .menu {
-        left: calc(12px + 4 * (var(--col) + 16px));
-        width: calc(2 * var(--col) + 16px);
       }
     }
 
@@ -375,14 +362,10 @@
 
       .top {
         row-gap: 0;
-        padding-block: 12px 112px;
       }
 
-      /* The line sits under the wordmark, full width, so each of its lines
-         runs whole where it can */
-      .tagline {
-        grid-column: 1;
-        padding-top: 56px;
+      .hero {
+        min-height: 50vh;
       }
 
       /* The address goes on a phone: the menu carries Contact */
@@ -424,7 +407,7 @@
         align-items: flex-start;
         gap: 0;
         padding: 12px;
-        background: #f7f7f7;
+        background: #fffffb;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
         transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
@@ -492,7 +475,7 @@
           right: 0;
           bottom: 0;
           height: 4px;
-          background: #f7f7f7;
+          background: #fffffb;
           z-index: 11;
         }
       }
@@ -515,8 +498,6 @@
       <p><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
 
-    <p class="tagline">Essentialist design practice, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.</p>
-
     <nav class="menu" id="menu" aria-label="Main">
       <div class="menu-head">
         <a href="index.html">Internet Guild™</a>
@@ -527,6 +508,10 @@
       <a href="contact.html">Contact</a>
     </nav>
   </header>
+
+  <div class="row hero">
+    <p class="tagline">Essentialist design practice, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.</p>
+  </div>
 
   <div class="bar">
     <p><span class="muted">Selected work /</span> Index</p>
