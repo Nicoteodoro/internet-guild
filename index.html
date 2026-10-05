@@ -16,7 +16,8 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
@@ -34,11 +35,20 @@
       overflow-y: scroll;
     }
 
-    /* IBM Plex Mono, self-hosted at the one weight the page uses */
+    /* IBM Plex Mono at 400 for the page, and Geist, one variable file, for
+       the wordmark alone at 500; both self-hosted */
     @font-face {
       font-family: "IBM Plex Mono";
-      src: url("ibm-plex-mono-500.woff2") format("woff2");
-      font-weight: 500;
+      src: url("ibm-plex-mono-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: Geist;
+      src: url("geist-latin.woff2") format("woff2");
+      font-weight: 100 900;
       font-style: normal;
       font-display: swap;
     }
@@ -47,7 +57,7 @@
       background: #f7f7f7;
       color: #333333;
       font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-      font-weight: 500;
+      font-weight: 400;
       letter-spacing: 0.1px;
       font-size: 14px;
       line-height: 16px;
@@ -102,9 +112,11 @@
       column-gap: 16px;
     }
 
-    /* The wordmark is blue, here and in the phone's sheet */
+    /* The wordmark is blue, in Geist Medium, here and in the phone's sheet */
     .top h1,
     .menu-head a {
+      font-family: Geist, system-ui, -apple-system, sans-serif;
+      font-weight: 500;
       color: #007bbb;
     }
 
