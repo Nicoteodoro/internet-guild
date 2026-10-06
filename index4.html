@@ -16,6 +16,7 @@
       margin: 0;
       height: 100%;
       overflow: hidden;
+      overscroll-behavior: none;
     }
 
     /* PP Neue Montreal Medium, self-hosted: the one face the page uses */
@@ -32,10 +33,11 @@
       color: #000000;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 17px;
+      font-size: 13px;
+      line-height: 16px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
+      touch-action: none;
     }
 
     a {
@@ -59,13 +61,14 @@
     }
 
     /* The page is one screen tall and does not move. Its words stand on the
-       left: the menu at the top, the studio in the middle, the address at
-       the foot. The work runs down the right in a column of its own, the
-       only thing that scrolls */
+       left, 13 in from the edges: the menu at the top, the studio in the
+       middle, the address at the foot. The work runs down the right in a
+       column of its own, the only thing that scrolls; a wheel turned anywhere
+       on the page moves it */
     .menu {
       position: fixed;
-      top: 22px;
-      left: 22px;
+      top: 13px;
+      left: 13px;
       display: flex;
       gap: 42px;
     }
@@ -73,7 +76,7 @@
     .studio {
       position: fixed;
       top: 45.4vh;
-      left: 22px;
+      left: 13px;
       display: grid;
       grid-template-columns: 210px auto;
     }
@@ -84,23 +87,23 @@
 
     .hire {
       position: fixed;
-      left: 22px;
-      bottom: 15px;
+      left: 13px;
+      bottom: 13px;
     }
 
-    /* A third of the screen's width and a little more, 52 in from the right,
-       from the top edge to the bottom one; the pieces stand 38 down, 30 apart */
+    /* Three sevenths of the screen's width, 13 in from the right, and from
+       the top edge to the bottom one: the pieces run flush to both, 30
+       apart */
     .works {
       position: fixed;
       top: 0;
       bottom: 0;
-      right: 52px;
+      right: 13px;
       width: calc(100vw * 3 / 7);
-      box-sizing: border-box;
-      padding-block: 38px;
       overflow-y: auto;
       overscroll-behavior: contain;
       scrollbar-width: none;
+      touch-action: pan-y;
     }
 
     .works::-webkit-scrollbar {
@@ -125,22 +128,21 @@
       object-fit: cover;
     }
 
-    /* On a phone the words keep the top and the foot and the work takes the
-       lower half, edge to edge */
+    /* On a phone the words keep the top and the work takes the lower half */
     @media (max-width: 800px) {
       .menu {
         gap: 24px;
       }
 
       .studio {
-        top: 70px;
+        top: 62px;
         grid-template-columns: 1fr;
-        gap: 14px;
-        right: 22px;
+        gap: 16px;
+        right: 13px;
       }
 
       .studio p + p {
-        margin-top: 17px;
+        margin-top: 16px;
       }
 
       .hire {
@@ -150,10 +152,9 @@
       .works {
         top: auto;
         height: 56vh;
-        left: 22px;
-        right: 22px;
+        left: 13px;
+        right: 13px;
         width: auto;
-        padding-block: 22px;
       }
     }
   </style>
@@ -219,6 +220,22 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const works = document.querySelector('.works');
 
+    // The work comes in a different order every time the page is entered
+    (() => {
+      const pieces = [...works.children];
+      for (let i = pieces.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+      }
+      works.append(...pieces);
+
+      // Whatever lands first is wanted straight away
+      pieces.slice(0, 4).forEach((piece) => {
+        const image = piece.querySelector('img');
+        if (image) image.loading = 'eager';
+      });
+    })();
+
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach(({ target, isIntersecting }) => {
         if (isIntersecting && !reduceMotion.matches) {
@@ -245,9 +262,10 @@
     });
 
     // The column moves by itself once the page has loaded, at a slow, steady
-    // pace. The first wheel turn, touch or key takes it out of the page's
-    // hands: from then on the visitor moves it, and the wheel is eased, so
-    // the column glides to where it was sent instead of jumping there
+    // pace. The first wheel turn, touch or key, anywhere on the page, takes it
+    // out of the page's hands: from then on the visitor moves it, and the
+    // wheel is eased, so the column glides to where it was sent instead of
+    // jumping there
     const AUTO_SPEED = 40;     // pixels a second
     const EASE = 0.085;        // share of the way covered each frame
     const START_AFTER = 700;   // ms after load
@@ -289,16 +307,35 @@
       auto = false;
     }
 
-    works.addEventListener('wheel', (e) => {
-      if (e.ctrlKey || reduceMotion.matches) return;
+    addEventListener('wheel', (e) => {
+      if (e.ctrlKey) return;
       e.preventDefault();
       takeOver();
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? works.clientHeight : 1;
       target = clamp(target + e.deltaY * unit);
-      run();
+
+      if (reduceMotion.matches) {
+        current = ours = works.scrollTop = target;
+      } else {
+        run();
+      }
     }, { passive: false });
 
-    works.addEventListener('touchstart', takeOver, { passive: true });
+    // A finger dragged anywhere but on the column moves the column too
+    let finger = null;
+
+    addEventListener('touchstart', (e) => {
+      takeOver();
+      finger = works.contains(e.target) ? null : e.touches[0].clientY;
+    }, { passive: true });
+
+    addEventListener('touchmove', (e) => {
+      if (finger === null) return;
+      const y = e.touches[0].clientY;
+      works.scrollTop = clamp(works.scrollTop + finger - y);
+      current = target = ours = works.scrollTop;
+      finger = y;
+    }, { passive: true });
 
     addEventListener('keydown', (e) => {
       if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) takeOver();
