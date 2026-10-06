@@ -16,8 +16,8 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="neue-haas-display-roman.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
@@ -35,20 +35,20 @@
       overflow-y: scroll;
     }
 
-    /* Neue Haas Grotesk Display Roman for the page, and DM Sans, one variable
-       file, for the wordmark alone at 600; both self-hosted */
+    /* PP Neue Montreal, self-hosted in two weights: Regular for the page,
+       Medium for the wordmark */
     @font-face {
-      font-family: "Neue Haas Display";
-      src: url("neue-haas-display-roman.woff2") format("woff2");
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-regular.woff2") format("woff2");
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
 
     @font-face {
-      font-family: "DM Sans";
-      src: url("dm-sans.woff2") format("woff2");
-      font-weight: 100 1000;
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-medium.woff2") format("woff2");
+      font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
@@ -56,7 +56,7 @@
     body {
       background: #ffffff;
       color: #000000;
-      font-family: "Neue Haas Display", system-ui, -apple-system, sans-serif;
+      font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 400;
       letter-spacing: 0.1px;
       font-size: 12px;
@@ -112,12 +112,11 @@
       column-gap: 16px;
     }
 
-    /* The wordmark is orange, SemiBold, drawn in a half point tighter, here
+    /* The wordmark is orange, Medium, drawn in a half point tighter, here
        and in the phone's sheet */
     .top h1,
     .menu-head a {
-      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
-      font-weight: 600;
+      font-weight: 500;
       letter-spacing: -0.5px;
       color: #f43b00;
     }
