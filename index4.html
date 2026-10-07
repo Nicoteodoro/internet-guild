@@ -154,14 +154,15 @@
       }
     }
 
-    /* The way in. The pieces come first: the ones on screen start as one
-       tiny, blurred heap in the middle of the screen and, growing, come
-       apart, the one that belongs above going up and the one that belongs
-       below going down, each settling into its place sharp. Then the words
-       rise into place, the menu, the studio, the address. The rest of the
-       pieces take no part: they are simply there when the visitor comes to
-       them. Nothing hides unless the page asked for it (the class on the
-       root) */
+    /* The way in. The pieces come first: the column opens with one piece in
+       the middle of the screen and one above, one below it, and all three
+       begin tiny and blurred in the heart of the middle one. The middle one
+       grows where it stands; the other two slip out from behind it, the one
+       that belongs above going up and the one that belongs below going down,
+       growing, and settle into their places sharp. Then the words rise into
+       place, the menu, the studio, the address. The rest of the pieces take
+       no part: they are simply there when the visitor comes to them. Nothing
+       hides unless the page asked for it (the class on the root) */
     .reveal {
       transition: opacity 0.9s ease var(--delay, 0s), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0s);
     }
@@ -175,6 +176,16 @@
       opacity: 0;
     }
 
+    html.intro .piece.start,
+    html.intro .piece.is-in {
+      position: relative;
+      z-index: 1;
+    }
+
+    html.intro .piece.middle {
+      z-index: 2;
+    }
+
     html.intro .piece.start {
       opacity: 0;
       transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(0.05);
@@ -186,9 +197,9 @@
       opacity: 1;
       transform: none;
       filter: blur(0);
-      transition: transform 1.9s cubic-bezier(0.3, 0.75, 0.2, 1) var(--delay, 0s),
-        filter 1.9s cubic-bezier(0.5, 0, 0.3, 1) var(--delay, 0s),
-        opacity 0.5s ease-out var(--delay, 0s);
+      transition: transform var(--dur, 2s) cubic-bezier(0.4, 0.1, 0.15, 1) var(--delay, 0s),
+        filter var(--dur, 2s) cubic-bezier(0.5, 0, 0.3, 1) var(--delay, 0s),
+        opacity 0.6s ease-out var(--delay, 0s);
     }
 
     html.intro .piece.plain {
@@ -293,13 +304,22 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const works = document.querySelector('.works');
 
-    // The work comes in a different order every time the page is entered
+    // The work comes in a different order every time the page is entered. The
+    // page opens on three of them, one in the middle of the screen with one
+    // above and one below, so the one in the middle is the first that leaves
+    // room for the other two to show
     (() => {
       const pieces = [...works.children];
       for (let i = pieces.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
       }
+
+      const room = works.clientHeight * 0.7;
+      const middle = pieces.find((piece) => piece.offsetHeight <= room)
+        || pieces.reduce((a, b) => (a.offsetHeight <= b.offsetHeight ? a : b));
+      pieces.splice(pieces.indexOf(middle), 1);
+      pieces.splice(1, 0, middle);
       works.append(...pieces);
 
       // Whatever lands first is wanted straight away
@@ -334,64 +354,86 @@
       if (video.dataset.poster) posterObserver.observe(video);
     });
 
-    // The way in: the pieces on screen at the start begin as a tiny heap in
-    // the middle of the screen and grow apart to their places, once all their
-    // pictures are there; the rest are left as they are, with no effect, for
-    // when the visitor comes to them. When the last of those that grew is
-    // nearly sharp the words rise, in the order they stand on the page. The
-    // column starts to move once all of it is in
+    // The way in: the column opens with its second piece in the middle of the
+    // screen, so one piece shows above it and one below. Once their pictures
+    // are there, all that are on screen begin as a tiny heap in the heart of
+    // the middle one; it grows where it stands and the others come out from
+    // behind it and grow to their places, the upper one going up and the lower
+    // one going down. The rest are left as they are, with no effect, for when
+    // the visitor comes to them. When the last of those that grew is nearly
+    // sharp the words rise, in the order they stand on the page. The column
+    // starts to move once all of it is in
     const root = document.documentElement;
+    let opening = document.fonts.ready;
 
     if (root.classList.contains('intro')) {
       window.introStarted = true;
 
-      const STEP = 0.08;
+      const MIDDLE_TIME = 2;     // seconds the middle one takes to grow
+      const SIDES_AFTER = 0.7;   // seconds before the others come out
+      const SIDES_TIME = 2.6;    // seconds they take
+      const SIDES_STEP = 0.15;   // seconds between one side and the next one out
+      const TEXTS_AT = 2.4;      // seconds, once the pieces have begun
       const texts = [...document.querySelectorAll('.reveal')];
       const pieces = [...works.children];
 
       const pictureReady = (piece) => new Promise((resolve) => {
-        const image = piece.querySelector('img');
+        const video = piece.querySelector('video');
+        let image = piece.querySelector('img');
+        if (video && video.dataset.poster) {
+          video.poster = video.dataset.poster;
+          image = new Image();
+          image.src = video.dataset.poster;
+        }
         if (!image || image.complete) return resolve();
         image.addEventListener('load', resolve, { once: true });
         image.addEventListener('error', resolve, { once: true });
         setTimeout(resolve, 1500);
       });
 
-      document.fonts.ready.then(() => {
-        const height = works.clientHeight;
-        const first = pieces.filter((piece) => piece.getBoundingClientRect().top < height);
-        const rest = pieces.filter((piece) => !first.includes(piece));
-
-        rest.forEach((piece) => piece.classList.add('plain'));
-
-        // Where each of the first pieces belongs, against the middle of the
-        // screen where they all begin: how far each has to travel
+      opening = document.fonts.ready.then(() => {
+        const middle = pieces[1];
         const column = works.getBoundingClientRect();
-        const middle = { x: column.left + column.width / 2, y: height / 2 };
+
+        // The column opens with the middle piece in the middle of the screen
+        works.scrollTop = Math.max(0, middle.offsetTop + middle.offsetHeight / 2 - works.clientHeight / 2);
+        current = target = ours = works.scrollTop;
+
+        const first = pieces.filter((piece) => {
+          const box = piece.getBoundingClientRect();
+          return box.bottom > column.top && box.top < column.bottom;
+        });
+        pieces.filter((piece) => !first.includes(piece)).forEach((piece) => piece.classList.add('plain'));
+
+        // Where each begins: in the heart of the middle one, so how far each
+        // has to travel to get to its place
+        const heart = middle.getBoundingClientRect();
         first.forEach((piece) => {
           const box = piece.getBoundingClientRect();
-          piece.style.setProperty('--dx', `${middle.x - (box.left + box.width / 2)}px`);
-          piece.style.setProperty('--dy', `${middle.y - (box.top + box.height / 2)}px`);
+          piece.style.setProperty('--dx', `${heart.left + heart.width / 2 - (box.left + box.width / 2)}px`);
+          piece.style.setProperty('--dy', `${heart.top + heart.height / 2 - (box.top + box.height / 2)}px`);
           piece.classList.add('start');
         });
+        middle.classList.add('middle');
 
         // All of them go together, once every picture is there
-        Promise.all(first.map(pictureReady)).then(() => {
+        return Promise.all(first.map(pictureReady)).then(() => {
           void works.offsetWidth;
-          first.forEach((piece, i) => {
-            piece.style.setProperty('--delay', `${i * STEP}s`);
+          first.forEach((piece) => {
+            const apart = Math.abs(pieces.indexOf(piece) - 1);
+            piece.style.setProperty('--dur', `${apart ? SIDES_TIME : MIDDLE_TIME}s`);
+            piece.style.setProperty('--delay', `${apart ? SIDES_AFTER + (apart - 1) * SIDES_STEP : 0}s`);
             piece.classList.remove('start');
             piece.classList.add('is-in');
           });
-        });
 
-        const textsAt = first.length * STEP + 1.5;
-        texts.forEach((text, i) => {
-          text.style.setProperty('--delay', `${textsAt + i * 0.09}s`);
-          text.classList.add('is-in');
-        });
+          texts.forEach((text, i) => {
+            text.style.setProperty('--delay', `${TEXTS_AT + i * 0.09}s`);
+            text.classList.add('is-in');
+          });
 
-        START_AFTER = Math.round((textsAt + texts.length * 0.09 + 0.9) * 1000);
+          START_AFTER = Math.round((TEXTS_AT + texts.length * 0.09 + 0.9) * 1000);
+        });
       });
     }
 
@@ -484,7 +526,7 @@
       }
     }, { passive: true });
 
-    document.fonts.ready.then(() => {
+    opening.then(() => {
       if (!auto) return;
       setTimeout(() => {
         if (auto) {
