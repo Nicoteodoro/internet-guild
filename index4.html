@@ -82,7 +82,23 @@
       right: 13px;
       display: flex;
       gap: 21px;
+      color: #000000;
       z-index: 2;
+    }
+
+    /* A black square, 4 by 4, stands before each word */
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .menu a::before {
+      content: "";
+      flex: none;
+      width: 4px;
+      height: 4px;
+      background: #000000;
     }
 
     /* The label's column shrinks with the screen */
@@ -153,15 +169,16 @@
     }
 
     /* The way in. The pieces come first: the column opens with one piece in
-       the middle of the screen and one above, one below it, and all three
-       begin tiny and blurred in the heart of the middle one. All three grow
-       together, at the same pace: the middle one where it stands, the other
-       two slipping out from behind it, the one that belongs above going up
-       and the one that belongs below going down, and settle into their places
-       sharp. Then the words rise into
-       place, the menu, the studio, the address. The rest of the pieces take
-       no part: they are simply there when the visitor comes to them. Nothing
-       hides unless the page asked for it (the class on the root) */
+       the middle of the screen and one above, one below it. All three begin
+       tiny and blurred in the heart of the middle one. First the other two
+       slip out from behind it, still tiny, the one that belongs above going
+       up and the one that belongs below going down; then all three grow
+       together, and settle into their places sharp. (The motion itself is
+       drawn by the script; here is only where a piece waits and where it
+       rests.) Then the words rise into place, the menu, the studio, the
+       address. The rest of the pieces take no part: they are simply there
+       when the visitor comes to them. Nothing hides unless the page asked for
+       it (the class on the root) */
     .reveal {
       transition: opacity 0.9s ease var(--delay, 0s), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0s);
     }
@@ -185,20 +202,8 @@
       z-index: 2;
     }
 
-    html.intro .piece.start {
-      opacity: 0;
-      transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(0.05);
-      filter: blur(14px);
-      transition: none;
-    }
-
     html.intro .piece.is-in {
       opacity: 1;
-      transform: none;
-      filter: blur(0);
-      transition: transform var(--dur, 2s) cubic-bezier(0.4, 0.1, 0.15, 1) var(--delay, 0s),
-        filter var(--dur, 2s) cubic-bezier(0.5, 0, 0.3, 1) var(--delay, 0s),
-        opacity 0.6s ease-out var(--delay, 0s);
     }
 
     html.intro .piece.plain {
@@ -356,20 +361,26 @@
     // The way in: the column opens with its second piece in the middle of the
     // screen, so one piece shows above it and one below. Once their pictures
     // are there, all that are on screen begin as a tiny heap in the heart of
-    // the middle one; all grow together, at the same pace, the middle one
-    // where it stands and the others coming out from behind it to their
-    // places, the upper one going up and the lower one going down. The rest are left as they are, with no effect, for when
-    // the visitor comes to them. When the last of those that grew is nearly
-    // sharp the words rise, in the order they stand on the page. The column
-    // starts to move once all of it is in
+    // the middle one. First the others slip out from behind it, still tiny, to
+    // the middle of what shows of each; then all grow together, to their
+    // places, and the blur clears as they land. The rest are left as they
+    // are, with no effect, for when the visitor comes to them. When the last
+    // of those that grew is nearly sharp the words rise, in the order they
+    // stand on the page. The column starts to move once all of it is in
     const root = document.documentElement;
     let opening = document.fonts.ready;
 
     if (root.classList.contains('intro')) {
       window.introStarted = true;
 
-      const GROW_TIME = 2.8;     // seconds every piece takes, all together
-      const TEXTS_AT = 2;        // seconds, once the pieces have begun
+      const SMALL = 0.08;        // how small they begin, of their size
+      const BLUR = 14;           // how blurred they begin, in pixels
+      const OUT_TIME = 1.1;      // seconds the others take to slip out, still tiny
+      const GROW_TIME = 2.4;     // seconds all take to grow, together
+      const TEXTS_AT = 2.5;      // seconds, once the pieces have begun
+      const SLIP = 'cubic-bezier(0.5, 0, 0.2, 1)';
+      const GROW = 'cubic-bezier(0.4, 0.1, 0.15, 1)';
+      const CLEAR = 'cubic-bezier(0.5, 0, 0.3, 1)';
       const texts = [...document.querySelectorAll('.reveal')];
       const pieces = [...works.children];
 
@@ -387,6 +398,33 @@
         setTimeout(resolve, 1500);
       });
 
+      // One piece's way in: tiny in the heart of the middle one, then tiny
+      // where it will first be seen, then grown into its place
+      const open = (piece, from, out) => {
+        piece.classList.remove('start');
+        piece.classList.add('is-in');
+        if (!piece.animate) return;
+
+        const tiny = ([x, y]) => `translate(${x}px, ${y}px) scale(${SMALL})`;
+        const at = OUT_TIME / (OUT_TIME + GROW_TIME);
+        const run = (frames, duration = (OUT_TIME + GROW_TIME) * 1000) => {
+          const motion = piece.animate(frames, { duration, fill: 'both' });
+          motion.finished.then(() => motion.cancel()).catch(() => {});
+        };
+
+        run([
+          { transform: tiny(from), easing: SLIP },
+          { transform: tiny(out), offset: at, easing: GROW },
+          { transform: 'none' },
+        ]);
+        run([
+          { filter: `blur(${BLUR}px)` },
+          { filter: `blur(${BLUR}px)`, offset: at, easing: CLEAR },
+          { filter: 'blur(0px)' },
+        ]);
+        run([{ opacity: 0 }, { opacity: 1 }], 500);
+      };
+
       opening = document.fonts.ready.then(() => {
         const middle = pieces[1];
         const column = works.getBoundingClientRect();
@@ -401,25 +439,30 @@
         });
         pieces.filter((piece) => !first.includes(piece)).forEach((piece) => piece.classList.add('plain'));
 
-        // Where each begins: in the heart of the middle one, so how far each
-        // has to travel to get to its place
+        // Where each begins (the heart of the middle one) and where it first
+        // shows (the middle of what is on screen of it), as how far each has
+        // to move from its place; the middle one does not move
         const heart = middle.getBoundingClientRect();
+        const way = new Map();
         first.forEach((piece) => {
           const box = piece.getBoundingClientRect();
-          piece.style.setProperty('--dx', `${heart.left + heart.width / 2 - (box.left + box.width / 2)}px`);
-          piece.style.setProperty('--dy', `${heart.top + heart.height / 2 - (box.top + box.height / 2)}px`);
+          const x = box.left + box.width / 2;
+          const y = box.top + box.height / 2;
+          const shownX = (Math.max(box.left, column.left) + Math.min(box.right, column.right)) / 2;
+          const shownY = (Math.max(box.top, column.top) + Math.min(box.bottom, column.bottom)) / 2;
+          way.set(piece, piece === middle
+            ? { from: [0, 0], out: [0, 0] }
+            : {
+              from: [heart.left + heart.width / 2 - x, heart.top + heart.height / 2 - y],
+              out: [shownX - x, shownY - y],
+            });
           piece.classList.add('start');
         });
         middle.classList.add('middle');
 
         // All of them go together, once every picture is there
         return Promise.all(first.map(pictureReady)).then(() => {
-          void works.offsetWidth;
-          first.forEach((piece) => {
-            piece.style.setProperty('--dur', `${GROW_TIME}s`);
-            piece.classList.remove('start');
-            piece.classList.add('is-in');
-          });
+          first.forEach((piece) => open(piece, way.get(piece).from, way.get(piece).out));
 
           texts.forEach((text, i) => {
             text.style.setProperty('--delay', `${TEXTS_AT + i * 0.09}s`);
