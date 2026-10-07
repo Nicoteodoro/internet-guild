@@ -72,18 +72,19 @@
     }
 
     /* The page is one screen tall and does not move. Its words stand on the
-       left, 13 in from the edges: the menu at the top, the studio in the
-       middle, the address at the foot. The work runs down the right in a
+       left, 13 in from the edges: the studio in the middle, the address at the
+       foot; the menu stands at the top right. The work runs down the middle in a
        column of its own, the only thing that scrolls; a wheel turned anywhere
        on the page moves it */
     /* The menu is set back: black at 30% */
     .menu {
       position: fixed;
       top: 13px;
-      left: 13px;
+      right: 13px;
       display: flex;
       gap: 42px;
       color: rgba(0, 0, 0, 0.3);
+      z-index: 2;
     }
 
     /* The label's column shrinks with the screen */
