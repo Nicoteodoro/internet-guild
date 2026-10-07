@@ -156,10 +156,11 @@
 
     /* The way in. The pieces come first: the column opens with one piece in
        the middle of the screen and one above, one below it, and all three
-       begin tiny and blurred in the heart of the middle one. The middle one
-       grows where it stands; the other two slip out from behind it, the one
-       that belongs above going up and the one that belongs below going down,
-       growing, and settle into their places sharp. Then the words rise into
+       begin tiny and blurred in the heart of the middle one. All three grow
+       together, at the same pace: the middle one where it stands, the other
+       two slipping out from behind it, the one that belongs above going up
+       and the one that belongs below going down, and settle into their places
+       sharp. Then the words rise into
        place, the menu, the studio, the address. The rest of the pieces take
        no part: they are simply there when the visitor comes to them. Nothing
        hides unless the page asked for it (the class on the root) */
@@ -357,9 +358,9 @@
     // The way in: the column opens with its second piece in the middle of the
     // screen, so one piece shows above it and one below. Once their pictures
     // are there, all that are on screen begin as a tiny heap in the heart of
-    // the middle one; it grows where it stands and the others come out from
-    // behind it and grow to their places, the upper one going up and the lower
-    // one going down. The rest are left as they are, with no effect, for when
+    // the middle one; all grow together, at the same pace, the middle one
+    // where it stands and the others coming out from behind it to their
+    // places, the upper one going up and the lower one going down. The rest are left as they are, with no effect, for when
     // the visitor comes to them. When the last of those that grew is nearly
     // sharp the words rise, in the order they stand on the page. The column
     // starts to move once all of it is in
@@ -369,11 +370,8 @@
     if (root.classList.contains('intro')) {
       window.introStarted = true;
 
-      const MIDDLE_TIME = 2;     // seconds the middle one takes to grow
-      const SIDES_AFTER = 0.7;   // seconds before the others come out
-      const SIDES_TIME = 2.6;    // seconds they take
-      const SIDES_STEP = 0.15;   // seconds between one side and the next one out
-      const TEXTS_AT = 2.4;      // seconds, once the pieces have begun
+      const GROW_TIME = 2.8;     // seconds every piece takes, all together
+      const TEXTS_AT = 2;        // seconds, once the pieces have begun
       const texts = [...document.querySelectorAll('.reveal')];
       const pieces = [...works.children];
 
@@ -420,9 +418,7 @@
         return Promise.all(first.map(pictureReady)).then(() => {
           void works.offsetWidth;
           first.forEach((piece) => {
-            const apart = Math.abs(pieces.indexOf(piece) - 1);
-            piece.style.setProperty('--dur', `${apart ? SIDES_TIME : MIDDLE_TIME}s`);
-            piece.style.setProperty('--delay', `${apart ? SIDES_AFTER + (apart - 1) * SIDES_STEP : 0}s`);
+            piece.style.setProperty('--dur', `${GROW_TIME}s`);
             piece.classList.remove('start');
             piece.classList.add('is-in');
           });
