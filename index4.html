@@ -86,14 +86,12 @@
       color: rgba(0, 0, 0, 0.3);
     }
 
-    /* The studio keeps to the left of the work: it stops 13 short of the
-       column, and the label's column shrinks with the screen, so on a small
-       window the lines wrap instead of running under the pieces */
+    /* The label's column shrinks with the screen */
     .studio {
       position: fixed;
       top: max(45.4vh, 60px);
       left: 13px;
-      right: calc(26px + 100vw * 3 / 7);
+      right: 13px;
       display: grid;
       grid-template-columns: clamp(110px, 14vw, 210px) 1fr;
       column-gap: 13px;
@@ -109,14 +107,14 @@
       bottom: 13px;
     }
 
-    /* Three sevenths of the screen's width, 13 in from the right, and from
-       the top edge to the bottom one: the pieces run flush to both, 30
-       apart */
+    /* Three sevenths of the screen's width, in the middle of the page (over
+       the words, if they meet), and from the top edge to the bottom one: the
+       pieces run flush to both, 30 apart */
     .works {
       position: fixed;
       top: 0;
       bottom: 0;
-      right: 13px;
+      left: calc(50vw - 100vw * 3 / 14);
       width: calc(100vw * 3 / 7);
       overflow-y: auto;
       overscroll-behavior: contain;
