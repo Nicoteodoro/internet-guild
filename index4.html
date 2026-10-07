@@ -135,6 +135,14 @@
       object-fit: cover;
     }
 
+    /* A short window: the studio sits just under the menu, so a tall list
+       never reaches the address */
+    @media (max-height: 560px) {
+      .studio {
+        top: 60px;
+      }
+    }
+
     /* On a phone the words keep the top and the work takes the lower half;
        a window that is narrow but short keeps the two columns */
     @media (max-width: 800px) and (min-height: 561px) {
