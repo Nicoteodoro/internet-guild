@@ -10,6 +10,17 @@
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
+  <script>
+    // The page comes in: while the class is on, everything waits to be shown.
+    // Not with reduced motion; and if the script below never starts, the
+    // page shows itself after a few seconds all the same
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('intro');
+      setTimeout(() => {
+        if (!window.introStarted) document.documentElement.classList.remove('intro');
+      }, 6000);
+    }
+  </script>
   <style>
     html,
     body {
@@ -119,7 +130,6 @@
 
     .piece {
       aspect-ratio: var(--ar, 1 / 1);
-      background: #d9d9d9;
       overflow: hidden;
     }
 
@@ -133,6 +143,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      background: #d9d9d9;
     }
 
     /* A short window: the studio sits just under the menu, so a tall list
@@ -141,6 +152,44 @@
       .studio {
         top: 60px;
       }
+    }
+
+    /* The way in. The pieces come first: each is drawn open from its foot
+       upward (the picture is what is drawn open, so the piece itself can be
+       watched for coming into view) while it settles from a closer crop, the ones on
+       screen one after another, the rest as they arrive. Then the words
+       rise into place, the menu, the studio, the address. Nothing hides
+       unless the page asked for it (the class on the root) */
+    .piece img,
+    .piece video {
+      transition: clip-path 1.25s cubic-bezier(0.76, 0, 0.18, 1) var(--delay, 0s),
+        transform 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0s);
+    }
+
+    .reveal {
+      transition: opacity 0.9s ease var(--delay, 0s), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0s);
+    }
+
+    html.intro .piece img,
+    html.intro .piece video {
+      clip-path: inset(100% 0 0 0);
+      transform: scale(1.22);
+    }
+
+    html.intro .reveal {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    html.intro .piece.is-in img,
+    html.intro .piece.is-in video {
+      clip-path: inset(0);
+      transform: none;
+    }
+
+    html.intro .reveal.is-in {
+      opacity: 1;
+      transform: none;
     }
 
     /* On a phone the words keep the top and the work takes the lower half;
@@ -177,20 +226,20 @@
 </head>
 <body>
   <nav class="menu" aria-label="Main">
-    <a href="works.html">Works</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+    <a class="reveal" href="works.html">Works</a>
+    <a class="reveal" href="about.html">About</a>
+    <a class="reveal" href="contact.html">Contact</a>
   </nav>
 
   <div class="studio">
-    <p>Internet Guild</p>
+    <p class="reveal">Internet Guild</p>
     <div>
-      <p>Design + code studio<br>Websites, products and AI for founders who value simplicity.</p>
-      <p>Essentialist practice, born to reduce.<br>11 years of experience.</p>
+      <p class="reveal">Design + code studio<br>Websites, products and AI for founders who value simplicity.</p>
+      <p class="reveal">Essentialist practice, born to reduce.<br>11 years of experience.</p>
     </div>
   </div>
 
-  <p class="hire">Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+  <p class="hire reveal">Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
 
   <main class="works" aria-label="Selected work">
       <div class="piece" style="--ar: 1500 / 1500"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
@@ -277,6 +326,58 @@
       if (video.dataset.poster) posterObserver.observe(video);
     });
 
+    // The way in: the pieces on screen open one after another, 110 ms apart,
+    // each once its picture is there; the rest open as they come into view.
+    // When the last of those is well under way the words rise, in the order
+    // they stand on the page. The column starts to move once all of it is in
+    const root = document.documentElement;
+
+    if (root.classList.contains('intro')) {
+      window.introStarted = true;
+
+      const STEP = 0.11;
+      const texts = [...document.querySelectorAll('.reveal')];
+      const pieces = [...works.children];
+
+      const pictureReady = (piece) => new Promise((resolve) => {
+        const image = piece.querySelector('img');
+        if (!image || image.complete) return resolve();
+        image.addEventListener('load', resolve, { once: true });
+        image.addEventListener('error', resolve, { once: true });
+        setTimeout(resolve, 1500);
+      });
+
+      const open = (piece, delay) => {
+        piece.style.setProperty('--delay', `${delay}s`);
+        pictureReady(piece).then(() => piece.classList.add('is-in'));
+      };
+
+      const later = new IntersectionObserver((entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          if (!isIntersecting) return;
+          later.unobserve(target);
+          open(target, 0);
+        });
+      }, { threshold: 0.05 });
+
+      document.fonts.ready.then(() => {
+        const height = works.clientHeight;
+        const first = pieces.filter((piece) => piece.getBoundingClientRect().top < height);
+        const rest = pieces.filter((piece) => !first.includes(piece));
+
+        first.forEach((piece, i) => open(piece, i * STEP));
+        rest.forEach((piece) => later.observe(piece));
+
+        const textsAt = first.length * STEP + 0.9;
+        texts.forEach((text, i) => {
+          text.style.setProperty('--delay', `${textsAt + i * 0.09}s`);
+          text.classList.add('is-in');
+        });
+
+        START_AFTER = Math.round((textsAt + texts.length * 0.09 + 0.9) * 1000);
+      });
+    }
+
     // The column moves by itself once the page has loaded, at a slow, steady
     // pace. The first wheel turn, touch or key, anywhere on the page, takes it
     // out of the page's hands: from then on the visitor moves it, and the
@@ -284,7 +385,7 @@
     // jumping there
     const AUTO_SPEED = 40;     // pixels a second
     const EASE = 0.085;        // share of the way covered each frame
-    const START_AFTER = 700;   // ms after load
+    let START_AFTER = 700;     // ms after load
 
     let target = 0;
     let current = 0;
