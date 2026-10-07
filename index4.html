@@ -76,14 +76,12 @@
        foot; the menu stands at the top right. The work runs down the middle in a
        column of its own, the only thing that scrolls; a wheel turned anywhere
        on the page moves it */
-    /* The menu is set back: black at 30% */
     .menu {
       position: fixed;
       top: 13px;
       right: 13px;
       display: flex;
-      gap: 42px;
-      color: rgba(0, 0, 0, 0.3);
+      gap: 21px;
       z-index: 2;
     }
 
@@ -216,7 +214,7 @@
        a window that is narrow but short keeps the two columns */
     @media (max-width: 800px) and (min-height: 561px) {
       .menu {
-        gap: 24px;
+        gap: 12px;
       }
 
       .studio {
@@ -246,8 +244,8 @@
 </head>
 <body>
   <nav class="menu" aria-label="Main">
-    <a class="reveal" href="works.html">Works</a>
     <a class="reveal" href="about.html">About</a>
+    <a class="reveal" href="playground.html">Playground</a>
     <a class="reveal" href="contact.html">Contact</a>
   </nav>
 
