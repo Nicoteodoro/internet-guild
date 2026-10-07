@@ -181,10 +181,11 @@
       background: #d9d9d9;
     }
 
-    /* About is not a page but a sheet laid over this one: white at 80%, with
+    /* About is not a page but a sheet laid over this one: white at 95%, with
        the page blurred beneath it, the menu left above it so it can be put
-       away again. Its words start where the column of work ends and run to
-       the right margin; the sheet scrolls if they run long */
+       away again. Its words start where the column of work ends, stop well
+       short of the right edge, and stand in the middle of the sheet's height;
+       the sheet scrolls if they run long */
     .about {
       position: fixed;
       inset: 0;
@@ -193,7 +194,7 @@
       overscroll-behavior: contain;
       scrollbar-width: none;
       touch-action: pan-y;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.95);
       -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       opacity: 0;
@@ -216,12 +217,18 @@
     }
 
     .about-inner {
+      display: flex;
       box-sizing: border-box;
       min-height: 100%;
-      padding: 62px 13px 40px calc(50vw + 100vw * 513 / 2800);
+      padding: 62px 8vw 62px calc(50vw + 100vw * 513 / 2800);
     }
 
+    /* In the middle of the sheet's height; if the words run longer than the
+       screen they start at the top margin and the sheet scrolls */
     .about-copy {
+      flex: 1;
+      min-width: 0;
+      margin-block: auto;
       text-align: left;
       text-wrap: pretty;
       color: #a9a9a9;
@@ -376,7 +383,7 @@
       }
 
       .about-inner {
-        padding-left: 13px;
+        padding-inline: 13px;
       }
 
       .works {
