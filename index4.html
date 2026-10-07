@@ -154,16 +154,19 @@
       }
     }
 
-    /* The way in. The pieces come first: each is drawn open from its foot
-       upward (the picture is what is drawn open, so the piece itself can be
-       watched for coming into view) while it settles from a closer crop, the ones on
-       screen one after another, the rest as they arrive. Then the words
-       rise into place, the menu, the studio, the address. Nothing hides
-       unless the page asked for it (the class on the root) */
+    /* The way in. The pieces come first: each grows from a small, blurred
+       square in the middle of its place up to its full size, the blur
+       clearing as it nears it, so it lands sharp. The ones on screen go one
+       after another, the rest as they arrive. Then the words rise into place,
+       the menu, the studio, the address. The grown thing is the picture; the
+       piece around it holds its place and can be watched for coming into
+       view. Nothing hides unless the page asked for it (the class on the
+       root) */
     .piece img,
     .piece video {
-      transition: clip-path 1.25s cubic-bezier(0.76, 0, 0.18, 1) var(--delay, 0s),
-        transform 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0s);
+      transition: transform 1.6s cubic-bezier(0.25, 0.6, 0.3, 1) var(--delay, 0s),
+        filter 1.6s cubic-bezier(0.5, 0, 0.3, 1) var(--delay, 0s),
+        opacity 0.5s ease-out var(--delay, 0s);
     }
 
     .reveal {
@@ -172,8 +175,9 @@
 
     html.intro .piece img,
     html.intro .piece video {
-      clip-path: inset(100% 0 0 0);
-      transform: scale(1.22);
+      transform: scale(0.28);
+      filter: blur(22px);
+      opacity: 0;
     }
 
     html.intro .reveal {
@@ -183,8 +187,9 @@
 
     html.intro .piece.is-in img,
     html.intro .piece.is-in video {
-      clip-path: inset(0);
       transform: none;
+      filter: blur(0);
+      opacity: 1;
     }
 
     html.intro .reveal.is-in {
@@ -326,16 +331,16 @@
       if (video.dataset.poster) posterObserver.observe(video);
     });
 
-    // The way in: the pieces on screen open one after another, 110 ms apart,
-    // each once its picture is there; the rest open as they come into view.
-    // When the last of those is well under way the words rise, in the order
+    // The way in: the pieces on screen grow one after another, 140 ms apart,
+    // each once its picture is there; the rest grow as they come into view.
+    // When the last of those is nearly sharp the words rise, in the order
     // they stand on the page. The column starts to move once all of it is in
     const root = document.documentElement;
 
     if (root.classList.contains('intro')) {
       window.introStarted = true;
 
-      const STEP = 0.11;
+      const STEP = 0.14;
       const texts = [...document.querySelectorAll('.reveal')];
       const pieces = [...works.children];
 
@@ -368,7 +373,7 @@
         first.forEach((piece, i) => open(piece, i * STEP));
         rest.forEach((piece) => later.observe(piece));
 
-        const textsAt = first.length * STEP + 0.9;
+        const textsAt = first.length * STEP + 1.25;
         texts.forEach((text, i) => {
           text.style.setProperty('--delay', `${textsAt + i * 0.09}s`);
           text.classList.add('is-in');
