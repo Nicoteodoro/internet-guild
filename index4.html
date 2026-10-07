@@ -71,9 +71,10 @@
       margin: 0;
     }
 
-    /* The page is one screen tall and does not move. Its words stand on the
-       left, 13 in from the edges: the studio in the middle, the address at the
-       foot; the menu stands at the top right. The work runs down the middle in a
+    /* The page is one screen tall and does not move. Its words stand 13 in
+       from the edges: the name at the top left, the studio's words in the
+       middle of the page, starting where the name ends; the address at the
+       foot; the menu at the top right. The work runs down the middle in a
        column of its own, the only thing that scrolls; a wheel turned anywhere
        on the page moves it */
     .menu {
@@ -101,15 +102,33 @@
       background: #000000;
     }
 
-    /* The label's column shrinks with the screen */
+    /* One grid over the page, 13 in from every edge: the first column is as
+       wide as the name, so the words start exactly where the name ends, and
+       they stand in the middle of the page's height. The grid itself lets
+       the page through */
     .studio {
       position: fixed;
-      top: max(45.4vh, 60px);
-      left: 13px;
-      right: 13px;
+      inset: 13px;
       display: grid;
-      grid-template-columns: clamp(110px, 14vw, 210px) 1fr;
-      column-gap: 13px;
+      grid-template-columns: max-content 1fr;
+      grid-template-rows: auto 1fr;
+      pointer-events: none;
+    }
+
+    .studio > * {
+      pointer-events: auto;
+    }
+
+    .studio > p {
+      grid-column: 1;
+      grid-row: 1;
+      white-space: nowrap;
+    }
+
+    .studio > div {
+      grid-column: 2;
+      grid-row: 1 / -1;
+      align-self: center;
     }
 
     .studio p + p {
@@ -158,14 +177,6 @@
       height: 100%;
       object-fit: cover;
       background: #d9d9d9;
-    }
-
-    /* A short window: the studio sits just under the menu, so a tall list
-       never reaches the address */
-    @media (max-height: 560px) {
-      .studio {
-        top: 60px;
-      }
     }
 
     /* The way in. The pieces come first: the column opens with one piece in
@@ -223,10 +234,16 @@
       }
 
       .studio {
-        top: 62px;
         grid-template-columns: 1fr;
-        gap: 16px;
-        right: 13px;
+        grid-template-rows: auto auto;
+        align-content: start;
+      }
+
+      .studio > div {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: start;
+        margin-top: 35px;
       }
 
       .studio p + p {
