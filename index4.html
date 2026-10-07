@@ -158,10 +158,10 @@
        square in the middle of its place up to its full size, the blur
        clearing as it nears it, so it lands sharp. The ones on screen go one
        after another, the rest as they arrive. Then the words rise into place,
-       the menu, the studio, the address. The grown thing is the picture; the
-       piece around it holds its place and can be watched for coming into
-       view. Nothing hides unless the page asked for it (the class on the
-       root) */
+       the menu, the studio, the address. Only the pieces on screen at the
+       start do this; the rest show as they are. The grown thing is the
+       picture, the piece around it holds its place. Nothing hides unless
+       the page asked for it (the class on the root) */
     .piece img,
     .piece video {
       transition: transform 1.6s cubic-bezier(0.25, 0.6, 0.3, 1) var(--delay, 0s),
@@ -178,6 +178,16 @@
       transform: scale(0.28);
       filter: blur(22px);
       opacity: 0;
+    }
+
+    /* The pieces below the fold take no part in it: they are simply there
+       when the visitor comes to them */
+    html.intro .piece.plain img,
+    html.intro .piece.plain video {
+      transition: none;
+      transform: none;
+      filter: none;
+      opacity: 1;
     }
 
     html.intro .reveal {
@@ -331,10 +341,11 @@
       if (video.dataset.poster) posterObserver.observe(video);
     });
 
-    // The way in: the pieces on screen grow one after another, 140 ms apart,
-    // each once its picture is there; the rest grow as they come into view.
-    // When the last of those is nearly sharp the words rise, in the order
-    // they stand on the page. The column starts to move once all of it is in
+    // The way in: the pieces on screen at the start grow one after another,
+    // 140 ms apart, each once its picture is there; the rest are left as they
+    // are, with no effect, for when the visitor comes to them. When the last
+    // of those that grew is nearly sharp the words rise, in the order they
+    // stand on the page. The column starts to move once all of it is in
     const root = document.documentElement;
 
     if (root.classList.contains('intro')) {
@@ -357,21 +368,13 @@
         pictureReady(piece).then(() => piece.classList.add('is-in'));
       };
 
-      const later = new IntersectionObserver((entries) => {
-        entries.forEach(({ target, isIntersecting }) => {
-          if (!isIntersecting) return;
-          later.unobserve(target);
-          open(target, 0);
-        });
-      }, { threshold: 0.05 });
-
       document.fonts.ready.then(() => {
         const height = works.clientHeight;
         const first = pieces.filter((piece) => piece.getBoundingClientRect().top < height);
         const rest = pieces.filter((piece) => !first.includes(piece));
 
         first.forEach((piece, i) => open(piece, i * STEP));
-        rest.forEach((piece) => later.observe(piece));
+        rest.forEach((piece) => piece.classList.add('plain'));
 
         const textsAt = first.length * STEP + 1.25;
         texts.forEach((text, i) => {
