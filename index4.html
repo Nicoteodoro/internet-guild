@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="robots" content="noindex">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
   <title>Internet Guild</title>
   <link rel="canonical" href="https://internetguild.co/">
   <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -101,7 +102,8 @@
       background: #000000;
     }
 
-    /* The phone's own menu controls; the desk needs neither */
+    /* The phone's own bar and menu controls; the desk needs none of them */
+    .topbar,
     .menu-head,
     .menu-open {
       display: none;
@@ -379,8 +381,12 @@
         touch-action: auto;
       }
 
-      body::before {
-        content: "";
+      /* The bar is a real element, not drawn by CSS alone: Safari on the
+         iPhone paints the strip under its clock with the colour of a fixed
+         element touching the top of the screen, so the page never shows
+         through there */
+      .topbar {
+        display: block;
         position: fixed;
         top: 0;
         left: 0;
@@ -523,6 +529,8 @@
   </style>
 </head>
 <body>
+  <div class="topbar" aria-hidden="true"></div>
+
   <button type="button" class="menu-open reveal" aria-expanded="false" aria-controls="menu">Menu</button>
 
   <nav class="menu" id="menu" aria-label="Main">
