@@ -72,9 +72,8 @@
     }
 
     /* The page is one screen tall and does not move. Its words stand 13 in
-       from the edges: the name at the top left, the studio's words in the
-       middle of the page, starting where the name ends; the address at the
-       foot, to the right; the menu at the top right. The work runs down the middle in a
+       from the edges: the mark at the top left, the studio in the middle,
+       the address at the foot, to the right; the menu at the top right. The work runs down the middle in a
        column of its own, the only thing that scrolls; a wheel turned anywhere
        on the page moves it */
     .menu {
@@ -102,37 +101,38 @@
       background: #000000;
     }
 
-    /* One grid over the page, 13 in from every edge: the first column is as
-       wide as the name, so the words start exactly where the name ends, and
-       they stand in the middle of the page's height. The grid itself lets
-       the page through */
+    /* The mark, the guild's square, at the top left */
+    .mark {
+      position: fixed;
+      top: 13px;
+      left: 13px;
+      display: block;
+      width: 24px;
+      height: 24px;
+    }
+
+    /* The name and the studio's words side by side, a little above the
+       middle of the page; the name's column shrinks with the screen */
     .studio {
       position: fixed;
-      inset: 13px;
+      top: max(45.4vh, 60px);
+      left: 13px;
+      right: 13px;
       display: grid;
-      grid-template-columns: max-content 1fr;
-      grid-template-rows: auto 1fr;
-      pointer-events: none;
-    }
-
-    .studio > * {
-      pointer-events: auto;
-    }
-
-    .studio > p {
-      grid-column: 1;
-      grid-row: 1;
-      white-space: nowrap;
-    }
-
-    .studio > div {
-      grid-column: 2;
-      grid-row: 1 / -1;
-      align-self: center;
+      grid-template-columns: clamp(110px, 14vw, 210px) 1fr;
+      column-gap: 13px;
     }
 
     .studio p + p {
       margin-top: 64px;
+    }
+
+    /* A short window: the studio sits just under the menu, so a tall list
+       never reaches the address */
+    @media (max-height: 560px) {
+      .studio {
+        top: 60px;
+      }
     }
 
     .hire {
@@ -365,16 +365,10 @@
       }
 
       .studio {
+        top: 62px;
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-content: start;
-      }
-
-      .studio > div {
-        grid-column: 1;
-        grid-row: 2;
-        align-self: start;
-        margin-top: 35px;
+        gap: 16px;
+        right: 13px;
       }
 
       .studio p + p {
@@ -405,6 +399,8 @@
     <a class="reveal" href="playground.html">Playground</a>
     <a class="reveal" href="contact.html" aria-haspopup="dialog" aria-controls="contact" aria-expanded="false">Contact</a>
   </nav>
+
+  <img class="mark reveal" src="icon-logo.svg" alt="Internet Guild" width="24" height="24">
 
   <div class="studio">
     <p class="reveal">Internet Guild</p>
