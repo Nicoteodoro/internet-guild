@@ -180,12 +180,12 @@
       background: #d9d9d9;
     }
 
-    /* About is not a page but a sheet laid over this one: white at 95%, with
+    /* About and Contact are not pages but sheets laid over this one: white at 95%, with
        the page blurred beneath it, the menu left above it so it can be put
        away again. Its words start where the column of work ends, stop well
        short of the right edge, and stand in the middle of the sheet's height;
-       the sheet scrolls if they run long */
-    .about {
+       the sheet scrolls if they run long. One is up at a time */
+    .sheet {
       position: fixed;
       inset: 0;
       z-index: 1;
@@ -201,21 +201,21 @@
       transition: opacity 0.4s ease, visibility 0s linear 0.4s;
     }
 
-    .about::-webkit-scrollbar {
+    .sheet::-webkit-scrollbar {
       display: none;
     }
 
-    .about:focus {
+    .sheet:focus {
       outline: none;
     }
 
-    .about.is-open {
+    .sheet.is-open {
       opacity: 1;
       visibility: visible;
       transition: opacity 0.4s ease;
     }
 
-    .about-inner {
+    .sheet-inner {
       display: flex;
       box-sizing: border-box;
       min-height: 100%;
@@ -224,7 +224,7 @@
 
     /* In the middle of the sheet's height; if the words run longer than the
        screen they start at the top margin and the sheet scrolls */
-    .about-copy {
+    .sheet-copy {
       flex: 1;
       min-width: 0;
       margin-block: auto;
@@ -236,62 +236,66 @@
       transition: opacity 0.5s ease 0.1s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s;
     }
 
-    .about.is-open .about-copy {
+    .sheet.is-open .sheet-copy {
       opacity: 1;
       transform: none;
     }
 
-    .about-copy p + p {
+    .sheet-copy p + p {
       margin-top: 14px;
     }
 
-    .about-copy .lead,
-    .about-copy dt {
+    .sheet-copy .lead,
+    .sheet-copy dt {
       color: #000000;
     }
 
-    .about-copy section {
+    .sheet-copy section {
       margin-top: 14px;
     }
 
-    .about-copy section + section {
+    .sheet-copy section + section {
       margin-top: 28px;
     }
 
-    .about-copy h2 {
+    .sheet-copy h2 {
       margin: 0 0 14px;
       font: inherit;
     }
 
-    .about-copy #about-collaborations {
+    .sheet-copy #about-collaborations {
       margin-bottom: 0;
     }
 
-    .about-copy dl,
-    .about-copy dd {
+    .sheet-copy dl,
+    .sheet-copy dd {
       margin: 0;
     }
 
-    .about-copy dl div + div {
+    .sheet-copy dl div + div {
       margin-top: 14px;
     }
 
-    .about-copy .clients {
+    .sheet-copy .reach {
       color: #000000;
     }
 
-    .about-copy .clients a {
+    .sheet-copy .clients {
+      color: #000000;
+    }
+
+    .sheet-copy .clients a {
       white-space: nowrap;
     }
 
-    .about-copy a {
+    .sheet-copy a {
       text-decoration-line: underline;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
       transition: color 0.15s ease;
     }
 
-    .about-copy a:hover {
+    .sheet-copy a:hover {
       color: #a9a9a9;
     }
 
@@ -300,8 +304,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .about,
-      .about-copy {
+      .sheet,
+      .sheet-copy {
         transition: none;
       }
     }
@@ -381,7 +385,7 @@
         display: none;
       }
 
-      .about-inner {
+      .sheet-inner {
         padding-inline: 13px;
       }
 
@@ -399,7 +403,7 @@
   <nav class="menu" aria-label="Main">
     <a class="reveal" href="about.html" aria-haspopup="dialog" aria-controls="about" aria-expanded="false">About</a>
     <a class="reveal" href="playground.html">Playground</a>
-    <a class="reveal" href="contact.html">Contact</a>
+    <a class="reveal" href="contact.html" aria-haspopup="dialog" aria-controls="contact" aria-expanded="false">Contact</a>
   </nav>
 
   <div class="studio">
@@ -451,9 +455,9 @@
       <div class="piece" style="--ar: 1500 / 1500"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
   </main>
 
-  <div class="about" id="about" role="dialog" aria-label="About" tabindex="-1">
-    <div class="about-inner">
-      <div class="about-copy">
+  <div class="sheet" id="about" role="dialog" aria-label="About" tabindex="-1">
+    <div class="sheet-inner">
+      <div class="sheet-copy">
         <p>
           <span class="lead">Internet guild is a tier-s design practice, born to reduce.</span><br>
           Websites, products and AI for founders who embrace simplicity.<br>
@@ -519,12 +523,30 @@
     </div>
   </div>
 
+  <div class="sheet" id="contact" role="dialog" aria-label="Contact" tabindex="-1">
+    <div class="sheet-inner">
+      <div class="sheet-copy">
+        <p class="reach">
+          <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
+          <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
+          <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">W +54 911 33932087</a>
+        </p>
+        <p class="reach">
+          <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br>
+          <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
+          <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+        </p>
+        <p>Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const works = document.querySelector('.works');
-    const about = document.querySelector('.about');
-    const aboutOpen = () => about.classList.contains('is-open');
+    const sheets = [...document.querySelectorAll('.sheet')];
+    const sheetOpen = () => sheets.some((sheet) => sheet.classList.contains('is-open'));
 
     // The work comes in a different order every time the page is entered. The
     // page opens on three of them, one in the middle of the screen with one
@@ -739,7 +761,7 @@
     }
 
     addEventListener('wheel', (e) => {
-      if (e.ctrlKey || aboutOpen()) return;
+      if (e.ctrlKey || sheetOpen()) return;
       e.preventDefault();
       takeOver();
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? works.clientHeight : 1;
@@ -756,7 +778,7 @@
     let finger = null;
 
     addEventListener('touchstart', (e) => {
-      if (aboutOpen()) {
+      if (sheetOpen()) {
         finger = null;
         return;
       }
@@ -773,7 +795,7 @@
     }, { passive: true });
 
     addEventListener('keydown', (e) => {
-      if (aboutOpen()) return;
+      if (sheetOpen()) return;
       if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) takeOver();
     });
 
@@ -786,40 +808,45 @@
       }
     }, { passive: true });
 
-    // About: the menu's About lays the sheet over the page and takes it off
-    // again; Escape, or a click on the sheet beside the words, does too. While
-    // it is up the page beneath is out of reach, and the wheel is the sheet's
-    const trigger = document.querySelector('.menu a[aria-controls="about"]');
+    // About and Contact: each menu word lays its sheet over the page and takes
+    // it off again, and one sheet takes the other's place; Escape, or a click
+    // on the sheet beside the words, puts it away too. While one is up the
+    // page beneath is out of reach, and the wheel is the sheet's
     const beneath = [document.querySelector('.studio'), works, document.querySelector('.hire')];
 
-    function setAbout(on) {
-      if (on === aboutOpen()) return;
-      about.classList.toggle('is-open', on);
+    function setSheet(sheet, on) {
+      if (on === sheet.classList.contains('is-open')) return;
+      const trigger = document.querySelector(`.menu a[aria-controls="${sheet.id}"]`);
+      sheet.classList.toggle('is-open', on);
       trigger.setAttribute('aria-expanded', String(on));
-      beneath.forEach((part) => { part.inert = on; });
       if (on) {
-        about.scrollTop = 0;
-        about.focus({ preventScroll: true });
-      } else if (about.contains(document.activeElement)) {
+        sheets.filter((other) => other !== sheet).forEach((other) => setSheet(other, false));
+        sheet.scrollTop = 0;
+        sheet.focus({ preventScroll: true });
+      } else if (sheet.contains(document.activeElement)) {
         trigger.focus({ preventScroll: true });
       }
-      history.replaceState(null, '', on ? '#about' : location.pathname + location.search);
+      beneath.forEach((part) => { part.inert = sheetOpen(); });
+      history.replaceState(null, '', sheetOpen() ? `#${sheets.find((one) => one.classList.contains('is-open')).id}` : location.pathname + location.search);
     }
 
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      setAbout(!aboutOpen());
-    });
+    sheets.forEach((sheet) => {
+      document.querySelector(`.menu a[aria-controls="${sheet.id}"]`).addEventListener('click', (e) => {
+        e.preventDefault();
+        setSheet(sheet, !sheet.classList.contains('is-open'));
+      });
 
-    about.addEventListener('click', (e) => {
-      if (e.target === about || e.target.classList.contains('about-inner')) setAbout(false);
+      sheet.addEventListener('click', (e) => {
+        if (e.target === sheet || e.target.classList.contains('sheet-inner')) setSheet(sheet, false);
+      });
     });
 
     addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') setAbout(false);
+      if (e.key === 'Escape') sheets.forEach((sheet) => setSheet(sheet, false));
     });
 
-    if (location.hash === '#about') setAbout(true);
+    const asked = sheets.find((sheet) => `#${sheet.id}` === location.hash);
+    if (asked) setSheet(asked, true);
 
     opening.then(() => {
       if (!auto) return;
