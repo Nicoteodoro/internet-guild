@@ -59,13 +59,19 @@
     }
 
     /* The name stays at the top left, above everything, as on the front page:
-       13 in from the edges, in the page's own type */
+       13 in from the edges, in the page's own type. Black, and white while
+       it stands over a dark piece */
     .logo {
       position: fixed;
       top: 13px;
       left: 13px;
       margin: 0;
       z-index: 3;
+      transition: color 0.2s ease;
+    }
+
+    .logo.is-light {
+      color: #ffffff;
     }
 
     /* The canvas has no edge: it is one plane of tiles, laid out as far as
@@ -324,8 +330,88 @@
       }
     }
 
+    // The name's colour: how light each picture is, read once from a small
+    // copy of it, a grid of 48 across; then, as the plane moves, how light is
+    // what lies under the name, the pieces' parts by their pictures and the
+    // rest (the grey of the tiles, the white between) as light
+    const logo = document.querySelector('.logo');
+    const lightness = new Map();
+
+    function lightnessOf(src) {
+      if (lightness.has(src)) return lightness.get(src);
+      lightness.set(src, null);
+      const picture = new Image();
+      picture.onload = () => {
+        try {
+          const w = 48;
+          const h = Math.max(1, Math.round((w * picture.naturalHeight) / picture.naturalWidth));
+          const sketch = document.createElement('canvas');
+          sketch.width = w;
+          sketch.height = h;
+          const pen = sketch.getContext('2d', { willReadFrequently: true });
+          pen.drawImage(picture, 0, 0, w, h);
+          const data = pen.getImageData(0, 0, w, h).data;
+          const values = new Float32Array(w * h);
+          for (let i = 0; i < values.length; i++) {
+            values[i] = (0.2126 * data[i * 4] + 0.7152 * data[i * 4 + 1] + 0.0722 * data[i * 4 + 2]) / 255;
+          }
+          lightness.set(src, { w, h, values });
+          toneLogo();
+        } catch {
+          // A picture that cannot be read leaves the name black
+        }
+      };
+      picture.src = src;
+      return null;
+    }
+
+    function toneLogo() {
+      const box = logo.firstElementChild.getBoundingClientRect();
+      const x0 = (box.left - camera.x) / camera.s;
+      const x1 = (box.right - camera.x) / camera.s;
+      const y0 = (box.top - camera.y) / camera.s;
+      const y1 = (box.bottom - camera.y) / camera.s;
+      const area = (x1 - x0) * (y1 - y0);
+      let dark = 0;
+
+      if (!viewer.classList.contains('is-open')) {
+        for (let row = Math.floor(y0 / CELL_H); row <= Math.floor(y1 / CELL_H); row++) {
+          for (let col = Math.floor(x0 / CELL_W); col <= Math.floor(x1 / CELL_W); col++) {
+            const tile = tiles.get(`${col},${row}`);
+            if (!tile) continue;
+            const media = tile.firstElementChild;
+            const map = lightnessOf(media.tagName === 'VIDEO' ? media.poster : media.src);
+            if (!map) continue;
+            const mw = parseFloat(media.style.width);
+            const mh = parseFloat(media.style.height);
+            const mx = col * CELL_W + (TILE_W - mw) / 2;
+            const my = row * CELL_H + (TILE_H - mh) / 2;
+            const ox0 = Math.max(x0, mx);
+            const ox1 = Math.min(x1, mx + mw);
+            const oy0 = Math.max(y0, my);
+            const oy1 = Math.min(y1, my + mh);
+            if (ox1 <= ox0 || oy1 <= oy0) continue;
+            // The darkness of the part of the picture under the name
+            const gx0 = Math.floor(((ox0 - mx) / mw) * map.w);
+            const gx1 = Math.min(map.w - 1, Math.floor(((ox1 - mx) / mw) * map.w));
+            const gy0 = Math.floor(((oy0 - my) / mh) * map.h);
+            const gy1 = Math.min(map.h - 1, Math.floor(((oy1 - my) / mh) * map.h));
+            let sum = 0;
+            let count = 0;
+            for (let gy = gy0; gy <= gy1; gy++) {
+              for (let gx = gx0; gx <= gx1; gx++) {
+                sum += map.values[gy * map.w + gx];
+                count++;
+              }
+            }
+            dark += (1 - sum / count) * (ox1 - ox0) * (oy1 - oy0);
+          }
+        }
+      }
+      logo.classList.toggle('is-light', dark / area > 0.5);
+    }
+
     let running = false;
-    let settle = 0;
 
     function frame() {
       camera.x += (target.x - camera.x) * EASE;
@@ -339,6 +425,7 @@
       }
       world.style.transform = `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.s})`;
       lay();
+      toneLogo();
       if (done) running = false;
       else requestAnimationFrame(frame);
     }
@@ -500,6 +587,7 @@
       viewer.setAttribute('aria-hidden', 'false');
       open = { index, from };
       viewer.classList.add('is-open');
+      toneLogo();
       for (const tile of tiles.values()) {
         const video = tile.firstElementChild;
         if (video.tagName === 'VIDEO') video.pause();
@@ -523,6 +611,7 @@
       viewer.classList.remove('is-open');
       viewer.setAttribute('aria-hidden', 'true');
       playVideos();
+      toneLogo();
 
       if (!reduceMotion.matches && from.isConnected && media) {
         const a = from.getBoundingClientRect();
@@ -552,6 +641,7 @@
     startView();
     world.style.transform = `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.s})`;
     lay();
+    toneLogo();
   </script>
 </body>
 </html>
