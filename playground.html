@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Playground / Internet Guild</title>
+  <link rel="canonical" href="https://internetguild.co/playground.html">
+  <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
+  <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+
+    @font-face {
+      font-family: "PP Neue Montreal";
+      src: url("neue-montreal-medium.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    body {
+      background: #ffffff;
+      color: #000000;
+      font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 14px;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:focus-visible,
+    .tile:focus-visible {
+      outline: 1px solid #000000;
+      outline-offset: 2px;
+    }
+
+    /* The name stays at the top left, above everything, 13 in from the edges */
+    .logo {
+      position: fixed;
+      top: 13px;
+      left: 13px;
+      margin: 0;
+      z-index: 3;
+    }
+
+    /* The canvas has no edge: it is one plane of tiles, laid out as far as
+       the eye can go, and the camera moves over it. Whatever is not on screen
+       is not in the page */
+    .canvas {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .canvas.is-dragging {
+      cursor: grabbing;
+    }
+
+    .world {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    /* A tile: a grey rectangle with one piece in its middle */
+    .tile {
+      position: absolute;
+      display: block;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      background: #f2f2f2;
+      cursor: inherit;
+      font: inherit;
+      color: inherit;
+      animation: tile-in 0.6s ease both;
+    }
+
+    @keyframes tile-in {
+      from {
+        opacity: 0;
+      }
+    }
+
+    .tile > img,
+    .tile > video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      background: #d9d9d9;
+      pointer-events: none;
+    }
+
+    /* A piece opened: white at 95% over the canvas with the canvas blurred
+       beneath, the piece as large as the screen allows, in the middle. It
+       grows out of its tile and goes back into it */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      cursor: zoom-out;
+      transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+    }
+
+    .viewer.is-open {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease;
+    }
+
+    .viewer > img,
+    .viewer > video {
+      display: block;
+      object-fit: cover;
+      background: #d9d9d9;
+      transform-origin: 0 0;
+    }
+
+    .viewer > img.is-moving,
+    .viewer > video.is-moving {
+      transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tile {
+        animation: none;
+      }
+
+      .viewer,
+      .viewer > img.is-moving,
+      .viewer > video.is-moving {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <p class="logo"><a href="index4.html">Internet Guild</a></p>
+
+  <main class="canvas" aria-label="Selected work, on an endless canvas"><div class="world"></div></main>
+
+  <div class="viewer" role="dialog" aria-label="Project" aria-hidden="true"></div>
+
+  <script>
+    const PROJECTS = [{"src": "towerbank-poster.webp", "w": 1500, "h": 1500, "alt": "Towerbank credit card street poster"}, {"src": "towerbank-cards.mp4", "poster": "poster-towerbank-cards.webp", "w": 1920, "h": 1080, "alt": "Towerbank Visa cards", "video": true}, {"src": "towerbank-app.webp", "w": 1500, "h": 1500, "alt": "Towerbank investments app on iPhone"}, {"src": "towerbank-debit-card.mp4", "poster": "poster-towerbank-debit-card.webp", "w": 720, "h": 1080, "alt": "Towerbank debit card screen", "video": true}, {"src": "towerbank-website-ui.mp4", "poster": "poster-towerbank-website-ui.webp", "w": 1920, "h": 1080, "alt": "Towerbank website interface", "video": true}, {"src": "towerbank-website-laptops.mp4", "poster": "poster-towerbank-website-laptops.webp", "w": 1920, "h": 1080, "alt": "Towerbank website on laptops", "video": true}, {"src": "numia-icons.webp", "w": 1500, "h": 1500, "alt": "Numia icon system"}, {"src": "numia-pattern.webp", "w": 1500, "h": 1500, "alt": "Numia geometric pattern"}, {"src": "numia-poster.webp", "w": 1500, "h": 1500, "alt": "Numia poster on a concrete wall"}, {"src": "numia-website-laptop.webp", "w": 1500, "h": 1500, "alt": "Numia website on a MacBook"}, {"src": "numia-website-mobile.webp", "w": 1500, "h": 1500, "alt": "Numia website on iPhone"}, {"src": "numia-website-sections.webp", "w": 1500, "h": 1500, "alt": "Numia website sections"}, {"src": "numia-customer-journey.mp4", "poster": "poster-numia-customer-journey.webp", "w": 1920, "h": 1080, "alt": "Numia customer journey website on a laptop", "video": true}, {"src": "numia-virtual-assistance.mp4", "poster": "poster-numia-virtual-assistance.webp", "w": 630, "h": 880, "alt": "Numia virtual assistance interface", "video": true}, {"src": "emi-brand.mp4", "poster": "poster-emi-brand.webp", "w": 1920, "h": 1080, "alt": "Emi brand identity", "video": true}, {"src": "emi-website.mp4", "poster": "poster-emi-website.webp", "w": 1920, "h": 1080, "alt": "Emi website", "video": true}, {"src": "emi-website-es.mp4", "poster": "poster-emi-website-es.webp", "w": 1920, "h": 1080, "alt": "Emi website in Spanish on laptops", "video": true}, {"src": "emi-onboarding.mp4", "poster": "poster-emi-onboarding.webp", "w": 1920, "h": 1080, "alt": "Emi onboarding website on a laptop", "video": true}, {"src": "emi-report-charts.mp4", "poster": "poster-emi-report-charts.webp", "w": 720, "h": 1080, "alt": "Emi report charts", "video": true}, {"src": "emilabs-report.webp", "w": 1500, "h": 1500, "alt": "Emi report on an iPad"}, {"src": "great-sky-solar-website.webp", "w": 1500, "h": 1500, "alt": "Great Sky Solar homepage and savings calculator"}, {"src": "great-sky-solar-products.webp", "w": 1500, "h": 1500, "alt": "Great Sky Solar product cards"}, {"src": "great-sky-solar-team.webp", "w": 1500, "h": 1500, "alt": "Great Sky Solar team page"}, {"src": "agent-activity-panel.webp", "w": 1500, "h": 1500, "alt": "Agent activity panel on a studio display"}, {"src": "token-statement.webp", "w": 1500, "h": 1500, "alt": "Token statement dashboard on a studio display"}, {"src": "xrank.webp", "w": 1500, "h": 1500, "alt": "xrank.tech leaderboard on a MacBook"}, {"src": "china-supply.webp", "w": 1500, "h": 1500, "alt": "China.Supply landing page on a MacBook"}, {"src": "journal-app.webp", "w": 1500, "h": 1500, "alt": "Journal app on iPhone resting on concrete blocks"}, {"src": "journal-app-closeup.webp", "w": 1500, "h": 1500, "alt": "Journal app on iPhone, close-up"}, {"src": "calm-app-login.webp", "w": 1500, "h": 1500, "alt": "Calm app login screen on iPhone"}, {"src": "music-player.webp", "w": 1500, "h": 1500, "alt": "Music player interface"}, {"src": "writing-app.webp", "w": 1500, "h": 1500, "alt": "Writing app on a MacBook"}, {"src": "godzilla-minus-one-poster.webp", "w": 1500, "h": 1500, "alt": "Godzilla Minus One poster"}, {"src": "godzilla-minus-one-bus-stop.webp", "w": 1500, "h": 1500, "alt": "Godzilla Minus One poster at a bus stop"}, {"src": "nine2five.webp", "w": 1500, "h": 1500, "alt": "Nine2Five work glasses spec sheet and stage screen"}, {"src": "ids-shopping-bag.webp", "w": 1500, "h": 1500, "alt": "Internet Guild shopping bag"}];
+
+    // The plane is a grid of equal tiles that repeats without end; the work
+    // is dealt over it in an order that is new each time the page is entered
+    const TILE_W = 620;
+    const TILE_H = 400;
+    const GAP = 20;
+    const CELL_W = TILE_W + GAP;
+    const CELL_H = TILE_H + GAP;
+    const PIECE_H = 0.62;      // share of a tile's height a piece may take
+    const PIECE_W = 0.7;       // and of its width
+    const MIN_ZOOM = 0.4;
+    const MAX_ZOOM = 2.5;
+    const EASE = 0.16;         // share of the way the camera covers each frame
+    const STRIDE = 7;          // how far along the work the next row begins
+
+    const canvas = document.querySelector('.canvas');
+    const world = document.querySelector('.world');
+    const viewer = document.querySelector('.viewer');
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+    const order = PROJECTS.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    const mod = (n, m) => ((n % m) + m) % m;
+    const projectAt = (col, row) => order[mod(col + row * STRIDE, order.length)];
+
+    // The camera: where the plane's origin stands on screen, and how large
+    // the plane is drawn. It moves toward its target a little each frame
+    const target = { x: 0, y: 0, s: 1 };
+    const camera = { x: 0, y: 0, s: 1 };
+    const clampZoom = (s) => Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, s));
+
+    function startView() {
+      const s = clampZoom(innerWidth / (3 * CELL_W));
+      target.s = camera.s = s;
+      // The first tile's middle stands in the middle of the screen
+      target.x = camera.x = innerWidth / 2 - (TILE_W / 2) * s;
+      target.y = camera.y = innerHeight / 2 - (TILE_H / 2) * s;
+    }
+
+    // Zoom about a point of the screen, so what is under it stays under it
+    function zoomAt(s, px, py) {
+      const next = clampZoom(s);
+      const ratio = next / target.s;
+      target.x = px - (px - target.x) * ratio;
+      target.y = py - (py - target.y) * ratio;
+      target.s = next;
+      run();
+    }
+
+    function panBy(dx, dy) {
+      target.x += dx;
+      target.y += dy;
+      run();
+    }
+
+    // The tiles on screen, by their place on the plane
+    const tiles = new Map();
+
+    function makeTile(col, row) {
+      const project = PROJECTS[projectAt(col, row)];
+      const tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = 'tile';
+      tile.setAttribute('aria-label', project.alt);
+      tile.style.cssText = `left:${col * CELL_W}px;top:${row * CELL_H}px;width:${TILE_W}px;height:${TILE_H}px`;
+      tile.dataset.project = projectAt(col, row);
+
+      const ratio = project.w / project.h;
+      const height = Math.min(TILE_H * PIECE_H, (TILE_W * PIECE_W) / ratio);
+      const media = document.createElement(project.video ? 'video' : 'img');
+      media.style.width = `${height * ratio}px`;
+      media.style.height = `${height}px`;
+      if (project.video) {
+        media.poster = project.poster;
+        media.muted = true;
+        media.loop = true;
+        media.playsInline = true;
+        media.preload = 'none';
+        media.dataset.src = project.src;
+      } else {
+        media.src = project.src;
+        media.alt = '';
+        media.decoding = 'async';
+      }
+      tile.append(media);
+      return tile;
+    }
+
+    // Lay out what is on screen, one cell of margin around it; take away
+    // what has left
+    function lay() {
+      const left = -camera.x / camera.s;
+      const top = -camera.y / camera.s;
+      const right = left + innerWidth / camera.s;
+      const bottom = top + innerHeight / camera.s;
+      const c0 = Math.floor(left / CELL_W) - 1;
+      const c1 = Math.floor(right / CELL_W) + 1;
+      const r0 = Math.floor(top / CELL_H) - 1;
+      const r1 = Math.floor(bottom / CELL_H) + 1;
+
+      for (const [key, tile] of tiles) {
+        const [col, row] = key.split(',').map(Number);
+        if (col < c0 || col > c1 || row < r0 || row > r1) {
+          tile.remove();
+          tiles.delete(key);
+        }
+      }
+
+      for (let row = r0; row <= r1; row++) {
+        for (let col = c0; col <= c1; col++) {
+          const key = `${col},${row}`;
+          if (tiles.has(key)) continue;
+          const tile = makeTile(col, row);
+          tiles.set(key, tile);
+          world.append(tile);
+        }
+      }
+      playVideos();
+    }
+
+    // Films play only on tiles on screen and drawn large enough to be seen
+    function playVideos() {
+      const live = camera.s >= 0.45 && !reduceMotion.matches && !viewer.classList.contains('is-open');
+      for (const tile of tiles.values()) {
+        const video = tile.firstElementChild;
+        if (video.tagName !== 'VIDEO') continue;
+        const box = tile.getBoundingClientRect();
+        const seen = box.right > 0 && box.left < innerWidth && box.bottom > 0 && box.top < innerHeight;
+        if (live && seen) {
+          if (!video.src) video.src = video.dataset.src;
+          video.play().catch(() => {});
+        } else if (!video.paused) {
+          video.pause();
+        }
+      }
+    }
+
+    let running = false;
+    let settle = 0;
+
+    function frame() {
+      camera.x += (target.x - camera.x) * EASE;
+      camera.y += (target.y - camera.y) * EASE;
+      camera.s += (target.s - camera.s) * EASE;
+      const done = Math.abs(target.x - camera.x) < 0.05 && Math.abs(target.y - camera.y) < 0.05 && Math.abs(target.s - camera.s) < 0.0002;
+      if (done) {
+        camera.x = target.x;
+        camera.y = target.y;
+        camera.s = target.s;
+      }
+      world.style.transform = `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.s})`;
+      lay();
+      if (done) running = false;
+      else requestAnimationFrame(frame);
+    }
+
+    function run() {
+      if (running) return;
+      running = true;
+      requestAnimationFrame(frame);
+    }
+
+    // A trackpad or a wheel: two fingers move over the plane; a pinch (or
+    // the control key and the wheel) zooms about the pointer
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (viewer.classList.contains('is-open')) return;
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1;
+      if (e.ctrlKey || e.metaKey) {
+        zoomAt(target.s * Math.exp(-e.deltaY * unit * 0.01), e.clientX, e.clientY);
+      } else {
+        panBy(-e.deltaX * unit, -e.deltaY * unit);
+      }
+    }, { passive: false });
+
+    // A hand: one pointer drags the plane, two pinch it. A pointer that has
+    // hardly moved when it is let go was a click
+    const pointers = new Map();
+    let pinch = null;
+    let drag = null;
+
+    canvas.addEventListener('pointerdown', (e) => {
+      if (viewer.classList.contains('is-open')) return;
+      canvas.setPointerCapture(e.pointerId);
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 1) {
+        drag = { x: e.clientX, y: e.clientY, moved: 0, at: performance.now(), vx: 0, vy: 0, last: performance.now(), tile: e.target.closest('.tile') };
+      } else if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 };
+        drag = null;
+      }
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+      const p = pointers.get(e.pointerId);
+      if (!p) return;
+      const dx = e.clientX - p.x;
+      const dy = e.clientY - p.y;
+      p.x = e.clientX;
+      p.y = e.clientY;
+
+      if (pinch && pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        const cx = (a.x + b.x) / 2;
+        const cy = (a.y + b.y) / 2;
+        panBy(cx - pinch.cx, cy - pinch.cy);
+        zoomAt(target.s * (d / pinch.d), cx, cy);
+        pinch = { d, cx, cy };
+      } else if (drag) {
+        drag.moved += Math.abs(dx) + Math.abs(dy);
+        if (drag.moved > 6) canvas.classList.add('is-dragging');
+        const now = performance.now();
+        const dt = Math.max(1, now - drag.last);
+        drag.vx = 0.8 * drag.vx + 0.2 * (dx / dt);
+        drag.vy = 0.8 * drag.vy + 0.2 * (dy / dt);
+        drag.last = now;
+        // Moving by hand follows the hand exactly
+        target.x += dx;
+        target.y += dy;
+        camera.x += dx;
+        camera.y += dy;
+        run();
+      }
+    });
+
+    function release(e) {
+      pointers.delete(e.pointerId);
+      if (pointers.size < 2) pinch = null;
+      if (!drag) return;
+      const gesture = drag;
+      drag = null;
+      canvas.classList.remove('is-dragging');
+      if (e.type === 'pointercancel') return;
+
+      if (gesture.moved <= 6) {
+        const tile = gesture.tile;
+        if (tile) openViewer(Number(tile.dataset.project), tile.firstElementChild);
+        return;
+      }
+      // Let go in motion, the plane glides on a little
+      if (performance.now() - gesture.last < 80 && !reduceMotion.matches) panBy(gesture.vx * 260, gesture.vy * 260);
+    }
+
+    canvas.addEventListener('pointerup', release);
+    canvas.addEventListener('pointercancel', release);
+
+    // Safari reports a trackpad pinch as gestures, not as the wheel
+    let gestureStart = 1;
+    addEventListener('gesturestart', (e) => { e.preventDefault(); gestureStart = target.s; });
+    addEventListener('gesturechange', (e) => {
+      e.preventDefault();
+      if (!viewer.classList.contains('is-open')) zoomAt(gestureStart * e.scale, e.clientX, e.clientY);
+    });
+
+    // The keys: plus and minus zoom about the middle of the screen, zero
+    // brings the plane back to where it began, the arrows move over it
+    addEventListener('keydown', (e) => {
+      if (viewer.classList.contains('is-open')) {
+        if (e.key === 'Escape') closeViewer();
+        else if (e.key === 'ArrowRight') stepViewer(1);
+        else if (e.key === 'ArrowLeft') stepViewer(-1);
+        return;
+      }
+      const middle = [innerWidth / 2, innerHeight / 2];
+      if (e.key === '+' || e.key === '=') zoomAt(target.s * 1.25, ...middle);
+      else if (e.key === '-' || e.key === '_') zoomAt(target.s / 1.25, ...middle);
+      else if (e.key === '0') {
+        const s = clampZoom(innerWidth / (3 * CELL_W));
+        zoomAt(s, ...middle);
+      } else if (e.key === 'ArrowLeft') panBy(120, 0);
+      else if (e.key === 'ArrowRight') panBy(-120, 0);
+      else if (e.key === 'ArrowUp') panBy(0, 120);
+      else if (e.key === 'ArrowDown') panBy(0, -120);
+    });
+
+    // A piece opened. It grows out of the tile it was in, to the largest size
+    // the screen allows, and goes back there when it is put away
+    let open = null;
+
+    function fit(project) {
+      const ratio = project.w / project.h;
+      const height = Math.min(innerHeight * 0.84, (innerWidth * 0.88) / ratio);
+      return { w: height * ratio, h: height };
+    }
+
+    function mediaFor(project) {
+      const media = document.createElement(project.video ? 'video' : 'img');
+      const size = fit(project);
+      media.style.width = `${size.w}px`;
+      media.style.height = `${size.h}px`;
+      if (project.video) {
+        media.src = project.src;
+        media.poster = project.poster;
+        media.muted = true;
+        media.loop = true;
+        media.autoplay = true;
+        media.playsInline = true;
+      } else {
+        media.src = project.src;
+        media.alt = project.alt;
+      }
+      return media;
+    }
+
+    function openViewer(index, from) {
+      const project = PROJECTS[index];
+      const media = mediaFor(project);
+      viewer.replaceChildren(media);
+      viewer.setAttribute('aria-hidden', 'false');
+      open = { index, from };
+      viewer.classList.add('is-open');
+      for (const tile of tiles.values()) {
+        const video = tile.firstElementChild;
+        if (video.tagName === 'VIDEO') video.pause();
+      }
+
+      if (reduceMotion.matches || !from.isConnected) return;
+      // From where it stood to where it goes, by a transform
+      const a = from.getBoundingClientRect();
+      const b = media.getBoundingClientRect();
+      media.style.transform = `translate(${a.left - b.left}px, ${a.top - b.top}px) scale(${a.width / b.width}, ${a.height / b.height})`;
+      void media.offsetWidth;
+      media.classList.add('is-moving');
+      media.style.transform = 'none';
+    }
+
+    function closeViewer() {
+      if (!open) return;
+      const media = viewer.firstElementChild;
+      const { from } = open;
+      open = null;
+      viewer.classList.remove('is-open');
+      viewer.setAttribute('aria-hidden', 'true');
+      playVideos();
+
+      if (!reduceMotion.matches && from.isConnected && media) {
+        const a = from.getBoundingClientRect();
+        const b = media.getBoundingClientRect();
+        media.classList.add('is-moving');
+        media.style.transform = `translate(${a.left - b.left}px, ${a.top - b.top}px) scale(${a.width / b.width}, ${a.height / b.height})`;
+      }
+    }
+
+    function stepViewer(by) {
+      if (!open) return;
+      const index = mod(open.index + by, PROJECTS.length);
+      viewer.replaceChildren(mediaFor(PROJECTS[index]));
+      open = { index, from: { isConnected: false } };
+    }
+
+    // A tile reached by the keyboard opens on Enter or Space
+    canvas.addEventListener('click', (e) => {
+      const tile = e.target.closest('.tile');
+      if (e.detail === 0 && tile) openViewer(Number(tile.dataset.project), tile.firstElementChild);
+    });
+
+    viewer.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+    viewer.addEventListener('click', closeViewer);
+    addEventListener('resize', () => { lay(); });
+
+    startView();
+    world.style.transform = `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.s})`;
+    lay();
+  </script>
+</body>
+</html>
