@@ -58,7 +58,10 @@
       outline-offset: 2px;
     }
 
-    /* The name stays at the top left, above everything, 24 in from the edges */
+    /* The name stays at the top left, above everything, 24 in from the edges.
+       It is #0a1bff, and changes with what it crosses: set in difference, its
+       #f5e400 reads #0a1bff over white, a near-blue over the grey of a tile,
+       and turns light over anything dark */
     .logo {
       position: fixed;
       top: 24px;
@@ -67,6 +70,8 @@
       font-size: 16px;
       line-height: 20px;
       text-transform: none;
+      color: #f5e400;
+      mix-blend-mode: difference;
       z-index: 3;
     }
 
