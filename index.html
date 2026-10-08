@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
   <title>Internet Guild</title>
   <meta name="description" content="Essentialist design studio. Design, build and ship, from websites to AI, for founders who value simplicity.">
   <link rel="canonical" href="https://internetguild.co/">
@@ -16,35 +17,31 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The studio’s card on grey: Internet Guild. Essentialist design studio. Design, build &amp; ship, from websites to AI. Hire the guild: webmaster@internetguild.co.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico?v=fav2" sizes="any">
   <link rel="icon" type="image/png" href="favicon-192.png?v=fav2" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=fav2">
+  <script>
+    // The page comes in: while the class is on, everything waits to be shown.
+    // Not with reduced motion; and if the script below never starts, the
+    // page shows itself after a few seconds all the same
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('intro');
+      setTimeout(() => {
+        if (!window.introStarted) document.documentElement.classList.remove('intro');
+      }, 6000);
+    }
+  </script>
   <style>
     html,
     body {
       margin: 0;
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
     }
 
-    /* Keep the scrollbar there whether the page needs it or not, so moving
-       between a long page and a short one does not shift the layout sideways.
-       Preferred over scrollbar-gutter, which reserves a fixed width even where
-       scrollbars overlay the page and take none */
-    html {
-      overflow-y: scroll;
-    }
-
-    /* PP Neue Montreal, self-hosted in two weights: Regular for the page,
-       Medium for the wordmark */
-    @font-face {
-      font-family: "PP Neue Montreal";
-      src: url("neue-montreal-regular.woff2") format("woff2");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
+    /* PP Neue Montreal Medium, self-hosted: the one face the page uses */
     @font-face {
       font-family: "PP Neue Montreal";
       src: url("neue-montreal-medium.woff2") format("woff2");
@@ -57,17 +54,23 @@
       background: #ffffff;
       color: #000000;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
-      font-weight: 400;
-      letter-spacing: 0.1px;
-      font-size: 12px;
+      font-weight: 500;
+      font-size: 11px;
       line-height: 14px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
+      touch-action: none;
     }
 
     a {
       color: inherit;
       text-decoration: none;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      text-decoration-line: underline;
     }
 
     a:focus-visible {
@@ -75,447 +78,336 @@
       outline-offset: 2px;
     }
 
-    p,
-    h1 {
+    p {
       margin: 0;
-      font-size: inherit;
-      font-weight: inherit;
     }
 
-    button {
-      letter-spacing: inherit;
-      text-transform: inherit;
-    }
-
-
-
-    .muted {
-      color: #949494;
-    }
-
-    /* The nav is one colour throughout, the address's note included */
-    .contact .muted {
-      color: inherit;
-    }
-
-    /* Header and grid share one four-column measure, 12px in from each edge */
-    .row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      padding-inline: 12px;
-    }
-
-    .top {
-      position: relative;
-      padding-block: 12px 0;
-      column-gap: 16px;
-    }
-
-    /* The line stands on its own between the nav and the work, as the hero
-       did: 40% of the screen tall with the line centred in it, across the
-       first columns so its lines run whole */
-    .hero {
-      min-height: 20vh;
-      align-content: center;
-      column-gap: 16px;
-    }
-
-    .tagline {
-      grid-column: 1 / -1;
-    }
-
-    @media (min-width: 901px) {
-      .tagline {
-        grid-column: 1 / span 3;
-      }
-    }
-
-    @media (min-width: 1101px) {
-      .tagline {
-        grid-column: 1 / span 2;
-      }
-    }
-
-    /* The wordmark is orange, Medium, drawn in a half point tighter, here
-       and in the phone's sheet */
-    .top h1,
-    .menu-head a {
-      font-weight: 500;
-      letter-spacing: -0.5px;
-      color: #f43b00;
-    }
-
+    /* The page is one screen tall and does not move. Its words stand 13 in
+       from the edges: the mark at the top left, the studio in the middle,
+       the address at the foot, to the right; the menu at the top right. The work runs down the middle in a
+       column of its own, the only thing that scrolls; a wheel turned anywhere
+       on the page moves it */
     .menu {
+      position: fixed;
+      top: 13px;
+      right: 13px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0 23px;
+      gap: 21px;
+      color: #000000;
+      z-index: 2;
     }
 
-    /* Wide, the menu runs on one line with no commas, its words 34px apart,
-       and the parts of the header sit on one baseline */
-    @media (min-width: 561px) {
-      .top {
-        align-items: baseline;
-      }
-
-      .menu {
-        gap: 0 34px;
-      }
+    /* A black square, 4 by 4, stands before each word */
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* The phone's own menu controls; the wide header needs neither */
+    .menu a::before {
+      content: "";
+      flex: none;
+      width: 4px;
+      height: 4px;
+      background: #000000;
+    }
+
+    /* The phone's own bar and menu controls; the desk needs none of them */
+    .topbar,
     .menu-head,
     .menu-open {
       display: none;
     }
 
-    .menu a {
-      position: relative;
-    }
-
-    /* The address goes grey under the pointer; the menu underlines, and the
-       page you are on stays underlined */
-    .contact a {
-      transition: color 0.15s ease;
-    }
-
-    .menu > a {
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-
-    .menu > a[aria-current] {
-      text-decoration-line: underline;
-    }
-
-    @media (hover: hover) {
-      .contact a:hover {
-        color: #949494;
-      }
-
-      .menu > a:hover {
-        text-decoration-line: underline;
-      }
-    }
-
-    /* Invisible touch area */
-    .menu a::before {
-      content: "";
-      position: absolute;
-      inset: -10px -3px;
-    }
-
-
-
-
-    /* Remix alone, at the right, with no rule over it */
-    .bar {
-      display: flex;
-      justify-content: flex-end;
-      margin-inline: 12px;
-      padding-block: 8px 12px;
-    }
-
-    /* Reads as the text around it; only the pointer says it is a control */
-    .remix {
-      appearance: none;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      background: none;
-      font: inherit;
-      letter-spacing: inherit;
-      text-transform: inherit;
-      color: inherit;
-      cursor: pointer;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-
-    .remix:hover {
-      text-decoration-line: underline;
-    }
-
-    /* The work is a masonry: eight columns from 1360, then four, three, two.
-       Each piece keeps its own proportions and takes one, two or three
-       columns, its title under it, close. Before the script sets them down
-       (or without it) the cells run in a plain grid. 16 across, 40 down */
-    .row.index {
-      --cols: 2;
-      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
-      gap: 40px 16px;
-      padding-bottom: 12px;
-      position: relative;
-    }
-
-    @media (min-width: 560px) {
-      .row.index {
-        --cols: 3;
-      }
-    }
-
-    @media (min-width: 1000px) {
-      .row.index {
-        --cols: 4;
-      }
-    }
-
-    @media (min-width: 1360px) {
-      .row.index {
-        --cols: 8;
-      }
-    }
-
-    .cell {
-      --s: var(--span, 1);
-      grid-column: span var(--s);
-      margin: 0;
-      min-width: 0;
-    }
-
-    @media (min-width: 1360px) {
-      .cell {
-        --s: var(--span8, var(--span, 1));
-      }
-    }
-
-    .index.is-packed {
+    /* The mark, the guild's square, at the top left */
+    .mark {
+      position: fixed;
+      top: 13px;
+      left: 13px;
       display: block;
+      width: 24px;
+      height: 24px;
     }
 
-    .index.is-packed .cell {
-      position: absolute;
+    /* The name and the studio's words side by side, a little above the
+       middle of the page; the name's column shrinks with the screen */
+    .studio {
+      position: fixed;
+      top: max(45.4vh, 60px);
+      left: 13px;
+      right: 13px;
+      display: grid;
+      grid-template-columns: clamp(96px, 9vw, 140px) 1fr;
+      column-gap: 13px;
     }
 
-    /* Titles stand under their piece, close, and run on as many lines as
-       they need */
-    figcaption {
-      margin-top: 4px;
+    .studio p + p {
+      margin-top: 64px;
     }
 
-    /* Every piece keeps its own proportions */
-    .media {
+    /* A short window: the studio sits just under the menu, so a tall list
+       never reaches the address */
+    @media (max-height: 560px) {
+      .studio {
+        top: 60px;
+      }
+    }
+
+    .hire {
+      position: fixed;
+      right: 13px;
+      bottom: 13px;
+      text-align: right;
+    }
+
+    /* 36.6% of the screen's width (three sevenths less a tenth and then a
+       twentieth), in the middle of the page (over
+       the words, if they meet), and from the top edge to the bottom one: the
+       pieces run flush to both, 30 apart */
+    .works {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: calc(50vw - 100vw * 513 / 2800);
+      width: calc(100vw * 513 / 1400);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+      touch-action: pan-y;
+    }
+
+    .works::-webkit-scrollbar {
+      display: none;
+    }
+
+    .piece {
       aspect-ratio: var(--ar, 1 / 1);
-      background: #f4f4f4;
       overflow: hidden;
     }
 
-    .media img,
-    .media video {
+    .piece + .piece {
+      margin-top: 30px;
+    }
+
+    .piece img,
+    .piece video {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      background: #d9d9d9;
     }
 
-    /* A piece opens large: it fills the screen, its title above it at the
-       left and Close at the right. Click anywhere, or Escape, to put it away;
-       the arrows step through the work */
-    .cell:not(.card) .media {
-      cursor: zoom-in;
-    }
-
-    .media:focus-visible,
-    .viewer-close:focus-visible,
-    .remix:focus-visible {
-      outline: 1px solid #000000;
-      outline-offset: 2px;
-    }
-
-    .viewer {
+    /* About and Contact are not pages but sheets laid over this one: white at 95%, with
+       the page blurred beneath it, the menu left above it so it can be put
+       away again. Its words start where the column of work ends, stop well
+       short of the right edge, and stand in the middle of the sheet's height;
+       the sheet scrolls if they run long. One is up at a time */
+    .sheet {
       position: fixed;
       inset: 0;
-      z-index: 30;
+      z-index: 1;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+      touch-action: pan-y;
+      background: rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+    }
+
+    .sheet::-webkit-scrollbar {
       display: none;
-      flex-direction: column;
+    }
+
+    .sheet:focus {
+      outline: none;
+    }
+
+    .sheet.is-open {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease;
+    }
+
+    .sheet-inner {
+      display: flex;
       box-sizing: border-box;
-      padding: 12px;
-      background: #ffffff;
+      min-height: 100%;
+      padding: 48px 8vw 48px calc(50vw + 100vw * 513 / 2800);
     }
 
-    .viewer.is-open {
-      display: flex;
-    }
-
-    .viewer-bar {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .viewer-close {
-      appearance: none;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      background: none;
-      font: inherit;
-      letter-spacing: inherit;
-      text-transform: inherit;
-      color: inherit;
-      cursor: pointer;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-
-    .viewer-close:hover {
-      text-decoration-line: underline;
-    }
-
-    .viewer-stage {
+    /* In the middle of the sheet's height; if the words run longer than the
+       screen they start at the top margin and the sheet scrolls */
+    .sheet-copy {
       flex: 1;
-      min-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-top: 12px;
-      cursor: zoom-out;
+      min-width: 0;
+      margin-block: auto;
+      text-align: left;
+      text-wrap: pretty;
+      color: #a9a9a9;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease 0.1s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s;
     }
 
-    .viewer-stage img,
-    .viewer-stage video {
-      display: block;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
+    .sheet.is-open .sheet-copy {
+      opacity: 1;
+      transform: none;
     }
 
-    html.viewer-is-open {
-      overflow: hidden;
+    .sheet-copy p + p {
+      margin-top: 14px;
     }
 
-    /* The first cell is a card of its own, with no film in it: the studio's
-       latest collaborations, set in the ink's own black */
-    .card {
-      box-sizing: border-box;
-      aspect-ratio: 1 / 1;
-      padding: 12px;
-      background: #000000;
-      color: #ffffff;
+    .sheet-copy .lead,
+    .sheet-copy dt {
+      color: #000000;
     }
 
-    .card p {
-      line-height: 18px;
+    .sheet-copy section {
+      margin-top: 14px;
     }
 
-    .card p + p {
-      margin-top: 18px;
+    .sheet-copy section + section {
+      margin-top: 28px;
     }
 
-    .card-title {
-      color: #949494;
+    .sheet-copy h2 {
+      margin: 0 0 14px;
+      font: inherit;
     }
 
-    .card a {
+    .sheet-copy #about-collaborations {
+      margin-bottom: 0;
+    }
+
+    .sheet-copy dl,
+    .sheet-copy dd {
+      margin: 0;
+    }
+
+    .sheet-copy dl div + div {
+      margin-top: 14px;
+    }
+
+    .sheet-copy .reach {
+      color: #000000;
+    }
+
+    .sheet-copy .clients {
+      color: #000000;
+    }
+
+    .sheet-copy .clients a {
+      white-space: nowrap;
+    }
+
+    .sheet-copy a {
       text-decoration-line: underline;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
       transition: color 0.15s ease;
     }
 
-    @media (hover: hover) {
-      .card a:hover {
-        color: #949494;
+    .sheet-copy a:hover {
+      color: #a9a9a9;
+    }
+
+    .menu a[aria-expanded="true"] {
+      text-decoration-line: underline;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sheet,
+      .sheet-copy {
+        transition: none;
       }
     }
 
-
-    @media (max-width: 900px) {
-      .row {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    /* The way in. The pieces come first: the column opens with one piece in
+       the middle of the screen and one above, one below it. All three begin
+       tiny and blurred in the heart of the middle one. First the other two
+       slip out from behind it, still tiny, the one that belongs above going
+       up and the one that belongs below going down; then all three grow
+       together, and settle into their places sharp. (The motion itself is
+       drawn by the script; here is only where a piece waits and where it
+       rests.) Then the words rise into place, the menu, the studio, the
+       address. The rest of the pieces take no part: they are simply there
+       when the visitor comes to them. Nothing hides unless the page asked for
+       it (the class on the root) */
+    .reveal {
+      transition: opacity 0.9s ease var(--delay, 0s), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0s);
     }
 
-    /* Between 901 and 999 the header holds two columns, as on a tablet: the
-       address, 221px of mono capitals, needs a column of that much */
-    @media (min-width: 901px) and (max-width: 999px) {
-      .top {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    html.intro .reveal {
+      opacity: 0;
+      transform: translateY(10px);
     }
 
-    /* Under 1000 the nav is in the flow: the wordmark and the address across
-       the top, the menu under the address */
-    @media (max-width: 999px) {
-      .menu {
-        grid-column: 2;
-      }
+    html.intro .piece {
+      opacity: 0;
     }
 
-    /* On a desk the wordmark, the address and the menu stay put while the
-       page runs under them. The address and the menu invert over what they
-       cross: #ffffff in difference reads #000000 on the #ffffff page and
-       light over anything dark. The wordmark keeps its orange over all of it.
-       The nav stands on the work's four columns: the wordmark the first, the
-       second left empty, the address the third, the menu the fourth. From
-       1360 the work has eight, and those four slots fall on its first, fifth
-       and seventh columns */
-    @media (min-width: 1000px) {
-      .top {
-        --col: calc((100% - 72px) / 4);
-        min-height: 28px;
+    html.intro .piece.start,
+    html.intro .piece.is-in {
+      position: relative;
+      z-index: 1;
+    }
+
+    html.intro .piece.middle {
+      z-index: 2;
+    }
+
+    html.intro .piece.is-in {
+      opacity: 1;
+    }
+
+    html.intro .piece.plain {
+      opacity: 1;
+    }
+
+    html.intro .reveal.is-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* On a phone the page scrolls as a page: only the bar at the top, the
+       mark and Menu, stays put; under it the studio's words, then the work,
+       one piece under another. Menu pulls a white sheet down over the page
+       with the three words, as on the front page. A window that is narrow
+       but short keeps the two columns */
+    @media (max-width: 800px) and (min-height: 561px) {
+      html,
+      body {
+        height: auto;
+        overflow: visible;
       }
 
-      .top h1,
-      .top .contact,
-      .top .menu {
+      body {
+        touch-action: auto;
+      }
+
+      /* The bar is a real element, not drawn by CSS alone: Safari on the
+         iPhone paints the strip under its clock with the colour of a fixed
+         element touching the top of the screen, so the page never shows
+         through there */
+      .topbar {
+        display: block;
         position: fixed;
-        top: 12px;
-        z-index: 5;
-        width: var(--col);
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background: #ffffff;
+        z-index: 3;
       }
 
-      .top .contact,
-      .top .menu {
-        color: #ffffff;
-        mix-blend-mode: difference;
-      }
-
-      /* In the blend the grey is set as its inverse: #6b6b6b in difference
-         reads #949494 on the #ffffff page */
-      @media (hover: hover) {
-        .top .contact a:hover {
-          color: #6b6b6b;
-        }
-      }
-
-      .top h1 {
-        left: 12px;
-      }
-
-      .top .contact {
-        left: calc(12px + 2 * (var(--col) + 16px));
-      }
-
-      .top .menu {
-        left: calc(12px + 3 * (var(--col) + 16px));
-      }
-    }
-
-    @media (max-width: 560px) {
-      .row {
-        grid-template-columns: 1fr;
-      }
-
-      .top {
-        row-gap: 0;
-      }
-
-      .hero {
-        min-height: 25vh;
-      }
-
-      /* The address goes on a phone: the menu carries Contact */
-      .contact {
-        display: none;
-      }
-
-      /* The menu leaves the header for a sheet of its own. Closed, it is
-         rolled up out of sight; Menu at the top right pulls it down over the
-         page, and the words follow it in one after another */
-      .top {
-        position: relative;
+      .mark {
+        z-index: 4;
       }
 
       .menu-open,
@@ -525,26 +417,28 @@
         border: 0;
         background: none;
         font: inherit;
+        text-transform: inherit;
         color: #000000;
         cursor: pointer;
       }
 
       .menu-open {
         display: block;
-        position: absolute;
-        top: 12px;
-        right: 12px;
+        position: fixed;
+        top: 18px;
+        right: 13px;
+        z-index: 4;
       }
 
       .menu {
-        position: fixed;
         inset: 0;
+        top: 0;
+        right: 0;
         z-index: 20;
         flex-direction: column;
-        flex-wrap: nowrap;
         align-items: flex-start;
         gap: 0;
-        padding: 12px;
+        padding: 13px;
         background: #ffffff;
         visibility: hidden;
         clip-path: inset(0 0 100% 0);
@@ -557,288 +451,280 @@
         transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1);
       }
 
-      /* The wordmark and Close stand where the wordmark and Menu stood */
+      /* The mark and Close stand where the mark and Menu stood */
       .menu-head {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
         align-self: stretch;
         margin-bottom: 22vh;
       }
 
-      .menu > a {
-        color: #000000;
+      .menu-head img {
+        display: block;
+        width: 24px;
+        height: 24px;
       }
 
-      .menu > a {
-        line-height: 36px;
+      .menu-close {
+        margin-top: 5px;
+      }
+
+      /* The words follow the sheet in, one after another */
+      html:not(.menu-is-open) .menu > a,
+      html:not(.menu-is-open) .menu > a.reveal.is-in {
         opacity: 0;
         transform: translateY(10px);
         transition: opacity 0.3s ease, transform 0.3s ease;
       }
 
-      .menu-is-open .menu > a {
+      .menu > a {
+        line-height: 36px;
+      }
+
+      html.menu-is-open .menu > a {
         opacity: 1;
         transform: none;
         transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
       }
 
-      .menu-is-open .menu > a:nth-of-type(1) { transition-delay: 0.22s; }
-      .menu-is-open .menu > a:nth-of-type(2) { transition-delay: 0.3s; }
-      .menu-is-open .menu > a:nth-of-type(3) { transition-delay: 0.38s; }
-      .menu-is-open .menu > a:nth-of-type(4) { transition-delay: 0.46s; }
+      html.menu-is-open .menu > a:nth-of-type(1) { transition-delay: 0.22s; }
+      html.menu-is-open .menu > a:nth-of-type(2) { transition-delay: 0.3s; }
+      html.menu-is-open .menu > a:nth-of-type(3) { transition-delay: 0.38s; }
 
-      /* Nothing scrolls behind the sheet */
+      /* Nothing scrolls behind a sheet */
       .menu-is-open,
-      .menu-is-open body {
+      .menu-is-open body,
+      .sheet-is-open,
+      .sheet-is-open body {
         overflow: hidden;
+      }
+
+      .studio {
+        position: static;
+        padding: 62px 13px 0;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .studio p + p {
+        margin-top: 16px;
+      }
+
+      .hire {
+        display: none;
+      }
+
+      .sheet-inner {
+        padding: 62px 13px 48px;
+      }
+
+      .works {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        margin: 48px 13px 13px;
       }
 
       @media (prefers-reduced-motion: reduce) {
         .menu,
-        .menu > a,
         .menu-is-open .menu,
-        .menu-is-open .menu > a {
+        html:not(.menu-is-open) .menu > a,
+        html.menu-is-open .menu > a {
           transition: none;
         }
-      }
-
-      /* iPhone only. Safari on iOS 26 fills the area under its own bottom bar
-         with the colour of a fixed element touching the bottom of the screen.
-         This strip is that element, so what scrolls does not show under the
-         address bar; above the curtain too, so the colour stays white */
-      @supports (-webkit-touch-callout: none) {
-        .edge {
-          position: fixed;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 4px;
-          background: #ffffff;
-          z-index: 11;
-        }
-      }
-
-      .bar {
-        gap: 12px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="edge" aria-hidden="true"></div>
+  <div class="topbar" aria-hidden="true"></div>
 
-  <header class="row top">
-    <h1>Internet Guild™</h1>
-    <button type="button" class="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
+  <button type="button" class="menu-open reveal" aria-expanded="false" aria-controls="menu">Menu</button>
 
-    <div class="contact">
-      <p><span class="muted">Hire the guild.</span> <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+  <nav class="menu" id="menu" aria-label="Main">
+    <div class="menu-head">
+      <img src="icon-logo.svg" alt="" width="24" height="24">
+      <button type="button" class="menu-close">Close</button>
     </div>
+    <a class="reveal" href="#about" aria-haspopup="dialog" aria-controls="about" aria-expanded="false">About</a>
+    <a class="reveal" href="playground.html">Playground</a>
+    <a class="reveal" href="#contact" aria-haspopup="dialog" aria-controls="contact" aria-expanded="false">Contact</a>
+  </nav>
 
-    <nav class="menu" id="menu" aria-label="Main">
-      <div class="menu-head">
-        <a href="index.html">Internet Guild™</a>
-        <button type="button" class="menu-close">Close</button>
-      </div>
-      <a href="index.html" aria-current="page">Index</a>
-      <a href="index.html#work">Work</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+  <img class="mark reveal" src="icon-logo.svg" alt="Internet Guild" width="24" height="24">
 
-  <div class="row hero">
-    <p class="tagline">Essentialist design practice, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.<br>Eleven years of practice. We design, build and launch.</p>
+  <div class="studio">
+    <p class="reveal">Internet Guild</p>
+    <div>
+      <p class="reveal">Design + code studio<br>Websites, products and AI<br>for founders who value simplicity.</p>
+      <p class="reveal">Essentialist practice, born to reduce.<br>11 years of experience.</p>
+    </div>
   </div>
 
-  <div class="bar" id="work">
-    <button type="button" class="remix">Remix</button>
-  </div>
+  <p class="hire reveal">Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
 
-  <main class="row index" aria-label="Selected work">
-    <div class="cell card" style="--span: 2; --span8: 2">
-      <p class="card-title">Latest collaborations</p>
-      <p>
-        <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>,
-        <a href="https://www.greatskysolar.com" target="_blank" rel="noopener">Great Sky Solar</a>,
-        <a href="https://www.buenbit.com" target="_blank" rel="noopener">Buenbit</a>&nbsp;(acquired),
-        <a href="https://numia.co" target="_blank" rel="noopener">Numia</a>,
-        <a href="https://www.towerbank.com" target="_blank" rel="noopener">Towerbank</a>,
-        <a href="https://papayadash.com" target="_blank" rel="noopener">Papayadash</a>,
-        <a href="https://www.kstreet.vc" target="_blank" rel="noopener">K Street VC</a>,
-        <a href="https://www.peigo.com.ec" target="_blank" rel="noopener">peiGo</a>,
-        <a href="https://eurekalabs.io" target="_blank" rel="noopener">Eureka Labs</a>,
-        <a href="https://www.emilabs.ai" target="_blank" rel="noopener">Emilabs</a>,
-        <a href="https://www.aquicore.com" target="_blank" rel="noopener">Aquicore</a>&nbsp;(acquired),
-        <a href="https://www.complif.com" target="_blank" rel="noopener">Complif</a>,
-        <a href="https://www.bonumcoaching.com" target="_blank" rel="noopener">Bonum</a>,
-        <a href="https://www.waterplan.com" target="_blank" rel="noopener">Waterplan</a>,
-        <a href="https://www.lupastudio.co" target="_blank" rel="noopener">Lupa Studio</a>,
-        <a href="https://www.fzsports.com" target="_blank" rel="noopener">FZ Sports</a>,
-        <a href="https://www.1190sports.com" target="_blank" rel="noopener">1190 Sports</a>,
-        <a href="https://www.fanatiz.com" target="_blank" rel="noopener">Fanatiz</a>,
-        <a href="https://www.whiteprompt.com" target="_blank" rel="noopener">White Prompt</a>,
-        <a href="https://www.cary.health" target="_blank" rel="noopener">Cary Health</a>,
-        <span>Cary RX</span>.
-      </p>
-    </div>
-    <figure class="cell" style="--span: 2; --span8: 2">
-      <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
-      <figcaption>Street Poster</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
-      <figcaption>Visa Cards</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
-      <figcaption>Investments App</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 720 / 1080"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
-      <figcaption>Debit Card</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
-      <figcaption>Interface</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
-      <figcaption>Website, Laptops</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
-      <figcaption>Icon System</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
-      <div class="media" style="--ar: 1500 / 1500"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
-      <figcaption>Pattern</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
-      <figcaption>Poster</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
-      <figcaption>Website, Laptop</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
-      <figcaption>Website, Mobile</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
-      <div class="media" style="--ar: 1500 / 1500"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
-      <figcaption>Website Sections</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
-      <figcaption>Customer Journey</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 630 / 880"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
-      <figcaption>Virtual Assistance</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
-      <figcaption>Brand Identity</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
-      <figcaption>Website</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
-      <figcaption>Website, Spanish</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 3">
-      <div class="media" style="--ar: 1920 / 1080"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
-      <figcaption>Onboarding</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 720 / 1080"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
-      <figcaption>Report Charts</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
-      <figcaption>Report, iPad</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
-      <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
-      <figcaption>Homepage</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
-      <figcaption>Product Cards</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
-      <figcaption>Team Page</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
-      <figcaption>Agent Activity Panel</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
-      <div class="media" style="--ar: 1500 / 1500"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
-      <figcaption>Token Statement</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
-      <figcaption>xrank.tech</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
-      <figcaption>China.Supply</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
-      <figcaption>Journal App</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
-      <figcaption>Journal, Close-up</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
-      <figcaption>Calm App Login</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
-      <figcaption>Music Player</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
-      <figcaption>Writing App</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 2; --span8: 2">
-      <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
-      <figcaption>Godzilla Minus One</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
-      <figcaption>Godzilla, Bus Stop</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
-      <figcaption>Nine2Five Spec Sheet</figcaption>
-    </figure>
-    <figure class="cell" style="--span: 1; --span8: 1">
-      <div class="media" style="--ar: 1500 / 1500"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
-      <figcaption>Shopping Bag</figcaption>
-    </figure>
+  <main class="works" aria-label="Selected work">
+      <div class="piece" style="--ar: 1500 / 1500"><img src="towerbank-poster.webp" alt="Towerbank credit card street poster" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="towerbank-cards.mp4" data-poster="poster-towerbank-cards.webp" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="towerbank-app.webp" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 720 / 1080"><video src="towerbank-debit-card.mp4" data-poster="poster-towerbank-debit-card.webp" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="towerbank-website-ui.mp4" data-poster="poster-towerbank-website-ui.webp" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="towerbank-website-laptops.mp4" data-poster="poster-towerbank-website-laptops.webp" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="numia-icons.webp" alt="Numia icon system" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="numia-pattern.webp" alt="Numia geometric pattern" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="numia-poster.webp" alt="Numia poster on a concrete wall" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="numia-website-laptop.webp" alt="Numia website on a MacBook" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="numia-website-mobile.webp" alt="Numia website on iPhone" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="numia-website-sections.webp" alt="Numia website sections" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="numia-customer-journey.mp4" data-poster="poster-numia-customer-journey.webp" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 630 / 880"><video src="numia-virtual-assistance.mp4" data-poster="poster-numia-virtual-assistance.webp" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="emi-brand.mp4" data-poster="poster-emi-brand.webp" aria-label="Emi brand identity" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="emi-website.mp4" data-poster="poster-emi-website.webp" aria-label="Emi website" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="emi-website-es.mp4" data-poster="poster-emi-website-es.webp" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1920 / 1080"><video src="emi-onboarding.mp4" data-poster="poster-emi-onboarding.webp" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 720 / 1080"><video src="emi-report-charts.mp4" data-poster="poster-emi-report-charts.webp" aria-label="Emi report charts" muted loop playsinline preload="none"></video></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="emilabs-report.webp" alt="Emi report on an iPad" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="great-sky-solar-website.webp" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="great-sky-solar-products.webp" alt="Great Sky Solar product cards" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="great-sky-solar-team.webp" alt="Great Sky Solar team page" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="agent-activity-panel.webp" alt="Agent activity panel on a studio display" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="token-statement.webp" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="xrank.webp" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="china-supply.webp" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="journal-app.webp" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="journal-app-closeup.webp" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="calm-app-login.webp" alt="Calm app login screen on iPhone" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="music-player.webp" alt="Music player interface" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="writing-app.webp" alt="Writing app on a MacBook" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-poster.webp" alt="Godzilla Minus One poster" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="godzilla-minus-one-bus-stop.webp" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="nine2five.webp" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async"></div>
+      <div class="piece" style="--ar: 1500 / 1500"><img src="ids-shopping-bag.webp" alt="Internet Guild shopping bag" loading="lazy" decoding="async"></div>
   </main>
 
-  <div class="viewer" role="dialog" aria-modal="true" aria-label="Piece, large">
-    <div class="viewer-bar">
-      <span class="viewer-caption"></span>
-      <button type="button" class="viewer-close">Close</button>
+  <div class="sheet" id="about" role="dialog" aria-label="About" tabindex="-1">
+    <div class="sheet-inner">
+      <div class="sheet-copy">
+        <p>
+          <span class="lead">Internet guild is a tier-s design practice, born to reduce.</span><br>
+          Websites, products and AI for founders who embrace simplicity.<br>
+          We make things simple. We keep only what matters.
+        </p>
+        <p>
+          <span class="lead">Design and code are one process.</span><br>
+          We work with you from the first idea to the day it goes live.<br>
+          We care about how it looks and how it works.<br>
+          People make the calls. AI helps us work faster.
+        </p>
+        <p>
+          <span class="lead">Eleven years of practice. We design, build and launch.</span>
+        </p>
+        <p>
+          <span class="lead">Founded and led by Nico Teodoro.</span><br>
+          Born in Argentina.<br>
+          Raised on the internet.<br>
+          Grown in Azeroth.
+        </p>
+
+        <section aria-labelledby="about-timeline">
+          <h2 id="about-timeline">Timeline</h2>
+          <dl>
+            <div>
+              <dt>Age 13</dt>
+              <dd>First jobs: websites for the game servers of local cybercafés.<br>Mu Online, Lineage 2, Argentum Online.<br>Design and code start here.</dd>
+            </div>
+            <div>
+              <dt>2015</dt>
+              <dd>Starts working on his own.<br>First clients from other countries, through freelance websites.<br>Design and code, all remote.</dd>
+            </div>
+            <div>
+              <dt>2020</dt>
+              <dd>During the pandemic, freelance work becomes a studio: Simplify Computer.<br>Projects in fintech, crypto, health, investment, energy, and early AI.</dd>
+            </div>
+            <div>
+              <dt>2024</dt>
+              <dd>Simplify closes. Back to working alone.<br>Fewer projects, more care.</dd>
+            </div>
+            <div>
+              <dt>2025</dt>
+              <dd>A trip to Japan. Kyoto, its culture, and the idea of doing more with less.<br>Everything learned over the years comes together in one idea: simple is not a style.<br>It’s the standard.</dd>
+            </div>
+            <div>
+              <dt>April 11, 2025</dt>
+              <dd>After a meeting in Kyoto, Internet Guild is born.</dd>
+            </div>
+            <div>
+              <dt>Now</dt>
+              <dd>Building products for AI, fintech, crypto, health, and real estate companies, and for other agencies.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section aria-labelledby="about-collaborations">
+          <h2 id="about-collaborations">Latest collaborations</h2>
+          <p class="clients">
+            <a href="https://aerolab.co" target="_blank" rel="noopener">Aerolab</a>, <a href="https://www.greatskysolar.com" target="_blank" rel="noopener">Great Sky Solar</a>, <a href="https://www.buenbit.com" target="_blank" rel="noopener">Buenbit</a>&nbsp;(acquired), <a href="https://numia.co" target="_blank" rel="noopener">Numia</a>, <a href="https://www.towerbank.com" target="_blank" rel="noopener">Towerbank</a>, <a href="https://papayadash.com" target="_blank" rel="noopener">Papayadash</a>, <a href="https://www.kstreet.vc" target="_blank" rel="noopener">K Street VC</a>, <a href="https://www.peigo.com.ec" target="_blank" rel="noopener">peiGo</a>, <a href="https://eurekalabs.io" target="_blank" rel="noopener">Eureka Labs</a>, <a href="https://www.emilabs.ai" target="_blank" rel="noopener">Emilabs</a>, <a href="https://www.aquicore.com" target="_blank" rel="noopener">Aquicore</a>&nbsp;(acquired), <a href="https://www.complif.com" target="_blank" rel="noopener">Complif</a>, <a href="https://www.bonumcoaching.com" target="_blank" rel="noopener">Bonum</a>, <a href="https://www.waterplan.com" target="_blank" rel="noopener">Waterplan</a>, <a href="https://www.lupastudio.co" target="_blank" rel="noopener">Lupa Studio</a>, <a href="https://www.fzsports.com" target="_blank" rel="noopener">FZ Sports</a>, <a href="https://www.1190sports.com" target="_blank" rel="noopener">1190 Sports</a>, <a href="https://www.fanatiz.com" target="_blank" rel="noopener">Fanatiz</a>, <a href="https://www.whiteprompt.com" target="_blank" rel="noopener">White Prompt</a>, <a href="https://www.cary.health" target="_blank" rel="noopener">Cary Health</a>, <span>Cary RX</span>.
+          </p>
+        </section>
+      </div>
     </div>
-    <div class="viewer-stage"></div>
+  </div>
+
+  <div class="sheet" id="contact" role="dialog" aria-label="Contact" tabindex="-1">
+    <div class="sheet-inner">
+      <div class="sheet-copy">
+        <p class="reach">
+          <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
+          <a href="mailto:n@internetguild.co">n@internetguild.co</a><br>
+          <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">W +54 911 33932087</a>
+        </p>
+        <p class="reach">
+          <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br>
+          <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter)</a><br>
+          <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+        </p>
+        <p>Buenos Aires, Republic of Argentina.<br>Copyright &copy; 2026. Internet Guild<br>All rights reserved.</p>
+      </div>
+    </div>
   </div>
 
   <script>
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const works = document.querySelector('.works');
+    const phone = matchMedia('(max-width: 800px) and (min-height: 561px)');
+    const sheets = [...document.querySelectorAll('.sheet')];
+    const sheetOpen = () => sheets.some((sheet) => sheet.classList.contains('is-open'));
+
+    // The work comes in a different order every time the page is entered. The
+    // page opens on three of them, one in the middle of the screen with one
+    // above and one below, so the one in the middle is the first that leaves
+    // room for the other two to show
+    (() => {
+      const pieces = [...works.children];
+      for (let i = pieces.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+      }
+
+      // On a phone the work simply runs down the page from the first piece
+      if (!phone.matches) {
+        const room = works.clientHeight * 0.7;
+        const middle = pieces.find((piece) => piece.offsetHeight <= room)
+          || pieces.reduce((a, b) => (a.offsetHeight <= b.offsetHeight ? a : b));
+        pieces.splice(pieces.indexOf(middle), 1);
+        pieces.splice(1, 0, middle);
+      }
+      works.append(...pieces);
+
+      // Whatever lands first is wanted straight away
+      pieces.slice(0, 4).forEach((piece) => {
+        const image = piece.querySelector('img');
+        if (image) image.loading = 'eager';
+      });
+    })();
 
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach(({ target, isIntersecting }) => {
@@ -859,222 +745,297 @@
       });
     }, { rootMargin: '100% 0px 100% 0px' });
 
-    document.querySelectorAll('.media video').forEach((video) => {
+    works.querySelectorAll('video').forEach((video) => {
       video.muted = true;
       videoObserver.observe(video);
       if (video.dataset.poster) posterObserver.observe(video);
     });
 
-    // The masonry: the cells go down in order, but each time the packer looks
-    // a few cells ahead for the one that sits lowest and leaves the least
-    // hole under it, so the gaps a wide piece would leave get filled
-    const index = document.querySelector('.index');
-    const LOOKAHEAD = 12;
+    // The way in: the column opens with its second piece in the middle of the
+    // screen, so one piece shows above it and one below. Once their pictures
+    // are there, all that are on screen begin as a tiny heap in the heart of
+    // the middle one. First the others slip out from behind it, still tiny, to
+    // the middle of what shows of each; then all grow together, to their
+    // places, and the blur clears as they land. The rest are left as they
+    // are, with no effect, for when the visitor comes to them. When the last
+    // of those that grew is nearly sharp the words rise, in the order they
+    // stand on the page. The column starts to move once all of it is in
+    const root = document.documentElement;
+    let opening = document.fonts.ready;
 
-    function pack() {
-      const style = getComputedStyle(index);
-      const cols = parseInt(style.getPropertyValue('--cols'), 10) || 2;
-      const gapX = parseFloat(style.columnGap) || 0;
-      const gapY = parseFloat(style.rowGap) || 0;
-      const edge = parseFloat(style.paddingLeft) || 0;
-      const colW = (index.clientWidth - 2 * edge - (cols - 1) * gapX) / cols;
-      const heights = new Array(cols).fill(0);
+    if (root.classList.contains('intro')) {
+      window.introStarted = true;
 
-      index.classList.add('is-packed');
+      const SMALL = 0.08;        // how small they begin, of their size
+      const BLUR = 14;           // how blurred they begin, in pixels
+      const OUT_TIME = 1.1;      // seconds the others take to slip out, still tiny
+      const GROW_TIME = 2.4;     // seconds all take to grow, together
+      const TEXTS_AT = 2.5;      // seconds, once the pieces have begun
+      const SLIP = 'cubic-bezier(0.5, 0, 0.2, 1)';
+      const GROW = 'cubic-bezier(0.4, 0.1, 0.15, 1)';
+      const CLEAR = 'cubic-bezier(0.5, 0, 0.3, 1)';
+      const texts = [...document.querySelectorAll('.reveal')];
+      const pieces = [...works.children];
 
-      // Each cell takes its width first, so its height is known
-      const queue = [...index.children].map((cell) => {
-        const span = Math.min(cols, parseInt(getComputedStyle(cell).getPropertyValue('--s'), 10) || 1);
-        cell.style.width = `${span * colW + (span - 1) * gapX}px`;
-        return { cell, span, height: cell.offsetHeight };
+      const pictureReady = (piece) => new Promise((resolve) => {
+        const video = piece.querySelector('video');
+        let image = piece.querySelector('img');
+        if (video && video.dataset.poster) {
+          video.poster = video.dataset.poster;
+          image = new Image();
+          image.src = video.dataset.poster;
+        }
+        if (!image || image.complete) return resolve();
+        image.addEventListener('load', resolve, { once: true });
+        image.addEventListener('error', resolve, { once: true });
+        setTimeout(resolve, 1500);
       });
 
-      // The lowest place for a cell: where its columns all stand clear
-      const place = ({ span }) => {
-        let col = 0;
-        let top = Infinity;
-        let waste = 0;
-        for (let c = 0; c <= cols - span; c++) {
-          const run = heights.slice(c, c + span);
-          const y = Math.max(...run);
-          if (y < top - 0.5) {
-            top = y;
-            col = c;
-            waste = run.reduce((sum, h) => sum + (y - h), 0) / span;
-          }
-        }
-        return { col, top, waste };
+      // One piece's way in: tiny in the heart of the middle one, then tiny
+      // where it will first be seen, then grown into its place
+      const open = (piece, from, out) => {
+        piece.classList.remove('start');
+        piece.classList.add('is-in');
+        if (!piece.animate) return;
+
+        const tiny = ([x, y]) => `translate(${x}px, ${y}px) scale(${SMALL})`;
+        const at = OUT_TIME / (OUT_TIME + GROW_TIME);
+        const run = (frames, duration = (OUT_TIME + GROW_TIME) * 1000) => {
+          const motion = piece.animate(frames, { duration, fill: 'both' });
+          motion.finished.then(() => motion.cancel()).catch(() => {});
+        };
+
+        run([
+          { transform: tiny(from), easing: SLIP },
+          { transform: tiny(out), offset: at, easing: GROW },
+          { transform: 'none' },
+        ]);
+        run([
+          { filter: `blur(${BLUR}px)` },
+          { filter: `blur(${BLUR}px)`, offset: at, easing: CLEAR },
+          { filter: 'blur(0px)' },
+        ]);
+        run([{ opacity: 0 }, { opacity: 1 }], 500);
       };
 
-      while (queue.length) {
-        let pick = 0;
-        let best = Infinity;
-        for (let i = 0; i < Math.min(LOOKAHEAD, queue.length); i++) {
-          const { top, waste } = place(queue[i]);
-          const score = top + waste * 0.5 + i * 6;
-          if (score < best) { best = score; pick = i; }
+      opening = document.fonts.ready.then(() => {
+        // On a phone the first piece leads and the rest come out from behind
+        // it, downward, on the screen as it is
+        const middle = phone.matches ? pieces[0] : pieces[1];
+        const column = phone.matches
+          ? { top: 0, bottom: innerHeight, left: 0, right: innerWidth }
+          : works.getBoundingClientRect();
+
+        // The column opens with the middle piece in the middle of the screen
+        if (!phone.matches) {
+          works.scrollTop = Math.max(0, middle.offsetTop + middle.offsetHeight / 2 - works.clientHeight / 2);
+          current = target = ours = works.scrollTop;
         }
 
-        const [item] = queue.splice(pick, 1);
-        const { col, top } = place(item);
-        item.cell.style.left = `${edge + col * (colW + gapX)}px`;
-        item.cell.style.top = `${top}px`;
-        for (let c = col; c < col + item.span; c++) heights[c] = top + item.height + gapY;
-      }
+        const first = pieces.filter((piece) => {
+          const box = piece.getBoundingClientRect();
+          return box.bottom > column.top && box.top < column.bottom;
+        }).slice(0, phone.matches ? 2 : Infinity);
+        pieces.filter((piece) => !first.includes(piece)).forEach((piece) => piece.classList.add('plain'));
 
-      index.style.height = `${Math.max(...heights) - gapY}px`;
+        // Where each begins (the heart of the middle one) and where it first
+        // shows (the middle of what is on screen of it), as how far each has
+        // to move from its place; the middle one does not move
+        const heart = middle.getBoundingClientRect();
+        const way = new Map();
+        first.forEach((piece) => {
+          const box = piece.getBoundingClientRect();
+          const x = box.left + box.width / 2;
+          const y = box.top + box.height / 2;
+          const shownX = (Math.max(box.left, column.left) + Math.min(box.right, column.right)) / 2;
+          const shownY = (Math.max(box.top, column.top) + Math.min(box.bottom, column.bottom)) / 2;
+          way.set(piece, piece === middle
+            ? { from: [0, 0], out: [0, 0] }
+            : {
+              from: [heart.left + heart.width / 2 - x, heart.top + heart.height / 2 - y],
+              out: [shownX - x, shownY - y],
+            });
+          piece.classList.add('start');
+        });
+        middle.classList.add('middle');
+
+        // All of them go together, once every picture is there
+        return Promise.all(first.map(pictureReady)).then(() => {
+          first.forEach((piece) => open(piece, way.get(piece).from, way.get(piece).out));
+
+          texts.forEach((text, i) => {
+            text.style.setProperty('--delay', `${TEXTS_AT + i * 0.09}s`);
+            text.classList.add('is-in');
+          });
+
+          START_AFTER = Math.round((TEXTS_AT + texts.length * 0.09 + 0.9) * 1000);
+        });
+      });
     }
 
-    // Remix deals the same pieces into a new order; the card stays first
-    function remix() {
-      const cells = [...index.children].filter((cell) => !cell.classList.contains('card'));
+    // The column moves by itself once the page has loaded, at a slow, steady
+    // pace. The first wheel turn, touch or key, anywhere on the page, takes it
+    // out of the page's hands: from then on the visitor moves it, and the
+    // wheel is eased, so the column glides to where it was sent instead of
+    // jumping there
+    const AUTO_SPEED = 40;     // pixels a second
+    const EASE = 0.085;        // share of the way covered each frame
+    let START_AFTER = 700;     // ms after load
 
-      for (let i = cells.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [cells[i], cells[j]] = [cells[j], cells[i]];
-      }
+    let target = 0;
+    let current = 0;
+    let auto = !reduceMotion.matches && !phone.matches;
+    let last = 0;
+    let running = false;
+    let ours = 0;
 
-      index.append(...cells);
+    const limit = () => works.scrollHeight - works.clientHeight;
+    const clamp = (y) => Math.max(0, Math.min(limit(), y));
 
-      // Whatever lands up top is wanted straight away
-      cells.slice(0, 8).forEach((cell) => {
-        const image = cell.querySelector('img');
-        if (image) image.loading = 'eager';
-      });
+    function frame(now) {
+      const dt = Math.min(0.05, (now - last) / 1000 || 0);
+      last = now;
 
-      // Moving a film can stop it, so have the observer judge each one afresh
-      index.querySelectorAll('video').forEach((video) => {
-        videoObserver.unobserve(video);
-        videoObserver.observe(video);
-      });
+      if (auto) target = clamp(target + AUTO_SPEED * dt);
+      current += (target - current) * (1 - Math.pow(1 - EASE, dt * 60));
+      if (Math.abs(target - current) < 0.1) current = target;
 
-      pack();
+      ours = current;
+      works.scrollTop = current;
+
+      if (auto && target >= limit()) auto = false;
+      if (auto || current !== target) requestAnimationFrame(frame);
+      else running = false;
     }
 
-    // The gallery opens on a different order every time it is loaded
-    remix();
+    function run() {
+      if (running) return;
+      running = true;
+      last = performance.now();
+      requestAnimationFrame(frame);
+    }
 
-    document.querySelector('.remix').addEventListener('click', remix);
+    function takeOver() {
+      auto = false;
+    }
 
-    // A piece opens large on a click, or Enter on it; the arrows step on and
-    // back through the work as it stands on the page
-    const viewer = document.querySelector('.viewer');
-    const stage = viewer.querySelector('.viewer-stage');
-    const viewerCaption = viewer.querySelector('.viewer-caption');
-    const viewerClose = viewer.querySelector('.viewer-close');
-    let opener = null;
-    let shown = null;
+    addEventListener('wheel', (e) => {
+      if (e.ctrlKey || sheetOpen() || phone.matches) return;
+      e.preventDefault();
+      takeOver();
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? works.clientHeight : 1;
+      target = clamp(target + e.deltaY * unit);
 
-    const pieces = () => [...index.querySelectorAll('.cell:not(.card)')]
-      .sort((a, b) => a.offsetTop - b.offsetTop || a.offsetLeft - b.offsetLeft);
-
-    function show(cell) {
-      const source = cell.querySelector('video, img');
-      let large;
-
-      if (source.tagName === 'VIDEO') {
-        large = document.createElement('video');
-        large.src = source.getAttribute('src');
-        if (source.poster) large.poster = source.poster;
-        large.muted = true;
-        large.loop = true;
-        large.autoplay = true;
-        large.playsInline = true;
-        large.setAttribute('aria-label', source.getAttribute('aria-label') || '');
-        large.play().catch(() => {});
+      if (reduceMotion.matches) {
+        current = ours = works.scrollTop = target;
       } else {
-        large = document.createElement('img');
-        large.src = source.currentSrc || source.src;
-        large.alt = source.alt;
+        run();
       }
+    }, { passive: false });
 
-      stage.replaceChildren(large);
-      viewerCaption.textContent = cell.querySelector('figcaption').textContent;
-      shown = cell;
-    }
+    // A finger dragged anywhere but on the column moves the column too
+    let finger = null;
 
-    function openViewer(cell) {
-      opener = document.activeElement;
-      show(cell);
-      viewer.classList.add('is-open');
-      document.documentElement.classList.add('viewer-is-open');
-      viewerClose.focus({ preventScroll: true });
-    }
+    addEventListener('touchstart', (e) => {
+      if (sheetOpen() || phone.matches) {
+        finger = null;
+        return;
+      }
+      takeOver();
+      finger = works.contains(e.target) ? null : e.touches[0].clientY;
+    }, { passive: true });
 
-    function closeViewer() {
-      viewer.classList.remove('is-open');
-      document.documentElement.classList.remove('viewer-is-open');
-      stage.replaceChildren();
-      shown = null;
-      if (opener) opener.focus({ preventScroll: true });
-    }
+    addEventListener('touchmove', (e) => {
+      if (finger === null) return;
+      const y = e.touches[0].clientY;
+      works.scrollTop = clamp(works.scrollTop + finger - y);
+      current = target = ours = works.scrollTop;
+      finger = y;
+    }, { passive: true });
 
-    function step(by) {
-      const all = pieces();
-      const at = all.indexOf(shown);
-      show(all[(at + by + all.length) % all.length]);
-    }
-
-    pieces().forEach((cell) => {
-      const media = cell.querySelector('.media');
-      media.tabIndex = 0;
-      media.setAttribute('role', 'button');
-      media.setAttribute('aria-label', `Open ${cell.querySelector('figcaption').textContent}`);
+    addEventListener('keydown', (e) => {
+      if (sheetOpen()) return;
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) takeOver();
     });
 
-    index.addEventListener('click', (e) => {
-      const media = e.target.closest('.media');
-      if (media && !media.closest('.card')) openViewer(media.closest('.cell'));
-    });
+    // Anything that moves the column but us (touch, keys, a drag) is the
+    // visitor's: follow it
+    works.addEventListener('scroll', () => {
+      if (Math.abs(works.scrollTop - ours) > 1.5) {
+        takeOver();
+        current = target = ours = works.scrollTop;
+      }
+    }, { passive: true });
 
-    index.addEventListener('keydown', (e) => {
-      const media = e.target.closest('.media');
-      if (media && (e.key === 'Enter' || e.key === ' ')) {
+    // The phone's menu: Menu pulls the sheet down, Close or Escape rolls it up
+    const menu = document.querySelector('.menu');
+    const menuOpen = document.querySelector('.menu-open');
+    const menuClose = document.querySelector('.menu-close');
+
+    function setMenu(on) {
+      if (on === root.classList.contains('menu-is-open')) return;
+      root.classList.toggle('menu-is-open', on);
+      menuOpen.setAttribute('aria-expanded', String(on));
+      if (on) menuClose.focus({ preventScroll: true });
+      else if (menu.contains(document.activeElement)) menuOpen.focus({ preventScroll: true });
+    }
+
+    menuOpen.addEventListener('click', () => setMenu(true));
+    menuClose.addEventListener('click', () => setMenu(false));
+
+    // About and Contact: each menu word lays its sheet over the page and takes
+    // it off again, and one sheet takes the other's place; Escape, or a click
+    // on the sheet beside the words, puts it away too. While one is up the
+    // page beneath is out of reach, and the wheel is the sheet's
+    const beneath = [document.querySelector('.studio'), works, document.querySelector('.hire')];
+
+    function setSheet(sheet, on) {
+      if (on === sheet.classList.contains('is-open')) return;
+      const trigger = document.querySelector(`.menu a[aria-controls="${sheet.id}"]`);
+      sheet.classList.toggle('is-open', on);
+      trigger.setAttribute('aria-expanded', String(on));
+      if (on) {
+        sheets.filter((other) => other !== sheet).forEach((other) => setSheet(other, false));
+        sheet.scrollTop = 0;
+        sheet.focus({ preventScroll: true });
+      } else if (sheet.contains(document.activeElement)) {
+        trigger.focus({ preventScroll: true });
+      }
+      beneath.forEach((part) => { part.inert = sheetOpen(); });
+      root.classList.toggle('sheet-is-open', sheetOpen());
+      history.replaceState(null, '', sheetOpen() ? `#${sheets.find((one) => one.classList.contains('is-open')).id}` : location.pathname + location.search);
+    }
+
+    sheets.forEach((sheet) => {
+      document.querySelector(`.menu a[aria-controls="${sheet.id}"]`).addEventListener('click', (e) => {
         e.preventDefault();
-        openViewer(media.closest('.cell'));
-      }
-    });
-
-    viewer.addEventListener('click', closeViewer);
-
-    document.addEventListener('keydown', (e) => {
-      if (!viewer.classList.contains('is-open')) return;
-      if (e.key === 'Escape') closeViewer();
-      if (e.key === 'ArrowRight') step(1);
-      if (e.key === 'ArrowLeft') step(-1);
-    });
-
-    // The titles wrap by the font, and the columns by the width
-    document.fonts.ready.then(pack);
-    let packing;
-    addEventListener('resize', () => {
-      cancelAnimationFrame(packing);
-      packing = requestAnimationFrame(pack);
-    });
-  </script>
-  <script>
-    // The phone menu: Menu pulls the sheet down, Close or Escape rolls it up
-    (() => {
-      const root = document.documentElement;
-      const open = document.querySelector('.menu-open');
-      const close = document.querySelector('.menu-close');
-      const set = (on) => {
-        root.classList.toggle('menu-is-open', on);
-        open.setAttribute('aria-expanded', String(on));
-        (on ? close : open).focus({ preventScroll: true });
-      };
-      open.addEventListener('click', () => set(true));
-      close.addEventListener('click', () => set(false));
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && root.classList.contains('menu-is-open')) set(false);
+        setMenu(false);
+        setSheet(sheet, !sheet.classList.contains('is-open'));
       });
-      // Coming back to the page from history, the sheet is rolled up again
-      addEventListener('pageshow', (e) => {
-        if (!e.persisted) return;
-        root.classList.remove('menu-is-open');
-        open.setAttribute('aria-expanded', 'false');
+
+      sheet.addEventListener('click', (e) => {
+        if (e.target === sheet || e.target.classList.contains('sheet-inner')) setSheet(sheet, false);
       });
-    })();
+    });
+
+    addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      setMenu(false);
+      sheets.forEach((sheet) => setSheet(sheet, false));
+    });
+
+    const asked = sheets.find((sheet) => `#${sheet.id}` === location.hash);
+    if (asked) setSheet(asked, true);
+
+    opening.then(() => {
+      if (!auto) return;
+      setTimeout(() => {
+        if (auto) {
+          current = target = works.scrollTop;
+          run();
+        }
+      }, START_AFTER);
+    });
   </script>
 </body>
 </html>
