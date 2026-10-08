@@ -101,6 +101,12 @@
       background: #000000;
     }
 
+    /* The phone's own menu controls; the desk needs neither */
+    .menu-head,
+    .menu-open {
+      display: none;
+    }
+
     /* The mark, the guild's square, at the top left */
     .mark {
       position: fixed;
@@ -357,18 +363,132 @@
       transform: none;
     }
 
-    /* On a phone the words keep the top and the work takes the lower half;
-       a window that is narrow but short keeps the two columns */
+    /* On a phone the page scrolls as a page: only the bar at the top, the
+       mark and Menu, stays put; under it the studio's words, then the work,
+       one piece under another. Menu pulls a white sheet down over the page
+       with the three words, as on the front page. A window that is narrow
+       but short keeps the two columns */
     @media (max-width: 800px) and (min-height: 561px) {
+      html,
+      body {
+        height: auto;
+        overflow: visible;
+      }
+
+      body {
+        touch-action: auto;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background: #ffffff;
+        z-index: 3;
+      }
+
+      .mark {
+        z-index: 4;
+      }
+
+      .menu-open,
+      .menu-close {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        text-transform: inherit;
+        color: #000000;
+        cursor: pointer;
+      }
+
+      .menu-open {
+        display: block;
+        position: fixed;
+        top: 18px;
+        right: 13px;
+        z-index: 4;
+      }
+
       .menu {
-        gap: 12px;
+        inset: 0;
+        top: 0;
+        right: 0;
+        z-index: 20;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 13px;
+        background: #ffffff;
+        visibility: hidden;
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
+      }
+
+      .menu-is-open .menu {
+        visibility: visible;
+        clip-path: inset(0);
+        transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1);
+      }
+
+      /* The mark and Close stand where the mark and Menu stood */
+      .menu-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+        margin-bottom: 22vh;
+      }
+
+      .menu-head img {
+        display: block;
+        width: 24px;
+        height: 24px;
+      }
+
+      .menu-close {
+        margin-top: 5px;
+      }
+
+      /* The words follow the sheet in, one after another */
+      html:not(.menu-is-open) .menu > a,
+      html:not(.menu-is-open) .menu > a.reveal.is-in {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .menu > a {
+        line-height: 36px;
+      }
+
+      html.menu-is-open .menu > a {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+
+      html.menu-is-open .menu > a:nth-of-type(1) { transition-delay: 0.22s; }
+      html.menu-is-open .menu > a:nth-of-type(2) { transition-delay: 0.3s; }
+      html.menu-is-open .menu > a:nth-of-type(3) { transition-delay: 0.38s; }
+
+      /* Nothing scrolls behind a sheet */
+      .menu-is-open,
+      .menu-is-open body,
+      .sheet-is-open,
+      .sheet-is-open body {
+        overflow: hidden;
       }
 
       .studio {
-        top: 62px;
+        position: static;
+        padding: 62px 13px 0;
         grid-template-columns: 1fr;
         gap: 16px;
-        right: 13px;
       }
 
       .studio p + p {
@@ -380,21 +500,36 @@
       }
 
       .sheet-inner {
-        padding-inline: 13px;
+        padding: 62px 13px 48px;
       }
 
       .works {
-        top: auto;
-        height: 56vh;
-        left: 13px;
-        right: 13px;
+        position: static;
         width: auto;
+        height: auto;
+        overflow: visible;
+        margin: 48px 13px 13px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu,
+        .menu-is-open .menu,
+        html:not(.menu-is-open) .menu > a,
+        html.menu-is-open .menu > a {
+          transition: none;
+        }
       }
     }
   </style>
 </head>
 <body>
-  <nav class="menu" aria-label="Main">
+  <button type="button" class="menu-open reveal" aria-expanded="false" aria-controls="menu">Menu</button>
+
+  <nav class="menu" id="menu" aria-label="Main">
+    <div class="menu-head">
+      <img src="icon-logo.svg" alt="" width="24" height="24">
+      <button type="button" class="menu-close">Close</button>
+    </div>
     <a class="reveal" href="about.html" aria-haspopup="dialog" aria-controls="about" aria-expanded="false">About</a>
     <a class="reveal" href="playground.html">Playground</a>
     <a class="reveal" href="contact.html" aria-haspopup="dialog" aria-controls="contact" aria-expanded="false">Contact</a>
@@ -541,6 +676,7 @@
     // Films play only while on screen, and never with reduced motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const works = document.querySelector('.works');
+    const phone = matchMedia('(max-width: 800px) and (min-height: 561px)');
     const sheets = [...document.querySelectorAll('.sheet')];
     const sheetOpen = () => sheets.some((sheet) => sheet.classList.contains('is-open'));
 
@@ -555,11 +691,14 @@
         [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
       }
 
-      const room = works.clientHeight * 0.7;
-      const middle = pieces.find((piece) => piece.offsetHeight <= room)
-        || pieces.reduce((a, b) => (a.offsetHeight <= b.offsetHeight ? a : b));
-      pieces.splice(pieces.indexOf(middle), 1);
-      pieces.splice(1, 0, middle);
+      // On a phone the work simply runs down the page from the first piece
+      if (!phone.matches) {
+        const room = works.clientHeight * 0.7;
+        const middle = pieces.find((piece) => piece.offsetHeight <= room)
+          || pieces.reduce((a, b) => (a.offsetHeight <= b.offsetHeight ? a : b));
+        pieces.splice(pieces.indexOf(middle), 1);
+        pieces.splice(1, 0, middle);
+      }
       works.append(...pieces);
 
       // Whatever lands first is wanted straight away
@@ -662,17 +801,23 @@
       };
 
       opening = document.fonts.ready.then(() => {
-        const middle = pieces[1];
-        const column = works.getBoundingClientRect();
+        // On a phone the first piece leads and the rest come out from behind
+        // it, downward, on the screen as it is
+        const middle = phone.matches ? pieces[0] : pieces[1];
+        const column = phone.matches
+          ? { top: 0, bottom: innerHeight, left: 0, right: innerWidth }
+          : works.getBoundingClientRect();
 
         // The column opens with the middle piece in the middle of the screen
-        works.scrollTop = Math.max(0, middle.offsetTop + middle.offsetHeight / 2 - works.clientHeight / 2);
-        current = target = ours = works.scrollTop;
+        if (!phone.matches) {
+          works.scrollTop = Math.max(0, middle.offsetTop + middle.offsetHeight / 2 - works.clientHeight / 2);
+          current = target = ours = works.scrollTop;
+        }
 
         const first = pieces.filter((piece) => {
           const box = piece.getBoundingClientRect();
           return box.bottom > column.top && box.top < column.bottom;
-        });
+        }).slice(0, phone.matches ? 2 : Infinity);
         pieces.filter((piece) => !first.includes(piece)).forEach((piece) => piece.classList.add('plain'));
 
         // Where each begins (the heart of the middle one) and where it first
@@ -721,7 +866,7 @@
 
     let target = 0;
     let current = 0;
-    let auto = !reduceMotion.matches;
+    let auto = !reduceMotion.matches && !phone.matches;
     let last = 0;
     let running = false;
     let ours = 0;
@@ -757,7 +902,7 @@
     }
 
     addEventListener('wheel', (e) => {
-      if (e.ctrlKey || sheetOpen()) return;
+      if (e.ctrlKey || sheetOpen() || phone.matches) return;
       e.preventDefault();
       takeOver();
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? works.clientHeight : 1;
@@ -774,7 +919,7 @@
     let finger = null;
 
     addEventListener('touchstart', (e) => {
-      if (sheetOpen()) {
+      if (sheetOpen() || phone.matches) {
         finger = null;
         return;
       }
@@ -804,6 +949,22 @@
       }
     }, { passive: true });
 
+    // The phone's menu: Menu pulls the sheet down, Close or Escape rolls it up
+    const menu = document.querySelector('.menu');
+    const menuOpen = document.querySelector('.menu-open');
+    const menuClose = document.querySelector('.menu-close');
+
+    function setMenu(on) {
+      if (on === root.classList.contains('menu-is-open')) return;
+      root.classList.toggle('menu-is-open', on);
+      menuOpen.setAttribute('aria-expanded', String(on));
+      if (on) menuClose.focus({ preventScroll: true });
+      else if (menu.contains(document.activeElement)) menuOpen.focus({ preventScroll: true });
+    }
+
+    menuOpen.addEventListener('click', () => setMenu(true));
+    menuClose.addEventListener('click', () => setMenu(false));
+
     // About and Contact: each menu word lays its sheet over the page and takes
     // it off again, and one sheet takes the other's place; Escape, or a click
     // on the sheet beside the words, puts it away too. While one is up the
@@ -823,12 +984,14 @@
         trigger.focus({ preventScroll: true });
       }
       beneath.forEach((part) => { part.inert = sheetOpen(); });
+      root.classList.toggle('sheet-is-open', sheetOpen());
       history.replaceState(null, '', sheetOpen() ? `#${sheets.find((one) => one.classList.contains('is-open')).id}` : location.pathname + location.search);
     }
 
     sheets.forEach((sheet) => {
       document.querySelector(`.menu a[aria-controls="${sheet.id}"]`).addEventListener('click', (e) => {
         e.preventDefault();
+        setMenu(false);
         setSheet(sheet, !sheet.classList.contains('is-open'));
       });
 
@@ -838,7 +1001,9 @@
     });
 
     addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') sheets.forEach((sheet) => setSheet(sheet, false));
+      if (e.key !== 'Escape') return;
+      setMenu(false);
+      sheets.forEach((sheet) => setSheet(sheet, false));
     });
 
     const asked = sheets.find((sheet) => `#${sheet.id}` === location.hash);
