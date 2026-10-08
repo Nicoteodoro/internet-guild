@@ -519,8 +519,13 @@
         padding: 62px 13px 48px;
       }
 
+      /* Its own layer, so the pieces lifted for the way in stay under the
+         sheets */
       .works {
-        position: static;
+        position: relative;
+        isolation: isolate;
+        top: auto;
+        left: auto;
         width: auto;
         height: auto;
         overflow: visible;
