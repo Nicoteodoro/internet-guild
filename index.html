@@ -56,11 +56,19 @@
       color: #000000;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      font-size: 11px;
-      line-height: 14px;
+      font-size: 14px;
+      line-height: 18px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
       touch-action: none;
+    }
+
+    /* On a phone the type is a point smaller */
+    @media (max-width: 800px) {
+      body {
+        font-size: 13px;
+        line-height: 17px;
+      }
     }
 
     a {
@@ -138,8 +146,12 @@
       left: 13px;
       right: 13px;
       display: grid;
-      grid-template-columns: clamp(96px, 9vw, 140px) 1fr;
+      grid-template-columns: clamp(122px, 9vw, 160px) 1fr;
       column-gap: 13px;
+    }
+
+    .studio > p {
+      white-space: nowrap;
     }
 
     .studio p + p {
@@ -261,7 +273,7 @@
     }
 
     .sheet-copy p + p {
-      margin-top: 14px;
+      margin-top: 1lh;
     }
 
     .sheet-copy .lead,
@@ -270,15 +282,15 @@
     }
 
     .sheet-copy section {
-      margin-top: 14px;
+      margin-top: 1lh;
     }
 
     .sheet-copy section + section {
-      margin-top: 28px;
+      margin-top: 2lh;
     }
 
     .sheet-copy h2 {
-      margin: 0 0 14px;
+      margin: 0 0 1lh;
       font: inherit;
     }
 
@@ -292,7 +304,7 @@
     }
 
     .sheet-copy dl div + div {
-      margin-top: 14px;
+      margin-top: 1lh;
     }
 
     .sheet-copy .reach {
@@ -435,7 +447,7 @@
       .menu-open {
         display: block;
         position: fixed;
-        top: 18px;
+        top: 16px;
         right: 13px;
         z-index: 4;
       }
@@ -477,7 +489,7 @@
       }
 
       .menu-close {
-        margin-top: 5px;
+        margin-top: 3px;
       }
 
       /* The words follow the sheet in, one after another */

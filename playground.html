@@ -32,13 +32,21 @@
       color: #000000;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      font-size: 11px;
-      line-height: 14px;
+      font-size: 14px;
+      line-height: 18px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
+    }
+
+    /* On a phone the type is a point smaller */
+    @media (max-width: 800px) {
+      body {
+        font-size: 13px;
+        line-height: 17px;
+      }
     }
 
     a {
@@ -170,7 +178,7 @@
       }
 
       .menu-close {
-        margin-top: 5px;
+        margin-top: 3px;
       }
 
       .menu > a {
