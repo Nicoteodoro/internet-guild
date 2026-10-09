@@ -56,19 +56,11 @@
       color: #000000;
       font-family: "PP Neue Montreal", system-ui, -apple-system, sans-serif;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
+      line-height: 14px;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
       touch-action: none;
-    }
-
-    /* On a phone the type is a point smaller */
-    @media (max-width: 800px) {
-      body {
-        font-size: 13px;
-        line-height: 17px;
-      }
     }
 
     a {
@@ -146,7 +138,7 @@
       left: 13px;
       right: 13px;
       display: grid;
-      grid-template-columns: clamp(122px, 9vw, 160px) 1fr;
+      grid-template-columns: clamp(104px, 9vw, 140px) 1fr;
       column-gap: 13px;
     }
 
@@ -447,7 +439,7 @@
       .menu-open {
         display: block;
         position: fixed;
-        top: 16px;
+        top: 18px;
         right: 13px;
         z-index: 4;
       }
@@ -489,7 +481,7 @@
       }
 
       .menu-close {
-        margin-top: 3px;
+        margin-top: 5px;
       }
 
       /* The words follow the sheet in, one after another */
