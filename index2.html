@@ -82,12 +82,12 @@
       text-underline-offset: 3px;
     }
 
-    /* The work: a packed grid, eight columns on a wide screen, fewer as it
+    /* The work: a packed grid, six columns on a wide screen, fewer as it
        narrows. A piece takes one column, or two for the ones that lead; each
        keeps its own shape, its caption under it in small capitals, and the
        grid closes up under it, column by column */
     .work {
-      --cols: 8;
+      --cols: 6;
       --gap: 10px;
       display: grid;
       grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
@@ -125,12 +125,6 @@
       line-height: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-    }
-
-    @media (max-width: 1599px) {
-      .work {
-        --cols: 6;
-      }
     }
 
     @media (max-width: 1199px) {
