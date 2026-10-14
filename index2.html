@@ -47,25 +47,52 @@
       font: inherit;
     }
 
-    /* The name at the top left, Contact at the top right, 17 in */
+    /* The nav stands on the work's columns: the name in the first, the
+       address in the second, the menu from the middle of the page */
     .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      --cols: 6;
+      display: grid;
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+      column-gap: 14px;
+      align-items: start;
       padding: 16px 17px 0;
     }
 
-    .top a:hover {
+    .top h1 {
+      grid-column: 1;
+    }
+
+    .enquiries {
+      grid-column: 2;
+    }
+
+    .nav {
+      grid-column: calc(var(--cols) / 2 + 1) / -1;
+    }
+
+    .nav a + a::before {
+      content: ", ";
+      white-space: pre;
+    }
+
+    .nav a[aria-current] {
       text-decoration-line: underline;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
     }
 
-    /* The wordmark, 7.5px tall */
+    .top a:not(.wordmark-link):hover {
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    /* The wordmark, 7.5px tall, its top on the capitals of the line beside it */
     .wordmark {
       display: block;
       width: auto;
       height: 7.5px;
+      margin-top: 3.5px;
     }
 
     /* What the studio is, two short paragraphs */
@@ -142,12 +169,29 @@
     }
 
     @media (max-width: 1199px) {
+      .top,
       .work {
         --cols: 4;
       }
     }
 
     @media (max-width: 700px) {
+      .top {
+        --cols: 2;
+        column-gap: 10px;
+        row-gap: 15px;
+      }
+
+      .nav {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .enquiries {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+
       .intro {
         padding-top: 48px;
       }
@@ -162,8 +206,9 @@
 </head>
 <body>
   <header class="top">
-    <h1><a href="index2.html"><img class="wordmark" src="wordmark.svg" alt="Internet Guild" width="82" height="7.5"></a></h1>
-    <a href="mailto:webmaster@internetguild.co">Contact</a>
+    <h1><a class="wordmark-link" href="index2.html"><img class="wordmark" src="wordmark.svg" alt="Internet Guild" width="82" height="7.5"></a></h1>
+    <p class="enquiries">Enquiries<br><a href="mailto:webmaster@internetguild.co">E. webmaster@internetguild.co</a></p>
+    <nav class="nav" aria-label="Main"><a href="index2.html" aria-current="page">Index</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav>
   </header>
 
   <div class="intro">
