@@ -48,7 +48,7 @@
     }
 
     /* The nav stands on the work's columns: the name in the first, the
-       address in the second, the menu from the middle of the page */
+       address in the second, the menu in the last, set to the right edge */
     .top {
       --cols: 6;
       display: grid;
@@ -67,12 +67,15 @@
     }
 
     .nav {
-      grid-column: calc(var(--cols) / 2 + 1) / -1;
+      grid-column: -2 / -1;
+      justify-self: end;
+      white-space: nowrap;
     }
 
+    /* A comma, then twice the word space */
     .nav a + a::before {
-      content: ", ";
-      white-space: pre;
+      content: ",";
+      margin-right: 0.56em;
     }
 
     .nav a[aria-current] {
@@ -98,7 +101,7 @@
     /* What the studio is, two short paragraphs */
     .intro {
       max-width: 440px;
-      padding: 64px 17px 0;
+      padding: 128px 17px 0;
     }
 
     .intro p + p {
@@ -220,13 +223,14 @@
         grid-row: 1;
       }
 
+
       .enquiries {
         grid-column: 1 / -1;
         grid-row: 2;
       }
 
       .intro {
-        padding-top: 48px;
+        padding-top: 88px;
       }
 
       .work {
