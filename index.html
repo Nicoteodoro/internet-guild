@@ -6,15 +6,19 @@
   <title>Internet Guild</title>
   <link rel="canonical" href="https://internetguild.co/">
   <style>
-    /* One screen, white, nothing to scroll; the name in the middle of it */
+    /* One screen, white, nothing to scroll; the name in the middle of it.
+       The body is pinned to the window itself, so the middle is the
+       window's middle from the first frame, whatever the browser makes of
+       a percentage height */
     html,
     body {
-      height: 100%;
       margin: 0;
       overflow: hidden;
     }
 
     body {
+      position: fixed;
+      inset: 0;
       display: grid;
       place-items: center;
       background: #ffffff;
