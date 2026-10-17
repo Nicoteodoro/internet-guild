@@ -6,31 +6,29 @@
   <title>Internet Guild</title>
   <link rel="canonical" href="https://internetguild.co/">
   <style>
-    /* One screen, white, nothing to scroll; the name in the middle of it.
-       The body is pinned to the window itself, so the middle is the
-       window's middle from the first frame, whatever the browser makes of
-       a percentage height */
+    /* One screen, white, nothing to scroll; the name in the middle of the
+       window. The name is placed on its own, not as part of a layout, so
+       nothing a browser extension slips into the page can push it about */
     html,
     body {
       margin: 0;
       overflow: hidden;
-    }
-
-    body {
-      position: fixed;
-      inset: 0;
-      display: grid;
-      place-items: center;
       background: #ffffff;
-      color: #000000;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 16px;
-      font-style: italic;
     }
 
     h1 {
+      position: fixed;
+      top: 50%;
+      left: 50%;
       margin: 0;
-      font: inherit;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      color: #000000;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1;
     }
   </style>
 </head>
