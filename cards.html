@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cards / Internet Guild</title>
+  <meta name="robots" content="noindex">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+    }
+
+    /* The pile alone, in the middle of a black page */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100svh;
+      background: #000000;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 22px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Four pieces in a pile, the first in front, the others peeking out on
+       its right, each a little smaller. Under the pointer (or a tap) the
+       pile deals out into a row and a button comes up under it */
+    .stack-wrap {
+      width: min(500px, 100% - 40px);
+      container-type: inline-size;
+    }
+
+    .stack {
+      --w: calc((100cqw - 24px) / 4);
+      position: relative;
+      isolation: isolate;
+      height: max(calc(var(--w) * 1.5), calc(var(--w) + 60px));
+      transition: height 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* While piled, the pile itself sits in the middle; dealt out, the row
+       fills the column */
+    .stack .cards {
+      display: block;
+      transform: translateX(calc((2.5 * var(--w) - 36px) / 2));
+      transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .stack.is-open .cards {
+      transform: none;
+    }
+
+    .stack .card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--w);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #1a1a1a;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 16px rgba(255, 255, 255, 0.06);
+      transform-origin: 0 0;
+      transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .stack .card img,
+    .stack .card video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stack .card:nth-child(1) {
+      z-index: 4;
+      transform: scale(1.5);
+    }
+
+    .stack .card:nth-child(2) {
+      z-index: 3;
+      transform: translate(calc(12% + 20px), 6%) scale(1.38);
+    }
+
+    .stack .card:nth-child(3) {
+      z-index: 2;
+      transform: translate(calc(24% + 40px), 12%) scale(1.26);
+    }
+
+    .stack .card:nth-child(4) {
+      z-index: 1;
+      transform: translate(calc(36% + 60px), 18%) scale(1.14);
+    }
+
+    .stack .button {
+      position: absolute;
+      top: calc(var(--w) + 16px);
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.07);
+      color: #ffffff;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s;
+    }
+
+    .stack .button:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .stack.is-open .card:nth-child(1) {
+      transform: none;
+    }
+
+    .stack.is-open .card:nth-child(2) {
+      transform: translateX(calc(100% + 8px));
+      transition-delay: 0.03s;
+    }
+
+    .stack.is-open .card:nth-child(3) {
+      transform: translateX(calc(200% + 16px));
+      transition-delay: 0.06s;
+    }
+
+    .stack.is-open .card:nth-child(4) {
+      transform: translateX(calc(300% + 24px));
+      transition-delay: 0.09s;
+    }
+
+    .stack.is-open .button {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      transition-delay: 0.15s;
+    }
+
+    @media (hover: hover) {
+      .stack:hover .cards {
+        transform: none;
+      }
+
+      .stack:hover .card:nth-child(1) {
+        transform: none;
+      }
+
+      .stack:hover .card:nth-child(2) {
+        transform: translateX(calc(100% + 8px));
+        transition-delay: 0.03s;
+      }
+
+      .stack:hover .card:nth-child(3) {
+        transform: translateX(calc(200% + 16px));
+        transition-delay: 0.06s;
+      }
+
+      .stack:hover .card:nth-child(4) {
+        transform: translateX(calc(300% + 24px));
+        transition-delay: 0.09s;
+      }
+
+      .stack:hover .button {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        transition-delay: 0.15s;
+      }
+    }
+
+    /* On a phone the cards are half the column wide, the pile a card at
+       full size, and it deals out two by two, the page making room */
+    @media (max-width: 800px) {
+      .stack {
+        --w: calc((100cqw - 8px) / 2);
+        height: var(--w);
+      }
+
+      .stack .cards {
+        transform: translateX(calc((var(--w) - 52px) / 2));
+      }
+
+      .stack.is-open .cards,
+      .stack:hover .cards {
+        transform: none;
+      }
+
+      .stack .card:nth-child(1) {
+        transform: none;
+      }
+
+      .stack .card:nth-child(2) {
+        transform: translate(calc(8% + 20px), 4%) scale(0.92);
+      }
+
+      .stack .card:nth-child(3) {
+        transform: translate(calc(16% + 40px), 8%) scale(0.84);
+      }
+
+      .stack .card:nth-child(4) {
+        transform: translate(calc(24% + 60px), 12%) scale(0.76);
+      }
+
+      .stack .button {
+        top: calc(var(--w) * 2 + 24px);
+      }
+
+      .stack.is-open,
+      .stack:hover {
+        height: calc(var(--w) * 2 + 64px);
+      }
+
+      .stack.is-open .card:nth-child(2),
+      .stack:hover .card:nth-child(2) {
+        transform: translateX(calc(100% + 8px));
+      }
+
+      .stack.is-open .card:nth-child(3),
+      .stack:hover .card:nth-child(3) {
+        transform: translateY(calc(100% + 8px));
+      }
+
+      .stack.is-open .card:nth-child(4),
+      .stack:hover .card:nth-child(4) {
+        transform: translate(calc(100% + 8px), calc(100% + 8px));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stack,
+      .stack .cards,
+      .stack .card,
+      .stack .button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stack-wrap">
+    <div class="stack">
+      <a class="cards" href="/index-v4" aria-label="View works">
+        <span class="card"><img alt="" decoding="async"></span>
+        <span class="card"><img alt="" decoding="async"></span>
+        <span class="card"><img alt="" decoding="async"></span>
+        <span class="card"><img alt="" decoding="async"></span>
+      </a>
+      <a class="button" href="/index-v4" tabindex="-1">View works →</a>
+    </div>
+  </div>
+
+  <script>
+    // A different four on every visit, drawn from all the work, the order
+    // shuffled as well. A video plays, muted and looping, only while it is
+    // on screen; until then, and without it, its poster
+    (() => {
+      const all = [
+        'towerbank-poster.webp',
+        'towerbank-cards.mp4',
+        'towerbank-app.webp',
+        'towerbank-debit-card.mp4',
+        'towerbank-website-ui.mp4',
+        'towerbank-website-laptops.mp4',
+        'numia-icons.webp',
+        'numia-pattern.webp',
+        'numia-poster.webp',
+        'numia-website-laptop.webp',
+        'numia-website-mobile.webp',
+        'numia-website-sections.webp',
+        'numia-customer-journey.mp4',
+        'numia-virtual-assistance.mp4',
+        'emi-brand.mp4',
+        'emi-website.mp4',
+        'emi-website-es.mp4',
+        'emi-onboarding.mp4',
+        'emi-report-charts.mp4',
+        'emilabs-report.webp',
+        'great-sky-solar-website.webp',
+        'great-sky-solar-products.webp',
+        'great-sky-solar-team.webp',
+        'agent-activity-panel.webp',
+        'token-statement.webp',
+        'xrank.webp',
+        'china-supply.webp',
+        'journal-app.webp',
+        'journal-app-closeup.webp',
+        'calm-app-login.webp',
+        'music-player.webp',
+        'writing-app.webp',
+        'godzilla-minus-one-poster.webp',
+        'godzilla-minus-one-bus-stop.webp',
+        'nine2five.webp',
+        'ids-shopping-bag.webp',
+        'towerbank-campaign.mp4',
+        'towerbank-card-colors.mp4',
+        'numia-stationery.webp',
+        'great-sky-solar-calculator.webp',
+        'great-sky-solar-monitoring.webp'
+      ];
+      for (let i = all.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [all[i], all[j]] = [all[j], all[i]];
+      }
+      const watch = 'IntersectionObserver' in window && new IntersectionObserver((entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          if (isIntersecting) target.play().catch(() => {});
+          else target.pause();
+        });
+      });
+      document.querySelectorAll('.stack .card img').forEach((img, i) => {
+        const file = all[i];
+        if (!file.endsWith('.mp4')) {
+          img.src = 'projects/' + file;
+          return;
+        }
+        const video = document.createElement('video');
+        video.src = 'projects/' + file;
+        video.poster = 'projects/poster-' + file.replace('.mp4', '.webp');
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = 'none';
+        video.setAttribute('aria-hidden', 'true');
+        img.replaceWith(video);
+        if (watch) watch.observe(video);
+      });
+    })();
+
+    // Without a pointer, the first tap deals the pile out; once out, a tap
+    // goes on to the works. Keyboard focus deals it out too
+    const stack = document.querySelector('.stack');
+    stack.addEventListener('click', (e) => {
+      if (!stack.classList.contains('is-open') && !matchMedia('(hover: hover)').matches) {
+        e.preventDefault();
+        stack.classList.add('is-open');
+      }
+    });
+    stack.addEventListener('focusin', (e) => {
+      if (e.target.matches(':focus-visible')) stack.classList.add('is-open');
+    });
+    stack.addEventListener('focusout', (e) => {
+      if (!stack.contains(e.relatedTarget)) stack.classList.remove('is-open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!stack.contains(e.target)) stack.classList.remove('is-open');
+    });
+  </script>
+</body>
+</html>
