@@ -1,39 +1,154 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Internet Design Guild</title>
-  <meta name="description" content="Internet Design Guild.">
-  <link rel="canonical" href="https://internetguild.co/">
-  <style>
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Internet Design Guild</title>
+<meta name="description" content="A design and development studio, born to reduce. Websites, products and AI for founders who embrace simplicity.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="The Internet Design Guild">
+<meta property="og:description" content="A design and development studio, born to reduce.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 11 11' shape-rendering='crispEdges'%3E%3Ccircle cx='4.5' cy='4.5' r='5.5' fill='%23F2F2F2'/%3E%3Cpath fill='%23000' d='M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000;
+  --fg: #f2f2f2;
+  --soft: #d9d9d9;
+  --muted: #8a8a8a;
+  --line: #262626;
+  --serif: "Newsreader", Georgia, serif;
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--fg); text-underline-offset: 3px; }
+a:hover { color: #fff; }
+a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 2px; }
 
-    /* The name alone, in the middle of the page: SF Pro where the system
-       has it, at 12px, black on white */
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffff;
-      color: #000000;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-      font-size: 12px;
-      line-height: 16px;
-      -webkit-font-smoothing: antialiased;
-    }
+.page {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.col { width: 100%; max-width: 300px; }
+.col p { margin: 0 0 16px; }
+.col p:last-child { margin-bottom: 0; }
 
-    h1 {
-      margin: 0;
-      font: inherit;
-    }
-  </style>
+.logo {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--fg); color: var(--bg);
+}
+.logo svg { width: 22px; height: 22px; }
+
+.hero { position: relative; width: 100%; max-width: 340px; margin-top: 48px; }
+.hero h1 {
+  margin: 0;
+  font: 400 34px/1.18 var(--serif);
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.manifesto { margin-top: 52px; }
+.rule { width: 200px; height: 1px; background: var(--line); border: 0; margin: 48px 0; }
+
+.clients {
+  list-style: none;
+  margin: 48px 0 0;
+  padding: 0;
+  width: 100%;
+  max-width: 340px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px 12px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.quote { margin: 56px 0 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.quote blockquote { margin: 0; font: 400 14px/1.45 var(--serif); color: var(--soft); }
+.quote figcaption { margin-top: 10px; display: flex; flex-direction: column; font-size: 12px; line-height: 1.4; }
+.quote figcaption strong { font-weight: 500; }
+.quote figcaption span { color: var(--muted); }
+
+.contact { margin-top: 72px; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 20px; font-size: 12px; }
+.contact a { color: var(--muted); text-decoration: none; padding: 12px 0; }
+.contact a:hover { color: var(--fg); }
+
+@media (max-width: 440px) {
+  .hero h1 { font-size: 30px; }
+}
+</style>
 </head>
 <body>
-  <h1>Internet Design Guild</h1>
+<main class="page">
+
+  <a class="logo" href="/" aria-label="The Internet Design Guild — home">
+    <svg viewBox="0 0 9 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z"/></svg>
+  </a>
+
+  <header class="hero">
+    <h1>A design and development studio, born to reduce.</h1>
+  </header>
+
+  <section class="col manifesto" aria-label="What we do">
+    <p>Websites, products and AI for founders who embrace simplicity.</p>
+    <p>Eleven years of practice, helping people build what they imagine.</p>
+    <p>We believe simple is not a style. It’s the standard. Every page starts full and gets emptied until only what matters is left.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="col" aria-label="Founder">
+    <p>The Internet Design Guild is founded and led by <a href="#">Nico Teodoro</a>, who made his first websites as a kid, for the online games at his local cybercafés. Born in Argentina, raised on the internet, grown in Azeroth.</p>
+    <p>Since then he has designed and built for startups, banks, funds and studios in fintech, crypto, energy, sports and health.</p>
+  </section>
+
+  <!-- Swap each name for its SVG logo when you have them: <li><img src="/logos/aerolab.svg" alt="Aerolab" height="16"></li> -->
+  <ul class="clients" aria-label="Selected clients">
+    <li>Aerolab</li>
+    <li>Buenbit</li>
+    <li>Towerbank</li>
+    <li>peiGo</li>
+    <li>Eureka Labs</li>
+    <li>Aquicore</li>
+    <li>Waterplan</li>
+    <li>Fanatiz</li>
+  </ul>
+
+  <figure class="col quote">
+    <blockquote>“He quickly understood Tintte’s vision and translated it into a clean, functional, and well-structured website. He’s proactive, reliable, and easy to work with, a true partner.”</blockquote>
+    <figcaption>
+      <strong>Magalí Mendez</strong>
+      <span>Tintte</span>
+    </figcaption>
+  </figure>
+
+  <nav class="contact" aria-label="Contact">
+    <a href="mailto:webmaster@internetguild.co">Email</a>
+    <a href="https://t.me/internetguild">Telegram</a>
+    <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://x.com/internetguild_" target="_blank" rel="noopener">Twitter</a>
+  </nav>
+
+</main>
 </body>
 </html>
