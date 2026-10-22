@@ -22,7 +22,7 @@
   --muted: #8a8a8a;
   --line: #262626;
   --serif: "Newsreader", Georgia, serif;
-  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -84,7 +84,7 @@ a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radi
 }
 
 .quote { margin: 56px 0 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
-.quote blockquote { margin: 0; font: 400 14px/1.45 var(--serif); color: var(--soft); }
+.quote blockquote { margin: 0; font: 400 14px/1.45 var(--sans); color: var(--soft); }
 .quote figcaption { margin-top: 10px; display: flex; flex-direction: column; font-size: 12px; line-height: 1.4; }
 .quote figcaption strong { font-weight: 500; }
 .quote figcaption span { color: var(--muted); }
