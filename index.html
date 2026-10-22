@@ -11,18 +11,31 @@
 <meta property="og:description" content="A design and development studio, born to reduce.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 11 11' shape-rendering='crispEdges'%3E%3Ccircle cx='4.5' cy='4.5' r='5.5' fill='%23F2F2F2'/%3E%3Cpath fill='%23000' d='M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet">
+<link rel="preload" href="SFPRODISPLAYREGULAR.OTF" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="SFPRODISPLAYMEDIUM.OTF" as="font" type="font/otf" crossorigin>
 <style>
+/* SF Pro Display, self-hosted: Regular for the words, Medium for the title */
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("SFPRODISPLAYREGULAR.OTF") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("SFPRODISPLAYMEDIUM.OTF") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
   --bg: #000;
   --fg: #f2f2f2;
   --soft: #d9d9d9;
   --muted: #8a8a8a;
   --line: #262626;
-  --serif: "Newsreader", Georgia, serif;
-  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -59,7 +72,7 @@ a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radi
 .hero { position: relative; width: 100%; max-width: 350px; margin-top: 48px; }
 .hero h1 {
   margin: 0;
-  font: 400 34px/1.18 var(--serif);
+  font: 500 34px/1.18 var(--sans);
   letter-spacing: -0.01em;
   text-align: center;
   text-wrap: balance;
@@ -106,7 +119,7 @@ a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radi
   </a>
 
   <header class="hero">
-    <h1>A design and development studio, born to reduce.</h1>
+    <h1>Design and development studio, born to reduce.</h1>
   </header>
 
   <section class="col manifesto" aria-label="What we do">
