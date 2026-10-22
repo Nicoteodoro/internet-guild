@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Internet Design Guild</title>
+<title>The Internet Design Guild</title>
 <meta name="description" content="Design and development studio, born to reduce. Websites, products and AI for founders who embrace simplicity.">
-<meta property="og:title" content="Internet Design Guild">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="The Internet Design Guild">
 <meta property="og:description" content="Design and development studio, born to reduce.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://internetguild.co/">
@@ -13,8 +14,7 @@
 <link rel="preload" href="SFPRODISPLAYREGULAR.OTF" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="SFPRODISPLAYMEDIUM.OTF" as="font" type="font/otf" crossorigin>
 <style>
-/* SF Pro Display, self-hosted: Regular for everything, Medium for the few
-   words set bold */
+/* SF Pro Display, self-hosted: Regular for the words, Medium for the titles */
 @font-face {
   font-family: "SF Pro Display";
   src: url("SFPRODISPLAYREGULAR.OTF") format("opentype");
@@ -29,163 +29,432 @@
   font-style: normal;
   font-display: swap;
 }
-
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --muted: #6b6b6b;
+  --sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; overflow-y: scroll; }
-
-/* One voice, black on white, down the left of the page; a blank line
-   between paragraphs */
+html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: #ffffff;
-  color: #000000;
-  font: 400 16px/20px "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 16px/20px var(--sans);
   -webkit-font-smoothing: antialiased;
 }
-p, ul, figure, blockquote { margin: 0; padding: 0; }
-p + p { margin-top: 20px; }
-a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-strong { font-weight: 500; }
+a { color: var(--fg); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 2px; }
 
-.page { padding: 24px 22px 80px; }
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 72px 20px 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+section, header { display: flex; flex-direction: column; gap: 14px; }
+h1, h2 { margin: 0; font-size: 1em; font-weight: 500; }
+p { margin: 0; }
+.year { font-weight: 500; }
 
-.mark { display: block; width: 28px; color: #000000; }
+.testimonials { gap: 28px; }
+.testimonials h2 { margin-bottom: -14px; }
+figure { margin: 0; }
+blockquote { margin: 0; }
+figcaption { margin-top: 6px; color: var(--muted); }
+
+.links { display: flex; flex-direction: column; }
+
+/* The guild's mark, above everything */
+.mark { display: block; width: 28px; color: var(--fg); }
 .mark svg { display: block; width: 28px; height: 28px; }
 
-.intro { margin-top: 92px; }
+  /* Four pieces in a pile, the first in front, the others peeking out on
+     its right, each a little smaller. Under the pointer (or a tap) the
+     pile deals out into a row and a button comes up under it */
+  .stack-wrap {
+    width: 100%;
+    container-type: inline-size;
+  }
 
-/* The clients, four to a row; a grey block holds each place until its
-   logo comes */
-.clients {
-  display: grid;
-  grid-template-columns: repeat(4, 92px);
-  gap: 23px 31px;
-  margin-top: 48px;
-  list-style: none;
-}
-.clients li { height: 38px; background: #d9d9d9; }
+  .stack {
+    --w: calc((100cqw - 24px) / 4);
+    position: relative;
+    isolation: isolate;
+    height: max(calc(var(--w) * 1.5), calc(var(--w) + 60px));
+    transition: height 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
 
-.founder { max-width: 440px; margin-top: 64px; }
-.quote { max-width: 440px; margin-top: 60px; }
-.quote blockquote { margin: 0; }
+  .stack .cards {
+    display: block;
+  }
 
-.contact { margin-top: 60px; }
-.contact a { text-decoration: none; }
-.contact a.mail { text-decoration-line: underline; }
-.contact a:hover { text-decoration-line: underline; }
+  .stack .card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--w);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #eeeeee;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.08);
+    transform-origin: 0 0;
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
 
-/* The work, one piece under another */
-.work { display: flex; flex-direction: column; gap: 16px; max-width: 620px; margin-top: 48px; }
-.work img, .work video { display: block; width: 100%; height: auto; background: #d9d9d9; }
+  .stack .card img,
+  .stack .card video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-@media (max-width: 480px) {
-  .clients { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 12px; }
-}
-</style>
+  .stack .card:nth-child(1) {
+    z-index: 4;
+    transform: scale(1.5);
+  }
+
+  .stack .card:nth-child(2) {
+    z-index: 3;
+    transform: translate(calc(12% + 20px), 6%) scale(1.38);
+  }
+
+  .stack .card:nth-child(3) {
+    z-index: 2;
+    transform: translate(calc(24% + 40px), 12%) scale(1.26);
+  }
+
+  .stack .card:nth-child(4) {
+    z-index: 1;
+    transform: translate(calc(36% + 60px), 18%) scale(1.14);
+  }
+
+  .stack .button {
+    position: absolute;
+    top: calc(var(--w) + 16px);
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.05);
+    color: #111111;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s;
+  }
+
+  .stack .button:hover {
+    background: rgba(0, 0, 0, 0.09);
+  }
+
+  .stack.is-open .card:nth-child(1) {
+    transform: none;
+  }
+
+  .stack.is-open .card:nth-child(2) {
+    transform: translateX(calc(100% + 8px));
+    transition-delay: 0.03s;
+  }
+
+  .stack.is-open .card:nth-child(3) {
+    transform: translateX(calc(200% + 16px));
+    transition-delay: 0.06s;
+  }
+
+  .stack.is-open .card:nth-child(4) {
+    transform: translateX(calc(300% + 24px));
+    transition-delay: 0.09s;
+  }
+
+  .stack.is-open .button {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition-delay: 0.15s;
+  }
+
+  @media (hover: hover) {
+    .stack:hover .card:nth-child(1) {
+      transform: none;
+    }
+
+    .stack:hover .card:nth-child(2) {
+      transform: translateX(calc(100% + 8px));
+      transition-delay: 0.03s;
+    }
+
+    .stack:hover .card:nth-child(3) {
+      transform: translateX(calc(200% + 16px));
+      transition-delay: 0.06s;
+    }
+
+    .stack:hover .card:nth-child(4) {
+      transform: translateX(calc(300% + 24px));
+      transition-delay: 0.09s;
+    }
+
+    .stack:hover .button {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      transition-delay: 0.15s;
+    }
+  }
+
+  /* On a phone the cards are half the column wide, the pile a card at
+     full size, and it deals out two by two, the page making room */
+  @media (max-width: 800px) {
+    .stack {
+      --w: calc((100cqw - 8px) / 2);
+      height: var(--w);
+    }
+
+    .stack .card:nth-child(1) {
+      transform: none;
+    }
+
+    .stack .card:nth-child(2) {
+      transform: translate(calc(8% + 20px), 4%) scale(0.92);
+    }
+
+    .stack .card:nth-child(3) {
+      transform: translate(calc(16% + 40px), 8%) scale(0.84);
+    }
+
+    .stack .card:nth-child(4) {
+      transform: translate(calc(24% + 60px), 12%) scale(0.76);
+    }
+
+    .stack .button {
+      top: calc(var(--w) * 2 + 24px);
+    }
+
+    .stack.is-open,
+    .stack:hover {
+      height: calc(var(--w) * 2 + 64px);
+    }
+
+    .stack.is-open .card:nth-child(2),
+    .stack:hover .card:nth-child(2) {
+      transform: translateX(calc(100% + 8px));
+    }
+
+    .stack.is-open .card:nth-child(3),
+    .stack:hover .card:nth-child(3) {
+      transform: translateY(calc(100% + 8px));
+    }
+
+    .stack.is-open .card:nth-child(4),
+    .stack:hover .card:nth-child(4) {
+      transform: translate(calc(100% + 8px), calc(100% + 8px));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack,
+    .stack .card,
+    .stack .button {
+      transition: none;
+    }
+  }</style>
 </head>
 <body>
 <main class="page">
 
-  <a class="mark" href="/" aria-label="Internet Design Guild — home">
+  <a class="mark" href="/" aria-label="The Internet Design Guild — home">
     <svg viewBox="0 0 9 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z"/></svg>
   </a>
 
-  <section class="intro" aria-label="The studio">
-    <p>Internet Design Guild</p>
+  <header>
+    <h1>The Internet Design Guild</h1>
     <p>Design and development studio, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.</p>
-    <p>Eleven years of practice,<br>helping people build what they imagine.</p>
-    <p>Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    <p>Eleven years of practice, helping people build what they imagine.</p>
+  </header>
+
+  <section aria-labelledby="about">
+    <h2 id="about">About</h2>
+    <p>Founded and led by Nico Teodoro.<br>Born in Argentina. Raised on the internet.<br>Grown in Azeroth.</p>
+    <p>He made his first websites as a kid, for the online games at his local cybercafés. He never stopped. Over the years he worked alone, built a studio, closed it and started again. Along the way he learned one simple thing: good work is not about adding more. It’s about knowing what to leave out.</p>
+    <p><span class="year">Age 13.</span> First websites, for the game servers of local cybercafés: Mu Online, Lineage 2, Argentum Online. Design and code start here.</p>
+    <p><span class="year">2015.</span> Goes solo. Just a laptop and clients from other countries, all remote.</p>
+    <p><span class="year">2020.</span> Freelance becomes a studio: Simplify Computer. A team, more clients, more noise.</p>
+    <p><span class="year">2024.</span> Simplify closes. Back to working alone. Fewer projects, more care.</p>
+    <p><span class="year">2025.</span> A trip to Japan. In Kyoto, one idea sticks: simple is not a style. It’s the standard.</p>
+    <p><span class="year">April 11, 2025.</span> After a meeting in Kyoto, the guild is born.</p>
+    <p><span class="year">Now.</span> Websites and products for AI, fintech, crypto, health and real estate companies, and for other agencies. The same kid from the cybercafés, still making things for the internet. Just cleaner.</p>
   </section>
 
-  <ul class="clients" aria-label="Selected clients">
-      <li aria-label="Aerolab"></li>
-      <li aria-label="Buenbit"></li>
-      <li aria-label="Towerbank"></li>
-      <li aria-label="peiGo"></li>
-      <li aria-label="Eureka Labs"></li>
-      <li aria-label="Aquicore"></li>
-      <li aria-label="Waterplan"></li>
-      <li aria-label="Fanatiz"></li>
-  </ul>
-
-  <section class="founder" aria-label="Founder">
-    <p>The Internet Design Guild is founded and led by <a href="#">Nico Teodoro</a>, who made his first websites as a kid, for the online games at his local cybercafés.<br>Born in Argentina, raised on the internet, grown in Azeroth.</p>
-    <p>Since then he has designed and built for startups, banks, funds and studios in fintech, crypto, energy, sports and health.</p>
+  <section aria-labelledby="work">
+    <h2 id="work">Work</h2>
+    <p>Over the years we have worked with startups, banks, funds and other studios, in fintech, crypto, energy, sports and health.</p>
+    <div class="stack-wrap">
+      <div class="stack">
+        <a class="cards" href="#work" aria-label="View works">
+          <span class="card"><img alt="" decoding="async"></span>
+          <span class="card"><img alt="" decoding="async"></span>
+          <span class="card"><img alt="" decoding="async"></span>
+          <span class="card"><img alt="" decoding="async"></span>
+        </a>
+        <a class="button" href="#work" tabindex="-1">View works →</a>
+      </div>
+    </div>
+    <p>Recent collaborations include Aerolab, Great Sky Solar, Buenbit (acquired), Numia, Towerbank, Papayadash, K Street VC, peiGo, Eureka Labs, Emilabs, Aquicore (acquired), Complif, Bonum, Waterplan, Lupa Studio, FZ Sports, 1190 Sports, Fanatiz, White Prompt, Cary Health and Cary RX.</p>
   </section>
 
-  <figure class="quote">
-    <blockquote>“He quickly understood Tintte’s vision and translated it into a clean, functional, and well-structured website. He’s proactive, reliable, and easy to work with, a true partner.”</blockquote>
-    <figcaption><strong>Magalí Mendez - Tintte.com</strong></figcaption>
-  </figure>
-
-  <section class="contact" aria-label="Contact">
-    <p><strong>Hire the guild</strong></p>
-    <p><a class="mail" href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br><a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (twitter)</a><br><a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br><a href="https://t.me/internetguild" target="_blank" rel="noopener">Telegram</a></p>
+  <section class="testimonials" aria-labelledby="testimonials">
+    <h2 id="testimonials">Testimonials</h2>
+    <figure>
+      <blockquote>“I worked with Nico on the full development of our new website, and from day one he clearly understood our vision. He delivered at the level of every reference we shared and also took the time to teach us how to maintain the site ourselves. Nico is both highly professional and great to work with.”</blockquote>
+      <figcaption>Karen Brendel, Growth Manager, Eureka Labs</figcaption>
+    </figure>
+    <figure>
+      <blockquote>“Working with Nico was a great experience. He’s really good at turning Figma designs into solid Webflow sites, always keeping the design exactly how it should be. He also helped a lot with setting up the CMS, making it easy for us to manage the content of our website. Nico is fast and easy to work with.”</blockquote>
+      <figcaption>Roddy Garcia, Product Design Manager, White Prompt</figcaption>
+    </figure>
+    <figure>
+      <blockquote>“Nico went far and beyond. He not only implemented the Zeplin we had in Webflow, he also improved it in many UI aspects. Nico has great technical and communicational skills, and more important than that, he is always available and willing to help. I am happy to have him in my network of partners.”</blockquote>
+      <figcaption>Juan Ignacio Cidre, CEO, White Prompt</figcaption>
+    </figure>
+    <figure>
+      <blockquote>“Nico helped us throughout the entire process, from brand creation to website design. His willingness to help and his constant communication made the entire process quick and efficient. We would definitely choose him again!”</blockquote>
+      <figcaption>Guido Sasson, CEO, Remmy</figcaption>
+    </figure>
+    <figure>
+      <blockquote>“Working with Nico was a great experience. He quickly understood Tintte’s vision and translated it into a clean, functional, and well-structured website. He’s proactive, reliable, and easy to work with, a true partner.”</blockquote>
+      <figcaption>Magalí Mendez, Co-founder &amp; CPO, Tintte</figcaption>
+    </figure>
+    <figure>
+      <blockquote>“Nico was an amazing asset in launching my NFT project and site. He is a Webflow wizard and his communication is second to none!”</blockquote>
+      <figcaption>Jacob J., jacobtheape.xyz</figcaption>
+    </figure>
   </section>
 
-  <section class="work" aria-label="Work">
-      <img src="projects/towerbank-poster.webp" width="1500" height="1500" alt="Towerbank credit card street poster" loading="lazy" decoding="async">
-      <video data-src="projects/towerbank-cards.mp4" poster="projects/poster-towerbank-cards.webp" width="1920" height="1080" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video>
-      <img src="projects/towerbank-app.webp" width="1500" height="1500" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async">
-      <video data-src="projects/towerbank-debit-card.mp4" poster="projects/poster-towerbank-debit-card.webp" width="720" height="1080" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video>
-      <video data-src="projects/towerbank-website-ui.mp4" poster="projects/poster-towerbank-website-ui.webp" width="1920" height="1080" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video>
-      <video data-src="projects/towerbank-website-laptops.mp4" poster="projects/poster-towerbank-website-laptops.webp" width="1920" height="1080" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video>
-      <img src="projects/numia-icons.webp" width="1500" height="1500" alt="Numia icon system" loading="lazy" decoding="async">
-      <img src="projects/numia-pattern.webp" width="1500" height="1500" alt="Numia geometric pattern" loading="lazy" decoding="async">
-      <img src="projects/numia-poster.webp" width="1500" height="1500" alt="Numia poster on a concrete wall" loading="lazy" decoding="async">
-      <img src="projects/numia-website-laptop.webp" width="1500" height="1500" alt="Numia website on a MacBook" loading="lazy" decoding="async">
-      <img src="projects/numia-website-mobile.webp" width="1500" height="1500" alt="Numia website on iPhone" loading="lazy" decoding="async">
-      <img src="projects/numia-website-sections.webp" width="1500" height="1500" alt="Numia website sections" loading="lazy" decoding="async">
-      <video data-src="projects/numia-customer-journey.mp4" poster="projects/poster-numia-customer-journey.webp" width="1920" height="1080" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video>
-      <video data-src="projects/numia-virtual-assistance.mp4" poster="projects/poster-numia-virtual-assistance.webp" width="630" height="880" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video>
-      <video data-src="projects/emi-brand.mp4" poster="projects/poster-emi-brand.webp" width="1920" height="1080" aria-label="Emi brand identity" muted loop playsinline preload="none"></video>
-      <video data-src="projects/emi-website.mp4" poster="projects/poster-emi-website.webp" width="1920" height="1080" aria-label="Emi website" muted loop playsinline preload="none"></video>
-      <video data-src="projects/emi-website-es.mp4" poster="projects/poster-emi-website-es.webp" width="1920" height="1080" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video>
-      <video data-src="projects/emi-onboarding.mp4" poster="projects/poster-emi-onboarding.webp" width="1920" height="1080" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video>
-      <video data-src="projects/emi-report-charts.mp4" poster="projects/poster-emi-report-charts.webp" width="720" height="1080" aria-label="Emi report charts" muted loop playsinline preload="none"></video>
-      <img src="projects/emilabs-report.webp" width="1500" height="1500" alt="Emi report on an iPad" loading="lazy" decoding="async">
-      <img src="projects/great-sky-solar-website.webp" width="1500" height="1500" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async">
-      <img src="projects/great-sky-solar-products.webp" width="1500" height="1500" alt="Great Sky Solar product cards" loading="lazy" decoding="async">
-      <img src="projects/great-sky-solar-team.webp" width="1500" height="1500" alt="Great Sky Solar team page" loading="lazy" decoding="async">
-      <img src="projects/agent-activity-panel.webp" width="1500" height="1500" alt="Agent activity panel on a studio display" loading="lazy" decoding="async">
-      <img src="projects/token-statement.webp" width="1500" height="1500" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async">
-      <img src="projects/xrank.webp" width="1500" height="1500" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async">
-      <img src="projects/china-supply.webp" width="1500" height="1500" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async">
-      <img src="projects/journal-app.webp" width="1500" height="1500" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async">
-      <img src="projects/journal-app-closeup.webp" width="1500" height="1500" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async">
-      <img src="projects/calm-app-login.webp" width="1500" height="1500" alt="Calm app login screen on iPhone" loading="lazy" decoding="async">
-      <img src="projects/music-player.webp" width="1500" height="1500" alt="Music player interface" loading="lazy" decoding="async">
-      <img src="projects/writing-app.webp" width="1500" height="1500" alt="Writing app on a MacBook" loading="lazy" decoding="async">
-      <img src="projects/godzilla-minus-one-poster.webp" width="1500" height="1500" alt="Godzilla Minus One poster" loading="lazy" decoding="async">
-      <img src="projects/godzilla-minus-one-bus-stop.webp" width="1500" height="1500" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async">
-      <img src="projects/nine2five.webp" width="1500" height="1500" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async">
-      <img src="projects/ids-shopping-bag.webp" width="1500" height="1500" alt="Internet Guild shopping bag" loading="lazy" decoding="async">
-      <video data-src="projects/towerbank-campaign.mp4" poster="projects/poster-towerbank-campaign.webp" width="1920" height="1080" aria-label="Towerbank campaign" muted loop playsinline preload="none"></video>
-      <video data-src="projects/towerbank-card-colors.mp4" poster="projects/poster-towerbank-card-colors.webp" width="720" height="1080" aria-label="Towerbank card colours" muted loop playsinline preload="none"></video>
-      <img src="projects/numia-stationery.webp" width="1500" height="1500" alt="Numia stationery" loading="lazy" decoding="async">
-      <img src="projects/great-sky-solar-calculator.webp" width="1500" height="1500" alt="Great Sky Solar savings calculator" loading="lazy" decoding="async">
-      <img src="projects/great-sky-solar-monitoring.webp" width="1500" height="1500" alt="Great Sky Solar monitoring app" loading="lazy" decoding="async">
+  <section aria-labelledby="notes">
+    <h2 id="notes">Notes</h2>
+    <nav class="links" aria-labelledby="notes">
+      <a href="#">Designed to reduce</a>
+      <a href="#">Yohaku, or the design of empty space</a>
+      <a href="#">Why we left Framer for one HTML file</a>
+      <a href="#">A website should feel like a document</a>
+    </nav>
+  </section>
+
+  <section aria-labelledby="contact">
+    <h2 id="contact">Contact</h2>
+    <nav class="links" aria-labelledby="contact">
+      <a href="mailto:webmaster@internetguild.co">Email</a>
+      <a href="https://t.me/internetguild">Telegram</a>
+      <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://x.com/internetguild_" target="_blank" rel="noopener">Twitter</a>
+    </nav>
   </section>
 
 </main>
-<script>
-  // Films load and play only while they are on screen, and never with
-  // reduced motion
-  const still = matchMedia('(prefers-reduced-motion: reduce)');
-  const films = new IntersectionObserver((entries) => {
-    entries.forEach(({ target, isIntersecting }) => {
-      if (isIntersecting && !still.matches) {
-        if (!target.src) target.src = target.dataset.src;
-        target.play().catch(() => {});
-      } else {
-        target.pause();
+  <script>
+    // A different four on every visit, drawn from all the work, the order
+    // shuffled as well. A video plays, muted and looping, only while it is
+    // on screen; until then, and without it, its poster
+    (() => {
+      const all = [
+        'towerbank-poster.webp',
+        'towerbank-cards.mp4',
+        'towerbank-app.webp',
+        'towerbank-debit-card.mp4',
+        'towerbank-website-ui.mp4',
+        'towerbank-website-laptops.mp4',
+        'numia-icons.webp',
+        'numia-pattern.webp',
+        'numia-poster.webp',
+        'numia-website-laptop.webp',
+        'numia-website-mobile.webp',
+        'numia-website-sections.webp',
+        'numia-customer-journey.mp4',
+        'numia-virtual-assistance.mp4',
+        'emi-brand.mp4',
+        'emi-website.mp4',
+        'emi-website-es.mp4',
+        'emi-onboarding.mp4',
+        'emi-report-charts.mp4',
+        'emilabs-report.webp',
+        'great-sky-solar-website.webp',
+        'great-sky-solar-products.webp',
+        'great-sky-solar-team.webp',
+        'agent-activity-panel.webp',
+        'token-statement.webp',
+        'xrank.webp',
+        'china-supply.webp',
+        'journal-app.webp',
+        'journal-app-closeup.webp',
+        'calm-app-login.webp',
+        'music-player.webp',
+        'writing-app.webp',
+        'godzilla-minus-one-poster.webp',
+        'godzilla-minus-one-bus-stop.webp',
+        'nine2five.webp',
+        'ids-shopping-bag.webp',
+        'towerbank-campaign.mp4',
+        'towerbank-card-colors.mp4',
+        'numia-stationery.webp',
+        'great-sky-solar-calculator.webp',
+        'great-sky-solar-monitoring.webp'
+      ];
+      for (let i = all.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [all[i], all[j]] = [all[j], all[i]];
+      }
+      const watch = 'IntersectionObserver' in window && new IntersectionObserver((entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          if (isIntersecting) target.play().catch(() => {});
+          else target.pause();
+        });
+      });
+      document.querySelectorAll('.stack .card img').forEach((img, i) => {
+        const file = all[i];
+        if (!file.endsWith('.mp4')) {
+          img.src = 'projects/' + file;
+          return;
+        }
+        const video = document.createElement('video');
+        video.src = 'projects/' + file;
+        video.poster = 'projects/poster-' + file.replace('.mp4', '.webp');
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = 'none';
+        video.setAttribute('aria-hidden', 'true');
+        img.replaceWith(video);
+        if (watch) watch.observe(video);
+      });
+    })();
+
+    // Without a pointer, the first tap deals the pile out; once out, a tap
+    // goes on to the works. Keyboard focus deals it out too
+    const stack = document.querySelector('.stack');
+    stack.addEventListener('click', (e) => {
+      if (!stack.classList.contains('is-open') && !matchMedia('(hover: hover)').matches) {
+        e.preventDefault();
+        stack.classList.add('is-open');
       }
     });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.work video').forEach((video) => {
-    video.muted = true;
-    films.observe(video);
-  });
-</script>
+    stack.addEventListener('focusin', (e) => {
+      if (e.target.matches(':focus-visible')) stack.classList.add('is-open');
+    });
+    stack.addEventListener('focusout', (e) => {
+      if (!stack.contains(e.relatedTarget)) stack.classList.remove('is-open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!stack.contains(e.target)) stack.classList.remove('is-open');
+    });
+  </script>
 </body>
 </html>
