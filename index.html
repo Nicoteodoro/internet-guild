@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Internet Design Guild</title>
-<meta name="description" content="A design and development studio, born to reduce. Websites, products and AI for founders who embrace simplicity.">
-<meta name="theme-color" content="#000000">
-<meta name="color-scheme" content="dark">
-<meta property="og:title" content="The Internet Design Guild">
-<meta property="og:description" content="A design and development studio, born to reduce.">
+<title>Internet Design Guild</title>
+<meta name="description" content="Design and development studio, born to reduce. Websites, products and AI for founders who embrace simplicity.">
+<meta property="og:title" content="Internet Design Guild">
+<meta property="og:description" content="Design and development studio, born to reduce.">
 <meta property="og:type" content="website">
+<link rel="canonical" href="https://internetguild.co/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 11 11' shape-rendering='crispEdges'%3E%3Ccircle cx='4.5' cy='4.5' r='5.5' fill='%23F2F2F2'/%3E%3Cpath fill='%23000' d='M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z'/%3E%3C/svg%3E">
 <link rel="preload" href="SFPRODISPLAYREGULAR.OTF" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="SFPRODISPLAYMEDIUM.OTF" as="font" type="font/otf" crossorigin>
 <style>
-/* SF Pro Display, self-hosted: Regular for the words, Medium for the title */
+/* SF Pro Display, self-hosted: Regular for everything, Medium for the few
+   words set bold */
 @font-face {
   font-family: "SF Pro Display";
   src: url("SFPRODISPLAYREGULAR.OTF") format("opentype");
@@ -29,137 +29,163 @@
   font-style: normal;
   font-display: swap;
 }
-:root {
-  --bg: #000;
-  --fg: #f2f2f2;
-  --soft: #d9d9d9;
-  --muted: #8a8a8a;
-  --line: #262626;
-  --sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
+
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; overflow-y: scroll; }
+
+/* One voice, black on white, down the left of the page; a blank line
+   between paragraphs */
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font: 14px/1.6 var(--sans);
+  background: #ffffff;
+  color: #000000;
+  font: 400 18px/22px "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-a { color: var(--fg); text-underline-offset: 3px; }
-a:hover { color: #fff; }
-a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 2px; }
+p, ul, figure, blockquote { margin: 0; padding: 0; }
+p + p { margin-top: 22px; }
+a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+strong { font-weight: 500; }
 
-.page {
-  max-width: 390px;
-  margin: 0 auto;
-  padding: 40px 20px 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.col { width: 100%; max-width: 350px; }
-.col p { margin: 0 0 16px; }
-.col p:last-child { margin-bottom: 0; }
+.page { padding: 24px 22px 80px; }
 
-.logo {
-  display: flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--fg); color: var(--bg);
-}
-.logo svg { width: 22px; height: 22px; }
+.mark { display: block; width: 28px; color: #000000; }
+.mark svg { display: block; width: 28px; height: 28px; }
 
-.hero { position: relative; width: 100%; max-width: 350px; margin-top: 48px; }
-.hero h1 {
-  margin: 0;
-  font: 500 34px/1.18 var(--sans);
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-wrap: balance;
-}
+.intro { margin-top: 92px; }
 
-.manifesto { margin-top: 52px; }
-.founder { margin-top: 48px; }
-
+/* The clients, four to a row; a grey block holds each place until its
+   logo comes */
 .clients {
-  list-style: none;
-  margin: 48px 0 0;
-  padding: 0;
-  width: 100%;
-  max-width: 350px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px 12px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
+  grid-template-columns: repeat(4, 92px);
+  gap: 23px 31px;
+  margin-top: 48px;
+  list-style: none;
 }
+.clients li { height: 38px; background: #d9d9d9; }
 
-.quote { margin: 56px 0 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
-.quote blockquote { margin: 0; font: 400 14px/1.45 var(--sans); color: var(--soft); }
-.quote figcaption { margin-top: 10px; display: flex; flex-direction: column; font-size: 12px; line-height: 1.4; }
-.quote figcaption strong { font-weight: 500; }
-.quote figcaption span { color: var(--muted); }
+.founder { max-width: 440px; margin-top: 64px; }
+.quote { max-width: 440px; margin-top: 60px; }
+.quote blockquote { margin: 0; }
 
-.contact { margin-top: 72px; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 20px; font-size: 12px; }
-.contact a { color: var(--muted); text-decoration: none; padding: 12px 0; }
-.contact a:hover { color: var(--fg); }
+.contact { margin-top: 60px; }
+.contact a { text-decoration: none; }
+.contact a.mail { text-decoration-line: underline; }
+.contact a:hover { text-decoration-line: underline; }
 
-@media (max-width: 390px) {
-  .hero h1 { font-size: 30px; }
+/* The work, one piece under another */
+.work { display: flex; flex-direction: column; gap: 16px; max-width: 620px; margin-top: 48px; }
+.work img, .work video { display: block; width: 100%; height: auto; background: #d9d9d9; }
+
+@media (max-width: 480px) {
+  .clients { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 12px; }
 }
 </style>
 </head>
 <body>
 <main class="page">
 
-  <a class="logo" href="/" aria-label="The Internet Design Guild — home">
+  <a class="mark" href="/" aria-label="Internet Design Guild — home">
     <svg viewBox="0 0 9 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z"/></svg>
   </a>
 
-  <header class="hero">
-    <h1>Design and development studio, born to reduce.</h1>
-  </header>
-
-  <section class="col manifesto" aria-label="What we do">
-    <p>Websites, products and AI for founders who embrace simplicity.</p>
-    <p>Eleven years of practice, helping people build what they imagine.</p>
+  <section class="intro" aria-label="The studio">
+    <p>Internet Design Guild</p>
+    <p>Design and development studio, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.</p>
+    <p>Eleven years of practice,<br>helping people build what they imagine.</p>
     <p>Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
   </section>
 
-  <section class="col founder" aria-label="Founder">
-    <p>The Internet Design Guild is founded and led by <a href="#">Nico Teodoro</a>, who made his first websites as a kid, for the online games at his local cybercafés. Born in Argentina, raised on the internet, grown in Azeroth.</p>
+  <ul class="clients" aria-label="Selected clients">
+      <li aria-label="Aerolab"></li>
+      <li aria-label="Buenbit"></li>
+      <li aria-label="Towerbank"></li>
+      <li aria-label="peiGo"></li>
+      <li aria-label="Eureka Labs"></li>
+      <li aria-label="Aquicore"></li>
+      <li aria-label="Waterplan"></li>
+      <li aria-label="Fanatiz"></li>
+  </ul>
+
+  <section class="founder" aria-label="Founder">
+    <p>The Internet Design Guild is founded and led by <a href="#">Nico Teodoro</a>, who made his first websites as a kid, for the online games at his local cybercafés.<br>Born in Argentina, raised on the internet, grown in Azeroth.</p>
     <p>Since then he has designed and built for startups, banks, funds and studios in fintech, crypto, energy, sports and health.</p>
   </section>
 
-  <!-- Swap each name for its SVG logo when you have them: <li><img src="/logos/aerolab.svg" alt="Aerolab" height="16"></li> -->
-  <ul class="clients" aria-label="Selected clients">
-    <li>Aerolab</li>
-    <li>Buenbit</li>
-    <li>Towerbank</li>
-    <li>peiGo</li>
-    <li>Eureka Labs</li>
-    <li>Aquicore</li>
-    <li>Waterplan</li>
-    <li>Fanatiz</li>
-  </ul>
-
-  <figure class="col quote">
+  <figure class="quote">
     <blockquote>“He quickly understood Tintte’s vision and translated it into a clean, functional, and well-structured website. He’s proactive, reliable, and easy to work with, a true partner.”</blockquote>
-    <figcaption>
-      <strong>Magalí Mendez</strong>
-      <span>Tintte</span>
-    </figcaption>
+    <figcaption><strong>Magalí Mendez - Tintte.com</strong></figcaption>
   </figure>
 
-  <nav class="contact" aria-label="Contact">
-    <a href="mailto:webmaster@internetguild.co">Email</a>
-    <a href="https://t.me/internetguild">Telegram</a>
-    <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a>
-    <a href="https://x.com/internetguild_" target="_blank" rel="noopener">Twitter</a>
-  </nav>
+  <section class="contact" aria-label="Contact">
+    <p><strong>Hire the guild</strong></p>
+    <p><a class="mail" href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br><a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (twitter)</a><br><a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><br><a href="https://t.me/internetguild" target="_blank" rel="noopener">Telegram</a></p>
+  </section>
+
+  <section class="work" aria-label="Work">
+      <img src="projects/towerbank-poster.webp" width="1500" height="1500" alt="Towerbank credit card street poster" loading="lazy" decoding="async">
+      <video data-src="projects/towerbank-cards.mp4" poster="projects/poster-towerbank-cards.webp" width="1920" height="1080" aria-label="Towerbank Visa cards" muted loop playsinline preload="none"></video>
+      <img src="projects/towerbank-app.webp" width="1500" height="1500" alt="Towerbank investments app on iPhone" loading="lazy" decoding="async">
+      <video data-src="projects/towerbank-debit-card.mp4" poster="projects/poster-towerbank-debit-card.webp" width="720" height="1080" aria-label="Towerbank debit card screen" muted loop playsinline preload="none"></video>
+      <video data-src="projects/towerbank-website-ui.mp4" poster="projects/poster-towerbank-website-ui.webp" width="1920" height="1080" aria-label="Towerbank website interface" muted loop playsinline preload="none"></video>
+      <video data-src="projects/towerbank-website-laptops.mp4" poster="projects/poster-towerbank-website-laptops.webp" width="1920" height="1080" aria-label="Towerbank website on laptops" muted loop playsinline preload="none"></video>
+      <img src="projects/numia-icons.webp" width="1500" height="1500" alt="Numia icon system" loading="lazy" decoding="async">
+      <img src="projects/numia-pattern.webp" width="1500" height="1500" alt="Numia geometric pattern" loading="lazy" decoding="async">
+      <img src="projects/numia-poster.webp" width="1500" height="1500" alt="Numia poster on a concrete wall" loading="lazy" decoding="async">
+      <img src="projects/numia-website-laptop.webp" width="1500" height="1500" alt="Numia website on a MacBook" loading="lazy" decoding="async">
+      <img src="projects/numia-website-mobile.webp" width="1500" height="1500" alt="Numia website on iPhone" loading="lazy" decoding="async">
+      <img src="projects/numia-website-sections.webp" width="1500" height="1500" alt="Numia website sections" loading="lazy" decoding="async">
+      <video data-src="projects/numia-customer-journey.mp4" poster="projects/poster-numia-customer-journey.webp" width="1920" height="1080" aria-label="Numia customer journey website on a laptop" muted loop playsinline preload="none"></video>
+      <video data-src="projects/numia-virtual-assistance.mp4" poster="projects/poster-numia-virtual-assistance.webp" width="630" height="880" aria-label="Numia virtual assistance interface" muted loop playsinline preload="none"></video>
+      <video data-src="projects/emi-brand.mp4" poster="projects/poster-emi-brand.webp" width="1920" height="1080" aria-label="Emi brand identity" muted loop playsinline preload="none"></video>
+      <video data-src="projects/emi-website.mp4" poster="projects/poster-emi-website.webp" width="1920" height="1080" aria-label="Emi website" muted loop playsinline preload="none"></video>
+      <video data-src="projects/emi-website-es.mp4" poster="projects/poster-emi-website-es.webp" width="1920" height="1080" aria-label="Emi website in Spanish on laptops" muted loop playsinline preload="none"></video>
+      <video data-src="projects/emi-onboarding.mp4" poster="projects/poster-emi-onboarding.webp" width="1920" height="1080" aria-label="Emi onboarding website on a laptop" muted loop playsinline preload="none"></video>
+      <video data-src="projects/emi-report-charts.mp4" poster="projects/poster-emi-report-charts.webp" width="720" height="1080" aria-label="Emi report charts" muted loop playsinline preload="none"></video>
+      <img src="projects/emilabs-report.webp" width="1500" height="1500" alt="Emi report on an iPad" loading="lazy" decoding="async">
+      <img src="projects/great-sky-solar-website.webp" width="1500" height="1500" alt="Great Sky Solar homepage and savings calculator" loading="lazy" decoding="async">
+      <img src="projects/great-sky-solar-products.webp" width="1500" height="1500" alt="Great Sky Solar product cards" loading="lazy" decoding="async">
+      <img src="projects/great-sky-solar-team.webp" width="1500" height="1500" alt="Great Sky Solar team page" loading="lazy" decoding="async">
+      <img src="projects/agent-activity-panel.webp" width="1500" height="1500" alt="Agent activity panel on a studio display" loading="lazy" decoding="async">
+      <img src="projects/token-statement.webp" width="1500" height="1500" alt="Token statement dashboard on a studio display" loading="lazy" decoding="async">
+      <img src="projects/xrank.webp" width="1500" height="1500" alt="xrank.tech leaderboard on a MacBook" loading="lazy" decoding="async">
+      <img src="projects/china-supply.webp" width="1500" height="1500" alt="China.Supply landing page on a MacBook" loading="lazy" decoding="async">
+      <img src="projects/journal-app.webp" width="1500" height="1500" alt="Journal app on iPhone resting on concrete blocks" loading="lazy" decoding="async">
+      <img src="projects/journal-app-closeup.webp" width="1500" height="1500" alt="Journal app on iPhone, close-up" loading="lazy" decoding="async">
+      <img src="projects/calm-app-login.webp" width="1500" height="1500" alt="Calm app login screen on iPhone" loading="lazy" decoding="async">
+      <img src="projects/music-player.webp" width="1500" height="1500" alt="Music player interface" loading="lazy" decoding="async">
+      <img src="projects/writing-app.webp" width="1500" height="1500" alt="Writing app on a MacBook" loading="lazy" decoding="async">
+      <img src="projects/godzilla-minus-one-poster.webp" width="1500" height="1500" alt="Godzilla Minus One poster" loading="lazy" decoding="async">
+      <img src="projects/godzilla-minus-one-bus-stop.webp" width="1500" height="1500" alt="Godzilla Minus One poster at a bus stop" loading="lazy" decoding="async">
+      <img src="projects/nine2five.webp" width="1500" height="1500" alt="Nine2Five work glasses spec sheet and stage screen" loading="lazy" decoding="async">
+      <img src="projects/ids-shopping-bag.webp" width="1500" height="1500" alt="Internet Guild shopping bag" loading="lazy" decoding="async">
+      <video data-src="projects/towerbank-campaign.mp4" poster="projects/poster-towerbank-campaign.webp" width="1920" height="1080" aria-label="Towerbank campaign" muted loop playsinline preload="none"></video>
+      <video data-src="projects/towerbank-card-colors.mp4" poster="projects/poster-towerbank-card-colors.webp" width="720" height="1080" aria-label="Towerbank card colours" muted loop playsinline preload="none"></video>
+      <img src="projects/numia-stationery.webp" width="1500" height="1500" alt="Numia stationery" loading="lazy" decoding="async">
+      <img src="projects/great-sky-solar-calculator.webp" width="1500" height="1500" alt="Great Sky Solar savings calculator" loading="lazy" decoding="async">
+      <img src="projects/great-sky-solar-monitoring.webp" width="1500" height="1500" alt="Great Sky Solar monitoring app" loading="lazy" decoding="async">
+  </section>
 
 </main>
+<script>
+  // Films load and play only while they are on screen, and never with
+  // reduced motion
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const films = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting && !still.matches) {
+        if (!target.src) target.src = target.dataset.src;
+        target.play().catch(() => {});
+      } else {
+        target.pause();
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.work video').forEach((video) => {
+    video.muted = true;
+    films.observe(video);
+  });
+</script>
 </body>
 </html>
