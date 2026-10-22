@@ -1,0 +1,343 @@
+[
+  {
+    "file": "towerbank-poster.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Towerbank",
+    "description": "Towerbank credit card street poster",
+    "type": "image"
+  },
+  {
+    "file": "towerbank-cards.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Towerbank",
+    "description": "Towerbank Visa cards",
+    "type": "video",
+    "poster": "poster-towerbank-cards.webp"
+  },
+  {
+    "file": "towerbank-app.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Towerbank",
+    "description": "Towerbank investments app on iPhone",
+    "type": "image"
+  },
+  {
+    "file": "towerbank-debit-card.mp4",
+    "width": 720,
+    "height": 1080,
+    "client": "Towerbank",
+    "description": "Towerbank debit card screen",
+    "type": "video",
+    "poster": "poster-towerbank-debit-card.webp"
+  },
+  {
+    "file": "towerbank-website-ui.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Towerbank",
+    "description": "Towerbank website interface",
+    "type": "video",
+    "poster": "poster-towerbank-website-ui.webp"
+  },
+  {
+    "file": "towerbank-website-laptops.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Towerbank",
+    "description": "Towerbank website on laptops",
+    "type": "video",
+    "poster": "poster-towerbank-website-laptops.webp"
+  },
+  {
+    "file": "numia-icons.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Numia",
+    "description": "Numia icon system",
+    "type": "image"
+  },
+  {
+    "file": "numia-pattern.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Numia",
+    "description": "Numia geometric pattern",
+    "type": "image"
+  },
+  {
+    "file": "numia-poster.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Numia",
+    "description": "Numia poster on a concrete wall",
+    "type": "image"
+  },
+  {
+    "file": "numia-website-laptop.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Numia",
+    "description": "Numia website on a MacBook",
+    "type": "image"
+  },
+  {
+    "file": "numia-website-mobile.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Numia",
+    "description": "Numia website on iPhone",
+    "type": "image"
+  },
+  {
+    "file": "numia-website-sections.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Numia",
+    "description": "Numia website sections",
+    "type": "image"
+  },
+  {
+    "file": "numia-customer-journey.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Numia",
+    "description": "Numia customer journey website on a laptop",
+    "type": "video",
+    "poster": "poster-numia-customer-journey.webp"
+  },
+  {
+    "file": "numia-virtual-assistance.mp4",
+    "width": 630,
+    "height": 880,
+    "client": "Numia",
+    "description": "Numia virtual assistance interface",
+    "type": "video",
+    "poster": "poster-numia-virtual-assistance.webp"
+  },
+  {
+    "file": "emi-brand.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Emi",
+    "description": "Emi brand identity",
+    "type": "video",
+    "poster": "poster-emi-brand.webp"
+  },
+  {
+    "file": "emi-website.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Emi",
+    "description": "Emi website",
+    "type": "video",
+    "poster": "poster-emi-website.webp"
+  },
+  {
+    "file": "emi-website-es.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Emi",
+    "description": "Emi website in Spanish on laptops",
+    "type": "video",
+    "poster": "poster-emi-website-es.webp"
+  },
+  {
+    "file": "emi-onboarding.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Emi",
+    "description": "Emi onboarding website on a laptop",
+    "type": "video",
+    "poster": "poster-emi-onboarding.webp"
+  },
+  {
+    "file": "emi-report-charts.mp4",
+    "width": 720,
+    "height": 1080,
+    "client": "Emi",
+    "description": "Emi report charts",
+    "type": "video",
+    "poster": "poster-emi-report-charts.webp"
+  },
+  {
+    "file": "emilabs-report.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Emi",
+    "description": "Emi report on an iPad",
+    "type": "image"
+  },
+  {
+    "file": "great-sky-solar-website.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Great Sky Solar",
+    "description": "Great Sky Solar homepage and savings calculator",
+    "type": "image"
+  },
+  {
+    "file": "great-sky-solar-products.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Great Sky Solar",
+    "description": "Great Sky Solar product cards",
+    "type": "image"
+  },
+  {
+    "file": "great-sky-solar-team.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Great Sky Solar",
+    "description": "Great Sky Solar team page",
+    "type": "image"
+  },
+  {
+    "file": "agent-activity-panel.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Studio",
+    "description": "Agent activity panel on a studio display",
+    "type": "image"
+  },
+  {
+    "file": "token-statement.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Studio",
+    "description": "Token statement dashboard on a studio display",
+    "type": "image"
+  },
+  {
+    "file": "xrank.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "xrank",
+    "description": "xrank.tech leaderboard on a MacBook",
+    "type": "image"
+  },
+  {
+    "file": "china-supply.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "China.Supply",
+    "description": "China.Supply landing page on a MacBook",
+    "type": "image"
+  },
+  {
+    "file": "journal-app.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Studio",
+    "description": "Journal app on iPhone resting on concrete blocks",
+    "type": "image"
+  },
+  {
+    "file": "journal-app-closeup.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Studio",
+    "description": "Journal app on iPhone, close-up",
+    "type": "image"
+  },
+  {
+    "file": "calm-app-login.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Studio",
+    "description": "Calm app login screen on iPhone",
+    "type": "image"
+  },
+  {
+    "file": "music-player.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Studio",
+    "description": "Music player interface",
+    "type": "image"
+  },
+  {
+    "file": "writing-app.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Studio",
+    "description": "Writing app on a MacBook",
+    "type": "image"
+  },
+  {
+    "file": "godzilla-minus-one-poster.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Godzilla Minus One",
+    "description": "Godzilla Minus One poster",
+    "type": "image"
+  },
+  {
+    "file": "godzilla-minus-one-bus-stop.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Godzilla Minus One",
+    "description": "Godzilla Minus One poster at a bus stop",
+    "type": "image"
+  },
+  {
+    "file": "nine2five.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Nine2Five",
+    "description": "Nine2Five work glasses spec sheet and stage screen",
+    "type": "image"
+  },
+  {
+    "file": "ids-shopping-bag.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Internet Guild",
+    "description": "Internet Guild shopping bag",
+    "type": "image"
+  },
+  {
+    "file": "towerbank-campaign.mp4",
+    "width": 1920,
+    "height": 1080,
+    "client": "Towerbank",
+    "description": "Towerbank campaign",
+    "type": "video",
+    "poster": "poster-towerbank-campaign.webp"
+  },
+  {
+    "file": "towerbank-card-colors.mp4",
+    "width": 720,
+    "height": 1080,
+    "client": "Towerbank",
+    "description": "Towerbank card colours",
+    "type": "video",
+    "poster": "poster-towerbank-card-colors.webp"
+  },
+  {
+    "file": "numia-stationery.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Numia",
+    "description": "Numia stationery",
+    "type": "image"
+  },
+  {
+    "file": "great-sky-solar-calculator.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Great Sky Solar",
+    "description": "Great Sky Solar savings calculator",
+    "type": "image"
+  },
+  {
+    "file": "great-sky-solar-monitoring.webp",
+    "width": 1500,
+    "height": 1500,
+    "client": "Great Sky Solar",
+    "description": "Great Sky Solar monitoring app",
+    "type": "image"
+  }
+]
