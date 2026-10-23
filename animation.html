@@ -74,6 +74,7 @@
   #name .scr { color: rgba(255, 255, 255, 0.45); }
 
   .after {
+    position: relative;
     width: 100%;
     height: auto;
     margin-top: 36px;
@@ -93,6 +94,22 @@
     text-transform: uppercase;
   }
   #name span { display: inline-block; height: 18px; line-height: 18px; vertical-align: top; }
+  /* sits well below the name without moving the icon and name off centre */
+  .hire {
+    position: absolute;
+    top: calc(100% + 96px);
+    left: 0;
+    right: 0;
+    margin: 0;
+    font-family: var(--font-name);
+    font-size: 10px;
+    line-height: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .hire span { display: block; height: 14px; }
+  .hire .scr { display: inline; color: rgba(255, 255, 255, 0.3); }
 </style>
 </head>
 <body>
@@ -373,24 +390,33 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
 </script>
   <div class="after">
   <h1 id="name" aria-label="Internet Guild©">Internet Guild&copy;</h1>
+  <p class="hire"><span id="hire1">HIRE THE GUILD</span><span id="hire2">internetguild.co</span></p>
   </div>
 </main>
 <script>
 (function () {
   "use strict";
-  var node = document.getElementById("name"), text = "Internet Guild\u00a9";
   var POOL = "一丶ノ二人入八十小夕日木心目田生光糸空門電夢網魂霊龍闇響魔".split("");
-  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var dur = 1100, head = 4, start = 0, done = document.createElement("span"), scr = document.createElement("span");
-  scr.className = "scr"; node.textContent = ""; node.appendChild(done); node.appendChild(scr);
-  function frame(t) {
-    if (!start) start = t;
-    var p = Math.min(1, (t - start) / dur), n = Math.floor(p * text.length), s = "";
-    for (var i = 0; i < head && n + i < text.length; i++) s += text[n + i] === " " ? " " : POOL[(Math.random() * POOL.length) | 0];
-    done.textContent = text.slice(0, n); scr.textContent = s;
-    if (p < 1) requestAnimationFrame(frame); else node.textContent = text;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // resolves the text left to right with a few kanji running ahead; empty until it starts
+  function decode(node, delay, dur) {
+    var text = node.textContent, head = 4, start = 0, done = document.createElement("span"), scr = document.createElement("span");
+    if (reduce) return;
+    node.setAttribute("aria-label", text);
+    scr.className = "scr"; node.textContent = ""; node.appendChild(done); node.appendChild(scr);
+    done.style.display = scr.style.display = "inline";
+    function frame(t) {
+      if (!start) start = t;
+      var p = Math.min(1, (t - start) / dur), n = Math.floor(p * text.length), s = "";
+      for (var i = 0; i < head && n + i < text.length; i++) s += text[n + i] === " " ? " " : POOL[(Math.random() * POOL.length) | 0];
+      done.textContent = text.slice(0, n); scr.textContent = s;
+      if (p < 1) requestAnimationFrame(frame); else node.textContent = text;
+    }
+    setTimeout(function () { requestAnimationFrame(frame); }, delay);
   }
-  setTimeout(function () { requestAnimationFrame(frame); }, 400);
+  decode(document.getElementById("name"), 400, 1100);
+  decode(document.getElementById("hire1"), 1800, 700);
+  decode(document.getElementById("hire2"), 2000, 800);
 })();
 </script>
 </body>
