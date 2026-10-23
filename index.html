@@ -76,9 +76,6 @@
     flex-direction: column;
     align-items: center;
   }
-  /* entrance: the works' loading veil over the content */
-  .intro-veil { position: absolute; z-index: 10; pointer-events: none; }
-
   h1 {
     margin: 0;
     font-family: var(--font-name);
@@ -417,51 +414,5 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
   </nav>
   </div>
 </main>
-<script>
-(function () {
-  "use strict";
-  // the works' loading veil, over the content: it starts covered in
-  // scrambling kanji on dark tiles, then they clear from the top left, a
-  // bright edge running ahead, and the page is left as it is
-  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var POOL = "一丶ノ二人入八十小夕日木心目田生光糸空門電夢網魂霊龍闇響魔".split("");
-  // only over the content: the icon, the name, the words and the buttons
-  var parts = [document.querySelector(".mark")].concat([].slice.call(document.querySelector(".after").children));
-  var L = Infinity, T = Infinity, R = -Infinity, B = -Infinity;
-  parts.forEach(function (p) { var b = p.getBoundingClientRect(); L = Math.min(L, b.left); T = Math.min(T, b.top); R = Math.max(R, b.right); B = Math.max(B, b.bottom); });
-  var pad = 16;
-  L = Math.max(0, L - pad); T = Math.max(0, T - pad); R = Math.min(window.innerWidth, R + pad); B = B + pad;
-  var cv = document.createElement("canvas"); cv.className = "intro-veil"; cv.setAttribute("aria-hidden", "true");
-  var w = Math.round(R - L), h = Math.round(B - T);
-  cv.style.left = (L + window.scrollX) + "px"; cv.style.top = (T + window.scrollY) + "px";
-  cv.style.width = w + "px"; cv.style.height = h + "px";
-  document.body.appendChild(cv);
-  var ctx = cv.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2);
-  cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  var CELL = w < 360 ? 16 : 20, cols = Math.ceil(w / CELL), rows = Math.ceil(h / CELL), n = cols * rows;
-  var ch = new Array(n), th = new Float32Array(n), max = 0, i;
-  for (i = 0; i < n; i++) {
-    ch[i] = POOL[(Math.random() * POOL.length) | 0];
-    var r = (i / cols) | 0, c = i % cols;
-    th[i] = (r / rows) * 0.6 + (c / cols) * 0.2 + Math.random() * 0.4; if (th[i] > max) max = th[i];
-  }
-  for (i = 0; i < n; i++) th[i] /= max;
-  var font = '500 ' + (CELL * 0.6).toFixed(1) + 'px "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif';
-  var start = performance.now(), hold = 260, dur = 900, edge = 0.09, lastScr = 0;
-  function frame(t) {
-    if (t - lastScr > 90) { lastScr = t; for (var k = 0; k < n * 0.1; k++) ch[(Math.random() * n) | 0] = POOL[(Math.random() * POOL.length) | 0]; }
-    var p = t - start < hold ? -1 : (t - start - hold) / dur;
-    ctx.clearRect(0, 0, w, h); ctx.font = font; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    for (var j = 0; j < n; j++) {
-      if (p >= 0 && th[j] < p - edge) continue;
-      var x = (j % cols) * CELL, y = ((j / cols) | 0) * CELL, hot = p >= 0 && th[j] < p;
-      ctx.fillStyle = hot ? "#000" : "#0b0b0c"; ctx.fillRect(x, y, CELL + 0.5, CELL + 0.5);
-      ctx.fillStyle = hot ? "#f2f2f2" : "#2c2c2f"; ctx.fillText(ch[j], x + CELL / 2, y + CELL / 2 + 0.5);
-    }
-    if (p >= 1 + edge) cv.remove(); else requestAnimationFrame(frame);
-  }
-  frame(start);
-})();
-</script>
 </body>
 </html>
