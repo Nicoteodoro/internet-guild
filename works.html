@@ -73,7 +73,7 @@
   .home { display: block; width: 88px; margin: 0 auto; border-radius: 0; }
   .home:focus-visible { outline: 1px solid var(--fg); outline-offset: 6px; }
 
-  /* prompt line + filter chips */
+  /* back to the index, the prompt line, and remix at the right */
   .bar {
     margin-top: 40px;
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
@@ -88,15 +88,14 @@
   }
   @keyframes blink { 50% { opacity: 0; } }
   .count { margin-left: 14px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips button {
-    height: 26px; padding: 0 10px; border: 0; border-radius: 0; cursor: pointer;
-    font: 500 12px/26px var(--font-name); letter-spacing: -0.01em;
+  .left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+  .chip {
+    display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border: 0; border-radius: 0; cursor: pointer;
+    font: 500 12px/26px var(--font-name); letter-spacing: -0.01em; text-decoration: none; white-space: nowrap;
     color: var(--muted); background: var(--line); transition: background-color .2s ease, color .2s ease;
   }
-  .chips button:hover { color: var(--fg); background: var(--line-hi); }
-  .chips button[aria-pressed="true"] { color: #000; background: var(--fg); }
-  .chips button:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+  .chip:hover { color: var(--fg); background: var(--line-hi); }
+  .chip:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
 
   /* grid */
   .grid {
@@ -483,16 +482,13 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
   </a>
 
   <div class="bar">
-    <div class="cmdline" aria-live="polite">
-      <span class="ps" aria-hidden="true">&gt;</span><span class="cmd" id="cmd">works --all</span><span class="cursor" aria-hidden="true"></span><span class="count" id="count"></span>
+    <div class="left">
+      <a class="chip" href="/">&larr; back to index</a>
+      <div class="cmdline" aria-live="polite">
+        <span class="ps" aria-hidden="true">&gt;</span><span class="cmd" id="cmd">works --all</span><span class="cursor" aria-hidden="true"></span><span class="count" id="count"></span>
+      </div>
     </div>
-    <div class="chips" id="chips" role="group" aria-label="Filter projects">
-      <button type="button" data-f="all" aria-pressed="true">all</button>
-      <button type="button" data-f="web" aria-pressed="false">web</button>
-      <button type="button" data-f="product" aria-pressed="false">product</button>
-      <button type="button" data-f="ai" aria-pressed="false">ai</button>
-      <button type="button" data-f="brand" aria-pressed="false">brand</button>
-    </div>
+    <button type="button" class="chip" id="remix">remix</button>
   </div>
 
   <ul class="grid" id="grid"></ul>
@@ -575,7 +571,7 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
   var canHover = window.matchMedia && matchMedia("(hover: hover)").matches;
 
   var grid = document.getElementById("grid"), cmd = document.getElementById("cmd"),
-      count = document.getElementById("count"), chips = document.getElementById("chips");
+      count = document.getElementById("count"), remix = document.getElementById("remix");
   var tiles = [], viewerOpen = false;
 
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
@@ -634,7 +630,13 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
     veils.add(this); if (!veilRaf) veilRaf = requestAnimationFrame(veilLoop);
   }
 
-  // ── build tiles ──
+  function shuffle(a) {
+    for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = a[k]; a[k] = a[j]; a[j] = x; }
+    return a;
+  }
+
+  // ── build tiles, in a new order on every visit ──
+  shuffle(PROJECTS);
   PROJECTS.forEach(function (p, i) {
     var li = el("li", "tile"), btn = el("button", "frame"), cap = el("div", "cap"),
         name = el("span", "name", p.client), m = el("span", "meta", meta(p)), media;
@@ -686,29 +688,19 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
     tiles.forEach(function (t) { t.btn.dataset.i = t.i; near.observe(t.btn); view.observe(t.btn); });
   } else tiles.forEach(function (t) { t.inView = true; t.seenAt = performance.now(); request(t); });
 
-  // ── filter ──
-  var current = "all";
-  function visible() { return tiles.filter(function (t) { return !t.el.hidden; }); }
-  function setFilter(f, animate) {
-    if (!/^(all|web|product|ai|brand)$/.test(f)) f = "all";
-    current = f;
-    chips.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.f === f)); });
-    decode(cmd, "works --" + f);
-    function update() {
-      tiles.forEach(function (t) { t.el.hidden = !(f === "all" || t.p.tags.indexOf(f) > -1); });
-      count.textContent = plural(visible().length);
-    }
-    if (animate && document.startViewTransition && !reduced) {
+  // ── remix: the same work, dealt again in a new order ──
+  function visible() { return [].map.call(grid.children, function (li) { return tiles[+li.dataset.i]; }); }
+  tiles.forEach(function (t) { t.el.dataset.i = t.i; });
+  count.textContent = plural(tiles.length);
+  remix.addEventListener("click", function () {
+    decode(cmd, "works --remix");
+    function update() { shuffle(visible()).forEach(function (t) { grid.appendChild(t.el); }); }
+    if (document.startViewTransition && !reduced) {
       tiles.forEach(function (t) { t.el.style.viewTransitionName = "tile-" + t.i; });
       var vt = document.startViewTransition(update);
       vt.finished.finally(function () { tiles.forEach(function (t) { t.el.style.viewTransitionName = ""; }); });
     } else update();
-    try { history.replaceState(null, "", f === "all" ? location.pathname : "#" + f); } catch (e) {}
-  }
-  chips.addEventListener("click", function (e) {
-    var b = e.target.closest("button"); if (b && b.dataset.f !== current) setFilter(b.dataset.f, true);
   });
-  setFilter((location.hash || "").slice(1) || "all", false);
 
   // ── viewer ──
   var viewer = document.getElementById("viewer"), stage = document.getElementById("v-stage"),
