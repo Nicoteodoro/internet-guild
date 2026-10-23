@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact · Internet Guild</title>
+<meta name="description" content="Contact Internet Guild by email, X or Instagram.">
+<meta name="theme-color" content="#000000">
+<link rel="preload" href="/neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* PP Neue Montreal, self-hosted: Regular for the words, Medium for the name and the buttons */
+  @font-face {
+    font-family: "PP Neue Montreal";
+    src: url("/neue-montreal-regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "PP Neue Montreal";
+    src: url("/neue-montreal-medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  /* same column as the index: icon, then a small terminal in the space the name and statement use */
+  :root {
+    --bg: #000000;
+    --fg: #ffffff;
+    --fg-dim: rgba(255, 255, 255, 0.86);
+    --muted: #7c7c80;
+    --line: #1c1c1e;
+    --line-hi: #2a2a2d;
+    --font-name: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  main {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-block: max(48px, env(safe-area-inset-top, 0px)) max(48px, env(safe-area-inset-bottom, 0px));
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+  }
+  /* soft cross-page transition: the icon stays put, the rest crossfades */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+  ::view-transition-group(mark) { animation-duration: .3s; }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  }
+  .mark {
+    width: 320px;
+    max-width: 100%;
+    margin: 0 auto;
+    view-transition-name: mark;
+  }
+  /* same height on every page, so the icon sits at the same spot on all of them */
+  .after {
+    width: 100%;
+    height: 272px;
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .term {
+    width: min(440px, 100%);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-family: var(--font-name);
+    font-size: 14px;
+    line-height: 1.65;
+    letter-spacing: -0.01em;
+    color: var(--fg-dim);
+    cursor: text;
+  }
+  /* output + prompt scroll together; the guide stays pinned below */
+  .screen { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+  .screen::-webkit-scrollbar { display: none; }
+  .screen.scrolled { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px); mask-image: linear-gradient(to bottom, transparent 0, #000 28px); }
+  .ln { min-height: 1.65em; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .ps { color: var(--muted); margin-right: 8px; user-select: none; }
+  .echo { color: var(--fg); }
+  .out { padding-left: 16px; }
+  .gap { height: 10px; }
+  .err, .note { color: var(--muted); }
+  .scr { color: var(--muted); }
+
+  .rows { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 12px; padding-left: 16px; margin: 0; }
+  .rows dt { color: var(--muted); }
+  .rows dd { margin: 0; min-width: 0; }
+  .term a { color: var(--fg); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s ease; }
+  .term a:hover, .term a:focus-visible { border-bottom-color: var(--fg); outline: none; }
+  .copy {
+    margin-left: 10px; padding: 0 6px; height: 20px;
+    font: 500 11px/20px var(--font-name); letter-spacing: 0;
+    color: var(--fg); background: var(--line); border: 0; border-radius: 0; cursor: pointer;
+    vertical-align: 1px; transition: background-color .2s ease, opacity .3s ease;
+  }
+  .copy:hover { background: var(--line-hi); }
+  .copy:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+  .copy.pre { opacity: 0; }
+
+  .prompt { position: relative; display: flex; align-items: baseline; min-height: 1.65em; }
+  .typed { color: var(--fg); white-space: pre; overflow: hidden; }
+  .cursor {
+    display: inline-block; flex: none; width: 8px; height: 15px; margin-left: 1px;
+    background: var(--fg); transform: translateY(2px);
+    animation: blink 1.05s steps(1) infinite;
+  }
+  .prompt:not(.focused) .cursor { background: transparent; box-shadow: inset 0 0 0 1px var(--muted); animation: none; }
+  .ghost { margin-left: 8px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .2s ease; }
+  .ghost[hidden] { display: none; }
+  @keyframes blink { 50% { opacity: 0; } }
+  #cmd {
+    position: absolute; inset: 0; width: 100%;
+    opacity: 0; border: 0; padding: 0; margin: 0; font: inherit; color: transparent; background: transparent;
+  }
+
+  /* command guide */
+  .guide {
+    flex: none;
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 8px;
+    font-size: 12px; line-height: 1.4; color: var(--muted);
+  }
+  .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .keys .label { margin-right: 4px; }
+  .keys button {
+    height: 22px; padding: 0 8px; border: 0; border-radius: 0; cursor: pointer;
+    font: 500 12px/22px var(--font-name); letter-spacing: -0.01em;
+    color: var(--fg); background: var(--line); transition: background-color .2s ease;
+  }
+  .keys button:hover { background: var(--line-hi); }
+  .keys button:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+  .tips { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .tips kbd {
+    display: inline-block; min-width: 18px; padding: 0 4px; margin-right: 4px; text-align: center;
+    font: 500 11px/16px var(--font-name); color: var(--fg-dim);
+    border: 1px solid var(--line-hi);
+  }
+  .touch-only { display: none; }
+  @media (hover: none) and (pointer: coarse) {
+    .tips { display: none; }
+    .touch-only { display: inline; }
+    .desk-only { display: none; }
+  }
+
+  /* first paint: the terminal fades in after the page transition */
+  .term { animation: in .5s ease .15s both; }
+  @keyframes in { from { opacity: 0; transform: translateY(4px); } }
+  @media (prefers-reduced-motion: reduce) { .cursor, .term { animation: none; } }
+  @media (max-width: 480px) {
+    .rows { grid-template-columns: 76px minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+<main>
+<div id="ik-p5qcph" class="mark"></div>
+<script>
+window.IconoKanji = window.IconoKanji || (function () {
+  "use strict";
+  var ICON = [
+    ".........###.........", "........#####........", ".......#######.......", "......#########......",
+    ".....###########.....", "....#############....", "....#############....", "...####.......####...",
+    "...###..#####..###...", "...##..#######..##...", "..##..#########..##..", "..##.###.###.###.##..",
+    ".###.###.###.###.###.", "####.###.###.###.####", "####.###########.####", ".###..#########..###.",
+    "...##..#######..##...", "...###...###...###...", "..######.....######..", ".###################.",
+    "..#################..", "....#############....", "......#########......", ".......#######.......",
+    "........#####........", ".........###........."
+  ];
+  var IW = 21, IH = 26, EYE_CELLS = [[11, 8], [12, 8], [13, 8], [11, 12], [12, 12], [13, 12]];
+  // density ramps, light → dark (kanji ordered by stroke count)
+  var SETS = {
+    kanji: [["一", "丶", "ノ", "二", "人", "入", "八", "十", "小", "夕", "・", "、"],
+            ["日", "木", "心", "目", "田", "生", "光", "糸", "空", "門"],
+            ["電", "夢", "網", "魂", "霊", "龍", "闇", "響", "魔", "驚", "鬱"]],
+    katakana: [["ノ", "ヘ", "ニ", "ト", "ー", "ハ", "ソ", "ン", "・", "、"],
+               ["カ", "サ", "タ", "ナ", "ミ", "ム", "ラ", "ワ", "ホ", "エ"],
+               ["ガ", "ギ", "ズ", "ゼ", "ダ", "ヂ", "ヅ", "ド", "ボ", "ポ", "ヴ"]],
+    hiragana: [["し", "く", "へ", "つ", "ひ", "こ", "い", "・", "、"],
+               ["あ", "お", "か", "た", "な", "む", "ゆ", "わ", "る"],
+               ["ぬ", "ね", "め", "ぼ", "ぎ", "ぶ", "ぽ", "ぜ", "ゑ"]]
+  };
+  var ASCII = [["'", ".", ",", ":", ";"], ["t", "S", "X", "%"], ["8", "#", "@", "%"]];
+  var STRAY = ["'", ".", ",", "o", "・", "、"];
+  var ACCENTS = ["#8f74d8", "#4e9a64", "#c97a3c", "#d9686a", "#5a8fbf"];
+  var FONT_UI = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+  var FONT_JP = '"Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif';
+  var DEFAULTS = {
+    seed: 12345, jp: "kanji", jpMix: 0.7, charScale: 1, changeRate: 1, scramble: true,
+    contrast: 1, density: 0, flow: 1,
+    bg: "#f4f4f1", transparent: false, grid: "#e5e5e1", showGrid: true,
+    tileLo: "#e0e0dc", tileHi: "#353533", text: "#5c5c58", textOnDark: "#eeeeea",
+    accentMode: "multi", accent: "#d9686a", accentRate: 1,
+    padX: 5, padY: 3, gap: 0.12, radius: 0,
+    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true
+  };
+  var CHARS = (function () {
+    var all = ASCII.flat().concat(STRAY);
+    Object.keys(SETS).forEach(function (k) { all = all.concat(SETS[k].flat()); });
+    return Array.from(new Set(all)).join("");
+  })();
+
+  function ensureFonts() {
+    if (document.getElementById("ik-fonts")) return;
+    var l = document.createElement("link");
+    l.id = "ik-fonts"; l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@500&text=" + encodeURIComponent(CHARS) + "&display=swap";
+    document.head.appendChild(l);
+  }
+  function hexRgb(h) {
+    h = String(h || "").trim();
+    if (/^#[0-9a-f]{3}$/i.test(h)) h = "#" + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
+    if (!/^#[0-9a-f]{6}$/i.test(h)) return [128, 128, 128];
+    return [1, 3, 5].map(function (k) { return parseInt(h.slice(k, k + 2), 16); });
+  }
+  function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function css(a) { return "rgb(" + (a[0] | 0) + "," + (a[1] | 0) + "," + (a[2] | 0) + ")"; }
+  function isJP(ch) { return ch.charCodeAt(0) > 0x2000; }
+
+  function mount(el, userCfg) {
+    ensureFonts();
+    var cfg = Object.assign({}, DEFAULTS, userCfg || {});
+    var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var cv = document.createElement("canvas");
+    cv.setAttribute("role", "img"); cv.setAttribute("aria-label", "Ícono animado hecho con caracteres");
+    cv.style.cssText = "display:block;width:100%;";
+    el.appendChild(cv);
+    var ctx = cv.getContext("2d"), bgc = document.createElement("canvas"), bctx = bgc.getContext("2d");
+    var G, cells, strays, T, nextBlink, blinkUntil, sweepStart, sweepId, rs = 1, seedN = 1, col, cell = 10, dpr = 1;
+    var raf = 0, visible = true, paused = false, last = 0, ro, io;
+
+    function rand() { rs |= 0; rs = rs + 0x6D2B79F5 | 0; var t = Math.imul(rs ^ rs >>> 15, 1 | rs); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function pick(a) { return a[(rand() * a.length) | 0]; }
+    function hash(x, y, z) { var h = (Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(z, 1440662683) + seedN) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16; return (h >>> 0) / 4294967296; }
+    function vnoise(x, y, z) {
+      var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z), u = x - xi, v = y - yi, w = z - zi;
+      u = u * u * (3 - 2 * u); v = v * v * (3 - 2 * v); w = w * w * (3 - 2 * w);
+      function L(a, b, t) { return a + (b - a) * t; }
+      return L(L(L(hash(xi, yi, zi), hash(xi + 1, yi, zi), u), L(hash(xi, yi + 1, zi), hash(xi + 1, yi + 1, zi), u), v),
+               L(L(hash(xi, yi, zi + 1), hash(xi + 1, yi, zi + 1), u), L(hash(xi, yi + 1, zi + 1), hash(xi + 1, yi + 1, zi + 1), u), v), w);
+    }
+
+    function geometry() {
+      var PX = Math.max(0, cfg.padX | 0), PY = Math.max(0, cfg.padY | 0);
+      var COLS = IW + PX * 2, ROWS = IH + PY * 2, N = COLS * ROWS, r, c, i;
+      var filled = new Uint8Array(N), outside = new Uint8Array(N);
+      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) if (ICON[r][c] === "#") filled[(r + PY) * COLS + c + PX] = 1;
+      var q = [];
+      for (i = 0; i < N; i++) { r = (i / COLS) | 0; c = i % COLS;
+        if ((r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1) && !filled[i]) { outside[i] = 1; q.push(i); } }
+      while (q.length) { i = q.pop(); r = (i / COLS) | 0; c = i % COLS;
+        [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) { var rr = r + d[0], cc = c + d[1];
+          if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) return; var j = rr * COLS + cc;
+          if (!outside[j] && !filled[j]) { outside[j] = 1; q.push(j); } }); }
+      function cheb(src, seedEdge) { var d = new Int16Array(N).fill(99), qq = [];
+        for (var k = 0; k < N; k++) if (src[k]) { d[k] = 0; qq.push(k); }
+        for (var h = 0; h < qq.length; h++) { var a = qq[h], ar = (a / COLS) | 0, ac = a % COLS;
+          for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) { var rr = ar + dr, cc = ac + dc;
+            if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) continue; var b = rr * COLS + cc;
+            if (d[b] > d[a] + 1) { d[b] = d[a] + 1; qq.push(b); } } }
+        if (seedEdge) for (var e = 0; e < N; e++) { var er = (e / COLS) | 0, ec = e % COLS;   // canvas edge counts as outside
+          var de = Math.min(er + 1, ec + 1, ROWS - er, COLS - ec); if (de < d[e]) d[e] = de; }
+        return d; }
+      G = { COLS: COLS, ROWS: ROWS, N: N, filled: filled, outside: outside,
+            depth: cheb(outside, true), away: cheb(filled, false),
+            eyes: EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
+    }
+
+    function reset() {
+      seedN = cfg.seed | 0; rs = seedN; T = 0;
+      nextBlink = 2 + rand() * 3; blinkUntil = -1; sweepStart = 3; sweepId = 0; cells = []; strays = [];
+      for (var i = 0; i < G.N; i++) {
+        var r = (i / G.COLS) | 0, c = i % G.COLS;
+        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1 });
+        else if (G.outside[i] && G.away[i] <= 2) strays.push({ r: r, c: c, d: G.away[i], on: false, ch: "", next: rand() * 2 });
+      }
+      step(0.001);
+    }
+
+    function colors() {
+      var bg = hexRgb(cfg.bg), lo = hexRgb(cfg.tileLo), hi = hexRgb(cfg.tileHi), tx = hexRgb(cfg.text);
+      col = { bg: bg, grid: hexRgb(cfg.grid), lo: lo, hi: hi, inkSoft: mix(lo, tx, 0.55), inkStrong: tx, onHi: hexRgb(cfg.textOnDark),
+              ghost: mix(bg, lo, 0.55), ghostInk: mix(bg, tx, 0.32), stray: mix(bg, tx, 0.45),
+              accents: cfg.accentMode === "single" ? [cfg.accent] : ACCENTS };
+      drawBg();
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = el.clientWidth || 300;
+      cell = w / G.COLS;
+      var h = cell * G.ROWS;
+      cv.width = bgc.width = Math.max(1, Math.round(w * dpr));
+      cv.height = bgc.height = Math.max(1, Math.round(h * dpr));
+      cv.style.height = h + "px";
+      drawBg(); draw();
+    }
+
+    function drawBg() {
+      if (!col || !G) return;
+      bctx.setTransform(1, 0, 0, 1, 0, 0); bctx.clearRect(0, 0, bgc.width, bgc.height);
+      bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var W = cell * G.COLS, H = cell * G.ROWS;
+      if (!cfg.transparent) { bctx.fillStyle = css(col.bg); bctx.fillRect(0, 0, W, H); }
+      if (cfg.showGrid) {
+        bctx.strokeStyle = css(col.grid); bctx.lineWidth = 1 / dpr; bctx.beginPath();
+        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(px, 0); bctx.lineTo(px, H); }
+        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(0, py); bctx.lineTo(W, py); }
+        bctx.stroke();
+      }
+    }
+
+    function bucket(t) { return t < 0.4 ? 0 : t < 0.7 ? 1 : 2; }
+    function set() { return SETS[cfg.jp] || SETS.kanji; }
+    function choose(b) { return rand() < cfg.jpMix ? pick(set()[b]) : pick(ASCII[b]); }
+    function anyChar() { return rand() < cfg.jpMix ? pick(set()[(rand() * 3) | 0]) : pick(ASCII[(rand() * 3) | 0]); }
+
+    var SWEEP_DUR = 2.4;
+    function sweepBoost(r, c) {
+      if (!cfg.sweep) return 0;
+      var p = T - sweepStart; if (p < 0 || p > SWEEP_DUR) return 0;
+      var head = -8 + (G.ROWS + 16) * (p / SWEEP_DUR), dist = (r + c * 0.4 - G.COLS * 0.2) - head;
+      return Math.exp(-(dist * dist) / 3);
+    }
+    function toneOf(cl) {
+      var n = 0.65 * vnoise(cl.c / 5, cl.r / 5, T * 0.22) + 0.35 * vnoise(cl.c / 2.2 + 40, cl.r / 2.2, T * 0.55);
+      var t = 0.4 + 0.11 * Math.min(cl.d, 4) + 0.6 * cfg.flow * (n - 0.5);
+      t = 0.5 + (t - 0.5) * cfg.contrast + cfg.density;
+      return Math.max(0.03, Math.min(1, t));
+    }
+
+    function step(dt) {
+      T += dt;
+      var scramble = cfg.scramble && !reduced;
+      if (T > sweepStart + SWEEP_DUR + cfg.sweepEvery) { sweepStart = T; sweepId++; }
+      if (cfg.blink && T >= nextBlink) { blinkUntil = T + 0.14; nextBlink = T + 2.5 + rand() * 4.5; if (rand() < 0.2) nextBlink = T + 0.32; }
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], boost = sweepBoost(cl.r, cl.c);
+        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4);
+        var b = bucket(cl.tone);
+        if (boost > 0.5 && cl.sweep !== sweepId) { cl.sweep = sweepId; cl.b = b; if (scramble) { cl.scr = 4; cl.scrNext = T; } else cl.ch = choose(b); }
+        if (b !== cl.b || T >= cl.next) {
+          cl.b = b; cl.next = T + (0.8 + rand() * 3.2) / Math.max(0.05, cfg.changeRate);
+          if (scramble && rand() < 0.7) { cl.scr = 2 + ((rand() * 3) | 0); cl.scrNext = T; } else cl.ch = choose(b);
+        }
+        if (cl.scr > 0 && T >= cl.scrNext) { cl.scr--; cl.scrNext = T + 0.055; cl.ch = cl.scr ? anyChar() : choose(cl.b); }
+        if (!cl.ch) cl.ch = choose(cl.b);
+        if (cl.acc !== null && (T > cl.accUntil || cfg.accentMode === "off")) cl.acc = null;
+        if (cfg.accentMode !== "off" && cl.acc === null && rand() < 0.012 * cfg.accentRate * dt) { cl.acc = (rand() * col.accents.length) | 0; cl.accUntil = T + 1.2 + rand() * 3; }
+        if (cfg.erosion && cl.d === 1 && T > cl.ghostUntil && rand() < 0.035 * dt) cl.ghostUntil = T + 0.4 + rand() * 1.6;
+      }
+      for (var s = 0; s < strays.length; s++) { var st = strays[s];
+        if (T >= st.next) { st.on = rand() < (st.d === 1 ? 0.3 : 0.12); st.ch = pick(STRAY); st.next = T + 0.5 + rand() * 2.5; } }
+    }
+
+    function tileRect(x, y, w, r) {
+      if (r > 0.3 && ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, w, r); ctx.fill(); }
+      else ctx.fillRect(x, y, w, w);
+    }
+
+    function draw() {
+      if (!col || !G || !cells) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bgc, 0, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var inset = cell * cfg.gap / 2, tile = cell - inset * 2, rad = tile * cfg.radius;
+      var fA = "500 " + (cell * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
+      var fJ = "500 " + (cell * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], x = cl.c * cell, y = cl.r * cell, fill, ink, t = cl.tone;
+        if (cfg.erosion && T < cl.ghostUntil) { fill = css(col.ghost); ink = css(col.ghostInk); }
+        else {
+          fill = css(mix(col.lo, col.hi, t));
+          ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
+          if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+        }
+        ctx.fillStyle = fill; tileRect(x + inset, y + inset, tile, rad);
+        var jp = isJP(cl.ch);
+        ctx.fillStyle = ink; ctx.font = jp ? fJ : fA;
+        ctx.fillText(cl.ch, x + cell / 2, y + cell / 2 + (jp ? 0 : cell * 0.04));
+      }
+      if (T < blinkUntil) {
+        ctx.fillStyle = css(col.hi);
+        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect((i % G.COLS) * cell + inset, ((i / G.COLS) | 0) * cell + inset, tile, rad); }
+      }
+      if (cfg.strays) {
+        ctx.fillStyle = css(col.stray);
+        for (var s = 0; s < strays.length; s++) { var st = strays[s]; if (!st.on) continue;
+          ctx.font = isJP(st.ch) ? fJ : fA; ctx.fillText(st.ch, st.c * cell + cell / 2, st.r * cell + cell / 2); }
+      }
+    }
+
+    function loop(now) {
+      var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
+      if (visible) {
+        if (!paused && cfg.speed > 0) step(dt * cfg.speed * (reduced ? 0.35 : 1));
+        draw();
+      }
+      raf = requestAnimationFrame(loop);
+    }
+
+    geometry(); colors(); reset(); resize();
+    if (window.ResizeObserver) { ro = new ResizeObserver(resize); ro.observe(el); } else window.addEventListener("resize", resize);
+    if (window.IntersectionObserver) { io = new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }); io.observe(cv); }
+    if (document.fonts && document.fonts.load) {
+      Promise.all([document.fonts.load("500 16px " + FONT_JP, CHARS), document.fonts.load("500 16px " + FONT_UI, "S%@")]).then(draw, function () {});
+    }
+    raf = requestAnimationFrame(loop);
+
+    return {
+      set: function (patch) {
+        var prev = cfg; cfg = Object.assign({}, cfg, patch || {});
+        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY) { geometry(); colors(); reset(); resize(); return; }
+        if (prev.accentMode !== cfg.accentMode && cells) cells.forEach(function (c) { c.acc = null; });
+        colors();
+        if (prev.seed !== cfg.seed) reset();
+        else if ((prev.jp !== cfg.jp || prev.jpMix !== cfg.jpMix) && cells) cells.forEach(function (c) { c.next = T + rand() * 0.6; });
+        draw();
+      },
+      get: function () { return Object.assign({}, cfg); },
+      size: function () { return { cols: G.COLS, rows: G.ROWS }; },
+      togglePause: function () { paused = !paused; return paused; },
+      destroy: function () { cancelAnimationFrame(raf); if (ro) ro.disconnect(); if (io) io.disconnect(); cv.remove(); }
+    };
+  }
+
+  return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
+})();
+IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"kanji","jpMix":1,"charScale":0.89,"changeRate":2.47,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#121314","transparent":true,"grid":"#1d1e20","showGrid":false,"tileLo":"#000000","tileHi":"#000000","text":"#ffffff","textOnDark":"#ffffff","accentMode":"off","accent":"#d9686a","accentRate":1,"padX":5,"padY":3,"gap":0.12,"radius":0,"speed":1,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true});
+</script>
+  <div class="after">
+  <section class="term" id="term" aria-label="Contact terminal">
+    <div class="screen" id="screen">
+      <div id="log" aria-live="polite"></div>
+      <div class="prompt" id="prompt">
+        <span class="ps" aria-hidden="true">&gt;</span><span class="typed" id="typed"></span><span class="cursor" aria-hidden="true"></span><span class="ghost" id="ghost" aria-hidden="true" hidden><span class="desk-only">type a command and press enter</span><span class="touch-only">tap here to type, or pick one below</span></span>
+        <label for="cmd" class="sr-only">Type a command: mail, x, instagram, help or home</label>
+        <input id="cmd" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send">
+      </div>
+    </div>
+    <div class="guide">
+      <div class="keys" aria-label="Commands">
+        <span class="label">Commands</span>
+        <button type="button" data-cmd="mail">mail</button>
+        <button type="button" data-cmd="x">x</button>
+        <button type="button" data-cmd="instagram">instagram</button>
+        <button type="button" data-cmd="help">help</button>
+        <button type="button" data-cmd="home">home</button>
+      </div>
+      <div class="tips">
+        <span><kbd>&#8629;</kbd>run</span>
+        <span><kbd>tab</kbd>complete</span>
+        <span><kbd>&uarr;</kbd><kbd>&darr;</kbd>history</span>
+        <span><kbd>esc</kbd>clear line</span>
+      </div>
+    </div>
+  </section>
+  </div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  // ── edit your handles here ──
+  var LINKS = {
+    mail:      { value: "webmaster@internetguild.co", href: "mailto:webmaster@internetguild.co" },
+    x:         { value: "@internetguild",             href: "https://x.com/internetguild" },
+    instagram: { value: "@internetguild",             href: "https://www.instagram.com/internetguild/" }
+  };
+  var HOME = "/";
+  var ALIAS = { email: "mail", "e-mail": "mail", twitter: "x", ig: "instagram", insta: "instagram",
+                ls: "contact", back: "home", "cd ..": "home", "?": "help", cls: "clear" };
+  var COMMANDS = ["contact", "mail", "x", "instagram", "help", "clear", "home"];
+  var POOL = "日木心目田生光糸空門一二人入八十小%#@:;tSX".split("");
+
+  var log = document.getElementById("log"), screen = document.getElementById("screen"),
+      input = document.getElementById("cmd"), typed = document.getElementById("typed"),
+      prompt = document.getElementById("prompt"), ghost = document.getElementById("ghost"),
+      term = document.getElementById("term");
+  var history = [], hIdx = 0, busy = false, queued = false;
+  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia && matchMedia("(pointer: fine)").matches;
+
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, reduced ? 0 : ms); }); }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function scrollEnd() { screen.scrollTop = screen.scrollHeight; screen.classList.toggle("scrolled", screen.scrollTop > 0); }
+  function add(node) { log.appendChild(node); scrollEnd(); return node; }
+  function gap() { add(el("div", "gap")); }
+  function echo(cmd) { var l = el("div", "ln"); l.appendChild(el("span", "ps", ">")); l.appendChild(el("span", "echo", cmd)); add(l); }
+  function refreshGhost() { ghost.hidden = busy || input.value.length > 0; }
+
+  // text resolves left to right; a few scrambled glyphs run ahead of it
+  function decode(node, text, speed) {
+    if (reduced || !text) { node.textContent = text; return Promise.resolve(); }
+    var dur = Math.min(650, 140 + text.length * (speed || 16)), head = 4, start = 0;
+    var done = el("span"), scr = el("span", "scr");
+    node.textContent = ""; node.appendChild(done); node.appendChild(scr);
+    return new Promise(function (res) {
+      function frame(t) {
+        if (!start) start = t;
+        var p = Math.min(1, (t - start) / dur), n = Math.floor(p * text.length), s = "";
+        for (var i = 0; i < head && n + i < text.length; i++) s += text[n + i] === " " ? " " : POOL[(Math.random() * POOL.length) | 0];
+        done.textContent = text.slice(0, n); scr.textContent = s; scrollEnd();
+        if (p < 1) requestAnimationFrame(frame); else { node.textContent = text; res(); }
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+  function out(text, cls) { var l = add(el("div", "ln out" + (cls ? " " + cls : ""))); return decode(l, text).then(function () { return l; }); }
+
+  function link(item) {
+    var a = el("a"); a.href = item.href;
+    if (/^https?:/.test(item.href)) { a.target = "_blank"; a.rel = "noopener"; }
+    return a;
+  }
+  function copy(text, btn) {
+    function done(ok) { if (btn) { btn.textContent = ok ? "copied" : "select it"; setTimeout(function () { btn.textContent = "copy"; }, 1400); } }
+    try { navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); }
+    catch (e) { done(false); }
+  }
+
+  // two-column list whose rows appear one after another
+  function table(rows, opts) {
+    var dl = add(el("dl", "rows"));
+    return rows.reduce(function (chain, r, i) {
+      return chain.then(function () {
+        var dt = el("dt"), dd = el("dd"); dl.appendChild(dt); dl.appendChild(dd);
+        var target = dd, extra = null;
+        if (r.link) { target = link(r.link); dd.appendChild(target); }
+        if (r.copy) { extra = el("button", "copy pre", "copy"); extra.type = "button";
+          extra.addEventListener("click", function (e) { e.stopPropagation(); copy(r.copy, extra); }); dd.appendChild(extra); }
+        decode(dt, r.k, 30);
+        var p = decode(target, r.v).then(function () { if (extra) extra.classList.remove("pre"); });
+        return (opts && opts.stagger === false) ? p : wait(110).then(function () { return i === rows.length - 1 ? p : null; });
+      });
+    }, Promise.resolve());
+  }
+  function contactBlock() {
+    return table([
+      { k: "mail", v: LINKS.mail.value, link: LINKS.mail, copy: LINKS.mail.value },
+      { k: "x", v: LINKS.x.value, link: LINKS.x },
+      { k: "instagram", v: LINKS.instagram.value, link: LINKS.instagram }
+    ]);
+  }
+
+  function run(raw) {
+    var shown = raw.trim(), cmd = shown.toLowerCase().replace(/\s+/g, " ");
+    echo(shown);
+    if (cmd) history.push(shown);
+    hIdx = history.length;
+    cmd = ALIAS[cmd] || cmd;
+    busy = true; refreshGhost();
+    var job;
+    switch (cmd) {
+      case "": job = Promise.resolve(); break;
+      case "contact": job = contactBlock(); break;
+      case "mail":
+        copy(LINKS.mail.value);
+        job = out("copied " + LINKS.mail.value + " to your clipboard").then(function () {
+          var l = add(el("div", "ln out")), a = link({ href: LINKS.mail.href }); l.appendChild(a); return decode(a, "open your mail app");
+        });
+        break;
+      case "x": case "instagram": {
+        var item = LINKS[cmd], w = null;
+        try { w = window.open(item.href, "_blank", "noopener"); } catch (e) {}
+        var l = add(el("div", "ln out")), lead = el("span"), a = link(item);
+        l.appendChild(lead); l.appendChild(a);
+        job = decode(lead, w === null ? "open " : "opening ").then(function () {
+          return decode(a, item.href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""));
+        });
+        break;
+      }
+      case "help":
+        job = table([
+          { k: "contact", v: "list every channel" },
+          { k: "mail", v: "copy the email address" },
+          { k: "x", v: "open X in a new tab" },
+          { k: "instagram", v: "open Instagram in a new tab" },
+          { k: "clear", v: "clear the screen" },
+          { k: "home", v: "back to the index" }
+        ]).then(function () { return out("ig, twitter and email work too.", "note"); });
+        break;
+      case "clear": log.textContent = ""; busy = false; refreshGhost(); scrollEnd(); return;
+      case "home": location.href = HOME; return;
+      default: job = out("command not found: " + cmd + ". Type help to see what works.", "err");
+    }
+    job.then(function () { gap(); scrollEnd(); idle(); });
+  }
+
+  function sync() { typed.textContent = input.value; refreshGhost(); }
+  function submit() { if (busy) { queued = true; return; } queued = false; var v = input.value; input.value = ""; sync(); run(v); }
+  function idle() { busy = false; sync(); if (queued) submit(); }
+
+  input.addEventListener("input", sync);
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); submit(); }
+    else if (e.key === "ArrowUp") { if (hIdx > 0) { hIdx--; input.value = history[hIdx]; sync(); } e.preventDefault(); }
+    else if (e.key === "ArrowDown") { if (hIdx < history.length) { hIdx++; input.value = history[hIdx] || ""; sync(); } e.preventDefault(); }
+    else if (e.key === "Escape") { input.value = ""; sync(); }
+    else if (e.key === "Tab") {
+      var v = input.value.trim().toLowerCase();
+      if (v) { var m = COMMANDS.filter(function (c) { return c.indexOf(v) === 0; }); if (m.length === 1) { input.value = m[0]; sync(); } }
+      e.preventDefault();
+    } else if (e.key === "l" && e.ctrlKey) { e.preventDefault(); log.textContent = ""; }
+  });
+  input.addEventListener("focus", function () { prompt.classList.add("focused"); });
+  input.addEventListener("blur", function () { prompt.classList.remove("focused"); });
+  term.addEventListener("click", function (e) {
+    if (e.target.closest("a, button") || String(window.getSelection())) return;
+    input.focus({ preventScroll: true });
+  });
+  screen.addEventListener("scroll", function () { screen.classList.toggle("scrolled", screen.scrollTop > 0); });
+  document.querySelectorAll(".keys button").forEach(function (b) {
+    b.addEventListener("click", function () { if (!busy) { input.value = ""; sync(); run(b.getAttribute("data-cmd")); } });
+  });
+
+  // intro: type "contact", then the channels resolve one row at a time
+  function intro() {
+    var word = "contact";
+    busy = true; refreshGhost();
+    if (reduced) { busy = false; run(word); return; }
+    var i = 0;
+    (function tick() {
+      typed.textContent = word.slice(0, ++i);
+      if (i < word.length) setTimeout(tick, 45 + Math.random() * 35);
+      else setTimeout(function () {
+        typed.textContent = ""; run(word);
+        if (finePointer) input.focus({ preventScroll: true });
+      }, 160);
+    })();
+  }
+  if (finePointer) input.focus({ preventScroll: true });
+  setTimeout(intro, reduced ? 0 : 380);
+})();
+</script>
+</body>
+</html>

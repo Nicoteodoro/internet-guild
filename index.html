@@ -2,460 +2,418 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Internet Design Guild</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Internet Guild</title>
 <meta name="description" content="Design and development studio, born to reduce. Websites, products and AI for founders who embrace simplicity.">
-<meta name="theme-color" content="#ffffff">
-<meta property="og:title" content="The Internet Design Guild">
+<meta property="og:title" content="Internet Guild">
 <meta property="og:description" content="Design and development studio, born to reduce.">
-<meta property="og:type" content="website">
-<link rel="canonical" href="https://internetguild.co/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 11 11' shape-rendering='crispEdges'%3E%3Ccircle cx='4.5' cy='4.5' r='5.5' fill='%23F2F2F2'/%3E%3Cpath fill='%23000' d='M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z'/%3E%3C/svg%3E">
-<link rel="preload" href="SFPRODISPLAYREGULAR.OTF" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="SFPRODISPLAYMEDIUM.OTF" as="font" type="font/otf" crossorigin>
+<meta name="theme-color" content="#000000">
+<link rel="preload" href="/neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* SF Pro Display, self-hosted: Regular for the words, Medium for the titles */
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("SFPRODISPLAYREGULAR.OTF") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("SFPRODISPLAYMEDIUM.OTF") format("opentype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-:root {
-  --bg: #fff;
-  --fg: #111;
-  --muted: #6b6b6b;
-  --sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-* { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font: 400 16px/20px var(--sans);
-  -webkit-font-smoothing: antialiased;
-}
-a { color: var(--fg); text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 3px; }
-a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 2px; }
-
-.page {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 120px 20px 112px;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-}
-section, header { display: flex; flex-direction: column; gap: 14px; }
-h1, h2 { margin: 0; font-size: 1em; font-weight: 500; }
-p { margin: 0; }
-.year { font-weight: 500; }
-
-.testimonials { gap: 28px; }
-.testimonials h2 { margin-bottom: -14px; }
-figure { margin: 0; }
-blockquote { margin: 0; }
-figcaption { margin-top: 6px; color: var(--muted); }
-
-.links { display: flex; flex-direction: column; }
-
-/* The guild's mark, above everything */
-.mark { display: block; width: 28px; color: var(--fg); }
-.mark svg { display: block; width: 28px; height: 28px; }
-
-  /* Four pieces in a pile, the first in front, the others peeking out on
-     its right, each a little smaller. Under the pointer (or a tap) the
-     pile deals out into a row and a button comes up under it */
-  .stack-wrap {
-    width: 100%;
-    margin: 26px 0;
-    container-type: inline-size;
+  /* PP Neue Montreal, self-hosted: Regular for the words, Medium for the name and the buttons */
+  @font-face {
+    font-family: "PP Neue Montreal";
+    src: url("/neue-montreal-regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
   }
-
-  .stack {
-    --w: calc((100cqw - 24px) / 4);
-    position: relative;
-    isolation: isolate;
-    height: max(calc(var(--w) * 1.5), calc(var(--w) + 60px));
-    transition: height 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  @font-face {
+    font-family: "PP Neue Montreal";
+    src: url("/neue-montreal-medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
   }
-
-  .stack .cards {
-    display: block;
+  /* single dark look: everything centered on one column, icon → name → statement → links */
+  :root {
+    --bg: #000000;
+    --fg: #ffffff;
+    --fg-dim: rgba(255, 255, 255, 0.86);
+    --font-name: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color-scheme: dark;
   }
-
-  .stack .card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: var(--w);
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    border-radius: 6px;
-    background: #eeeeee;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.08);
-    transform-origin: 0 0;
-    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-
-  .stack .card img,
-  .stack .card video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .stack .card:nth-child(1) {
-    z-index: 4;
-    transform: scale(1.5);
-  }
-
-  .stack .card:nth-child(2) {
-    z-index: 3;
-    transform: translate(calc(12% + 20px), 6%) scale(1.38);
-  }
-
-  .stack .card:nth-child(3) {
-    z-index: 2;
-    transform: translate(calc(24% + 40px), 12%) scale(1.26);
-  }
-
-  .stack .card:nth-child(4) {
-    z-index: 1;
-    transform: translate(calc(36% + 60px), 18%) scale(1.14);
-  }
-
-  .stack .button {
-    position: absolute;
-    top: calc(var(--w) + 16px);
-    left: 0;
-    right: 0;
+  main {
+    min-height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    border-radius: 6px;
-    background: rgba(0, 0, 0, 0.05);
-    color: #111111;
-    opacity: 0;
-    transform: translateY(8px);
-    pointer-events: none;
-    transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s;
+    text-align: center;
+    padding-block: max(48px, env(safe-area-inset-top, 0px)) max(48px, env(safe-area-inset-bottom, 0px));
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
   }
-
-  .stack .button:hover {
-    background: rgba(0, 0, 0, 0.09);
-  }
-
-  .stack.is-open .card:nth-child(1) {
-    transform: none;
-  }
-
-  .stack.is-open .card:nth-child(2) {
-    transform: translateX(calc(100% + 8px));
-    transition-delay: 0.03s;
-  }
-
-  .stack.is-open .card:nth-child(3) {
-    transform: translateX(calc(200% + 16px));
-    transition-delay: 0.06s;
-  }
-
-  .stack.is-open .card:nth-child(4) {
-    transform: translateX(calc(300% + 24px));
-    transition-delay: 0.09s;
-  }
-
-  .stack.is-open .button {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-    transition-delay: 0.15s;
-  }
-
-  @media (hover: hover) {
-    .stack:hover .card:nth-child(1) {
-      transform: none;
-    }
-
-    .stack:hover .card:nth-child(2) {
-      transform: translateX(calc(100% + 8px));
-      transition-delay: 0.03s;
-    }
-
-    .stack:hover .card:nth-child(3) {
-      transform: translateX(calc(200% + 16px));
-      transition-delay: 0.06s;
-    }
-
-    .stack:hover .card:nth-child(4) {
-      transform: translateX(calc(300% + 24px));
-      transition-delay: 0.09s;
-    }
-
-    .stack:hover .button {
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
-      transition-delay: 0.15s;
-    }
-  }
-
-  /* On a phone the cards are half the column wide, the pile a card at
-     full size, and it deals out two by two, the page making room */
-  @media (max-width: 800px) {
-    .stack {
-      --w: calc((100cqw - 8px) / 2);
-      height: var(--w);
-    }
-
-    .stack .card:nth-child(1) {
-      transform: none;
-    }
-
-    .stack .card:nth-child(2) {
-      transform: translate(calc(8% + 20px), 4%) scale(0.92);
-    }
-
-    .stack .card:nth-child(3) {
-      transform: translate(calc(16% + 40px), 8%) scale(0.84);
-    }
-
-    .stack .card:nth-child(4) {
-      transform: translate(calc(24% + 60px), 12%) scale(0.76);
-    }
-
-    .stack .button {
-      top: calc(var(--w) * 2 + 24px);
-    }
-
-    .stack.is-open,
-    .stack:hover {
-      height: calc(var(--w) * 2 + 64px);
-    }
-
-    .stack.is-open .card:nth-child(2),
-    .stack:hover .card:nth-child(2) {
-      transform: translateX(calc(100% + 8px));
-    }
-
-    .stack.is-open .card:nth-child(3),
-    .stack:hover .card:nth-child(3) {
-      transform: translateY(calc(100% + 8px));
-    }
-
-    .stack.is-open .card:nth-child(4),
-    .stack:hover .card:nth-child(4) {
-      transform: translate(calc(100% + 8px), calc(100% + 8px));
-    }
-  }
-
+  /* soft cross-page transition: the icon stays put, the rest crossfades */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+  ::view-transition-group(mark) { animation-duration: .3s; }
   @media (prefers-reduced-motion: reduce) {
-    .stack,
-    .stack .card,
-    .stack .button {
-      transition: none;
-    }
-  }</style>
+    ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  }
+  .mark {
+    width: 320px;
+    max-width: 100%;
+    margin: 0 auto;
+    view-transition-name: mark;
+  }
+  /* same height on every page, so the icon sits at the same spot on all of them */
+  .after {
+    width: 100%;
+    height: 272px;
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--font-name);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .statement {
+    margin: 28px 0 0;
+    font-family: var(--font-name);
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--fg-dim);
+  }
+  .statement span { display: block; text-wrap: balance; }
+  nav {
+    margin-top: 44px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    padding: 0 16px;
+    font-family: var(--font-name);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    border-radius: 0;
+    transition: background-color .2s ease, color .2s ease;
+  }
+  .btn-primary { background: #ffffff; color: #000000; }
+  .btn-primary:hover { background: #e4e4e4; }
+  .btn-secondary { background: #1c1c1e; color: #ffffff; }
+  .btn-secondary:hover { background: #2a2a2d; }
+  .btn:focus-visible { outline: 1px solid #ffffff; outline-offset: 3px; }
+  @media (max-width: 480px) {
+    .statement span { display: inline; }
+    nav { margin-top: 36px; }
+  }
+</style>
 </head>
 <body>
-<main class="page">
+<main>
+<div id="ik-p5qcph" class="mark"></div>
+<script>
+window.IconoKanji = window.IconoKanji || (function () {
+  "use strict";
+  var ICON = [
+    ".........###.........", "........#####........", ".......#######.......", "......#########......",
+    ".....###########.....", "....#############....", "....#############....", "...####.......####...",
+    "...###..#####..###...", "...##..#######..##...", "..##..#########..##..", "..##.###.###.###.##..",
+    ".###.###.###.###.###.", "####.###.###.###.####", "####.###########.####", ".###..#########..###.",
+    "...##..#######..##...", "...###...###...###...", "..######.....######..", ".###################.",
+    "..#################..", "....#############....", "......#########......", ".......#######.......",
+    "........#####........", ".........###........."
+  ];
+  var IW = 21, IH = 26, EYE_CELLS = [[11, 8], [12, 8], [13, 8], [11, 12], [12, 12], [13, 12]];
+  // density ramps, light → dark (kanji ordered by stroke count)
+  var SETS = {
+    kanji: [["一", "丶", "ノ", "二", "人", "入", "八", "十", "小", "夕", "・", "、"],
+            ["日", "木", "心", "目", "田", "生", "光", "糸", "空", "門"],
+            ["電", "夢", "網", "魂", "霊", "龍", "闇", "響", "魔", "驚", "鬱"]],
+    katakana: [["ノ", "ヘ", "ニ", "ト", "ー", "ハ", "ソ", "ン", "・", "、"],
+               ["カ", "サ", "タ", "ナ", "ミ", "ム", "ラ", "ワ", "ホ", "エ"],
+               ["ガ", "ギ", "ズ", "ゼ", "ダ", "ヂ", "ヅ", "ド", "ボ", "ポ", "ヴ"]],
+    hiragana: [["し", "く", "へ", "つ", "ひ", "こ", "い", "・", "、"],
+               ["あ", "お", "か", "た", "な", "む", "ゆ", "わ", "る"],
+               ["ぬ", "ね", "め", "ぼ", "ぎ", "ぶ", "ぽ", "ぜ", "ゑ"]]
+  };
+  var ASCII = [["'", ".", ",", ":", ";"], ["t", "S", "X", "%"], ["8", "#", "@", "%"]];
+  var STRAY = ["'", ".", ",", "o", "・", "、"];
+  var ACCENTS = ["#8f74d8", "#4e9a64", "#c97a3c", "#d9686a", "#5a8fbf"];
+  var FONT_UI = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+  var FONT_JP = '"Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif';
+  var DEFAULTS = {
+    seed: 12345, jp: "kanji", jpMix: 0.7, charScale: 1, changeRate: 1, scramble: true,
+    contrast: 1, density: 0, flow: 1,
+    bg: "#f4f4f1", transparent: false, grid: "#e5e5e1", showGrid: true,
+    tileLo: "#e0e0dc", tileHi: "#353533", text: "#5c5c58", textOnDark: "#eeeeea",
+    accentMode: "multi", accent: "#d9686a", accentRate: 1,
+    padX: 5, padY: 3, gap: 0.12, radius: 0,
+    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true
+  };
+  var CHARS = (function () {
+    var all = ASCII.flat().concat(STRAY);
+    Object.keys(SETS).forEach(function (k) { all = all.concat(SETS[k].flat()); });
+    return Array.from(new Set(all)).join("");
+  })();
 
-  <a class="mark" href="/" aria-label="The Internet Design Guild — home">
-    <svg viewBox="0 0 9 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h3v1h-3z M1 1h2v1h-2z M4 1h1v1h-1z M6 1h2v1h-2z M1 2h1v1h-1z M3 2h3v1h-3z M7 2h1v1h-1z M0 3h1v1h-1z M2 3h1v1h-1z M4 3h1v1h-1z M6 3h1v1h-1z M8 3h1v1h-1z M0 4h9v1h-9z M0 5h1v1h-1z M2 5h1v1h-1z M4 5h1v1h-1z M6 5h1v1h-1z M8 5h1v1h-1z M1 6h1v1h-1z M3 6h3v1h-3z M7 6h1v1h-1z M1 7h2v1h-2z M4 7h1v1h-1z M6 7h2v1h-2z M3 8h3v1h-3z"/></svg>
-  </a>
+  function ensureFonts() {
+    if (document.getElementById("ik-fonts")) return;
+    var l = document.createElement("link");
+    l.id = "ik-fonts"; l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@500&text=" + encodeURIComponent(CHARS) + "&display=swap";
+    document.head.appendChild(l);
+  }
+  function hexRgb(h) {
+    h = String(h || "").trim();
+    if (/^#[0-9a-f]{3}$/i.test(h)) h = "#" + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
+    if (!/^#[0-9a-f]{6}$/i.test(h)) return [128, 128, 128];
+    return [1, 3, 5].map(function (k) { return parseInt(h.slice(k, k + 2), 16); });
+  }
+  function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function css(a) { return "rgb(" + (a[0] | 0) + "," + (a[1] | 0) + "," + (a[2] | 0) + ")"; }
+  function isJP(ch) { return ch.charCodeAt(0) > 0x2000; }
 
-  <header>
-    <h1>The Internet Design Guild</h1>
-    <p>Design and development studio, born to reduce.<br>Websites, products and AI for founders who embrace simplicity.</p>
-    <p>Eleven years of practice, helping people build what they imagine.</p>
-  </header>
+  function mount(el, userCfg) {
+    ensureFonts();
+    var cfg = Object.assign({}, DEFAULTS, userCfg || {});
+    var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var cv = document.createElement("canvas");
+    cv.setAttribute("role", "img"); cv.setAttribute("aria-label", "Ícono animado hecho con caracteres");
+    cv.style.cssText = "display:block;width:100%;";
+    el.appendChild(cv);
+    var ctx = cv.getContext("2d"), bgc = document.createElement("canvas"), bctx = bgc.getContext("2d");
+    var G, cells, strays, T, nextBlink, blinkUntil, sweepStart, sweepId, rs = 1, seedN = 1, col, cell = 10, dpr = 1;
+    var raf = 0, visible = true, paused = false, last = 0, ro, io;
 
-  <section aria-labelledby="about">
-    <h2 id="about">About</h2>
-    <p>Founded and led by Nico Teodoro.<br>Born in Argentina. Raised on the internet.<br>Grown in Azeroth.</p>
-    <p>He made his first websites as a kid, for the online games at his local cybercafés. He never stopped. Over the years he worked alone, built a studio, closed it and started again. Along the way he learned one simple thing: good work is not about adding more. It’s about knowing what to leave out.</p>
-    <p><span class="year">Age 13.</span> First websites, for the game servers of local cybercafés: Mu Online, Lineage 2, Argentum Online. Design and code start here.</p>
-    <p><span class="year">2015.</span> Goes solo. Just a laptop and clients from other countries, all remote.</p>
-    <p><span class="year">2020.</span> Freelance becomes a studio: Simplify Computer. A team, more clients, more noise.</p>
-    <p><span class="year">2024.</span> Simplify closes. Back to working alone. Fewer projects, more care.</p>
-    <p><span class="year">2025.</span> A trip to Japan. In Kyoto, one idea sticks: simple is not a style. It’s the standard.</p>
-    <p><span class="year">April 11, 2025.</span> After a meeting in Kyoto, the guild is born.</p>
-    <p><span class="year">Now.</span> Websites and products for AI, fintech, crypto, health and real estate companies, and for other agencies. The same kid from the cybercafés, still making things for the internet. Just cleaner.</p>
-  </section>
+    function rand() { rs |= 0; rs = rs + 0x6D2B79F5 | 0; var t = Math.imul(rs ^ rs >>> 15, 1 | rs); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function pick(a) { return a[(rand() * a.length) | 0]; }
+    function hash(x, y, z) { var h = (Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(z, 1440662683) + seedN) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16; return (h >>> 0) / 4294967296; }
+    function vnoise(x, y, z) {
+      var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z), u = x - xi, v = y - yi, w = z - zi;
+      u = u * u * (3 - 2 * u); v = v * v * (3 - 2 * v); w = w * w * (3 - 2 * w);
+      function L(a, b, t) { return a + (b - a) * t; }
+      return L(L(L(hash(xi, yi, zi), hash(xi + 1, yi, zi), u), L(hash(xi, yi + 1, zi), hash(xi + 1, yi + 1, zi), u), v),
+               L(L(hash(xi, yi, zi + 1), hash(xi + 1, yi, zi + 1), u), L(hash(xi, yi + 1, zi + 1), hash(xi + 1, yi + 1, zi + 1), u), v), w);
+    }
 
-  <section aria-labelledby="work">
-    <h2 id="work">Work</h2>
-    <p>Over the years we have worked with startups, banks, funds and other studios, in fintech, crypto, energy, sports and health.</p>
-    <div class="stack-wrap">
-      <div class="stack">
-        <a class="cards" href="#work" aria-label="View works">
-          <span class="card"><img alt="" decoding="async"></span>
-          <span class="card"><img alt="" decoding="async"></span>
-          <span class="card"><img alt="" decoding="async"></span>
-          <span class="card"><img alt="" decoding="async"></span>
-        </a>
-        <a class="button" href="#work" tabindex="-1">View works →</a>
-      </div>
-    </div>
-    <p>Recent collaborations include Aerolab, Great Sky Solar, Buenbit (acquired), Numia, Towerbank, Papayadash, K Street VC, peiGo, Eureka Labs, Emilabs, Aquicore (acquired), Complif, Bonum, Waterplan, Lupa Studio, FZ Sports, 1190 Sports, Fanatiz, White Prompt, Cary Health and Cary RX.</p>
-  </section>
+    function geometry() {
+      var PX = Math.max(0, cfg.padX | 0), PY = Math.max(0, cfg.padY | 0);
+      var COLS = IW + PX * 2, ROWS = IH + PY * 2, N = COLS * ROWS, r, c, i;
+      var filled = new Uint8Array(N), outside = new Uint8Array(N);
+      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) if (ICON[r][c] === "#") filled[(r + PY) * COLS + c + PX] = 1;
+      var q = [];
+      for (i = 0; i < N; i++) { r = (i / COLS) | 0; c = i % COLS;
+        if ((r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1) && !filled[i]) { outside[i] = 1; q.push(i); } }
+      while (q.length) { i = q.pop(); r = (i / COLS) | 0; c = i % COLS;
+        [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) { var rr = r + d[0], cc = c + d[1];
+          if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) return; var j = rr * COLS + cc;
+          if (!outside[j] && !filled[j]) { outside[j] = 1; q.push(j); } }); }
+      function cheb(src, seedEdge) { var d = new Int16Array(N).fill(99), qq = [];
+        for (var k = 0; k < N; k++) if (src[k]) { d[k] = 0; qq.push(k); }
+        for (var h = 0; h < qq.length; h++) { var a = qq[h], ar = (a / COLS) | 0, ac = a % COLS;
+          for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) { var rr = ar + dr, cc = ac + dc;
+            if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) continue; var b = rr * COLS + cc;
+            if (d[b] > d[a] + 1) { d[b] = d[a] + 1; qq.push(b); } } }
+        if (seedEdge) for (var e = 0; e < N; e++) { var er = (e / COLS) | 0, ec = e % COLS;   // canvas edge counts as outside
+          var de = Math.min(er + 1, ec + 1, ROWS - er, COLS - ec); if (de < d[e]) d[e] = de; }
+        return d; }
+      G = { COLS: COLS, ROWS: ROWS, N: N, filled: filled, outside: outside,
+            depth: cheb(outside, true), away: cheb(filled, false),
+            eyes: EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
+    }
 
-  <section class="testimonials" aria-labelledby="testimonials">
-    <h2 id="testimonials">Testimonials</h2>
-    <figure>
-      <blockquote>“I worked with Nico on the full development of our new website, and from day one he clearly understood our vision. He delivered at the level of every reference we shared and also took the time to teach us how to maintain the site ourselves. Nico is both highly professional and great to work with.”</blockquote>
-      <figcaption>Karen Brendel, Growth Manager, Eureka Labs</figcaption>
-    </figure>
-    <figure>
-      <blockquote>“Working with Nico was a great experience. He’s really good at turning Figma designs into solid Webflow sites, always keeping the design exactly how it should be. He also helped a lot with setting up the CMS, making it easy for us to manage the content of our website. Nico is fast and easy to work with.”</blockquote>
-      <figcaption>Roddy Garcia, Product Design Manager, White Prompt</figcaption>
-    </figure>
-    <figure>
-      <blockquote>“Nico went far and beyond. He not only implemented the Zeplin we had in Webflow, he also improved it in many UI aspects. Nico has great technical and communicational skills, and more important than that, he is always available and willing to help. I am happy to have him in my network of partners.”</blockquote>
-      <figcaption>Juan Ignacio Cidre, CEO, White Prompt</figcaption>
-    </figure>
-    <figure>
-      <blockquote>“Nico helped us throughout the entire process, from brand creation to website design. His willingness to help and his constant communication made the entire process quick and efficient. We would definitely choose him again!”</blockquote>
-      <figcaption>Guido Sasson, CEO, Remmy</figcaption>
-    </figure>
-    <figure>
-      <blockquote>“Working with Nico was a great experience. He quickly understood Tintte’s vision and translated it into a clean, functional, and well-structured website. He’s proactive, reliable, and easy to work with, a true partner.”</blockquote>
-      <figcaption>Magalí Mendez, Co-founder &amp; CPO, Tintte</figcaption>
-    </figure>
-    <figure>
-      <blockquote>“Nico was an amazing asset in launching my NFT project and site. He is a Webflow wizard and his communication is second to none!”</blockquote>
-      <figcaption>Jacob J., jacobtheape.xyz</figcaption>
-    </figure>
-  </section>
-
-  <section aria-labelledby="notes">
-    <h2 id="notes">Notes</h2>
-    <nav class="links" aria-labelledby="notes">
-      <a href="#">Designed to reduce</a>
-      <a href="#">Yohaku, or the design of empty space</a>
-      <a href="#">Why we left Framer for one HTML file</a>
-      <a href="#">A website should feel like a document</a>
-    </nav>
-  </section>
-
-  <section aria-labelledby="contact">
-    <h2 id="contact">Contact</h2>
-    <nav class="links" aria-labelledby="contact">
-      <a href="mailto:webmaster@internetguild.co">Email</a>
-      <a href="https://t.me/internetguild">Telegram</a>
-      <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://x.com/internetguild_" target="_blank" rel="noopener">Twitter</a>
-    </nav>
-  </section>
-
-</main>
-  <script>
-    // A different four on every visit, drawn from all the work, the order
-    // shuffled as well. A video plays, muted and looping, only while it is
-    // on screen; until then, and without it, its poster
-    (() => {
-      const all = [
-        'towerbank-poster.webp',
-        'towerbank-cards.mp4',
-        'towerbank-app.webp',
-        'towerbank-debit-card.mp4',
-        'towerbank-website-ui.mp4',
-        'towerbank-website-laptops.mp4',
-        'numia-icons.webp',
-        'numia-pattern.webp',
-        'numia-poster.webp',
-        'numia-website-laptop.webp',
-        'numia-website-mobile.webp',
-        'numia-website-sections.webp',
-        'numia-customer-journey.mp4',
-        'numia-virtual-assistance.mp4',
-        'emi-brand.mp4',
-        'emi-website.mp4',
-        'emi-website-es.mp4',
-        'emi-onboarding.mp4',
-        'emi-report-charts.mp4',
-        'emilabs-report.webp',
-        'great-sky-solar-website.webp',
-        'great-sky-solar-products.webp',
-        'great-sky-solar-team.webp',
-        'agent-activity-panel.webp',
-        'token-statement.webp',
-        'xrank.webp',
-        'china-supply.webp',
-        'journal-app.webp',
-        'journal-app-closeup.webp',
-        'calm-app-login.webp',
-        'music-player.webp',
-        'writing-app.webp',
-        'godzilla-minus-one-poster.webp',
-        'godzilla-minus-one-bus-stop.webp',
-        'nine2five.webp',
-        'ids-shopping-bag.webp',
-        'towerbank-campaign.mp4',
-        'towerbank-card-colors.mp4',
-        'numia-stationery.webp',
-        'great-sky-solar-calculator.webp',
-        'great-sky-solar-monitoring.webp'
-      ];
-      for (let i = all.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [all[i], all[j]] = [all[j], all[i]];
+    function reset() {
+      seedN = cfg.seed | 0; rs = seedN; T = 0;
+      nextBlink = 2 + rand() * 3; blinkUntil = -1; sweepStart = 3; sweepId = 0; cells = []; strays = [];
+      for (var i = 0; i < G.N; i++) {
+        var r = (i / G.COLS) | 0, c = i % G.COLS;
+        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1 });
+        else if (G.outside[i] && G.away[i] <= 2) strays.push({ r: r, c: c, d: G.away[i], on: false, ch: "", next: rand() * 2 });
       }
-      const watch = 'IntersectionObserver' in window && new IntersectionObserver((entries) => {
-        entries.forEach(({ target, isIntersecting }) => {
-          if (isIntersecting) target.play().catch(() => {});
-          else target.pause();
-        });
-      });
-      document.querySelectorAll('.stack .card img').forEach((img, i) => {
-        const file = all[i];
-        if (!file.endsWith('.mp4')) {
-          img.src = 'projects/' + file;
-          return;
+      step(0.001);
+    }
+
+    function colors() {
+      var bg = hexRgb(cfg.bg), lo = hexRgb(cfg.tileLo), hi = hexRgb(cfg.tileHi), tx = hexRgb(cfg.text);
+      col = { bg: bg, grid: hexRgb(cfg.grid), lo: lo, hi: hi, inkSoft: mix(lo, tx, 0.55), inkStrong: tx, onHi: hexRgb(cfg.textOnDark),
+              ghost: mix(bg, lo, 0.55), ghostInk: mix(bg, tx, 0.32), stray: mix(bg, tx, 0.45),
+              accents: cfg.accentMode === "single" ? [cfg.accent] : ACCENTS };
+      drawBg();
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = el.clientWidth || 300;
+      cell = w / G.COLS;
+      var h = cell * G.ROWS;
+      cv.width = bgc.width = Math.max(1, Math.round(w * dpr));
+      cv.height = bgc.height = Math.max(1, Math.round(h * dpr));
+      cv.style.height = h + "px";
+      drawBg(); draw();
+    }
+
+    function drawBg() {
+      if (!col || !G) return;
+      bctx.setTransform(1, 0, 0, 1, 0, 0); bctx.clearRect(0, 0, bgc.width, bgc.height);
+      bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var W = cell * G.COLS, H = cell * G.ROWS;
+      if (!cfg.transparent) { bctx.fillStyle = css(col.bg); bctx.fillRect(0, 0, W, H); }
+      if (cfg.showGrid) {
+        bctx.strokeStyle = css(col.grid); bctx.lineWidth = 1 / dpr; bctx.beginPath();
+        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(px, 0); bctx.lineTo(px, H); }
+        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(0, py); bctx.lineTo(W, py); }
+        bctx.stroke();
+      }
+    }
+
+    function bucket(t) { return t < 0.4 ? 0 : t < 0.7 ? 1 : 2; }
+    function set() { return SETS[cfg.jp] || SETS.kanji; }
+    function choose(b) { return rand() < cfg.jpMix ? pick(set()[b]) : pick(ASCII[b]); }
+    function anyChar() { return rand() < cfg.jpMix ? pick(set()[(rand() * 3) | 0]) : pick(ASCII[(rand() * 3) | 0]); }
+
+    var SWEEP_DUR = 2.4;
+    function sweepBoost(r, c) {
+      if (!cfg.sweep) return 0;
+      var p = T - sweepStart; if (p < 0 || p > SWEEP_DUR) return 0;
+      var head = -8 + (G.ROWS + 16) * (p / SWEEP_DUR), dist = (r + c * 0.4 - G.COLS * 0.2) - head;
+      return Math.exp(-(dist * dist) / 3);
+    }
+    function toneOf(cl) {
+      var n = 0.65 * vnoise(cl.c / 5, cl.r / 5, T * 0.22) + 0.35 * vnoise(cl.c / 2.2 + 40, cl.r / 2.2, T * 0.55);
+      var t = 0.4 + 0.11 * Math.min(cl.d, 4) + 0.6 * cfg.flow * (n - 0.5);
+      t = 0.5 + (t - 0.5) * cfg.contrast + cfg.density;
+      return Math.max(0.03, Math.min(1, t));
+    }
+
+    function step(dt) {
+      T += dt;
+      var scramble = cfg.scramble && !reduced;
+      if (T > sweepStart + SWEEP_DUR + cfg.sweepEvery) { sweepStart = T; sweepId++; }
+      if (cfg.blink && T >= nextBlink) { blinkUntil = T + 0.14; nextBlink = T + 2.5 + rand() * 4.5; if (rand() < 0.2) nextBlink = T + 0.32; }
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], boost = sweepBoost(cl.r, cl.c);
+        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4);
+        var b = bucket(cl.tone);
+        if (boost > 0.5 && cl.sweep !== sweepId) { cl.sweep = sweepId; cl.b = b; if (scramble) { cl.scr = 4; cl.scrNext = T; } else cl.ch = choose(b); }
+        if (b !== cl.b || T >= cl.next) {
+          cl.b = b; cl.next = T + (0.8 + rand() * 3.2) / Math.max(0.05, cfg.changeRate);
+          if (scramble && rand() < 0.7) { cl.scr = 2 + ((rand() * 3) | 0); cl.scrNext = T; } else cl.ch = choose(b);
         }
-        const video = document.createElement('video');
-        video.src = 'projects/' + file;
-        video.poster = 'projects/poster-' + file.replace('.mp4', '.webp');
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.preload = 'none';
-        video.setAttribute('aria-hidden', 'true');
-        img.replaceWith(video);
-        if (watch) watch.observe(video);
-      });
-    })();
-
-    // Without a pointer, the first tap deals the pile out; once out, a tap
-    // goes on to the works. Keyboard focus deals it out too
-    const stack = document.querySelector('.stack');
-    stack.addEventListener('click', (e) => {
-      if (!stack.classList.contains('is-open') && !matchMedia('(hover: hover)').matches) {
-        e.preventDefault();
-        stack.classList.add('is-open');
+        if (cl.scr > 0 && T >= cl.scrNext) { cl.scr--; cl.scrNext = T + 0.055; cl.ch = cl.scr ? anyChar() : choose(cl.b); }
+        if (!cl.ch) cl.ch = choose(cl.b);
+        if (cl.acc !== null && (T > cl.accUntil || cfg.accentMode === "off")) cl.acc = null;
+        if (cfg.accentMode !== "off" && cl.acc === null && rand() < 0.012 * cfg.accentRate * dt) { cl.acc = (rand() * col.accents.length) | 0; cl.accUntil = T + 1.2 + rand() * 3; }
+        if (cfg.erosion && cl.d === 1 && T > cl.ghostUntil && rand() < 0.035 * dt) cl.ghostUntil = T + 0.4 + rand() * 1.6;
       }
-    });
-    stack.addEventListener('focusin', (e) => {
-      if (e.target.matches(':focus-visible')) stack.classList.add('is-open');
-    });
-    stack.addEventListener('focusout', (e) => {
-      if (!stack.contains(e.relatedTarget)) stack.classList.remove('is-open');
-    });
-    document.addEventListener('click', (e) => {
-      if (!stack.contains(e.target)) stack.classList.remove('is-open');
-    });
-  </script>
+      for (var s = 0; s < strays.length; s++) { var st = strays[s];
+        if (T >= st.next) { st.on = rand() < (st.d === 1 ? 0.3 : 0.12); st.ch = pick(STRAY); st.next = T + 0.5 + rand() * 2.5; } }
+    }
+
+    function tileRect(x, y, w, r) {
+      if (r > 0.3 && ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, w, r); ctx.fill(); }
+      else ctx.fillRect(x, y, w, w);
+    }
+
+    function draw() {
+      if (!col || !G || !cells) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bgc, 0, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var inset = cell * cfg.gap / 2, tile = cell - inset * 2, rad = tile * cfg.radius;
+      var fA = "500 " + (cell * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
+      var fJ = "500 " + (cell * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], x = cl.c * cell, y = cl.r * cell, fill, ink, t = cl.tone;
+        if (cfg.erosion && T < cl.ghostUntil) { fill = css(col.ghost); ink = css(col.ghostInk); }
+        else {
+          fill = css(mix(col.lo, col.hi, t));
+          ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
+          if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+        }
+        ctx.fillStyle = fill; tileRect(x + inset, y + inset, tile, rad);
+        var jp = isJP(cl.ch);
+        ctx.fillStyle = ink; ctx.font = jp ? fJ : fA;
+        ctx.fillText(cl.ch, x + cell / 2, y + cell / 2 + (jp ? 0 : cell * 0.04));
+      }
+      if (T < blinkUntil) {
+        ctx.fillStyle = css(col.hi);
+        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect((i % G.COLS) * cell + inset, ((i / G.COLS) | 0) * cell + inset, tile, rad); }
+      }
+      if (cfg.strays) {
+        ctx.fillStyle = css(col.stray);
+        for (var s = 0; s < strays.length; s++) { var st = strays[s]; if (!st.on) continue;
+          ctx.font = isJP(st.ch) ? fJ : fA; ctx.fillText(st.ch, st.c * cell + cell / 2, st.r * cell + cell / 2); }
+      }
+    }
+
+    function loop(now) {
+      var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
+      if (visible) {
+        if (!paused && cfg.speed > 0) step(dt * cfg.speed * (reduced ? 0.35 : 1));
+        draw();
+      }
+      raf = requestAnimationFrame(loop);
+    }
+
+    geometry(); colors(); reset(); resize();
+    if (window.ResizeObserver) { ro = new ResizeObserver(resize); ro.observe(el); } else window.addEventListener("resize", resize);
+    if (window.IntersectionObserver) { io = new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }); io.observe(cv); }
+    if (document.fonts && document.fonts.load) {
+      Promise.all([document.fonts.load("500 16px " + FONT_JP, CHARS), document.fonts.load("500 16px " + FONT_UI, "S%@")]).then(draw, function () {});
+    }
+    raf = requestAnimationFrame(loop);
+
+    return {
+      set: function (patch) {
+        var prev = cfg; cfg = Object.assign({}, cfg, patch || {});
+        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY) { geometry(); colors(); reset(); resize(); return; }
+        if (prev.accentMode !== cfg.accentMode && cells) cells.forEach(function (c) { c.acc = null; });
+        colors();
+        if (prev.seed !== cfg.seed) reset();
+        else if ((prev.jp !== cfg.jp || prev.jpMix !== cfg.jpMix) && cells) cells.forEach(function (c) { c.next = T + rand() * 0.6; });
+        draw();
+      },
+      get: function () { return Object.assign({}, cfg); },
+      size: function () { return { cols: G.COLS, rows: G.ROWS }; },
+      togglePause: function () { paused = !paused; return paused; },
+      destroy: function () { cancelAnimationFrame(raf); if (ro) ro.disconnect(); if (io) io.disconnect(); cv.remove(); }
+    };
+  }
+
+  return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
+})();
+IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"kanji","jpMix":1,"charScale":0.89,"changeRate":2.47,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#121314","transparent":true,"grid":"#1d1e20","showGrid":false,"tileLo":"#000000","tileHi":"#000000","text":"#ffffff","textOnDark":"#ffffff","accentMode":"off","accent":"#d9686a","accentRate":1,"padX":5,"padY":3,"gap":0.12,"radius":0,"speed":1,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true});
+</script>
+  <div class="after">
+  <h1>Internet Guild&copy;</h1>
+  <p class="statement">
+    <span>Design and development studio, born to reduce.</span>
+    <span>Websites, products and AI for founders who embrace simplicity.</span>
+    <span>Eleven years of practice, helping people build what they imagine.</span>
+  </p>
+  <nav aria-label="Main">
+    <a class="btn btn-primary" href="/works">View works</a>
+    <a class="btn btn-secondary" href="/contact">Hire the Guild</a>
+  </nav>
+  </div>
+</main>
 </body>
 </html>
