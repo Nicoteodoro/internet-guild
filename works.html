@@ -196,7 +196,7 @@
     .frame img, .frame video { transition: opacity .2s ease; }
   }
   @media (max-width: 640px) {
-    .grid { gap: 20px 6px; }
+    .grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
     .cap { flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 8px; font-size: 12px; }
     .cap .meta { font-size: 11px; }
     .tag-video { top: 6px; right: 6px; font-size: 10px; }
