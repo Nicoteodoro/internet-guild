@@ -88,7 +88,10 @@
   }
   @keyframes blink { 50% { opacity: 0; } }
   .count { margin-left: 14px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-  .left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+  .left { display: flex; align-items: baseline; gap: 28px; min-width: 0; flex-wrap: wrap; }
+  .back { color: var(--fg); font-size: 14px; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+  .back:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .back:focus-visible { outline: 1px solid var(--fg); outline-offset: 3px; }
   .chip {
     display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border: 0; border-radius: 0; cursor: pointer;
     font: 500 12px/26px var(--font-name); letter-spacing: -0.01em; text-decoration: none; white-space: nowrap;
@@ -483,7 +486,7 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
 
   <div class="bar">
     <div class="left">
-      <a class="chip" href="/">&larr; back to index</a>
+      <a class="back" href="/"><span class="ps" aria-hidden="true">&lt;</span>back to index</a>
       <div class="cmdline" aria-live="polite">
         <span class="ps" aria-hidden="true">&gt;</span><span class="cmd" id="cmd">works --all</span><span class="cursor" aria-hidden="true"></span><span class="count" id="count"></span>
       </div>
