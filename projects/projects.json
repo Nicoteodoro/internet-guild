@@ -25,15 +25,6 @@
     "type": "image"
   },
   {
-    "file": "towerbank-debit-card.mp4",
-    "width": 720,
-    "height": 1080,
-    "client": "Towerbank",
-    "description": "Towerbank debit card screen",
-    "type": "video",
-    "poster": "poster-towerbank-debit-card.webp"
-  },
-  {
     "file": "towerbank-website-ui.mp4",
     "width": 1920,
     "height": 1080,
@@ -43,28 +34,11 @@
     "poster": "poster-towerbank-website-ui.webp"
   },
   {
-    "file": "towerbank-website-laptops.mp4",
-    "width": 1920,
-    "height": 1080,
-    "client": "Towerbank",
-    "description": "Towerbank website on laptops",
-    "type": "video",
-    "poster": "poster-towerbank-website-laptops.webp"
-  },
-  {
     "file": "numia-icons.webp",
     "width": 1500,
     "height": 1500,
     "client": "Numia",
     "description": "Numia icon system",
-    "type": "image"
-  },
-  {
-    "file": "numia-pattern.webp",
-    "width": 1500,
-    "height": 1500,
-    "client": "Numia",
-    "description": "Numia geometric pattern",
     "type": "image"
   },
   {
@@ -152,15 +126,6 @@
     "description": "Emi onboarding website on a laptop",
     "type": "video",
     "poster": "poster-emi-onboarding.webp"
-  },
-  {
-    "file": "emi-report-charts.mp4",
-    "width": 720,
-    "height": 1080,
-    "client": "Emi",
-    "description": "Emi report charts",
-    "type": "video",
-    "poster": "poster-emi-report-charts.webp"
   },
   {
     "file": "emilabs-report.webp",
@@ -306,15 +271,6 @@
     "description": "Towerbank campaign",
     "type": "video",
     "poster": "poster-towerbank-campaign.webp"
-  },
-  {
-    "file": "towerbank-card-colors.mp4",
-    "width": 720,
-    "height": 1080,
-    "client": "Towerbank",
-    "description": "Towerbank card colours",
-    "type": "video",
-    "poster": "poster-towerbank-card-colors.webp"
   },
   {
     "file": "numia-stationery.webp",
