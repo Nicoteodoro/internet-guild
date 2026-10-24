@@ -211,6 +211,7 @@
   }
   @media (max-width: 640px) {
     .grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+    .frame { aspect-ratio: var(--own, var(--ratio)); } /* one column: each piece at its own shape, nothing cropped */
     .cap { flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 8px; font-size: 12px; }
     .cap .meta { font-size: 11px; }
     .tag-video { top: 6px; right: 6px; font-size: 10px; }
@@ -540,47 +541,47 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
   // ── the projects ──
   // from projects/projects.json; tags: web, product, ai, brand · type: "image" or "video" · poster: still frame for videos
   var PROJECTS = [
-    {"client": "Towerbank", "tags": ["brand"], "type": "image", "src": "/projects/towerbank-poster.webp", "desc": "Towerbank credit card street poster."},
-    {"client": "Towerbank", "tags": ["brand"], "type": "video", "src": "/projects/towerbank-cards.mp4", "desc": "Towerbank Visa cards.", "poster": "/projects/poster-towerbank-cards.webp"},
-    {"client": "Towerbank", "tags": ["product"], "type": "image", "src": "/projects/towerbank-app.webp", "desc": "Towerbank investments app on iPhone."},
-    {"client": "Towerbank", "tags": ["product", "brand"], "type": "video", "src": "/projects/towerbank-debit-card.mp4", "desc": "Towerbank debit card screen.", "poster": "/projects/poster-towerbank-debit-card.webp"},
-    {"client": "Towerbank", "tags": ["web", "product"], "type": "video", "src": "/projects/towerbank-website-ui.mp4", "desc": "Towerbank website interface.", "poster": "/projects/poster-towerbank-website-ui.webp"},
-    {"client": "Towerbank", "tags": ["web"], "type": "video", "src": "/projects/towerbank-website-laptops.mp4", "desc": "Towerbank website on laptops.", "poster": "/projects/poster-towerbank-website-laptops.webp"},
-    {"client": "Numia", "tags": ["brand"], "type": "image", "src": "/projects/numia-icons.webp", "desc": "Numia icon system."},
-    {"client": "Numia", "tags": ["brand"], "type": "image", "src": "/projects/numia-pattern.webp", "desc": "Numia geometric pattern."},
-    {"client": "Numia", "tags": ["brand"], "type": "image", "src": "/projects/numia-poster.webp", "desc": "Numia poster on a concrete wall."},
-    {"client": "Numia", "tags": ["web"], "type": "image", "src": "/projects/numia-website-laptop.webp", "desc": "Numia website on a MacBook."},
-    {"client": "Numia", "tags": ["web", "product"], "type": "image", "src": "/projects/numia-website-mobile.webp", "desc": "Numia website on iPhone."},
-    {"client": "Numia", "tags": ["web"], "type": "image", "src": "/projects/numia-website-sections.webp", "desc": "Numia website sections."},
-    {"client": "Numia", "tags": ["web", "product"], "type": "video", "src": "/projects/numia-customer-journey.mp4", "desc": "Numia customer journey website on a laptop.", "poster": "/projects/poster-numia-customer-journey.webp"},
-    {"client": "Numia", "tags": ["product", "ai"], "type": "video", "src": "/projects/numia-virtual-assistance.mp4", "desc": "Numia virtual assistance interface.", "poster": "/projects/poster-numia-virtual-assistance.webp"},
-    {"client": "Emi", "tags": ["brand"], "type": "video", "src": "/projects/emi-brand.mp4", "desc": "Emi brand identity.", "poster": "/projects/poster-emi-brand.webp"},
-    {"client": "Emi", "tags": ["web"], "type": "video", "src": "/projects/emi-website.mp4", "desc": "Emi website.", "poster": "/projects/poster-emi-website.webp"},
-    {"client": "Emi", "tags": ["web"], "type": "video", "src": "/projects/emi-website-es.mp4", "desc": "Emi website in Spanish on laptops.", "poster": "/projects/poster-emi-website-es.webp"},
-    {"client": "Emi", "tags": ["web", "product"], "type": "video", "src": "/projects/emi-onboarding.mp4", "desc": "Emi onboarding website on a laptop.", "poster": "/projects/poster-emi-onboarding.webp"},
-    {"client": "Emi", "tags": ["product"], "type": "video", "src": "/projects/emi-report-charts.mp4", "desc": "Emi report charts.", "poster": "/projects/poster-emi-report-charts.webp"},
-    {"client": "Emi", "tags": ["product"], "type": "image", "src": "/projects/emilabs-report.webp", "desc": "Emi report on an iPad."},
-    {"client": "Great Sky Solar", "tags": ["web"], "type": "image", "src": "/projects/great-sky-solar-website.webp", "desc": "Great Sky Solar homepage and savings calculator."},
-    {"client": "Great Sky Solar", "tags": ["brand"], "type": "image", "src": "/projects/great-sky-solar-products.webp", "desc": "Great Sky Solar product cards."},
-    {"client": "Great Sky Solar", "tags": ["web"], "type": "image", "src": "/projects/great-sky-solar-team.webp", "desc": "Great Sky Solar team page."},
-    {"client": "Studio", "tags": ["product", "ai"], "type": "image", "src": "/projects/agent-activity-panel.webp", "desc": "Agent activity panel on a studio display."},
-    {"client": "Studio", "tags": ["product"], "type": "image", "src": "/projects/token-statement.webp", "desc": "Token statement dashboard on a studio display."},
-    {"client": "xrank", "tags": ["product"], "type": "image", "src": "/projects/xrank.webp", "desc": "xrank.tech leaderboard on a MacBook."},
-    {"client": "China.Supply", "tags": ["web"], "type": "image", "src": "/projects/china-supply.webp", "desc": "China.Supply landing page on a MacBook."},
-    {"client": "Studio", "tags": ["product"], "type": "image", "src": "/projects/journal-app.webp", "desc": "Journal app on iPhone resting on concrete blocks."},
-    {"client": "Studio", "tags": ["product"], "type": "image", "src": "/projects/journal-app-closeup.webp", "desc": "Journal app on iPhone, close-up."},
-    {"client": "Studio", "tags": ["product"], "type": "image", "src": "/projects/calm-app-login.webp", "desc": "Calm app login screen on iPhone."},
-    {"client": "Studio", "tags": ["product"], "type": "image", "src": "/projects/music-player.webp", "desc": "Music player interface."},
-    {"client": "Studio", "tags": ["product"], "type": "image", "src": "/projects/writing-app.webp", "desc": "Writing app on a MacBook."},
-    {"client": "Godzilla Minus One", "tags": ["brand"], "type": "image", "src": "/projects/godzilla-minus-one-poster.webp", "desc": "Godzilla Minus One poster."},
-    {"client": "Godzilla Minus One", "tags": ["brand"], "type": "image", "src": "/projects/godzilla-minus-one-bus-stop.webp", "desc": "Godzilla Minus One poster at a bus stop."},
-    {"client": "Nine2Five", "tags": ["product", "brand"], "type": "image", "src": "/projects/nine2five.webp", "desc": "Nine2Five work glasses spec sheet and stage screen."},
-    {"client": "Internet Guild", "tags": ["brand"], "type": "image", "src": "/projects/ids-shopping-bag.webp", "desc": "Internet Guild shopping bag."},
-    {"client": "Towerbank", "tags": ["brand"], "type": "video", "src": "/projects/towerbank-campaign.mp4", "desc": "Towerbank campaign.", "poster": "/projects/poster-towerbank-campaign.webp"},
-    {"client": "Towerbank", "tags": ["brand"], "type": "video", "src": "/projects/towerbank-card-colors.mp4", "desc": "Towerbank card colours.", "poster": "/projects/poster-towerbank-card-colors.webp"},
-    {"client": "Numia", "tags": ["brand"], "type": "image", "src": "/projects/numia-stationery.webp", "desc": "Numia stationery."},
-    {"client": "Great Sky Solar", "tags": ["brand"], "type": "image", "src": "/projects/great-sky-solar-calculator.webp", "desc": "Great Sky Solar savings calculator."},
-    {"client": "Great Sky Solar", "tags": ["product"], "type": "image", "src": "/projects/great-sky-solar-monitoring.webp", "desc": "Great Sky Solar monitoring app."}
+    {"client": "Towerbank", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-poster.webp", "desc": "Towerbank credit card street poster."},
+    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-cards.mp4", "desc": "Towerbank Visa cards.", "poster": "/projects/poster-towerbank-cards.webp"},
+    {"client": "Towerbank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-app.webp", "desc": "Towerbank investments app on iPhone."},
+    {"client": "Towerbank", "tags": ["product", "brand"], "w": 720, "h": 1080, "type": "video", "src": "/projects/towerbank-debit-card.mp4", "desc": "Towerbank debit card screen.", "poster": "/projects/poster-towerbank-debit-card.webp"},
+    {"client": "Towerbank", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-website-ui.mp4", "desc": "Towerbank website interface.", "poster": "/projects/poster-towerbank-website-ui.webp"},
+    {"client": "Towerbank", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-website-laptops.mp4", "desc": "Towerbank website on laptops.", "poster": "/projects/poster-towerbank-website-laptops.webp"},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-icons.webp", "desc": "Numia icon system."},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-pattern.webp", "desc": "Numia geometric pattern."},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-poster.webp", "desc": "Numia poster on a concrete wall."},
+    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-laptop.webp", "desc": "Numia website on a MacBook."},
+    {"client": "Numia", "tags": ["web", "product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-mobile.webp", "desc": "Numia website on iPhone."},
+    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-sections.webp", "desc": "Numia website sections."},
+    {"client": "Numia", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/numia-customer-journey.mp4", "desc": "Numia customer journey website on a laptop.", "poster": "/projects/poster-numia-customer-journey.webp"},
+    {"client": "Numia", "tags": ["product", "ai"], "w": 630, "h": 880, "type": "video", "src": "/projects/numia-virtual-assistance.mp4", "desc": "Numia virtual assistance interface.", "poster": "/projects/poster-numia-virtual-assistance.webp"},
+    {"client": "Emi", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-brand.mp4", "desc": "Emi brand identity.", "poster": "/projects/poster-emi-brand.webp"},
+    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website.mp4", "desc": "Emi website.", "poster": "/projects/poster-emi-website.webp"},
+    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website-es.mp4", "desc": "Emi website in Spanish on laptops.", "poster": "/projects/poster-emi-website-es.webp"},
+    {"client": "Emi", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-onboarding.mp4", "desc": "Emi onboarding website on a laptop.", "poster": "/projects/poster-emi-onboarding.webp"},
+    {"client": "Emi", "tags": ["product"], "w": 720, "h": 1080, "type": "video", "src": "/projects/emi-report-charts.mp4", "desc": "Emi report charts.", "poster": "/projects/poster-emi-report-charts.webp"},
+    {"client": "Emi", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/emilabs-report.webp", "desc": "Emi report on an iPad."},
+    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-website.webp", "desc": "Great Sky Solar homepage and savings calculator."},
+    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-products.webp", "desc": "Great Sky Solar product cards."},
+    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-team.webp", "desc": "Great Sky Solar team page."},
+    {"client": "Studio", "tags": ["product", "ai"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/agent-activity-panel.webp", "desc": "Agent activity panel on a studio display."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/token-statement.webp", "desc": "Token statement dashboard on a studio display."},
+    {"client": "xrank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/xrank.webp", "desc": "xrank.tech leaderboard on a MacBook."},
+    {"client": "China.Supply", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/china-supply.webp", "desc": "China.Supply landing page on a MacBook."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app.webp", "desc": "Journal app on iPhone resting on concrete blocks."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app-closeup.webp", "desc": "Journal app on iPhone, close-up."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/calm-app-login.webp", "desc": "Calm app login screen on iPhone."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/music-player.webp", "desc": "Music player interface."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/writing-app.webp", "desc": "Writing app on a MacBook."},
+    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-poster.webp", "desc": "Godzilla Minus One poster."},
+    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-bus-stop.webp", "desc": "Godzilla Minus One poster at a bus stop."},
+    {"client": "Nine2Five", "tags": ["product", "brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/nine2five.webp", "desc": "Nine2Five work glasses spec sheet and stage screen."},
+    {"client": "Internet Guild", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/ids-shopping-bag.webp", "desc": "Internet Guild shopping bag."},
+    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-campaign.mp4", "desc": "Towerbank campaign.", "poster": "/projects/poster-towerbank-campaign.webp"},
+    {"client": "Towerbank", "tags": ["brand"], "w": 720, "h": 1080, "type": "video", "src": "/projects/towerbank-card-colors.mp4", "desc": "Towerbank card colours.", "poster": "/projects/poster-towerbank-card-colors.webp"},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-stationery.webp", "desc": "Numia stationery."},
+    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-calculator.webp", "desc": "Great Sky Solar savings calculator."},
+    {"client": "Great Sky Solar", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-monitoring.webp", "desc": "Great Sky Solar monitoring app."}
   ];
   var LABEL = { web: "Web", product: "Product", ai: "AI", brand: "Brand" };
   var POOL = "一丶ノ二人入八十小夕日木心目田生光糸空門電夢網魂霊龍闇響魔".split("");
@@ -658,6 +659,7 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
     var li = el("li", "tile"), btn = el("button", "frame"), cap = el("div", "cap"),
         name = el("span", "name", p.client), m = el("span", "meta", meta(p)), media;
     btn.type = "button"; btn.setAttribute("aria-label", "Open " + p.client);
+    if (p.w && p.h) btn.style.setProperty("--own", p.w + " / " + p.h);
     if (p.type === "video") {
       media = el("video"); media.muted = true; media.loop = true; media.playsInline = true; media.preload = "none";
       media.setAttribute("muted", ""); media.setAttribute("playsinline", ""); if (p.poster) media.poster = p.poster;
