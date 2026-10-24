@@ -464,8 +464,9 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
     statement.style.height = statement.offsetHeight + "px";
     btns.forEach(function (b) { b.style.width = b.offsetWidth + "px"; });
     decode(document.getElementById("name"), 1200, 1100);
-    statement.querySelectorAll("span").forEach(function (l, i) { decode(l, 2600 + i * 200, 1100); });
-    btns.forEach(function (b, i) { decode(b, 3200 + i * 200, 600); });
+    // one line after the other, then the buttons
+    statement.querySelectorAll("span").forEach(function (l, i) { decode(l, 2500 + i * 800, 800); });
+    btns.forEach(function (b, i) { decode(b, 5000 + i * 500, 500); });
     after.classList.remove("typing");
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(begin, begin);
