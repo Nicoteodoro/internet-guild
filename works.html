@@ -47,7 +47,7 @@
     --line: #1c1c1e;
     --line-hi: #2a2a2d;
     --tile: #0b0b0c;
-    --ratio: 4 / 3; /* tile shape: 4 / 3 keeps 25-30 projects scannable; 4 / 5 for taller tiles */
+    --ratio: 1 / 1; /* tile shape: most pieces are square; the rest sit whole over a blurred fill of themselves */
     --font-name: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color-scheme: dark;
   }
@@ -117,22 +117,28 @@
   /* grid */
   .grid {
     list-style: none; margin: 20px 0 0; padding: 0;
-    columns: 2; column-gap: 8px; /* masonry: each piece keeps its own shape, nothing cropped */
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 8px;
   }
-  .tile { min-width: 0; break-inside: avoid; margin-bottom: 32px; }
+  .tile { min-width: 0; }
   .frame {
-    position: relative; display: block; width: 100%; aspect-ratio: var(--own, var(--ratio)); max-width: 100%;
+    position: relative; display: block; width: 100%; aspect-ratio: var(--ratio); max-width: 100%;
     padding: 0; border: 0; border-radius: 0; overflow: hidden; cursor: pointer;
     background: var(--tile);
   }
   .frame:focus-visible { outline: 1px solid var(--fg); outline-offset: 3px; }
   .frame img, .frame video {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block;
     opacity: 0; transition: opacity .4s ease, filter .5s ease, transform .8s cubic-bezier(.2,.7,.2,1);
   }
   .frame .loaded { opacity: 1; }
+  .fill {
+    position: absolute; inset: -12%; background: center / cover no-repeat; filter: blur(28px) brightness(.4);
+    opacity: 0; transition: opacity .4s ease, filter .5s ease;
+  }
   @media (hover: hover) {
     .frame img, .frame video { filter: grayscale(1) brightness(.78); }
+    .fill { filter: blur(28px) brightness(.4) grayscale(1); }
+    .tile:hover .fill, .frame:focus-visible .fill { filter: blur(28px) brightness(.4); }
     .tile:hover .frame img, .tile:hover .frame video,
     .frame:focus-visible img, .frame:focus-visible video { filter: none; transform: scale(1.015); }
   }
@@ -210,8 +216,7 @@
     .frame img, .frame video { transition: opacity .2s ease; }
   }
   @media (max-width: 640px) {
-    .grid { columns: 1; }
-    .tile { margin-bottom: 28px; }
+    .grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
     .cap { flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 8px; font-size: 12px; }
     .cap .meta { font-size: 11px; }
     .tag-video { top: 6px; right: 6px; font-size: 10px; }
@@ -659,7 +664,8 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
     var li = el("li", "tile"), btn = el("button", "frame"), cap = el("div", "cap"),
         name = el("span", "name", p.client), m = el("span", "meta", meta(p)), media;
     btn.type = "button"; btn.setAttribute("aria-label", "Open " + p.client);
-    if (p.w && p.h) btn.style.setProperty("--own", p.w + " / " + p.h);
+    var fill = null;
+    if (p.w && p.h && Math.abs(p.w / p.h - 1) > 0.02) { fill = el("div", "fill"); fill.setAttribute("aria-hidden", "true"); btn.appendChild(fill); }
     if (p.type === "video") {
       media = el("video"); media.muted = true; media.loop = true; media.playsInline = true; media.preload = "none";
       media.setAttribute("muted", ""); media.setAttribute("playsinline", ""); if (p.poster) media.poster = p.poster;
@@ -668,7 +674,7 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
       media = el("img"); media.alt = p.client; media.decoding = "async"; media.loading = "lazy";
     }
     btn.appendChild(media); cap.appendChild(name); cap.appendChild(m); li.appendChild(btn); li.appendChild(cap); grid.appendChild(li);
-    var t = { p: p, el: li, btn: btn, media: media, name: name, i: i, veil: null, loaded: false, requested: false, seenAt: 0, inView: false };
+    var t = { p: p, el: li, btn: btn, media: media, fill: fill, name: name, i: i, veil: null, loaded: false, requested: false, seenAt: 0, inView: false };
     tiles.push(t);
     btn.addEventListener("click", function () { openViewer(t); });
     if (canHover) li.addEventListener("mouseenter", function () {
@@ -684,6 +690,7 @@ IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"
     var m = t.media;
     function ok() {
       if (t.loaded) return; t.loaded = true; m.classList.add("loaded");
+      if (t.fill) { t.fill.style.backgroundImage = 'url("' + (t.p.poster || t.p.src) + '")'; t.fill.classList.add("loaded"); }
       if (t.veil) { var since = performance.now() - (t.seenAt || performance.now()); t.veil.reveal(Math.max(0, 260 - since) + (t.i % 2) * 90); }
       if (t.p.type === "video" && t.inView && !viewerOpen && !reduced) m.play().catch(function () {});
     }
