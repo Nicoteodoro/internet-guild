@@ -46,8 +46,7 @@
     --muted: #7c7c80;
     --line: #1c1c1e;
     --line-hi: #2a2a2d;
-    --tile: #161617;
-    --tile-pad: 24px; /* breathing room so whole images sit inside the box */
+    --tile: #0b0b0c;
     --ratio: 4 / 3; /* tile shape: 4 / 3 keeps 25-30 projects scannable; 4 / 5 for taller tiles */
     --font-name: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color-scheme: dark;
@@ -128,8 +127,7 @@
   }
   .frame:focus-visible { outline: 1px solid var(--fg); outline-offset: 3px; }
   .frame img, .frame video {
-    position: absolute; inset: var(--tile-pad); width: calc(100% - 2 * var(--tile-pad)); height: calc(100% - 2 * var(--tile-pad));
-    object-fit: contain; display: block;
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
     opacity: 0; transition: opacity .4s ease, filter .5s ease, transform .8s cubic-bezier(.2,.7,.2,1);
   }
   .frame .loaded { opacity: 1; }
@@ -213,7 +211,6 @@
   }
   @media (max-width: 640px) {
     .grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-    :root { --tile-pad: 16px; }
     .cap { flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 8px; font-size: 12px; }
     .cap .meta { font-size: 11px; }
     .tag-video { top: 6px; right: 6px; font-size: 10px; }
