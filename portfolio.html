@@ -55,6 +55,9 @@
     .reel { padding: 16px 0 96px; gap: 40px; }
     .card { border-radius: 24px; }
   }
+  /* stack: pieces pin in the middle of the screen */
+  [data-fx="stack"] .card { position: sticky; top: calc((100vh - min(82vh, var(--col) / var(--ar))) / 2); transform-origin: 50% 0; }
+  [data-fx="stack"] .reel { gap: 40vh; padding-bottom: 30vh; }
   @media (prefers-reduced-motion: reduce) { .card { transform: none !important; } }
 </style>
 </head>
@@ -138,10 +141,10 @@
     cards.forEach(function (c, i) { c.el.dataset.i = i; near.observe(c.el); view.observe(c.el); });
   } else cards.forEach(load);
 
-  // scroll effects, picked with ?fx=  ·  bend (default) · focus · fold · drum · swing · tunnel · speed
-  var FX = ["bend", "focus", "fold", "drum", "swing", "tunnel", "speed"];
+  // scroll effects, picked with ?fx=  ·  stack (default) · bend · focus · fold · drum · swing · tunnel · speed
+  var FX = ["stack", "bend", "focus", "fold", "drum", "swing", "tunnel", "speed"];
   var fx = new URLSearchParams(location.search).get("fx");
-  if (FX.indexOf(fx) < 0) fx = "bend";
+  if (FX.indexOf(fx) < 0) fx = "stack";
   document.documentElement.setAttribute("data-fx", fx);
   if (reduced) return;
   function lim(v, m) { return Math.max(-m, Math.min(m, v)); }
@@ -154,7 +157,12 @@
       var r = c.el.getBoundingClientRect(), s = c.el.style;
       if (r.bottom < -vh * 0.5 || r.top > vh * 1.5) return;
       var e = lim((mid - (r.top + r.height / 2)) / vh, 1), a = Math.abs(e); // e: 1 a screen above the middle … -1 a screen below
-      if (fx === "bend") {
+      if (fx === "stack") {
+        // each piece pins in the middle and the next slides up over it; the ones underneath sink back into a pile
+        var next = cards[i + 1] && cards[i + 1].el.getBoundingClientRect(), p = next ? Math.max(0, Math.min(1, 1 - (next.top - r.top) / vh)) : 0;
+        s.transform = "translateY(" + (-p * 28).toFixed(1) + "px) scale(" + (1 - p * 0.08).toFixed(4) + ")";
+        s.filter = "brightness(" + (1 - p * 0.55).toFixed(3) + ")";
+      } else if (fx === "bend") {
         // the cards tilt back as they leave the middle
         s.transform = "perspective(1400px) rotateX(" + (e * 28).toFixed(2) + "deg) scale(" + (1 - a * 0.06).toFixed(3) + ")";
       } else if (fx === "focus") {
