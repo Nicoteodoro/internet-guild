@@ -31,7 +31,7 @@
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--fg); overflow-x: clip; }
-  body { font-family: var(--font); font-size: 14px; line-height: 18px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font); font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
   a:hover { opacity: .6; }
   a:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
@@ -43,13 +43,13 @@
   .icon .mark { width: 100%; }
   .id { position: absolute; left: var(--side); top: 34px; }
   .id .dim { color: var(--dim); }
-  .menu { position: absolute; right: var(--side); top: 38px; display: flex; flex-direction: column; }
+  .menu { position: absolute; right: var(--side); top: 38px; display: flex; flex-direction: column; gap: 4px; text-transform: lowercase; }
   .menu .on { font-weight: 600; }
 
   /* the text column */
   .col { margin: 0 var(--side); padding: 320px 0 120px; }
-  .gap { height: 18px; }
-  .gap-l { height: 54px; }
+  .gap { height: 20px; }
+  .gap-l { height: 60px; }
   .two { display: grid; grid-template-columns: 378px 1fr; }
 
   @media (max-width: 760px) {
@@ -90,7 +90,7 @@
     opacity: 0; transition: opacity .5s ease;
   }
   .media .loaded { opacity: 1; }
-  .cap { margin-top: 8px; font-size: 14px; line-height: 18px; }
+  .cap { margin-top: 8px; font-size: 14px; line-height: 20px; }
   .cap b { display: block; font-weight: inherit; }
   @media (max-width: 700px) { .work { columns: 1; } }
   @media (prefers-reduced-motion: reduce) { .logos ul { animation: none; } }
