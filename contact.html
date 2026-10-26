@@ -7,189 +7,97 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Contact · Internet Guild</title>
-<meta name="description" content="Contact Internet Guild by email, X or Instagram.">
-<meta name="theme-color" content="#000000">
+<meta name="description" content="Write to Internet Guild: email, WhatsApp, X, Instagram and Telegram.">
+<meta name="theme-color" content="#ffffff">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Internet Guild">
 <meta property="og:title" content="Contact · Internet Guild">
-<meta property="og:description" content="Contact Internet Guild by email, X or Instagram.">
+<meta property="og:description" content="Write to Internet Guild: email, WhatsApp, X, Instagram and Telegram.">
 <meta property="og:url" content="https://internetguild.co/contact">
 <meta property="og:image" content="https://internetguild.co/og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Internet Guild: design and development studio, born to reduce.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://internetguild.co/og.png?v=2">
-<link rel="preload" href="/neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  /* PP Neue Montreal, self-hosted: Regular for the words, Medium for the name and the buttons */
-  @font-face {
-    font-family: "PP Neue Montreal";
-    src: url("/neue-montreal-regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "PP Neue Montreal";
-    src: url("/neue-montreal-medium.woff2") format("woff2");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-  /* same column as the index: icon, then a small terminal in the space the name and statement use */
   :root {
-    --bg: #000000;
-    --fg: #ffffff;
-    --fg-dim: rgba(255, 255, 255, 0.86);
-    --muted: #7c7c80;
-    --line: #1c1c1e;
-    --line-hi: #2a2a2d;
-    --font-name: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color-scheme: dark;
+    --bg: #ffffff;
+    --fg: #000000;
+    --dim: #8e8e8e;
+    --edge: 20px;
+    --col: 25.8vw;   /* where the text column starts */
+    --nav: 72.9vw;   /* where the menu starts */
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
-  *, *::before, *::after { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  main {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding-block: max(48px, env(safe-area-inset-top, 0px)) max(48px, env(safe-area-inset-bottom, 0px));
-    padding-left: max(20px, env(safe-area-inset-left, 0px));
-    padding-right: max(20px, env(safe-area-inset-right, 0px));
-  }
-  /* soft cross-page transition: the icon stays put, the rest crossfades */
-  @view-transition { navigation: auto; }
-  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
-  ::view-transition-group(mark) { animation-duration: .3s; }
-  @media (prefers-reduced-motion: reduce) {
-    ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
-  }
-  .mark {
-    width: 320px;
-    max-width: 100%;
-    margin: 0 auto;
-    view-transition-name: mark;
-  }
-  /* same height on every page, so the icon sits at the same spot on all of them */
-  .after {
-    width: 100%;
-    height: 272px;
-    margin-top: 36px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); overflow-x: clip; }
+  body { font-family: var(--font); font-size: 16px; line-height: 24px; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { opacity: .6; }
+  a:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+  p { margin: 0; }
 
-  .term {
-    width: min(440px, 100%);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    font-family: var(--font-name);
-    font-size: 14px;
-    line-height: 1.65;
-    letter-spacing: -0.01em;
-    color: var(--fg-dim);
-    cursor: text;
-  }
-  /* output + prompt scroll together; the guide stays pinned below */
-  .screen { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
-  .screen::-webkit-scrollbar { display: none; }
-  .screen.scrolled { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px); mask-image: linear-gradient(to bottom, transparent 0, #000 28px); }
-  .ln { min-height: 1.65em; white-space: pre-wrap; overflow-wrap: anywhere; }
-  .ps { color: var(--muted); margin-right: 8px; user-select: none; }
-  .echo { color: var(--fg); }
-  .out { padding-left: 16px; }
-  .gap { height: 10px; }
-  .err, .note { color: var(--muted); }
-  .scr { color: var(--muted); }
+  /* header: icon on the left, the name in the text column, the menu on the right */
+  .top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; height: 0; }
+  .icon { position: absolute; left: var(--edge); top: 36px; width: 34px; aspect-ratio: 23 / 28; }
+  .icon .mark { width: 100%; }
+  .id { position: absolute; left: var(--col); top: 34px; }
+  .id .dim { color: var(--dim); }
+  .menu { position: absolute; left: var(--nav); top: 38px; display: flex; flex-direction: column; }
+  .menu .on { font-weight: 600; }
 
-  .rows { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 12px; padding-left: 16px; margin: 0; }
-  .rows dt { color: var(--muted); }
-  .rows dd { margin: 0; min-width: 0; }
-  .term a { color: var(--fg); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s ease; }
-  .term a:hover, .term a:focus-visible { border-bottom-color: var(--fg); outline: none; }
-  .copy {
-    margin-left: 10px; padding: 0 6px; height: 20px;
-    font: 500 11px/20px var(--font-name); letter-spacing: 0;
-    color: var(--fg); background: var(--line); border: 0; border-radius: 0; cursor: pointer;
-    vertical-align: 1px; transition: background-color .2s ease, opacity .3s ease;
-  }
-  .copy:hover { background: var(--line-hi); }
-  .copy:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
-  .copy.pre { opacity: 0; }
+  /* the text column */
+  .col { margin-left: var(--col); max-width: 690px; padding: 320px var(--edge) 120px 0; }
+  .gap { height: 24px; }
+  .gap-l { height: 72px; }
+  .two { display: grid; grid-template-columns: 378px 1fr; }
 
-  .prompt { position: relative; display: flex; align-items: baseline; min-height: 1.65em; }
-  .typed { color: var(--fg); white-space: pre; overflow: hidden; }
-  .cursor {
-    display: inline-block; flex: none; width: 8px; height: 15px; margin-left: 1px;
-    background: var(--fg); transform: translateY(2px);
-    animation: blink 1.05s steps(1) infinite;
+  @media (max-width: 760px) {
+    :root { --edge: 16px; --col: 64px; }
+    .icon { top: 24px; width: 30px; }
+    .id { top: 22px; }
+    .menu { left: auto; right: var(--edge); top: 22px; text-align: right; }
+    .col { margin-left: var(--edge); padding-top: 176px; }
+    .two { grid-template-columns: 1fr 1fr; column-gap: 16px; }
   }
-  .prompt:not(.focused) .cursor { background: transparent; box-shadow: inset 0 0 0 1px var(--muted); animation: none; }
-  .ghost { margin-left: 8px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .2s ease; }
-  .ghost[hidden] { display: none; }
-  @keyframes blink { 50% { opacity: 0; } }
-  #cmd {
-    position: absolute; inset: 0; width: 100%;
-    opacity: 0; border: 0; padding: 0; margin: 0; font: inherit; color: transparent; background: transparent;
-  }
-
-  /* command guide */
-  .guide {
-    flex: none;
-    margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
-    display: flex; flex-direction: column; gap: 8px;
-    font-size: 12px; line-height: 1.4; color: var(--muted);
-  }
-  .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-  .keys .label { margin-right: 4px; }
-  .keys button {
-    height: 22px; padding: 0 8px; border: 0; border-radius: 0; cursor: pointer;
-    font: 500 12px/22px var(--font-name); letter-spacing: -0.01em;
-    color: var(--fg); background: var(--line); transition: background-color .2s ease;
-  }
-  .keys button:hover { background: var(--line-hi); }
-  .keys button:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
-  .tips { display: flex; flex-wrap: wrap; gap: 4px 14px; }
-  .tips kbd {
-    display: inline-block; min-width: 18px; padding: 0 4px; margin-right: 4px; text-align: center;
-    font: 500 11px/16px var(--font-name); color: var(--fg-dim);
-    border: 1px solid var(--line-hi);
-  }
-  .touch-only { display: none; }
-  @media (hover: none) and (pointer: coarse) {
-    .tips { display: none; }
-    .touch-only { display: inline; }
-    .desk-only { display: none; }
-  }
-
-  /* first paint: the terminal fades in after the page transition */
-  .term { animation: in .5s ease .15s both; }
-  @keyframes in { from { opacity: 0; transform: translateY(4px); } }
-  @media (prefers-reduced-motion: reduce) { .cursor, .term { animation: none; } }
-  @media (max-width: 480px) {
-    .rows { grid-template-columns: 76px minmax(0, 1fr); }
-  }
+  h1, h2 { margin: 0; font: inherit; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  figure, blockquote { margin: 0; }
 </style>
 </head>
 <body>
-<main>
-<div id="ik-p5qcph" class="mark"></div>
+<header class="top">
+  <a class="icon" href="/" aria-label="Internet Guild, home"><div id="ik" class="mark"></div></a>
+  <p class="id"><a href="/">Internet Design Guild</a><br><a class="dim" href="/contact">Hire the guild</a></p>
+  <nav class="menu" aria-label="Main">
+    <a href="/#work">Works</a>
+    <a href="/about">About</a>
+    <a href="/services">Services</a>
+    <a href="/contact" class="on" aria-current="page">Contact</a>
+  </nav>
+</header>
+<main class="col">
+  <h1 class="sr">Contact</h1>
+  <p>Tell us what you are making.<br>
+  We reply to every message.</p>
+  <div class="gap"></div>
+  <p>Write<br>
+  <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
+  <a href="mailto:n@internetguild.co">n@internetguild.co</a></p>
+  <div class="gap"></div>
+  <p>Talk<br>
+  <a href="https://wa.me/5491133932087" target="_blank" rel="noopener">WhatsApp +54 911 33932087</a></p>
+  <div class="gap"></div>
+  <p>Follow<br>
+  <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter): x.com/internetguild_</a><br>
+  <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram: instagram.com/internetguild</a><br>
+  <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram: t.me/nico_teodoro</a></p>
+  <div class="gap-l" style="height:96px"></div>
+  <p>Buenos Aires, Republic of Argentina.<br>
+  Copyright © 2026. Internet Guild<br>
+  All rights reserved.</p>
+</main>
+
 <script>
 window.IconoKanji = window.IconoKanji || (function () {
   "use strict";
@@ -208,9 +116,10 @@ window.IconoKanji = window.IconoKanji || (function () {
     kanji: [["一", "丶", "ノ", "二", "人", "入", "八", "十", "小", "夕", "・", "、"],
             ["日", "木", "心", "目", "田", "生", "光", "糸", "空", "門"],
             ["電", "夢", "網", "魂", "霊", "龍", "闇", "響", "魔", "驚", "鬱"]],
-    katakana: [["ノ", "ヘ", "ニ", "ト", "ー", "ハ", "ソ", "ン", "・", "、"],
-               ["カ", "サ", "タ", "ナ", "ミ", "ム", "ラ", "ワ", "ホ", "エ"],
-               ["ガ", "ギ", "ズ", "ゼ", "ダ", "ヂ", "ヅ", "ド", "ボ", "ポ", "ヴ"]],
+    // simple, low-stroke katakana only: they stay legible at the small size of this page
+    katakana: [["ノ", "ー", "ニ", "ト", "ハ", "ヘ", "ソ", "ン", "・"],
+               ["エ", "カ", "コ", "ナ", "ヒ", "フ", "ラ", "ロ", "ク"],
+               ["キ", "サ", "シ", "ミ", "ム", "メ", "ヨ", "ワ", "ヲ"]],
     hiragana: [["し", "く", "へ", "つ", "ひ", "こ", "い", "・", "、"],
                ["あ", "お", "か", "た", "な", "む", "ゆ", "わ", "る"],
                ["ぬ", "ね", "め", "ぼ", "ぎ", "ぶ", "ぽ", "ぜ", "ゑ"]]
@@ -227,7 +136,8 @@ window.IconoKanji = window.IconoKanji || (function () {
     tileLo: "#e0e0dc", tileHi: "#353533", text: "#5c5c58", textOnDark: "#eeeeea",
     accentMode: "multi", accent: "#d9686a", accentRate: 1,
     padX: 5, padY: 3, gap: 0.12, radius: 0,
-    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true
+    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true,
+    icon: null, tones: null, useTones: true, colors: null, colorMode: "palette", colorAmt: 1, colorVar: 1
   };
   var CHARS = (function () {
     var all = ASCII.flat().concat(STRAY);
@@ -263,6 +173,7 @@ window.IconoKanji = window.IconoKanji || (function () {
     var ctx = cv.getContext("2d"), bgc = document.createElement("canvas"), bctx = bgc.getContext("2d");
     var G, cells, strays, T, nextBlink, blinkUntil, sweepStart, sweepId, rs = 1, seedN = 1, col, cell = 10, dpr = 1;
     var raf = 0, visible = true, paused = false, last = 0, ro, io;
+    var intro = reduced ? 1e9 : 0; // real seconds since mount; cells type in top to bottom, as on the home page
 
     function rand() { rs |= 0; rs = rs + 0x6D2B79F5 | 0; var t = Math.imul(rs ^ rs >>> 15, 1 | rs); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
     function pick(a) { return a[(rand() * a.length) | 0]; }
@@ -277,9 +188,20 @@ window.IconoKanji = window.IconoKanji || (function () {
 
     function geometry() {
       var PX = Math.max(0, cfg.padX | 0), PY = Math.max(0, cfg.padY | 0);
+      var custom = !!(cfg.icon && cfg.icon.length && cfg.icon[0].length);
+      var icon = custom ? cfg.icon : ICON, IW = icon[0].length, IH = icon.length;
+      var tones = custom && cfg.tones && cfg.tones.length === IH ? cfg.tones : null;
+      var cols = custom && cfg.colors && cfg.colors.length === IH ? cfg.colors : null;
+      var rgb = new Array(N).fill(null);
       var COLS = IW + PX * 2, ROWS = IH + PY * 2, N = COLS * ROWS, r, c, i;
       var filled = new Uint8Array(N), outside = new Uint8Array(N);
-      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) if (ICON[r][c] === "#") filled[(r + PY) * COLS + c + PX] = 1;
+      var lum = new Float32Array(N).fill(-1);   // image darkness per cell, -1 = none
+      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) {
+        var at = (r + PY) * COLS + c + PX;
+        if (icon[r][c] === "#") filled[at] = 1;
+        if (tones && tones[r][c] >= "0" && tones[r][c] <= "9") lum[at] = Number(tones[r][c]) / 9;
+        if (cols) { var hx = cols[r].substr(c * 6, 6); if (/^[0-9a-f]{6}$/i.test(hx)) rgb[at] = hexRgb("#" + hx); }
+      }
       var q = [];
       for (i = 0; i < N; i++) { r = (i / COLS) | 0; c = i % COLS;
         if ((r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1) && !filled[i]) { outside[i] = 1; q.push(i); } }
@@ -298,7 +220,8 @@ window.IconoKanji = window.IconoKanji || (function () {
         return d; }
       G = { COLS: COLS, ROWS: ROWS, N: N, filled: filled, outside: outside,
             depth: cheb(outside, true), away: cheb(filled, false),
-            eyes: EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
+            lum: lum, rgb: rgb, custom: custom,
+            eyes: custom ? [] : EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
     }
 
     function reset() {
@@ -306,7 +229,7 @@ window.IconoKanji = window.IconoKanji || (function () {
       nextBlink = 2 + rand() * 3; blinkUntil = -1; sweepStart = 3; sweepId = 0; cells = []; strays = [];
       for (var i = 0; i < G.N; i++) {
         var r = (i / G.COLS) | 0, c = i % G.COLS;
-        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1 });
+        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1, lum: G.lum[i], rgb: G.rgb[i], nz: 0 , at: 0.15 + (r / G.ROWS) * 0.75 + (c / G.COLS) * 0.1 + Math.random() * 0.3, shown: false });
         else if (G.outside[i] && G.away[i] <= 2) strays.push({ r: r, c: c, d: G.away[i], on: false, ch: "", next: rand() * 2 });
       }
       step(0.001);
@@ -321,7 +244,7 @@ window.IconoKanji = window.IconoKanji || (function () {
     }
 
     function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 2, Math.max(1, 2400 / (el.clientWidth || 300))); // the giant start is drawn big, not dense
       var w = el.clientWidth || 300;
       cell = w / G.COLS;
       var h = cell * G.ROWS;
@@ -331,18 +254,21 @@ window.IconoKanji = window.IconoKanji || (function () {
       drawBg(); draw();
     }
 
+    function bgTo(c, cs, sc, lw, pxW, pxH) {
+      c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, pxW, pxH);
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var W = cs * G.COLS, H = cs * G.ROWS;
+      if (!cfg.transparent) { c.fillStyle = css(col.bg); c.fillRect(0, 0, W, H); }
+      if (cfg.showGrid) {
+        c.strokeStyle = css(col.grid); c.lineWidth = lw; c.beginPath();
+        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cs * sc) / sc + lw / 2; c.moveTo(px, 0); c.lineTo(px, H); }
+        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cs * sc) / sc + lw / 2; c.moveTo(0, py); c.lineTo(W, py); }
+        c.stroke();
+      }
+    }
     function drawBg() {
       if (!col || !G) return;
-      bctx.setTransform(1, 0, 0, 1, 0, 0); bctx.clearRect(0, 0, bgc.width, bgc.height);
-      bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var W = cell * G.COLS, H = cell * G.ROWS;
-      if (!cfg.transparent) { bctx.fillStyle = css(col.bg); bctx.fillRect(0, 0, W, H); }
-      if (cfg.showGrid) {
-        bctx.strokeStyle = css(col.grid); bctx.lineWidth = 1 / dpr; bctx.beginPath();
-        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(px, 0); bctx.lineTo(px, H); }
-        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(0, py); bctx.lineTo(W, py); }
-        bctx.stroke();
-      }
+      bgTo(bctx, cell, dpr, 1 / dpr, bgc.width, bgc.height);
     }
 
     function bucket(t) { return t < 0.4 ? 0 : t < 0.7 ? 1 : 2; }
@@ -359,7 +285,9 @@ window.IconoKanji = window.IconoKanji || (function () {
     }
     function toneOf(cl) {
       var n = 0.65 * vnoise(cl.c / 5, cl.r / 5, T * 0.22) + 0.35 * vnoise(cl.c / 2.2 + 40, cl.r / 2.2, T * 0.55);
-      var t = 0.4 + 0.11 * Math.min(cl.d, 4) + 0.6 * cfg.flow * (n - 0.5);
+      var base = (cfg.useTones && cl.lum >= 0) ? 0.16 + 0.74 * cl.lum + 0.03 * Math.min(cl.d, 3) : 0.4 + 0.11 * Math.min(cl.d, 4);
+      var t = base + 0.6 * cfg.flow * (n - 0.5);
+      cl.nz = 0.6 * cfg.flow * (n - 0.5) * cfg.contrast;   // animated part only, used to shade image colors
       t = 0.5 + (t - 0.5) * cfg.contrast + cfg.density;
       return Math.max(0.03, Math.min(1, t));
     }
@@ -371,7 +299,7 @@ window.IconoKanji = window.IconoKanji || (function () {
       if (cfg.blink && T >= nextBlink) { blinkUntil = T + 0.14; nextBlink = T + 2.5 + rand() * 4.5; if (rand() < 0.2) nextBlink = T + 0.32; }
       for (var k = 0; k < cells.length; k++) {
         var cl = cells[k], boost = sweepBoost(cl.r, cl.c);
-        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4);
+        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4); cl.nz += boost * 0.4;
         var b = bucket(cl.tone);
         if (boost > 0.5 && cl.sweep !== sweepId) { cl.sweep = sweepId; cl.b = b; if (scramble) { cl.scr = 4; cl.scrNext = T; } else cl.ch = choose(b); }
         if (b !== cl.b || T >= cl.next) {
@@ -388,46 +316,108 @@ window.IconoKanji = window.IconoKanji || (function () {
         if (T >= st.next) { st.on = rand() < (st.d === 1 ? 0.3 : 0.12); st.ch = pick(STRAY); st.next = T + 0.5 + rand() * 2.5; } }
     }
 
-    function tileRect(x, y, w, r) {
-      if (r > 0.3 && ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, w, r); ctx.fill(); }
-      else ctx.fillRect(x, y, w, w);
+    function tileRect(c, x, y, w, r) {
+      if (r > 0.3 && c.roundRect) { c.beginPath(); c.roundRect(x, y, w, w, r); c.fill(); }
+      else c.fillRect(x, y, w, w);
     }
-
+    function cellStyle(cl) {
+      var t = cl.tone, fill, ink;
+      if (cfg.erosion && T < cl.ghostUntil) return [css(col.ghost), css(col.ghostInk)];
+      if (cfg.colorMode === "image" && cl.rgb) {
+        // original pixel color, breathing lighter/darker with the animation
+        var dv = cl.nz * cfg.colorVar * 1.1, base = cl.rgb;
+        var img = dv > 0 ? mix(base, [0, 0, 0], Math.min(0.7, dv)) : mix(base, [255, 255, 255], Math.min(0.7, -dv));
+        var f = mix(mix(col.lo, col.hi, t), img, cfg.colorAmt);
+        var L = (0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2]) / 255;
+        fill = css(f);
+        ink = css(L < 0.5 ? mix(f, [255, 255, 255], 0.72) : mix(f, [0, 0, 0], 0.62));
+        if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+        return [fill, ink];
+      }
+      fill = css(mix(col.lo, col.hi, t));
+      ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
+      if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+      return [fill, ink];
+    }
+    // draws tiles + characters onto any 2D context; cs = cell size in that context's units
+    function paintCells(c, cs, sc) {
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var inset = cs * cfg.gap / 2, tile = cs - inset * 2, rad = tile * cfg.radius;
+      var fA = "500 " + (cs * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
+      var fJ = "500 " + (cs * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
+      c.textAlign = "center"; c.textBaseline = "middle";
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], x = cl.c * cs, y = cl.r * cs, st;
+        if (intro < cl.at) continue;
+        if (!cl.shown) { cl.shown = true; if (intro < 1e8) { cl.scr = 5; cl.scrNext = T; cl.ch = anyChar(); } }
+        st = cellStyle(cl);
+        c.fillStyle = st[0]; tileRect(c, x + inset, y + inset, tile, rad);
+        var jp = isJP(cl.ch);
+        c.fillStyle = st[1]; c.font = jp ? fJ : fA;
+        c.fillText(cl.ch, x + cs / 2, y + cs / 2 + (jp ? 0 : cs * 0.04));
+      }
+      if (T < blinkUntil) {
+        c.fillStyle = css(col.hi);
+        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect(c, (i % G.COLS) * cs + inset, ((i / G.COLS) | 0) * cs + inset, tile, rad); }
+      }
+      if (cfg.strays && intro > 1.4) {
+        c.fillStyle = css(col.stray);
+        for (var s = 0; s < strays.length; s++) { var sy = strays[s]; if (!sy.on) continue;
+          c.font = isJP(sy.ch) ? fJ : fA; c.fillText(sy.ch, sy.c * cs + cs / 2, sy.r * cs + cs / 2); }
+      }
+    }
     function draw() {
       if (!col || !G || !cells) return;
       ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bgc, 0, 0);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var inset = cell * cfg.gap / 2, tile = cell - inset * 2, rad = tile * cfg.radius;
-      var fA = "500 " + (cell * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
-      var fJ = "500 " + (cell * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
-      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      paintCells(ctx, cell, dpr);
+    }
+
+    // still image of the current frame at a given pixel width
+    function snapshot(width) {
+      var cs = width / G.COLS, w = Math.round(width), h = Math.round(cs * G.ROWS);
+      var c = document.createElement("canvas"); c.width = w; c.height = h;
+      var c2 = c.getContext("2d");
+      bgTo(c2, cs, 1, Math.max(1, cs / 22), w, h);
+      paintCells(c2, cs, 1);
+      return c;
+    }
+    // vector version of the current frame; text stays live (JetBrains Mono / Noto Sans JP)
+    function toSVG() {
+      var U = 24, W = U * G.COLS, H = U * G.ROWS, n = function (v) { return +v.toFixed(2); };
+      var inset = U * cfg.gap / 2, tile = U - inset * 2, rad = n(tile * cfg.radius);
+      var fsA = n(U * 0.66 * cfg.charScale), fsJ = n(U * 0.62 * cfg.charScale);
+      var o = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">'];
+      o.push('<style>@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&amp;family=Noto+Sans+JP:wght@500&amp;display=swap");'
+        + '.a{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:' + fsA + 'px}'
+        + '.j{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-weight:500;font-size:' + fsJ + 'px}</style>');
+      if (!cfg.transparent) o.push('<rect id="fondo" width="' + W + '" height="' + H + '" fill="' + css(col.bg) + '"/>');
+      if (cfg.showGrid) {
+        var d = "";
+        for (var x = 0; x <= G.COLS; x++) d += "M" + x * U + " 0V" + H;
+        for (var y = 0; y <= G.ROWS; y++) d += "M0 " + y * U + "H" + W;
+        o.push('<path id="grilla" d="' + d + '" stroke="' + css(col.grid) + '" stroke-width="1" fill="none"/>');
+      }
+      var rects = [], texts = [], rr = rad > 0.3 ? ' rx="' + rad + '"' : "";
+      function txt(ch, cx, cy, fill) {
+        var jp = isJP(ch), fs = jp ? fsJ : fsA;
+        texts.push('<text class="' + (jp ? "j" : "a") + '" x="' + n(cx) + '" y="' + n(cy + fs * 0.36) + '" text-anchor="middle" fill="' + fill + '">' + ch + '</text>');
+      }
       for (var k = 0; k < cells.length; k++) {
-        var cl = cells[k], x = cl.c * cell, y = cl.r * cell, fill, ink, t = cl.tone;
-        if (cfg.erosion && T < cl.ghostUntil) { fill = css(col.ghost); ink = css(col.ghostInk); }
-        else {
-          fill = css(mix(col.lo, col.hi, t));
-          ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
-          if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
-        }
-        ctx.fillStyle = fill; tileRect(x + inset, y + inset, tile, rad);
-        var jp = isJP(cl.ch);
-        ctx.fillStyle = ink; ctx.font = jp ? fJ : fA;
-        ctx.fillText(cl.ch, x + cell / 2, y + cell / 2 + (jp ? 0 : cell * 0.04));
+        var cl = cells[k], st = cellStyle(cl);
+        rects.push('<rect x="' + n(cl.c * U + inset) + '" y="' + n(cl.r * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + st[0] + '"/>');
+        txt(cl.ch, cl.c * U + U / 2, cl.r * U + U / 2, st[1]);
       }
-      if (T < blinkUntil) {
-        ctx.fillStyle = css(col.hi);
-        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect((i % G.COLS) * cell + inset, ((i / G.COLS) | 0) * cell + inset, tile, rad); }
-      }
-      if (cfg.strays) {
-        ctx.fillStyle = css(col.stray);
-        for (var s = 0; s < strays.length; s++) { var st = strays[s]; if (!st.on) continue;
-          ctx.font = isJP(st.ch) ? fJ : fA; ctx.fillText(st.ch, st.c * cell + cell / 2, st.r * cell + cell / 2); }
-      }
+      if (T < blinkUntil) for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e];
+        rects.push('<rect x="' + n((i % G.COLS) * U + inset) + '" y="' + n(((i / G.COLS) | 0) * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + css(col.hi) + '"/>'); }
+      if (cfg.strays) for (var s = 0; s < strays.length; s++) if (strays[s].on) txt(strays[s].ch, strays[s].c * U + U / 2, strays[s].r * U + U / 2, css(col.stray));
+      o.push('<g id="celdas">' + rects.join("") + '</g>', '<g id="caracteres">' + texts.join("") + '</g>', '</svg>');
+      return o.join("\n");
     }
 
     function loop(now) {
       var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
       if (visible) {
+        intro += dt;
         if (!paused && cfg.speed > 0) step(dt * cfg.speed * (reduced ? 0.35 : 1));
         draw();
       }
@@ -445,7 +435,7 @@ window.IconoKanji = window.IconoKanji || (function () {
     return {
       set: function (patch) {
         var prev = cfg; cfg = Object.assign({}, cfg, patch || {});
-        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY) { geometry(); colors(); reset(); resize(); return; }
+        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY || prev.icon !== cfg.icon || prev.tones !== cfg.tones || prev.colors !== cfg.colors) { geometry(); colors(); reset(); resize(); return; }
         if (prev.accentMode !== cfg.accentMode && cells) cells.forEach(function (c) { c.acc = null; });
         colors();
         if (prev.seed !== cfg.seed) reset();
@@ -454,6 +444,8 @@ window.IconoKanji = window.IconoKanji || (function () {
       },
       get: function () { return Object.assign({}, cfg); },
       size: function () { return { cols: G.COLS, rows: G.ROWS }; },
+      snapshot: function (width) { return snapshot(width); },
+      toSVG: function () { return toSVG(); },
       togglePause: function () { paused = !paused; return paused; },
       destroy: function () { cancelAnimationFrame(raf); if (ro) ro.disconnect(); if (io) io.disconnect(); cv.remove(); }
     };
@@ -461,212 +453,7 @@ window.IconoKanji = window.IconoKanji || (function () {
 
   return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
 })();
-IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"kanji","jpMix":1,"charScale":0.89,"changeRate":2.47,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#121314","transparent":true,"grid":"#1d1e20","showGrid":false,"tileLo":"#000000","tileHi":"#000000","text":"#ffffff","textOnDark":"#ffffff","accentMode":"off","accent":"#d9686a","accentRate":1,"padX":5,"padY":3,"gap":0.12,"radius":0,"speed":1,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true});
-</script>
-  <div class="after">
-  <section class="term" id="term" aria-label="Contact terminal">
-    <div class="screen" id="screen">
-      <div id="log" aria-live="polite"></div>
-      <div class="prompt" id="prompt">
-        <span class="ps" aria-hidden="true">&gt;</span><span class="typed" id="typed"></span><span class="cursor" aria-hidden="true"></span><span class="ghost" id="ghost" aria-hidden="true" hidden><span class="desk-only">type a command and press enter</span><span class="touch-only">tap here to type, or pick one below</span></span>
-        <label for="cmd" class="sr-only">Type a command: mail, x, instagram, help or home</label>
-        <input id="cmd" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send">
-      </div>
-    </div>
-    <div class="guide">
-      <div class="keys" aria-label="Commands">
-        <span class="label">Commands</span>
-        <button type="button" data-cmd="mail">mail</button>
-        <button type="button" data-cmd="x">x</button>
-        <button type="button" data-cmd="instagram">instagram</button>
-        <button type="button" data-cmd="help">help</button>
-        <button type="button" data-cmd="home">home</button>
-      </div>
-      <div class="tips">
-        <span><kbd>&#8629;</kbd>run</span>
-        <span><kbd>tab</kbd>complete</span>
-        <span><kbd>&uarr;</kbd><kbd>&darr;</kbd>history</span>
-        <span><kbd>esc</kbd>clear line</span>
-      </div>
-    </div>
-  </section>
-  </div>
-</main>
-
-<script>
-(function () {
-  "use strict";
-  // ── edit your handles here ──
-  var LINKS = {
-    mail:      { value: "webmaster@internetguild.co", href: "mailto:webmaster@internetguild.co" },
-    x:         { value: "@internetguild",             href: "https://x.com/internetguild" },
-    instagram: { value: "@internetguild",             href: "https://www.instagram.com/internetguild/" }
-  };
-  var HOME = "/";
-  var ALIAS = { email: "mail", "e-mail": "mail", twitter: "x", ig: "instagram", insta: "instagram",
-                ls: "contact", back: "home", "cd ..": "home", "?": "help", cls: "clear" };
-  var COMMANDS = ["contact", "mail", "x", "instagram", "help", "clear", "home"];
-  var POOL = "日木心目田生光糸空門一二人入八十小%#@:;tSX".split("");
-
-  var log = document.getElementById("log"), screen = document.getElementById("screen"),
-      input = document.getElementById("cmd"), typed = document.getElementById("typed"),
-      prompt = document.getElementById("prompt"), ghost = document.getElementById("ghost"),
-      term = document.getElementById("term");
-  var history = [], hIdx = 0, busy = false, queued = false;
-  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var finePointer = window.matchMedia && matchMedia("(pointer: fine)").matches;
-
-  function wait(ms) { return new Promise(function (r) { setTimeout(r, reduced ? 0 : ms); }); }
-  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
-  function scrollEnd() { screen.scrollTop = screen.scrollHeight; screen.classList.toggle("scrolled", screen.scrollTop > 0); }
-  function add(node) { log.appendChild(node); scrollEnd(); return node; }
-  function gap() { add(el("div", "gap")); }
-  function echo(cmd) { var l = el("div", "ln"); l.appendChild(el("span", "ps", ">")); l.appendChild(el("span", "echo", cmd)); add(l); }
-  function refreshGhost() { ghost.hidden = busy || input.value.length > 0; }
-
-  // text resolves left to right; a few scrambled glyphs run ahead of it
-  function decode(node, text, speed) {
-    if (reduced || !text) { node.textContent = text; return Promise.resolve(); }
-    var dur = Math.min(650, 140 + text.length * (speed || 16)), head = 4, start = 0;
-    var done = el("span"), scr = el("span", "scr");
-    node.textContent = ""; node.appendChild(done); node.appendChild(scr);
-    return new Promise(function (res) {
-      function frame(t) {
-        if (!start) start = t;
-        var p = Math.min(1, (t - start) / dur), n = Math.floor(p * text.length), s = "";
-        for (var i = 0; i < head && n + i < text.length; i++) s += text[n + i] === " " ? " " : POOL[(Math.random() * POOL.length) | 0];
-        done.textContent = text.slice(0, n); scr.textContent = s; scrollEnd();
-        if (p < 1) requestAnimationFrame(frame); else { node.textContent = text; res(); }
-      }
-      requestAnimationFrame(frame);
-    });
-  }
-  function out(text, cls) { var l = add(el("div", "ln out" + (cls ? " " + cls : ""))); return decode(l, text).then(function () { return l; }); }
-
-  function link(item) {
-    var a = el("a"); a.href = item.href;
-    if (/^https?:/.test(item.href)) { a.target = "_blank"; a.rel = "noopener"; }
-    return a;
-  }
-  function copy(text, btn) {
-    function done(ok) { if (btn) { btn.textContent = ok ? "copied" : "select it"; setTimeout(function () { btn.textContent = "copy"; }, 1400); } }
-    try { navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); }
-    catch (e) { done(false); }
-  }
-
-  // two-column list whose rows appear one after another
-  function table(rows, opts) {
-    var dl = add(el("dl", "rows"));
-    return rows.reduce(function (chain, r, i) {
-      return chain.then(function () {
-        var dt = el("dt"), dd = el("dd"); dl.appendChild(dt); dl.appendChild(dd);
-        var target = dd, extra = null;
-        if (r.link) { target = link(r.link); dd.appendChild(target); }
-        if (r.copy) { extra = el("button", "copy pre", "copy"); extra.type = "button";
-          extra.addEventListener("click", function (e) { e.stopPropagation(); copy(r.copy, extra); }); dd.appendChild(extra); }
-        decode(dt, r.k, 30);
-        var p = decode(target, r.v).then(function () { if (extra) extra.classList.remove("pre"); });
-        return (opts && opts.stagger === false) ? p : wait(110).then(function () { return i === rows.length - 1 ? p : null; });
-      });
-    }, Promise.resolve());
-  }
-  function contactBlock() {
-    return table([
-      { k: "mail", v: LINKS.mail.value, link: LINKS.mail, copy: LINKS.mail.value },
-      { k: "x", v: LINKS.x.value, link: LINKS.x },
-      { k: "instagram", v: LINKS.instagram.value, link: LINKS.instagram }
-    ]);
-  }
-
-  function run(raw) {
-    var shown = raw.trim(), cmd = shown.toLowerCase().replace(/\s+/g, " ");
-    echo(shown);
-    if (cmd) history.push(shown);
-    hIdx = history.length;
-    cmd = ALIAS[cmd] || cmd;
-    busy = true; refreshGhost();
-    var job;
-    switch (cmd) {
-      case "": job = Promise.resolve(); break;
-      case "contact": job = contactBlock(); break;
-      case "mail":
-        copy(LINKS.mail.value);
-        job = out("copied " + LINKS.mail.value + " to your clipboard").then(function () {
-          var l = add(el("div", "ln out")), a = link({ href: LINKS.mail.href }); l.appendChild(a); return decode(a, "open your mail app");
-        });
-        break;
-      case "x": case "instagram": {
-        var item = LINKS[cmd], w = null;
-        try { w = window.open(item.href, "_blank", "noopener"); } catch (e) {}
-        var l = add(el("div", "ln out")), lead = el("span"), a = link(item);
-        l.appendChild(lead); l.appendChild(a);
-        job = decode(lead, w === null ? "open " : "opening ").then(function () {
-          return decode(a, item.href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""));
-        });
-        break;
-      }
-      case "help":
-        job = table([
-          { k: "contact", v: "list every channel" },
-          { k: "mail", v: "copy the email address" },
-          { k: "x", v: "open X in a new tab" },
-          { k: "instagram", v: "open Instagram in a new tab" },
-          { k: "clear", v: "clear the screen" },
-          { k: "home", v: "back to the index" }
-        ]).then(function () { return out("ig, twitter and email work too.", "note"); });
-        break;
-      case "clear": log.textContent = ""; busy = false; refreshGhost(); scrollEnd(); return;
-      case "home": location.href = HOME; return;
-      default: job = out("command not found: " + cmd + ". Type help to see what works.", "err");
-    }
-    job.then(function () { gap(); scrollEnd(); idle(); });
-  }
-
-  function sync() { typed.textContent = input.value; refreshGhost(); }
-  function submit() { if (busy) { queued = true; return; } queued = false; var v = input.value; input.value = ""; sync(); run(v); }
-  function idle() { busy = false; sync(); if (queued) submit(); }
-
-  input.addEventListener("input", sync);
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") { e.preventDefault(); submit(); }
-    else if (e.key === "ArrowUp") { if (hIdx > 0) { hIdx--; input.value = history[hIdx]; sync(); } e.preventDefault(); }
-    else if (e.key === "ArrowDown") { if (hIdx < history.length) { hIdx++; input.value = history[hIdx] || ""; sync(); } e.preventDefault(); }
-    else if (e.key === "Escape") { input.value = ""; sync(); }
-    else if (e.key === "Tab") {
-      var v = input.value.trim().toLowerCase();
-      if (v) { var m = COMMANDS.filter(function (c) { return c.indexOf(v) === 0; }); if (m.length === 1) { input.value = m[0]; sync(); } }
-      e.preventDefault();
-    } else if (e.key === "l" && e.ctrlKey) { e.preventDefault(); log.textContent = ""; }
-  });
-  input.addEventListener("focus", function () { prompt.classList.add("focused"); });
-  input.addEventListener("blur", function () { prompt.classList.remove("focused"); });
-  term.addEventListener("click", function (e) {
-    if (e.target.closest("a, button") || String(window.getSelection())) return;
-    input.focus({ preventScroll: true });
-  });
-  screen.addEventListener("scroll", function () { screen.classList.toggle("scrolled", screen.scrollTop > 0); });
-  document.querySelectorAll(".keys button").forEach(function (b) {
-    b.addEventListener("click", function () { if (!busy) { input.value = ""; sync(); run(b.getAttribute("data-cmd")); } });
-  });
-
-  // intro: type "contact", then the channels resolve one row at a time
-  function intro() {
-    var word = "contact";
-    busy = true; refreshGhost();
-    if (reduced) { busy = false; run(word); return; }
-    var i = 0;
-    (function tick() {
-      typed.textContent = word.slice(0, ++i);
-      if (i < word.length) setTimeout(tick, 45 + Math.random() * 35);
-      else setTimeout(function () {
-        typed.textContent = ""; run(word);
-        if (finePointer) input.focus({ preventScroll: true });
-      }, 160);
-    })();
-  }
-  if (finePointer) input.focus({ preventScroll: true });
-  setTimeout(intro, reduced ? 0 : 380);
-})();
+IconoKanji.mount(document.getElementById("ik"), {"seed":1357092039,"jp":"katakana","jpMix":1,"charScale":1.1,"changeRate":3.4,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#fbfaf7","transparent":true,"grid":"#efede8","showGrid":false,"tileLo":"#ecebe6","tileHi":"#111111","text":"#2a2a28","textOnDark":"#fbfaf7","accentMode":"off","accent":"#FF360C","accentRate":3,"padX":1,"padY":1,"gap":0.06,"radius":0,"speed":1.6,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true,"icon":[".........###.........","........#####........",".......#######.......","......#########......",".....###########.....","....#############....","....#############....","...####.......####...","...###..#####..###...","...##..#######..##...","..##..#########..##..","..##.###.###.###.##..",".###.###.###.###.###.","####.###.###.###.####","####.###########.####",".###..#########..###.","...##..#######..##...","...###...###...###...","..######.....######..",".###################.","..#################..","....#############....","......#########......",".......#######.......","........#####........",".........###........."],"tones":[".........999.........","........99999........",".......9999999.......","......999999999......",".....99999999999.....","....9999999999999....","....9999999999999....","...9999.......9999...","...999..99999..999...","...99..9999999..99...","..99..999999999..99..","..99.999.999.999.99..",".999.999.999.999.999.","9999.999.999.999.9999","9999.99999999999.9999",".999..999999999..999.","...99..9999999..99...","...999...999...999...","..999999.....999999..",".9999999999999999999.","..99999999999999999..","....9999999999999....","......999999999......",".......9999999.......","........99999........",".........999........."],"useTones":true,"colors":["......................................................000000000000000000......................................................","................................................000000000000000000000000000000................................................","..........................................000000000000000000000000000000000000000000..........................................","....................................000000000000000000000000000000000000000000000000000000....................................","..............................000000000000000000000000000000000000000000000000000000000000000000..............................","........................000000000000000000000000000000000000000000000000000000000000000000000000000000........................","........................000000000000000000000000000000000000000000000000000000000000000000000000000000........................","..................000000000000000000000000..........................................000000000000000000000000..................","..................000000000000000000............000000000000000000000000000000............000000000000000000..................","..................000000000000............000000000000000000000000000000000000000000............000000000000..................","............000000000000............000000000000000000000000000000000000000000000000000000............000000000000............","............000000000000......000000000000000000......000000000000000000......000000000000000000......000000000000............","......000000000000000000......000000000000000000......000000000000000000......000000000000000000......000000000000000000......","000000000000000000000000......000000000000000000......000000000000000000......000000000000000000......000000000000000000000000","000000000000000000000000......000000000000000000000000000000000000000000000000000000000000000000......000000000000000000000000","......000000000000000000............000000000000000000000000000000000000000000000000000000............000000000000000000......","..................000000000000............000000000000000000000000000000000000000000............000000000000..................","..................000000000000000000..................000000000000000000..................000000000000000000..................","............000000000000000000000000000000000000..............................000000000000000000000000000000000000............","......000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000......","............000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000............","........................000000000000000000000000000000000000000000000000000000000000000000000000000000........................","....................................000000000000000000000000000000000000000000000000000000....................................","..........................................000000000000000000000000000000000000000000..........................................","................................................000000000000000000000000000000................................................","......................................................000000000000000000......................................................"],"colorMode":"image","colorAmt":1,"colorVar":1.52});
 </script>
 </body>
 </html>

@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>About · Internet Guild</title>
+<meta name="description" content="Internet Guild is a design practice, born to reduce. Founded and led by Nico Teodoro.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Internet Guild">
+<meta property="og:title" content="About · Internet Guild">
+<meta property="og:description" content="Internet Guild is a design practice, born to reduce. Founded and led by Nico Teodoro.">
+<meta property="og:url" content="https://internetguild.co/about">
+<meta property="og:image" content="https://internetguild.co/og.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://internetguild.co/og.png?v=2">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --dim: #8e8e8e;
+    --edge: 20px;
+    --col: 25.8vw;   /* where the text column starts */
+    --nav: 72.9vw;   /* where the menu starts */
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); overflow-x: clip; }
+  body { font-family: var(--font); font-size: 16px; line-height: 24px; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { opacity: .6; }
+  a:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+  p { margin: 0; }
+
+  /* header: icon on the left, the name in the text column, the menu on the right */
+  .top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; height: 0; }
+  .icon { position: absolute; left: var(--edge); top: 36px; width: 34px; aspect-ratio: 23 / 28; }
+  .icon .mark { width: 100%; }
+  .id { position: absolute; left: var(--col); top: 34px; }
+  .id .dim { color: var(--dim); }
+  .menu { position: absolute; left: var(--nav); top: 38px; display: flex; flex-direction: column; }
+  .menu .on { font-weight: 600; }
+
+  /* the text column */
+  .col { margin-left: var(--col); max-width: 690px; padding: 320px var(--edge) 120px 0; }
+  .gap { height: 24px; }
+  .gap-l { height: 72px; }
+  .two { display: grid; grid-template-columns: 378px 1fr; }
+
+  @media (max-width: 760px) {
+    :root { --edge: 16px; --col: 64px; }
+    .icon { top: 24px; width: 30px; }
+    .id { top: 22px; }
+    .menu { left: auto; right: var(--edge); top: 22px; text-align: right; }
+    .col { margin-left: var(--edge); padding-top: 176px; }
+    .two { grid-template-columns: 1fr 1fr; column-gap: 16px; }
+  }
+  h1, h2 { margin: 0; font: inherit; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  figure, blockquote { margin: 0; }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="icon" href="/" aria-label="Internet Guild, home"><div id="ik" class="mark"></div></a>
+  <p class="id"><a href="/">Internet Design Guild</a><br><a class="dim" href="/contact">Hire the guild</a></p>
+  <nav class="menu" aria-label="Main">
+    <a href="/#work">Works</a>
+    <a href="/about" class="on" aria-current="page">About</a>
+    <a href="/services">Services</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+<main class="col">
+  <h1 class="sr">About</h1>
+  <p>Internet Guild is a tier-s design practice, born to reduce.<br>
+  Websites, products and AI for founders who embrace simplicity.<br>
+  We make things simple. We keep only what matters.</p>
+  <div class="gap"></div>
+  <p>Every detail is there for a reason. Color, type, space, and motion help people know where to go. They also give each product its own look. If something helps, we keep it. If it gets in the way, we take it out.</p>
+  <div class="gap"></div>
+  <p>The goal: easy to get, easy to use.<br>
+  Design and code are one process.</p>
+  <div class="gap"></div>
+  <p>We work with you from the first idea to the day it goes live.<br>
+  We care about how it looks and how it works.<br>
+  People make the calls. AI helps us work faster.</p>
+  <div class="gap"></div>
+  <p>Eleven years of practice. We design, build and launch.</p>
+  <div class="gap"></div>
+  <p>Founded and led by Nico Teodoro.<br>
+  Born in Argentina.<br>
+  Raised on the internet.<br>
+  Grown in Azeroth.</p>
+  <div class="gap-l"></div>
+  <h2>Timeline</h2>
+  <div class="gap"></div>
+  <p>Age 13 First jobs: websites for the game servers of local cybercafés. Mu Online, Lineage 2, Argentum Online. Kids paid to play, servers needed a face, and someone had to design and code it. That someone was him. Design and code start here, long before they had a name.</p>
+  <p>2015 Starts working on his own. No office, no team, no studio. Just a laptop and freelance platforms. The first clients come from other countries: briefs in English, payments in dollars, everything remote. Design and code, end to end. The craft hardens. The studio begins without a name.</p>
+  <p>2020 The pandemic hits. Freelance work turns into a studio: Simplify Computer. A team, more clients, more noise. Projects in fintech, crypto, health, investment, energy, and early AI. The work gets bigger. The calendar fills. Something about it starts to feel heavy.</p>
+  <p>2024 Simplify closes. Back to working alone. Fewer projects, more care. The noise drops. The work gets quieter, and better. The question is no longer how much to take on, but what is worth keeping.</p>
+  <p>2025 A trip to Japan. Kyoto, its culture, and the idea of doing more with less. Temples, empty rooms, things that last because nothing extra was added. Everything learned over the years comes together in one idea: simple is not a style. It’s the standard.</p>
+  <p>April 11, 2025 After a meeting in Kyoto, Internet Guild is born. Same craft, new name, one rule: keep only what matters.</p>
+  <p>Now Building products for AI, fintech, crypto, health, and real estate companies, and for other agencies. One person. Design and code. From first idea to launch. The same kid who built game-server sites for cybercafés, still making things for the internet, just cleaner.</p>
+  <div class="gap-l"></div>
+  <h2>Latest collaborations</h2>
+  <p>Aerolab, Great Sky Solar, Buenbit (acquired), Numia, Towerbank, Papayadash, K Street VC, peiGo, Eureka Labs, Emilabs, Aquicore (acquired), Complif, Bonum, Waterplan, Lupa Studio, FZ Sports, 1190 Sports, Fanatiz, White Prompt, Cary Health, Cary RX.</p>
+  <div class="gap-l"></div>
+  <figure><figcaption>Karen Brendel, Growth Manager, Eureka Labs</figcaption><blockquote>“I worked with Nico on the full development of our new website, and from day one he clearly understood our vision. He was proactive in proposing solutions that truly aligned with our ideas, and took the time to teach us how to maintain the site ourselves. Nico is highly professional and great to work with. I always recommend him.”</blockquote></figure>
+  <div class="gap"></div>
+  <figure><figcaption>Roddy Garcia, Product Design Manager, White Prompt</figcaption><blockquote>“Working with Nico was a great experience. He’s really good at turning Figma designs into solid Webflow sites, always keeping the design exactly how it should be. He also helped a lot with setting up the CMS, making it easy for us to manage the content of our website. Nico is fast and easy to work with.”</blockquote></figure>
+  <div class="gap"></div>
+  <figure><figcaption>Juan Ignacio “Nacho” Cidre, CEO &amp; CTO, White Prompt</figcaption><blockquote>“Nico went far and beyond. He not only implemented the Zeplin we had in Webflow, he also improved it in many UI aspects. Nico has great technical and communicational skills, and more important than that, he is always available and willing to help. I am happy to have him in my network of partners.”</blockquote></figure>
+  <div class="gap"></div>
+  <figure><figcaption>Guido Sasson, CEO, Remmy</figcaption><blockquote>“Nico helped us throughout the entire process, from brand creation to website design. Their willingness to help and their constant communication made whole the entire process quick and efficient. We would definitely choose them again!”</blockquote></figure>
+</main>
+
+<script>
+window.IconoKanji = window.IconoKanji || (function () {
+  "use strict";
+  var ICON = [
+    ".........###.........", "........#####........", ".......#######.......", "......#########......",
+    ".....###########.....", "....#############....", "....#############....", "...####.......####...",
+    "...###..#####..###...", "...##..#######..##...", "..##..#########..##..", "..##.###.###.###.##..",
+    ".###.###.###.###.###.", "####.###.###.###.####", "####.###########.####", ".###..#########..###.",
+    "...##..#######..##...", "...###...###...###...", "..######.....######..", ".###################.",
+    "..#################..", "....#############....", "......#########......", ".......#######.......",
+    "........#####........", ".........###........."
+  ];
+  var IW = 21, IH = 26, EYE_CELLS = [[11, 8], [12, 8], [13, 8], [11, 12], [12, 12], [13, 12]];
+  // density ramps, light → dark (kanji ordered by stroke count)
+  var SETS = {
+    kanji: [["一", "丶", "ノ", "二", "人", "入", "八", "十", "小", "夕", "・", "、"],
+            ["日", "木", "心", "目", "田", "生", "光", "糸", "空", "門"],
+            ["電", "夢", "網", "魂", "霊", "龍", "闇", "響", "魔", "驚", "鬱"]],
+    // simple, low-stroke katakana only: they stay legible at the small size of this page
+    katakana: [["ノ", "ー", "ニ", "ト", "ハ", "ヘ", "ソ", "ン", "・"],
+               ["エ", "カ", "コ", "ナ", "ヒ", "フ", "ラ", "ロ", "ク"],
+               ["キ", "サ", "シ", "ミ", "ム", "メ", "ヨ", "ワ", "ヲ"]],
+    hiragana: [["し", "く", "へ", "つ", "ひ", "こ", "い", "・", "、"],
+               ["あ", "お", "か", "た", "な", "む", "ゆ", "わ", "る"],
+               ["ぬ", "ね", "め", "ぼ", "ぎ", "ぶ", "ぽ", "ぜ", "ゑ"]]
+  };
+  var ASCII = [["'", ".", ",", ":", ";"], ["t", "S", "X", "%"], ["8", "#", "@", "%"]];
+  var STRAY = ["'", ".", ",", "o", "・", "、"];
+  var ACCENTS = ["#8f74d8", "#4e9a64", "#c97a3c", "#d9686a", "#5a8fbf"];
+  var FONT_UI = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+  var FONT_JP = '"Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif';
+  var DEFAULTS = {
+    seed: 12345, jp: "kanji", jpMix: 0.7, charScale: 1, changeRate: 1, scramble: true,
+    contrast: 1, density: 0, flow: 1,
+    bg: "#f4f4f1", transparent: false, grid: "#e5e5e1", showGrid: true,
+    tileLo: "#e0e0dc", tileHi: "#353533", text: "#5c5c58", textOnDark: "#eeeeea",
+    accentMode: "multi", accent: "#d9686a", accentRate: 1,
+    padX: 5, padY: 3, gap: 0.12, radius: 0,
+    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true,
+    icon: null, tones: null, useTones: true, colors: null, colorMode: "palette", colorAmt: 1, colorVar: 1
+  };
+  var CHARS = (function () {
+    var all = ASCII.flat().concat(STRAY);
+    Object.keys(SETS).forEach(function (k) { all = all.concat(SETS[k].flat()); });
+    return Array.from(new Set(all)).join("");
+  })();
+
+  function ensureFonts() {
+    if (document.getElementById("ik-fonts")) return;
+    var l = document.createElement("link");
+    l.id = "ik-fonts"; l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@500&text=" + encodeURIComponent(CHARS) + "&display=swap";
+    document.head.appendChild(l);
+  }
+  function hexRgb(h) {
+    h = String(h || "").trim();
+    if (/^#[0-9a-f]{3}$/i.test(h)) h = "#" + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
+    if (!/^#[0-9a-f]{6}$/i.test(h)) return [128, 128, 128];
+    return [1, 3, 5].map(function (k) { return parseInt(h.slice(k, k + 2), 16); });
+  }
+  function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function css(a) { return "rgb(" + (a[0] | 0) + "," + (a[1] | 0) + "," + (a[2] | 0) + ")"; }
+  function isJP(ch) { return ch.charCodeAt(0) > 0x2000; }
+
+  function mount(el, userCfg) {
+    ensureFonts();
+    var cfg = Object.assign({}, DEFAULTS, userCfg || {});
+    var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var cv = document.createElement("canvas");
+    cv.setAttribute("role", "img"); cv.setAttribute("aria-label", "Ícono animado hecho con caracteres");
+    cv.style.cssText = "display:block;width:100%;";
+    el.appendChild(cv);
+    var ctx = cv.getContext("2d"), bgc = document.createElement("canvas"), bctx = bgc.getContext("2d");
+    var G, cells, strays, T, nextBlink, blinkUntil, sweepStart, sweepId, rs = 1, seedN = 1, col, cell = 10, dpr = 1;
+    var raf = 0, visible = true, paused = false, last = 0, ro, io;
+    var intro = reduced ? 1e9 : 0; // real seconds since mount; cells type in top to bottom, as on the home page
+
+    function rand() { rs |= 0; rs = rs + 0x6D2B79F5 | 0; var t = Math.imul(rs ^ rs >>> 15, 1 | rs); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function pick(a) { return a[(rand() * a.length) | 0]; }
+    function hash(x, y, z) { var h = (Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(z, 1440662683) + seedN) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16; return (h >>> 0) / 4294967296; }
+    function vnoise(x, y, z) {
+      var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z), u = x - xi, v = y - yi, w = z - zi;
+      u = u * u * (3 - 2 * u); v = v * v * (3 - 2 * v); w = w * w * (3 - 2 * w);
+      function L(a, b, t) { return a + (b - a) * t; }
+      return L(L(L(hash(xi, yi, zi), hash(xi + 1, yi, zi), u), L(hash(xi, yi + 1, zi), hash(xi + 1, yi + 1, zi), u), v),
+               L(L(hash(xi, yi, zi + 1), hash(xi + 1, yi, zi + 1), u), L(hash(xi, yi + 1, zi + 1), hash(xi + 1, yi + 1, zi + 1), u), v), w);
+    }
+
+    function geometry() {
+      var PX = Math.max(0, cfg.padX | 0), PY = Math.max(0, cfg.padY | 0);
+      var custom = !!(cfg.icon && cfg.icon.length && cfg.icon[0].length);
+      var icon = custom ? cfg.icon : ICON, IW = icon[0].length, IH = icon.length;
+      var tones = custom && cfg.tones && cfg.tones.length === IH ? cfg.tones : null;
+      var cols = custom && cfg.colors && cfg.colors.length === IH ? cfg.colors : null;
+      var rgb = new Array(N).fill(null);
+      var COLS = IW + PX * 2, ROWS = IH + PY * 2, N = COLS * ROWS, r, c, i;
+      var filled = new Uint8Array(N), outside = new Uint8Array(N);
+      var lum = new Float32Array(N).fill(-1);   // image darkness per cell, -1 = none
+      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) {
+        var at = (r + PY) * COLS + c + PX;
+        if (icon[r][c] === "#") filled[at] = 1;
+        if (tones && tones[r][c] >= "0" && tones[r][c] <= "9") lum[at] = Number(tones[r][c]) / 9;
+        if (cols) { var hx = cols[r].substr(c * 6, 6); if (/^[0-9a-f]{6}$/i.test(hx)) rgb[at] = hexRgb("#" + hx); }
+      }
+      var q = [];
+      for (i = 0; i < N; i++) { r = (i / COLS) | 0; c = i % COLS;
+        if ((r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1) && !filled[i]) { outside[i] = 1; q.push(i); } }
+      while (q.length) { i = q.pop(); r = (i / COLS) | 0; c = i % COLS;
+        [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) { var rr = r + d[0], cc = c + d[1];
+          if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) return; var j = rr * COLS + cc;
+          if (!outside[j] && !filled[j]) { outside[j] = 1; q.push(j); } }); }
+      function cheb(src, seedEdge) { var d = new Int16Array(N).fill(99), qq = [];
+        for (var k = 0; k < N; k++) if (src[k]) { d[k] = 0; qq.push(k); }
+        for (var h = 0; h < qq.length; h++) { var a = qq[h], ar = (a / COLS) | 0, ac = a % COLS;
+          for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) { var rr = ar + dr, cc = ac + dc;
+            if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) continue; var b = rr * COLS + cc;
+            if (d[b] > d[a] + 1) { d[b] = d[a] + 1; qq.push(b); } } }
+        if (seedEdge) for (var e = 0; e < N; e++) { var er = (e / COLS) | 0, ec = e % COLS;   // canvas edge counts as outside
+          var de = Math.min(er + 1, ec + 1, ROWS - er, COLS - ec); if (de < d[e]) d[e] = de; }
+        return d; }
+      G = { COLS: COLS, ROWS: ROWS, N: N, filled: filled, outside: outside,
+            depth: cheb(outside, true), away: cheb(filled, false),
+            lum: lum, rgb: rgb, custom: custom,
+            eyes: custom ? [] : EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
+    }
+
+    function reset() {
+      seedN = cfg.seed | 0; rs = seedN; T = 0;
+      nextBlink = 2 + rand() * 3; blinkUntil = -1; sweepStart = 3; sweepId = 0; cells = []; strays = [];
+      for (var i = 0; i < G.N; i++) {
+        var r = (i / G.COLS) | 0, c = i % G.COLS;
+        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1, lum: G.lum[i], rgb: G.rgb[i], nz: 0 , at: 0.15 + (r / G.ROWS) * 0.75 + (c / G.COLS) * 0.1 + Math.random() * 0.3, shown: false });
+        else if (G.outside[i] && G.away[i] <= 2) strays.push({ r: r, c: c, d: G.away[i], on: false, ch: "", next: rand() * 2 });
+      }
+      step(0.001);
+    }
+
+    function colors() {
+      var bg = hexRgb(cfg.bg), lo = hexRgb(cfg.tileLo), hi = hexRgb(cfg.tileHi), tx = hexRgb(cfg.text);
+      col = { bg: bg, grid: hexRgb(cfg.grid), lo: lo, hi: hi, inkSoft: mix(lo, tx, 0.55), inkStrong: tx, onHi: hexRgb(cfg.textOnDark),
+              ghost: mix(bg, lo, 0.55), ghostInk: mix(bg, tx, 0.32), stray: mix(bg, tx, 0.45),
+              accents: cfg.accentMode === "single" ? [cfg.accent] : ACCENTS };
+      drawBg();
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2, Math.max(1, 2400 / (el.clientWidth || 300))); // the giant start is drawn big, not dense
+      var w = el.clientWidth || 300;
+      cell = w / G.COLS;
+      var h = cell * G.ROWS;
+      cv.width = bgc.width = Math.max(1, Math.round(w * dpr));
+      cv.height = bgc.height = Math.max(1, Math.round(h * dpr));
+      cv.style.height = h + "px";
+      drawBg(); draw();
+    }
+
+    function bgTo(c, cs, sc, lw, pxW, pxH) {
+      c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, pxW, pxH);
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var W = cs * G.COLS, H = cs * G.ROWS;
+      if (!cfg.transparent) { c.fillStyle = css(col.bg); c.fillRect(0, 0, W, H); }
+      if (cfg.showGrid) {
+        c.strokeStyle = css(col.grid); c.lineWidth = lw; c.beginPath();
+        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cs * sc) / sc + lw / 2; c.moveTo(px, 0); c.lineTo(px, H); }
+        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cs * sc) / sc + lw / 2; c.moveTo(0, py); c.lineTo(W, py); }
+        c.stroke();
+      }
+    }
+    function drawBg() {
+      if (!col || !G) return;
+      bgTo(bctx, cell, dpr, 1 / dpr, bgc.width, bgc.height);
+    }
+
+    function bucket(t) { return t < 0.4 ? 0 : t < 0.7 ? 1 : 2; }
+    function set() { return SETS[cfg.jp] || SETS.kanji; }
+    function choose(b) { return rand() < cfg.jpMix ? pick(set()[b]) : pick(ASCII[b]); }
+    function anyChar() { return rand() < cfg.jpMix ? pick(set()[(rand() * 3) | 0]) : pick(ASCII[(rand() * 3) | 0]); }
+
+    var SWEEP_DUR = 2.4;
+    function sweepBoost(r, c) {
+      if (!cfg.sweep) return 0;
+      var p = T - sweepStart; if (p < 0 || p > SWEEP_DUR) return 0;
+      var head = -8 + (G.ROWS + 16) * (p / SWEEP_DUR), dist = (r + c * 0.4 - G.COLS * 0.2) - head;
+      return Math.exp(-(dist * dist) / 3);
+    }
+    function toneOf(cl) {
+      var n = 0.65 * vnoise(cl.c / 5, cl.r / 5, T * 0.22) + 0.35 * vnoise(cl.c / 2.2 + 40, cl.r / 2.2, T * 0.55);
+      var base = (cfg.useTones && cl.lum >= 0) ? 0.16 + 0.74 * cl.lum + 0.03 * Math.min(cl.d, 3) : 0.4 + 0.11 * Math.min(cl.d, 4);
+      var t = base + 0.6 * cfg.flow * (n - 0.5);
+      cl.nz = 0.6 * cfg.flow * (n - 0.5) * cfg.contrast;   // animated part only, used to shade image colors
+      t = 0.5 + (t - 0.5) * cfg.contrast + cfg.density;
+      return Math.max(0.03, Math.min(1, t));
+    }
+
+    function step(dt) {
+      T += dt;
+      var scramble = cfg.scramble && !reduced;
+      if (T > sweepStart + SWEEP_DUR + cfg.sweepEvery) { sweepStart = T; sweepId++; }
+      if (cfg.blink && T >= nextBlink) { blinkUntil = T + 0.14; nextBlink = T + 2.5 + rand() * 4.5; if (rand() < 0.2) nextBlink = T + 0.32; }
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], boost = sweepBoost(cl.r, cl.c);
+        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4); cl.nz += boost * 0.4;
+        var b = bucket(cl.tone);
+        if (boost > 0.5 && cl.sweep !== sweepId) { cl.sweep = sweepId; cl.b = b; if (scramble) { cl.scr = 4; cl.scrNext = T; } else cl.ch = choose(b); }
+        if (b !== cl.b || T >= cl.next) {
+          cl.b = b; cl.next = T + (0.8 + rand() * 3.2) / Math.max(0.05, cfg.changeRate);
+          if (scramble && rand() < 0.7) { cl.scr = 2 + ((rand() * 3) | 0); cl.scrNext = T; } else cl.ch = choose(b);
+        }
+        if (cl.scr > 0 && T >= cl.scrNext) { cl.scr--; cl.scrNext = T + 0.055; cl.ch = cl.scr ? anyChar() : choose(cl.b); }
+        if (!cl.ch) cl.ch = choose(cl.b);
+        if (cl.acc !== null && (T > cl.accUntil || cfg.accentMode === "off")) cl.acc = null;
+        if (cfg.accentMode !== "off" && cl.acc === null && rand() < 0.012 * cfg.accentRate * dt) { cl.acc = (rand() * col.accents.length) | 0; cl.accUntil = T + 1.2 + rand() * 3; }
+        if (cfg.erosion && cl.d === 1 && T > cl.ghostUntil && rand() < 0.035 * dt) cl.ghostUntil = T + 0.4 + rand() * 1.6;
+      }
+      for (var s = 0; s < strays.length; s++) { var st = strays[s];
+        if (T >= st.next) { st.on = rand() < (st.d === 1 ? 0.3 : 0.12); st.ch = pick(STRAY); st.next = T + 0.5 + rand() * 2.5; } }
+    }
+
+    function tileRect(c, x, y, w, r) {
+      if (r > 0.3 && c.roundRect) { c.beginPath(); c.roundRect(x, y, w, w, r); c.fill(); }
+      else c.fillRect(x, y, w, w);
+    }
+    function cellStyle(cl) {
+      var t = cl.tone, fill, ink;
+      if (cfg.erosion && T < cl.ghostUntil) return [css(col.ghost), css(col.ghostInk)];
+      if (cfg.colorMode === "image" && cl.rgb) {
+        // original pixel color, breathing lighter/darker with the animation
+        var dv = cl.nz * cfg.colorVar * 1.1, base = cl.rgb;
+        var img = dv > 0 ? mix(base, [0, 0, 0], Math.min(0.7, dv)) : mix(base, [255, 255, 255], Math.min(0.7, -dv));
+        var f = mix(mix(col.lo, col.hi, t), img, cfg.colorAmt);
+        var L = (0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2]) / 255;
+        fill = css(f);
+        ink = css(L < 0.5 ? mix(f, [255, 255, 255], 0.72) : mix(f, [0, 0, 0], 0.62));
+        if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+        return [fill, ink];
+      }
+      fill = css(mix(col.lo, col.hi, t));
+      ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
+      if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+      return [fill, ink];
+    }
+    // draws tiles + characters onto any 2D context; cs = cell size in that context's units
+    function paintCells(c, cs, sc) {
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var inset = cs * cfg.gap / 2, tile = cs - inset * 2, rad = tile * cfg.radius;
+      var fA = "500 " + (cs * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
+      var fJ = "500 " + (cs * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
+      c.textAlign = "center"; c.textBaseline = "middle";
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], x = cl.c * cs, y = cl.r * cs, st;
+        if (intro < cl.at) continue;
+        if (!cl.shown) { cl.shown = true; if (intro < 1e8) { cl.scr = 5; cl.scrNext = T; cl.ch = anyChar(); } }
+        st = cellStyle(cl);
+        c.fillStyle = st[0]; tileRect(c, x + inset, y + inset, tile, rad);
+        var jp = isJP(cl.ch);
+        c.fillStyle = st[1]; c.font = jp ? fJ : fA;
+        c.fillText(cl.ch, x + cs / 2, y + cs / 2 + (jp ? 0 : cs * 0.04));
+      }
+      if (T < blinkUntil) {
+        c.fillStyle = css(col.hi);
+        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect(c, (i % G.COLS) * cs + inset, ((i / G.COLS) | 0) * cs + inset, tile, rad); }
+      }
+      if (cfg.strays && intro > 1.4) {
+        c.fillStyle = css(col.stray);
+        for (var s = 0; s < strays.length; s++) { var sy = strays[s]; if (!sy.on) continue;
+          c.font = isJP(sy.ch) ? fJ : fA; c.fillText(sy.ch, sy.c * cs + cs / 2, sy.r * cs + cs / 2); }
+      }
+    }
+    function draw() {
+      if (!col || !G || !cells) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bgc, 0, 0);
+      paintCells(ctx, cell, dpr);
+    }
+
+    // still image of the current frame at a given pixel width
+    function snapshot(width) {
+      var cs = width / G.COLS, w = Math.round(width), h = Math.round(cs * G.ROWS);
+      var c = document.createElement("canvas"); c.width = w; c.height = h;
+      var c2 = c.getContext("2d");
+      bgTo(c2, cs, 1, Math.max(1, cs / 22), w, h);
+      paintCells(c2, cs, 1);
+      return c;
+    }
+    // vector version of the current frame; text stays live (JetBrains Mono / Noto Sans JP)
+    function toSVG() {
+      var U = 24, W = U * G.COLS, H = U * G.ROWS, n = function (v) { return +v.toFixed(2); };
+      var inset = U * cfg.gap / 2, tile = U - inset * 2, rad = n(tile * cfg.radius);
+      var fsA = n(U * 0.66 * cfg.charScale), fsJ = n(U * 0.62 * cfg.charScale);
+      var o = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">'];
+      o.push('<style>@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&amp;family=Noto+Sans+JP:wght@500&amp;display=swap");'
+        + '.a{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:' + fsA + 'px}'
+        + '.j{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-weight:500;font-size:' + fsJ + 'px}</style>');
+      if (!cfg.transparent) o.push('<rect id="fondo" width="' + W + '" height="' + H + '" fill="' + css(col.bg) + '"/>');
+      if (cfg.showGrid) {
+        var d = "";
+        for (var x = 0; x <= G.COLS; x++) d += "M" + x * U + " 0V" + H;
+        for (var y = 0; y <= G.ROWS; y++) d += "M0 " + y * U + "H" + W;
+        o.push('<path id="grilla" d="' + d + '" stroke="' + css(col.grid) + '" stroke-width="1" fill="none"/>');
+      }
+      var rects = [], texts = [], rr = rad > 0.3 ? ' rx="' + rad + '"' : "";
+      function txt(ch, cx, cy, fill) {
+        var jp = isJP(ch), fs = jp ? fsJ : fsA;
+        texts.push('<text class="' + (jp ? "j" : "a") + '" x="' + n(cx) + '" y="' + n(cy + fs * 0.36) + '" text-anchor="middle" fill="' + fill + '">' + ch + '</text>');
+      }
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], st = cellStyle(cl);
+        rects.push('<rect x="' + n(cl.c * U + inset) + '" y="' + n(cl.r * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + st[0] + '"/>');
+        txt(cl.ch, cl.c * U + U / 2, cl.r * U + U / 2, st[1]);
+      }
+      if (T < blinkUntil) for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e];
+        rects.push('<rect x="' + n((i % G.COLS) * U + inset) + '" y="' + n(((i / G.COLS) | 0) * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + css(col.hi) + '"/>'); }
+      if (cfg.strays) for (var s = 0; s < strays.length; s++) if (strays[s].on) txt(strays[s].ch, strays[s].c * U + U / 2, strays[s].r * U + U / 2, css(col.stray));
+      o.push('<g id="celdas">' + rects.join("") + '</g>', '<g id="caracteres">' + texts.join("") + '</g>', '</svg>');
+      return o.join("\n");
+    }
+
+    function loop(now) {
+      var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
+      if (visible) {
+        intro += dt;
+        if (!paused && cfg.speed > 0) step(dt * cfg.speed * (reduced ? 0.35 : 1));
+        draw();
+      }
+      raf = requestAnimationFrame(loop);
+    }
+
+    geometry(); colors(); reset(); resize();
+    if (window.ResizeObserver) { ro = new ResizeObserver(resize); ro.observe(el); } else window.addEventListener("resize", resize);
+    if (window.IntersectionObserver) { io = new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }); io.observe(cv); }
+    if (document.fonts && document.fonts.load) {
+      Promise.all([document.fonts.load("500 16px " + FONT_JP, CHARS), document.fonts.load("500 16px " + FONT_UI, "S%@")]).then(draw, function () {});
+    }
+    raf = requestAnimationFrame(loop);
+
+    return {
+      set: function (patch) {
+        var prev = cfg; cfg = Object.assign({}, cfg, patch || {});
+        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY || prev.icon !== cfg.icon || prev.tones !== cfg.tones || prev.colors !== cfg.colors) { geometry(); colors(); reset(); resize(); return; }
+        if (prev.accentMode !== cfg.accentMode && cells) cells.forEach(function (c) { c.acc = null; });
+        colors();
+        if (prev.seed !== cfg.seed) reset();
+        else if ((prev.jp !== cfg.jp || prev.jpMix !== cfg.jpMix) && cells) cells.forEach(function (c) { c.next = T + rand() * 0.6; });
+        draw();
+      },
+      get: function () { return Object.assign({}, cfg); },
+      size: function () { return { cols: G.COLS, rows: G.ROWS }; },
+      snapshot: function (width) { return snapshot(width); },
+      toSVG: function () { return toSVG(); },
+      togglePause: function () { paused = !paused; return paused; },
+      destroy: function () { cancelAnimationFrame(raf); if (ro) ro.disconnect(); if (io) io.disconnect(); cv.remove(); }
+    };
+  }
+
+  return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
+})();
+IconoKanji.mount(document.getElementById("ik"), {"seed":1357092039,"jp":"katakana","jpMix":1,"charScale":1.1,"changeRate":3.4,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#fbfaf7","transparent":true,"grid":"#efede8","showGrid":false,"tileLo":"#ecebe6","tileHi":"#111111","text":"#2a2a28","textOnDark":"#fbfaf7","accentMode":"off","accent":"#FF360C","accentRate":3,"padX":1,"padY":1,"gap":0.06,"radius":0,"speed":1.6,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true,"icon":[".........###.........","........#####........",".......#######.......","......#########......",".....###########.....","....#############....","....#############....","...####.......####...","...###..#####..###...","...##..#######..##...","..##..#########..##..","..##.###.###.###.##..",".###.###.###.###.###.","####.###.###.###.####","####.###########.####",".###..#########..###.","...##..#######..##...","...###...###...###...","..######.....######..",".###################.","..#################..","....#############....","......#########......",".......#######.......","........#####........",".........###........."],"tones":[".........999.........","........99999........",".......9999999.......","......999999999......",".....99999999999.....","....9999999999999....","....9999999999999....","...9999.......9999...","...999..99999..999...","...99..9999999..99...","..99..999999999..99..","..99.999.999.999.99..",".999.999.999.999.999.","9999.999.999.999.9999","9999.99999999999.9999",".999..999999999..999.","...99..9999999..99...","...999...999...999...","..999999.....999999..",".9999999999999999999.","..99999999999999999..","....9999999999999....","......999999999......",".......9999999.......","........99999........",".........999........."],"useTones":true,"colors":["......................................................000000000000000000......................................................","................................................000000000000000000000000000000................................................","..........................................000000000000000000000000000000000000000000..........................................","....................................000000000000000000000000000000000000000000000000000000....................................","..............................000000000000000000000000000000000000000000000000000000000000000000..............................","........................000000000000000000000000000000000000000000000000000000000000000000000000000000........................","........................000000000000000000000000000000000000000000000000000000000000000000000000000000........................","..................000000000000000000000000..........................................000000000000000000000000..................","..................000000000000000000............000000000000000000000000000000............000000000000000000..................","..................000000000000............000000000000000000000000000000000000000000............000000000000..................","............000000000000............000000000000000000000000000000000000000000000000000000............000000000000............","............000000000000......000000000000000000......000000000000000000......000000000000000000......000000000000............","......000000000000000000......000000000000000000......000000000000000000......000000000000000000......000000000000000000......","000000000000000000000000......000000000000000000......000000000000000000......000000000000000000......000000000000000000000000","000000000000000000000000......000000000000000000000000000000000000000000000000000000000000000000......000000000000000000000000","......000000000000000000............000000000000000000000000000000000000000000000000000000............000000000000000000......","..................000000000000............000000000000000000000000000000000000000000............000000000000..................","..................000000000000000000..................000000000000000000..................000000000000000000..................","............000000000000000000000000000000000000..............................000000000000000000000000000000000000............","......000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000......","............000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000............","........................000000000000000000000000000000000000000000000000000000000000000000000000000000........................","....................................000000000000000000000000000000000000000000000000000000....................................","..........................................000000000000000000000000000000000000000000..........................................","................................................000000000000000000000000000000................................................","......................................................000000000000000000......................................................"],"colorMode":"image","colorAmt":1,"colorVar":1.52});
+</script>
+</body>
+</html>
