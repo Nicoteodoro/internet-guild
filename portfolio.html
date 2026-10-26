@@ -37,13 +37,13 @@
 
   /* the band: fixed across the middle of the screen, behind the projects */
   .band {
-    position: fixed; top: 50%; left: 8px; right: 8px; z-index: 0; transform: translateY(-50%);
-    height: 40px; padding: 0 16px; border-radius: 6px; background: #FF350C; color: #ffffff;
+    position: fixed; top: 50%; left: 4px; right: 4px; z-index: 0; transform: translateY(-50%);
+    height: 32px; padding: 0 8px; border-radius: 6px; background: #FF350C; color: #ffffff;
     display: flex; align-items: center; justify-content: space-between;
     font-size: 12px; font-weight: 500; line-height: 1; white-space: nowrap;
   }
   .band .name { text-transform: uppercase; }
-  .band nav { display: flex; gap: 24px; }
+  .band nav { display: flex; gap: 12px; }
   .band a { transition: opacity .2s ease; }
   .band a:hover { opacity: .7; }
   .band a:focus-visible { outline: 1px solid #ffffff; outline-offset: 3px; }
@@ -68,6 +68,7 @@
     :root { --col: calc(100vw - 32px); }
     .reel { gap: 40px; }
     .card { border-radius: 24px; }
+    .band { z-index: 2; } /* the cards fill the width here, so the band rides over them */
   }
 </style>
 </head>
