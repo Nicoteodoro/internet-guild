@@ -27,7 +27,7 @@
   body { font-family: var(--font); -webkit-font-smoothing: antialiased; }
 
   /* hero: the icon starts giant and settles to the home layout as you scroll; then the stage lets go */
-  .hero { position: relative; height: 260vh; }
+  .hero { position: relative; height: 150vh; } /* the settled view stays pinned a little before the work comes up */
   .stage {
     position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -81,32 +81,41 @@
   <section class="work" id="work"></section>
 </main>
 <script>
-// the icon is laid out giant and scaled down, so it stays sharp at both ends
+// the icon is laid out big and scaled down, so it stays sharp at both ends.
+// one flick of the scroll settles it: past the top it shrinks into place, back at the top it grows again
 (function () {
   "use strict";
-  var mark = document.getElementById("ik-index2"), slot = document.getElementById("slot"), after = document.getElementById("after"), hero = document.getElementById("hero");
+  var mark = document.getElementById("ik-index2"), slot = document.getElementById("slot"), after = document.getElementById("after");
   var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var big = 0;
+  var big = 0, e = reduced ? 1 : 0, from = 0, to = e, t0 = 0, DUR = 700, raf = 0;
   function size() {
-    big = Math.round(Math.max(window.innerWidth, window.innerHeight) * 1.5);
+    // as large as fits the screen: full height, never wider than the screen
+    big = Math.floor(Math.min(window.innerHeight * 23 / 28, window.innerWidth));
     mark.style.width = big + "px";
-    update();
+    paint();
   }
-  function ease(t) { return 1 - Math.pow(1 - t, 3); }
-  function update() {
-    var vh = window.innerHeight, run = Math.max(1, hero.offsetHeight - vh);
-    var p = reduced ? 1 : Math.max(0, Math.min(1, window.scrollY / (run * 0.7))), e = ease(p);
-    var rest = slot.clientWidth / big, s = 1 + (rest - 1) * e;
-    // start centred on the screen, end centred in its slot above the text
-    var r = slot.getBoundingClientRect(), dy = (vh / 2 - (r.top + r.height / 2)) * (1 - e);
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function paint() {
+    var vh = window.innerHeight, rest = slot.clientWidth / big, s = 1 + (rest - 1) * e;
+    var r = slot.getBoundingClientRect(), dy = (vh / 2 - (r.top + r.height / 2)) * (1 - e); // big: centred on the screen
     mark.style.transform = "translate(-50%, -50%) translateY(" + dy.toFixed(1) + "px) scale(" + s.toFixed(4) + ")";
-    var q = Math.max(0, Math.min(1, (p - 0.75) / 0.25));
+    var q = Math.max(0, Math.min(1, (e - 0.7) / 0.3));
     after.style.opacity = q.toFixed(3); after.style.transform = "translateY(" + ((1 - q) * 16).toFixed(1) + "px)";
   }
-  var ticking = false;
-  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; update(); }); } }, { passive: true });
+  function tick(now) {
+    var k = Math.min(1, (now - t0) / DUR);
+    e = from + (to - from) * ease(k); paint();
+    raf = k < 1 ? requestAnimationFrame(tick) : 0;
+  }
+  function go(target) {
+    if (target === to) return;
+    from = e; to = target; t0 = performance.now();
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  window.addEventListener("scroll", function () { if (!reduced) go(window.scrollY > 8 ? 1 : 0); else paint(); }, { passive: true });
   window.addEventListener("resize", size);
   size();
+  if (!reduced && window.scrollY > 8) { e = to = 1; paint(); }
 })();
 </script>
 <script>
