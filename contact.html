@@ -31,7 +31,7 @@
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--fg); overflow-x: clip; }
-  body { font-family: var(--font); font-size: 16px; line-height: 24px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font); font-size: 14px; line-height: 18px; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
   a:hover { opacity: .6; }
   a:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
@@ -48,8 +48,8 @@
 
   /* the text column */
   .col { margin-left: var(--col); max-width: 690px; padding: 320px var(--edge) 120px 0; }
-  .gap { height: 24px; }
-  .gap-l { height: 72px; }
+  .gap { height: 18px; }
+  .gap-l { height: 54px; }
   .two { display: grid; grid-template-columns: 378px 1fr; }
 
   @media (max-width: 760px) {
@@ -92,7 +92,7 @@
   <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (Twitter): x.com/internetguild_</a><br>
   <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram: instagram.com/internetguild</a><br>
   <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram: t.me/nico_teodoro</a></p>
-  <div class="gap-l" style="height:96px"></div>
+  <div class="gap-l" style="height:72px"></div>
   <p>Buenos Aires, Republic of Argentina.<br>
   Copyright © 2026. Internet Guild<br>
   All rights reserved.</p>
@@ -346,11 +346,19 @@ window.IconoKanji = window.IconoKanji || (function () {
       var fA = "500 " + (cs * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
       var fJ = "500 " + (cs * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
       c.textAlign = "center"; c.textBaseline = "middle";
+      // too small for characters (the header icon): plain tiles snapped to whole device pixels, so nothing shimmers
+      var tiny = cs * sc < 8, d = cs * sc;
+      if (tiny) c.setTransform(1, 0, 0, 1, 0, 0);
       for (var k = 0; k < cells.length; k++) {
         var cl = cells[k], x = cl.c * cs, y = cl.r * cs, st;
         if (intro < cl.at) continue;
         if (!cl.shown) { cl.shown = true; if (intro < 1e8) { cl.scr = 5; cl.scrNext = T; cl.ch = anyChar(); } }
         st = cellStyle(cl);
+        if (tiny) {
+          var x0 = Math.round(cl.c * d), y0 = Math.round(cl.r * d);
+          c.fillStyle = st[0]; c.fillRect(x0, y0, Math.round((cl.c + 1) * d) - x0, Math.round((cl.r + 1) * d) - y0);
+          continue;
+        }
         c.fillStyle = st[0]; tileRect(c, x + inset, y + inset, tile, rad);
         var jp = isJP(cl.ch);
         c.fillStyle = st[1]; c.font = jp ? fJ : fA;
@@ -360,6 +368,7 @@ window.IconoKanji = window.IconoKanji || (function () {
         c.fillStyle = css(col.hi);
         for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect(c, (i % G.COLS) * cs + inset, ((i / G.COLS) | 0) * cs + inset, tile, rad); }
       }
+      if (tiny) return;
       if (cfg.strays && intro > 1.4) {
         c.fillStyle = css(col.stray);
         for (var s = 0; s < strays.length; s++) { var sy = strays[s]; if (!sy.on) continue;
