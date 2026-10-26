@@ -25,10 +25,9 @@
   html, body { margin: 0; background: var(--bg); color: var(--fg); overflow-x: clip; }
   body { font-family: var(--font); -webkit-font-smoothing: antialiased; }
 
-  /* hero: the icon starts giant and settles to the home layout as you scroll; then the stage lets go */
-  .hero { position: relative; height: 150vh; } /* the settled view stays pinned a little before the work comes up */
+  /* hero: the icon starts at full screen and settles to the home layout; the hero then drops to 80vh so the work peeks in */
   .stage {
-    position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+    position: relative; height: 100vh; height: 100svh; overflow: hidden;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
   }
   .slot { position: relative; width: var(--mark); max-width: calc(100vw - 48px); aspect-ratio: 23 / 28; }
@@ -51,20 +50,29 @@
   .cap { margin-top: 8px; font-size: 15px; font-weight: 500; line-height: 21px; }
   .cap b { display: block; font-weight: 500; }
 
+  /* client logos: endless strip along the bottom of the hero, fading out at both ends */
+  .logos {
+    position: absolute; left: 0; right: 0; bottom: 24px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+  }
+  .logos ul { list-style: none; margin: 0; padding: 0; display: flex; width: max-content; animation: drift 60s linear infinite; }
+  .logos li { padding: 0 28px; font-size: 15px; font-weight: 500; line-height: 21px; white-space: nowrap; }
+  @keyframes drift { to { transform: translateX(-50%); } }
+
   @media (max-width: 700px) {
     .work { columns: 1; }
     .statement span { display: inline; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero { height: auto; }
-    .stage { position: relative; }
+    .logos ul { animation: none; }
   }
 </style>
 </head>
 <body>
 <main>
   <section class="hero" id="hero">
-    <div class="stage">
+    <div class="stage" id="stage">
       <div class="slot" id="slot"><div id="ik-index2" class="mark"></div></div>
       <div class="after" id="after">
         <h1 aria-label="Internet Guild©"><svg class="logo" viewBox="0 0 263 23" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -89,6 +97,13 @@
           <span>Eleven years of practice, helping people build what they imagine.</span>
         </p>
       </div>
+      <div class="logos" id="logos" aria-label="Clients">
+        <ul>
+          <li>Aerolab</li><li>Great Sky Solar</li><li>Buenbit</li><li>Numia</li><li>Towerbank</li><li>Papayadash</li><li>K Street VC</li>
+          <li>peiGo</li><li>Eureka Labs</li><li>Emilabs</li><li>Aquicore</li><li>Complif</li><li>Bonum</li><li>Waterplan</li>
+          <li>Lupa Studio</li><li>FZ Sports</li><li>1190 Sports</li><li>Fanatiz</li><li>White Prompt</li><li>Cary Health</li><li>Cary RX</li>
+        </ul>
+      </div>
     </div>
   </section>
   <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Work</h2>
@@ -96,12 +111,16 @@
 </main>
 <script>
 // the icon is laid out big and scaled down, so it stays sharp at both ends.
-// one flick of the scroll settles it, or it settles by itself after a moment; scrolling back to the top grows it again
+// it settles by itself after a moment, or at the first scroll: it shrinks into place, the text and logos come in,
+// and the hero drops from the full screen to 80vh so the work below peeks in
 (function () {
   "use strict";
   var mark = document.getElementById("ik-index2"), slot = document.getElementById("slot"), after = document.getElementById("after");
+  var stage = document.getElementById("stage"), logos = document.getElementById("logos"), list = logos.querySelector("ul");
   var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var big = 0, e = reduced ? 1 : 0, from = 0, to = e, t0 = 0, DUR = 700, raf = 0;
+  var big = 0, e = reduced ? 1 : 0, from = 0, to = e, t0 = 0, DUR = 700, raf = 0, AUTO = 2600, timer = 0;
+  list.innerHTML += list.innerHTML; // two copies, so the strip loops without a seam
+  Array.prototype.slice.call(list.children, list.children.length / 2).forEach(function (li) { li.setAttribute("aria-hidden", "true"); });
   function size() {
     // as large as fits the screen: full height, never wider than the screen
     big = Math.floor(Math.min(window.innerHeight * 23 / 28, window.innerWidth));
@@ -110,33 +129,33 @@
   }
   function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function paint() {
-    var vh = window.innerHeight, rest = slot.clientWidth / big, s = 1 + (rest - 1) * e;
+    var vh = window.innerHeight;
+    stage.style.height = Math.round(vh * (1 - 0.2 * e)) + "px";
+    var rest = slot.clientWidth / big, sc = 1 + (rest - 1) * e;
     var r = slot.getBoundingClientRect(), dy = (vh / 2 - (r.top + r.height / 2)) * (1 - e); // big: centred on the screen
-    mark.style.transform = "translate(-50%, -50%) translateY(" + dy.toFixed(1) + "px) scale(" + s.toFixed(4) + ")";
+    mark.style.transform = "translate(-50%, -50%) translateY(" + dy.toFixed(1) + "px) scale(" + sc.toFixed(4) + ")";
     var q = Math.max(0, Math.min(1, (e - 0.7) / 0.3));
-    after.style.opacity = q.toFixed(3); after.style.transform = "translateY(" + ((1 - q) * 16).toFixed(1) + "px)";
+    after.style.opacity = logos.style.opacity = q.toFixed(3);
+    after.style.transform = "translateY(" + ((1 - q) * 16).toFixed(1) + "px)";
   }
   function tick(now) {
     var k = Math.min(1, (now - t0) / DUR);
     e = from + (to - from) * ease(k); paint();
     raf = k < 1 ? requestAnimationFrame(tick) : 0;
   }
-  var AUTO = 2600, timer = 0, away = false; // settle on its own once the icon has typed in
-  function go(target) {
-    clearTimeout(timer);
-    if (target === 0) timer = setTimeout(function () { go(1); }, AUTO);
-    if (target === to) return;
-    from = e; to = target; t0 = performance.now();
+  function settle() {
+    clearTimeout(timer); window.removeEventListener("scroll", onScroll);
+    if (to === 1) return;
+    from = e; to = 1; t0 = performance.now();
     if (!raf) raf = requestAnimationFrame(tick);
   }
-  window.addEventListener("scroll", function () {
-    if (reduced) { paint(); return; }
-    if (window.scrollY > 8) { away = true; go(1); }
-    else if (away) { away = false; go(0); } // grows back only when you return to the top
-  }, { passive: true });
+  function onScroll() { if (window.scrollY > 8) settle(); }
   window.addEventListener("resize", size);
   size();
-  if (!reduced) { if (window.scrollY > 8) { away = true; e = to = 1; paint(); } else timer = setTimeout(function () { go(1); }, AUTO); }
+  if (!reduced) {
+    if (window.scrollY > 8) { e = to = 1; paint(); }
+    else { timer = setTimeout(settle, AUTO); window.addEventListener("scroll", onScroll, { passive: true }); }
+  }
 })();
 </script>
 <script>
