@@ -63,6 +63,18 @@
   h1, h2 { margin: 0; font: inherit; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   figure, blockquote { margin: 0; }
+  /* work: two columns, each piece whole at its own shape */
+  .work { padding: 8px 8px 64px; columns: 2; column-gap: 8px; scroll-margin-top: 0; }
+  .piece { break-inside: avoid; margin: 0 0 24px; }
+  .media { position: relative; aspect-ratio: var(--ar); background: #f4f4f4; overflow: hidden; }
+  .media img, .media video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+    opacity: 0; transition: opacity .5s ease;
+  }
+  .media .loaded { opacity: 1; }
+  .cap { margin-top: 8px; font-size: 14px; line-height: 20px; }
+  .cap b { display: block; font-weight: inherit; }
+  @media (max-width: 700px) { .work { columns: 1; } }
   /* hero: the icon starts at full screen, then flies to the corner; the hero drops to 80vh so the work peeks in */
   @font-face { font-family: "PP Neue Montreal"; src: url("/neue-montreal-medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
   .stage { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
@@ -81,18 +93,6 @@
   .logos li { padding: 0 48px; font-family: "PP Neue Montreal", var(--font); font-size: 22px; font-weight: 500; line-height: 28px; letter-spacing: -0.01em; white-space: nowrap; }
   @keyframes drift { to { transform: translateX(-50%); } }
 
-  /* work: two columns, each piece whole at its own shape */
-  .work { padding: 8px 8px 64px; columns: 2; column-gap: 8px; scroll-margin-top: 0; }
-  .piece { break-inside: avoid; margin: 0 0 24px; }
-  .media { position: relative; aspect-ratio: var(--ar); background: #f4f4f4; overflow: hidden; }
-  .media img, .media video {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
-    opacity: 0; transition: opacity .5s ease;
-  }
-  .media .loaded { opacity: 1; }
-  .cap { margin-top: 8px; font-size: 14px; line-height: 20px; }
-  .cap b { display: block; font-weight: inherit; }
-  @media (max-width: 700px) { .work { columns: 1; } }
   @media (prefers-reduced-motion: reduce) { .logos ul { animation: none; } }
 </style>
 </head>
@@ -101,7 +101,7 @@
   <a class="icon" href="/" aria-label="Internet Guild, home"></a>
   <p class="id"><a href="/">Internet Design Guild</a><br><a class="dim" href="/contact">Hire the guild</a></p>
   <nav class="menu" aria-label="Main">
-    <a href="/#work">Works</a>
+    <a href="/works">Works</a>
     <a href="/about">About</a>
     <a href="/services">Services</a>
     <a href="/contact">Contact</a>
@@ -111,9 +111,14 @@
   <section class="stage" id="stage">
     <div id="ik" class="mark"></div>
     <h1 class="sr">Internet Guild</h1>
-    <p class="hero-text fade">Design and development studio, born to reduce.<br>
-    Websites, products and AI for founders who embrace simplicity.<br>
-    Eleven years of practice, helping people build what they imagine.</p>
+    <div class="hero-text fade">
+      <p>Design and development studio, born to reduce.<br>
+      Websites, products and AI for founders who embrace simplicity.<br>
+      Eleven years of practice, helping people build what they imagine.</p>
+      <div class="gap"></div>
+      <p><a href="/contact">Hire the guild</a><br>
+      <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+    </div>
     <div class="logos fade" id="logos" aria-label="Clients">
       <ul>
           <li>Aerolab</li><li>Great Sky Solar</li><li>Buenbit</li><li>Numia</li><li>Towerbank</li><li>Papayadash</li><li>K Street VC</li>
