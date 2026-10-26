@@ -6,115 +6,96 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Animation · Internet Guild</title>
+<title>Internet Guild</title>
+<meta name="description" content="Design and development studio, born to reduce. Websites, products and AI for founders who embrace simplicity.">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#ffffff">
 <link rel="preload" href="/neue-montreal-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/neue-montreal-medium.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  /* PP Neue Montreal, self-hosted: Regular for the words, Medium for the name and the buttons */
-  @font-face {
-    font-family: "PP Neue Montreal";
-    src: url("/neue-montreal-regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "PP Neue Montreal";
-    src: url("/neue-montreal-medium.woff2") format("woff2");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-  /* single dark look: everything centered on one column, icon → name */
+  @font-face { font-family: "PP Neue Montreal"; src: url("/neue-montreal-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "PP Neue Montreal"; src: url("/neue-montreal-medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
   :root {
-    --bg: #000000;
-    --fg: #ffffff;
-    --fg-dim: rgba(255, 255, 255, 0.86);
-    --font-name: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color-scheme: dark;
+    --bg: #ffffff;
+    --fg: #000000;
+    --dim: rgba(0, 0, 0, 0.55);
+    --gutter: 24px;
+    --font: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
-  *, *::before, *::after { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  main {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding-block: max(48px, env(safe-area-inset-top, 0px)) max(48px, env(safe-area-inset-bottom, 0px));
-    padding-left: max(20px, env(safe-area-inset-left, 0px));
-    padding-right: max(20px, env(safe-area-inset-right, 0px));
-  }
-  /* soft cross-page transition: the icon stays put, the rest crossfades */
-  @view-transition { navigation: auto; }
-  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
-  ::view-transition-group(mark) { animation-duration: .3s; }
-  @media (prefers-reduced-motion: reduce) {
-    ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
-  }
-  .mark {
-    width: 320px;
-    max-width: 100%;
-    margin: 0 auto;
-    view-transition-name: mark;
-  }
-  /* same height on every page, so the icon sits at the same spot on all of them */
-  /* the name, written in: it resolves left to right, a few scrambled
-     glyphs running ahead of it */
-  #name .scr { color: rgba(255, 255, 255, 0.45); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); }
+  body { font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
 
-  .after {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin-top: 36px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* one screen, never scrolls: the studio on the left, the work scrolls on the right */
+  .page { height: 100vh; height: 100svh; display: flex; overflow: hidden; }
+  .side {
+    flex: 1; min-width: 0; padding: var(--gutter);
+    display: flex; flex-direction: column; justify-content: space-between;
   }
-  h1 {
-    margin: 0;
-    font-family: var(--font-name);
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 1;
-    height: 18px;
-    white-space: nowrap;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
+  .mark { width: 120px; }
+  .intro h1 { margin: 0; font-size: 18px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; }
+  .statement { margin: 20px 0 0; font-size: 14px; line-height: 1.4; color: var(--dim); max-width: 420px; }
+  .statement span { display: block; }
+  nav { margin-top: 28px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; height: 34px; padding: 0 16px;
+    font-size: 13px; font-weight: 500; letter-spacing: -0.01em; text-decoration: none;
+    transition: background-color .2s ease;
   }
-  #name span { display: inline-block; height: 18px; line-height: 18px; vertical-align: top; }
-  /* sits well below the name without moving the icon and name off centre */
-  .hire {
-    position: absolute;
-    top: calc(100% + 48px);
-    left: 0;
-    right: 0;
-    margin: 0;
-    font-family: var(--font-name);
-    font-size: 10px;
-    line-height: 14px;
-    color: rgba(255, 255, 255, 0.5);
-    text-align: center;
-    white-space: nowrap;
+  .btn-primary { background: #000000; color: #ffffff; }
+  .btn-primary:hover { background: #2a2a2a; }
+  .btn-secondary { background: #f0f0f0; color: #000000; }
+  .btn-secondary:hover { background: #e2e2e2; }
+  .btn:focus-visible { outline: 1px solid var(--fg); outline-offset: 3px; }
+  .copy { margin: 0; font-size: 12px; line-height: 1.4; color: var(--dim); }
+
+  .work {
+    width: min(800px, 60vw); height: 100%; overflow-y: auto; overscroll-behavior: contain;
+    padding: var(--gutter) var(--gutter) var(--gutter) 0; scrollbar-width: none;
   }
-  .hire span { display: block; height: 14px; }
-  .hire .scr { display: inline; color: rgba(255, 255, 255, 0.3); }
+  .work::-webkit-scrollbar { display: none; }
+  .reel { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  /* each piece at its own shape: whole, edge to edge, nothing cropped */
+  .piece { position: relative; aspect-ratio: var(--ar); background: #f4f4f4; overflow: hidden; }
+  .piece img, .piece video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+    opacity: 0; transition: opacity .5s ease;
+  }
+  .piece .loaded { opacity: 1; }
+
+  /* phones: one column, the whole page scrolls */
+  @media (max-width: 900px) {
+    :root { --gutter: 16px; }
+    .page { display: block; height: auto; overflow: visible; }
+    .side { min-height: 0; gap: 40px; padding-bottom: 32px; }
+    .work { width: auto; height: auto; overflow: visible; padding: 0 var(--gutter) var(--gutter); }
+  }
 </style>
 </head>
 <body>
-<main>
-<div id="ik-p5qcph" class="mark"></div>
+<div class="page">
+  <header class="side">
+    <div id="ik-index2" class="mark"></div>
+    <div class="intro">
+      <h1>Internet Guild&copy;</h1>
+      <p class="statement">
+        <span>Design and development studio, born to reduce.</span>
+        <span>Websites, products and AI for founders who embrace simplicity.</span>
+        <span>Eleven years of practice, helping people build what they imagine.</span>
+      </p>
+      <nav aria-label="Main">
+        <a class="btn btn-primary" href="/works">View works</a>
+        <a class="btn btn-secondary" href="/contact">Hire the Guild</a>
+      </nav>
+    </div>
+    <p class="copy">&copy; 2026 Internet Guild. Buenos Aires, Argentina.</p>
+  </header>
+  <main class="work">
+    <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Work</h2>
+    <ul class="reel" id="reel"></ul>
+  </main>
+</div>
 <script>
 window.IconoKanji = window.IconoKanji || (function () {
   "use strict";
@@ -391,37 +372,84 @@ window.IconoKanji = window.IconoKanji || (function () {
 
   return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
 })();
-IconoKanji.mount(document.getElementById("ik-p5qcph"), {"seed":1521282005,"jp":"kanji","jpMix":1,"charScale":0.89,"changeRate":2.47,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#121314","transparent":true,"grid":"#1d1e20","showGrid":false,"tileLo":"#000000","tileHi":"#000000","text":"#ffffff","textOnDark":"#ffffff","accentMode":"off","accent":"#d9686a","accentRate":1,"padX":5,"padY":3,"gap":0.12,"radius":0,"speed":0.5,"intro":true,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true});
+IconoKanji.mount(document.getElementById("ik-index2"), {"seed":1521282005,"jp":"kanji","jpMix":1,"charScale":0.89,"changeRate":2.47,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#ffffff","transparent":true,"grid":"#eeeeee","showGrid":false,"tileLo":"#ffffff","tileHi":"#ffffff","text":"#000000","textOnDark":"#000000","accentMode":"off","accent":"#d9686a","accentRate":1,"padX":5,"padY":3,"gap":0.12,"radius":0,"speed":1,"intro":true,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true});
 </script>
-  <div class="after">
-  <h1 id="name" aria-label="Internet Guild©">Internet Guild&copy;</h1>
-  <p class="hire"><span id="hire1">HIRE THE GUILD</span><span id="hire2">internetguild.co</span></p>
-  </div>
-</main>
 <script>
 (function () {
   "use strict";
-  var POOL = "一丶ノ二人入八十小夕日木心目田生光糸空門電夢網魂霊龍闇響魔".split("");
-  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // resolves the text left to right with a few kanji running ahead; empty until it starts
-  function decode(node, delay, dur) {
-    var text = node.textContent, head = 4, start = 0, done = document.createElement("span"), scr = document.createElement("span");
-    if (reduce) return;
-    node.setAttribute("aria-label", text);
-    scr.className = "scr"; node.textContent = ""; node.appendChild(done); node.appendChild(scr);
-    done.style.display = scr.style.display = "inline";
-    function frame(t) {
-      if (!start) start = t;
-      var p = Math.min(1, (t - start) / dur), n = Math.floor(p * text.length), s = "";
-      for (var i = 0; i < head && n + i < text.length; i++) s += text[n + i] === " " ? " " : POOL[(Math.random() * POOL.length) | 0];
-      done.textContent = text.slice(0, n); scr.textContent = s;
-      if (p < 1) requestAnimationFrame(frame); else node.textContent = text;
-    }
-    setTimeout(function () { requestAnimationFrame(frame); }, delay);
+  var PROJECTS = [
+    {"client": "Towerbank", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-poster.webp", "desc": "Towerbank credit card street poster."},
+    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-cards.mp4", "desc": "Towerbank Visa cards.", "poster": "/projects/poster-towerbank-cards.webp"},
+    {"client": "Towerbank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-app.webp", "desc": "Towerbank investments app on iPhone."},
+    {"client": "Towerbank", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-website-ui.mp4", "desc": "Towerbank website interface.", "poster": "/projects/poster-towerbank-website-ui.webp"},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-icons.webp", "desc": "Numia icon system."},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-poster.webp", "desc": "Numia poster on a concrete wall."},
+    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-laptop.webp", "desc": "Numia website on a MacBook."},
+    {"client": "Numia", "tags": ["web", "product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-mobile.webp", "desc": "Numia website on iPhone."},
+    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-sections.webp", "desc": "Numia website sections."},
+    {"client": "Numia", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/numia-customer-journey.mp4", "desc": "Numia customer journey website on a laptop.", "poster": "/projects/poster-numia-customer-journey.webp"},
+    {"client": "Numia", "tags": ["product", "ai"], "w": 630, "h": 880, "type": "video", "src": "/projects/numia-virtual-assistance.mp4", "desc": "Numia virtual assistance interface.", "poster": "/projects/poster-numia-virtual-assistance.webp"},
+    {"client": "Emi", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-brand.mp4", "desc": "Emi brand identity.", "poster": "/projects/poster-emi-brand.webp"},
+    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website.mp4", "desc": "Emi website.", "poster": "/projects/poster-emi-website.webp"},
+    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website-es.mp4", "desc": "Emi website in Spanish on laptops.", "poster": "/projects/poster-emi-website-es.webp"},
+    {"client": "Emi", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-onboarding.mp4", "desc": "Emi onboarding website on a laptop.", "poster": "/projects/poster-emi-onboarding.webp"},
+    {"client": "Emi", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/emilabs-report.webp", "desc": "Emi report on an iPad."},
+    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-website.webp", "desc": "Great Sky Solar homepage and savings calculator."},
+    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-products.webp", "desc": "Great Sky Solar product cards."},
+    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-team.webp", "desc": "Great Sky Solar team page."},
+    {"client": "Studio", "tags": ["product", "ai"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/agent-activity-panel.webp", "desc": "Agent activity panel on a studio display."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/token-statement.webp", "desc": "Token statement dashboard on a studio display."},
+    {"client": "xrank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/xrank.webp", "desc": "xrank.tech leaderboard on a MacBook."},
+    {"client": "China.Supply", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/china-supply.webp", "desc": "China.Supply landing page on a MacBook."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app.webp", "desc": "Journal app on iPhone resting on concrete blocks."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app-closeup.webp", "desc": "Journal app on iPhone, close-up."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/calm-app-login.webp", "desc": "Calm app login screen on iPhone."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/music-player.webp", "desc": "Music player interface."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/writing-app.webp", "desc": "Writing app on a MacBook."},
+    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-poster.webp", "desc": "Godzilla Minus One poster."},
+    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-bus-stop.webp", "desc": "Godzilla Minus One poster at a bus stop."},
+    {"client": "Nine2Five", "tags": ["product", "brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/nine2five.webp", "desc": "Nine2Five work glasses spec sheet and stage screen."},
+    {"client": "Internet Guild", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/ids-shopping-bag.webp", "desc": "Internet Guild shopping bag."},
+    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-campaign.mp4", "desc": "Towerbank campaign.", "poster": "/projects/poster-towerbank-campaign.webp"},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-stationery.webp", "desc": "Numia stationery."},
+    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-calculator.webp", "desc": "Great Sky Solar savings calculator."},
+    {"client": "Great Sky Solar", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-monitoring.webp", "desc": "Great Sky Solar monitoring app."}
+  ];
+
+  var reel = document.getElementById("reel"), work = document.querySelector(".work"), items = [];
+  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var phone = window.matchMedia && matchMedia("(max-width: 900px)").matches;
+  function el(tag, cls) { var n = document.createElement(tag); if (cls) n.className = cls; return n; }
+  for (var k = PROJECTS.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = PROJECTS[k]; PROJECTS[k] = PROJECTS[j]; PROJECTS[j] = x; }
+
+  PROJECTS.forEach(function (p, i) {
+    var li = el("li", "piece"), m;
+    li.style.setProperty("--ar", (p.w / p.h).toFixed(4)); li.dataset.i = i;
+    if (p.type === "video") {
+      m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
+      m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); if (p.poster) m.poster = p.poster;
+    } else { m = el("img"); m.alt = p.desc; m.decoding = "async"; }
+    li.appendChild(m); reel.appendChild(li);
+    items.push({ el: li, p: p, m: m, requested: false, inView: false });
+  });
+
+  function load(c) {
+    if (c.requested) return; c.requested = true;
+    var done = function () { c.m.classList.add("loaded"); if (c.p.type === "video" && c.inView && !reduced) c.m.play().catch(function () {}); };
+    if (c.p.type === "video") { c.m.addEventListener("loadeddata", done, { once: true }); c.m.src = c.p.src; c.m.load(); }
+    else { c.m.addEventListener("load", done, { once: true }); c.m.src = c.p.src; if (c.m.complete && c.m.naturalWidth) done(); }
   }
-  decode(document.getElementById("name"), 1200, 1100);
-  decode(document.getElementById("hire1"), 2600, 700);
-  decode(document.getElementById("hire2"), 2800, 800);
+  if ("IntersectionObserver" in window) {
+    var root = phone ? null : work; // the right column is the scroller on wide screens
+    var near = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) load(items[+e.target.dataset.i]); }); }, { root: root, rootMargin: "800px 0px" });
+    var view = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var c = items[+e.target.dataset.i]; c.inView = e.isIntersecting;
+        if (c.p.type === "video" && c.m.classList.contains("loaded") && !reduced) { if (c.inView) c.m.play().catch(function () {}); else c.m.pause(); }
+      });
+    }, { root: root, threshold: 0.2 });
+    items.forEach(function (c) { near.observe(c.el); view.observe(c.el); });
+  } else items.forEach(load);
 })();
 </script>
 </body>
