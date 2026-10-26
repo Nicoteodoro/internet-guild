@@ -18,7 +18,6 @@
   :root {
     --bg: #ffffff;
     --fg: #000000;
-    --dim: rgba(0, 0, 0, 0.5);
     --mark: 160px; /* the icon's resting size */
     --font: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
@@ -35,8 +34,9 @@
   .slot { position: relative; width: var(--mark); max-width: calc(100vw - 48px); aspect-ratio: 23 / 28; }
   .mark { position: absolute; left: 50%; top: 50%; transform-origin: 50% 50%; will-change: transform; }
   .after { margin-top: 36px; text-align: center; padding: 0 24px; will-change: opacity, transform; }
-  h1 { margin: 0; font-size: 18px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; }
-  .statement { margin: 28px 0 0; font-size: 14px; line-height: 1.4; color: var(--dim); }
+  h1 { margin: 0; line-height: 0; }
+  .logo { display: inline-block; width: 150px; height: auto; } /* same width the typed name had */
+  .statement { margin: 28px 0 0; font-size: 15px; font-weight: 500; line-height: 21px; }
   .statement span { display: block; text-wrap: balance; }
 
   /* work: two columns, each piece whole at its own shape */
@@ -48,9 +48,8 @@
     opacity: 0; transition: opacity .5s ease;
   }
   .media .loaded { opacity: 1; }
-  .cap { margin-top: 8px; font-size: 13px; line-height: 1.35; }
-  .cap b { display: block; font-weight: 400; }
-  .cap span { color: var(--dim); }
+  .cap { margin-top: 8px; font-size: 15px; font-weight: 500; line-height: 21px; }
+  .cap b { display: block; font-weight: 500; }
 
   @media (max-width: 700px) {
     .work { columns: 1; }
@@ -68,7 +67,22 @@
     <div class="stage">
       <div class="slot" id="slot"><div id="ik-index2" class="mark"></div></div>
       <div class="after" id="after">
-        <h1>Internet Guild&copy;</h1>
+        <h1 aria-label="Internet Guild©"><svg class="logo" viewBox="0 0 263 23" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M216.105 22.1232V0.484131H224.519C230.481 0.484131 234.143 4.35797 234.143 11.3188C234.143 18.2796 230.602 22.1232 224.61 22.1232H216.105ZM219.707 3.54083V19.0665H224.337C229.18 19.0665 230.542 15.465 230.542 11.3188C230.542 7.17256 229.18 3.54083 224.337 3.54083H219.707Z" fill="black"/>
+<path d="M199.229 0.484131H202.831V19.0665H213.635V22.1232H199.229V0.484131Z" fill="black"/>
+<path d="M191.902 0.484131H195.504V22.1232H191.902V0.484131Z" fill="black"/>
+<path d="M188.421 14.7387C188.421 19.4599 185.909 22.5771 179.886 22.5771C173.864 22.5771 171.352 19.4599 171.352 14.7387V0.484131H174.953V14.7387C174.953 18.0072 176.587 19.4902 179.886 19.4902C183.215 19.4902 184.85 18.0072 184.85 14.7387V0.484131H188.421V14.7387Z" fill="black"/>
+<path d="M164.324 7.23295C163.78 4.66048 161.782 3.117 158.574 3.117C153.944 3.117 152.037 7.23295 152.037 11.2884C152.037 15.3741 153.52 19.49 158.453 19.49C161.873 19.49 164.597 17.1294 164.627 13.6793H158.514V10.7739H168.289V22.123H165.807L165.02 19.1571H164.96C163.507 21.3362 161.48 22.577 158.211 22.577C151.946 22.577 148.436 17.8255 148.436 11.2884C148.436 4.78154 152.37 0.0300293 158.604 0.0300293C164.234 0.0300293 167.26 3.08673 167.926 7.23295H164.324Z" fill="black"/>
+<path d="M130.529 22.1232V3.54083H123.599V0.484131H141.031V3.54083H134.131V22.1232H130.529Z" fill="black"/>
+<path d="M109.555 9.41213H120.117V12.4991H109.555V19.0665H121.902V22.1232H105.953V0.484131H121.6V3.54083H109.555V9.41213Z" fill="black"/>
+<path d="M84.8213 22.1232V0.484131H88.8465L98.5916 16.7361H98.6521V0.484131H102.254V22.1232H98.2587L88.4833 5.93172H88.4228V22.1232H84.8213Z" fill="black"/>
+<path d="M65.3145 22.1232V0.484131H74.5451C78.994 0.484131 81.8691 2.75396 81.8691 6.68833C81.8691 9.71477 80.3256 11.4701 77.8439 12.0754V12.1359C82.8376 13.0741 81.0217 21.5481 82.1717 21.9113V22.1232H78.3887C77.39 21.2152 79.4177 13.7702 74.2122 13.7702H68.9159V22.1232H65.3145ZM68.9159 3.54083V10.6832H73.7885C75.9978 10.6832 78.2979 10.2595 78.2979 7.11203C78.2979 3.9948 75.9978 3.54083 73.7885 3.54083H68.9159Z" fill="black"/>
+<path d="M50.0312 9.41213H60.5934V12.4991H50.0312V19.0665H62.379V22.1232H46.4297V0.484131H62.0764V3.54083H50.0312V9.41213Z" fill="black"/>
+<path d="M33.4706 22.1232V3.54083H26.54V0.484131H43.9724V3.54083H37.0721V22.1232H33.4706Z" fill="black"/>
+<path d="M7.32715 22.1232V0.484131H11.3523L21.0975 16.7361H21.158V0.484131H24.7595V22.1232H20.7646L10.9891 5.93172H10.9286V22.1232H7.32715Z" fill="black"/>
+<path d="M0 0.484131H3.60147V22.1232H0V0.484131Z" fill="black"/>
+<path d="M251.863 22.6075C245.023 22.6075 240.695 17.7955 240.695 11.3189C240.695 4.8423 245.023 0 251.863 0C258.703 0 263 4.8423 263 11.3189C263 17.7955 258.703 22.6075 251.863 22.6075ZM251.863 21.3061C257.764 21.3061 261.396 16.8573 261.396 11.3189C261.396 5.75023 257.764 1.30137 251.863 1.30137C245.931 1.30137 242.299 5.75023 242.299 11.3189C242.299 16.8573 245.931 21.3061 251.863 21.3061ZM255.041 9.47275C254.92 8.65561 254.314 6.90028 251.893 6.90028C249.2 6.90028 248.382 8.89773 248.382 11.3189C248.382 13.7098 249.2 15.7072 251.893 15.7072C254.314 15.7072 254.92 14.0427 255.041 13.1045H257.734C257.553 15.8888 255.495 18.0981 252.044 18.0981C247.989 18.0981 245.659 15.3138 245.659 11.3189C245.659 7.35425 247.868 4.50939 251.802 4.50939C255.313 4.50939 257.432 6.71869 257.734 9.47275H255.041Z" fill="black"/>
+</svg></h1>
         <p class="statement">
           <span>Design and development studio, born to reduce.</span>
           <span>Websites, products and AI for founders who embrace simplicity.</span>
