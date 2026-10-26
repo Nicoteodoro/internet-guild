@@ -42,7 +42,7 @@
   .card {
     z-index: 1; aspect-ratio: var(--ar); width: min(100%, 82vh * var(--ar)); margin: 0 auto;
     border-radius: 40px; overflow: hidden; background: #f2f2f2;
-    transform-origin: 50% 0; will-change: transform;
+    transform-origin: 50% 50%; will-change: transform, opacity;
     position: sticky; top: calc((100vh - min(82vh, var(--col) / var(--ar))) / 2); /* pins in the middle of the screen */
   }
   .card img, .card video {
@@ -139,7 +139,8 @@
     cards.forEach(function (c, i) { c.el.dataset.i = i; near.observe(c.el); view.observe(c.el); });
   } else cards.forEach(load);
 
-  // stack: each piece pins in the middle and the next slides up over it; the ones underneath sink back into a pile
+  // stack: each piece pins in the middle and the next slides up over it; the one underneath shrinks back and fades out,
+  // so once the new piece is centred it is the only one on screen, whatever the sizes
   if (reduced) return;
   function frame() {
     var vh = window.innerHeight;
@@ -147,8 +148,9 @@
       var r = c.el.getBoundingClientRect(), s = c.el.style;
       if (r.bottom < -vh * 0.5 || r.top > vh * 1.5) return;
       var next = cards[i + 1] && cards[i + 1].el.getBoundingClientRect(), p = next ? Math.max(0, Math.min(1, 1 - (next.top - r.top) / vh)) : 0;
-      s.transform = "translateY(" + (-p * 28).toFixed(1) + "px) scale(" + (1 - p * 0.08).toFixed(4) + ")";
-      s.filter = "brightness(" + (1 - p * 0.55).toFixed(3) + ")";
+      var q = Math.max(0, Math.min(1, (p - 0.25) / 0.7));
+      s.transform = "scale(" + (1 - q * 0.08).toFixed(4) + ")";
+      s.opacity = (1 - q).toFixed(3);
     });
     requestAnimationFrame(frame);
   }
