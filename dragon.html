@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<title>Dragon · Internet Guild</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  html, body { margin: 0; height: 100%; background: #f4f4f1; }
+  body { display: flex; align-items: center; justify-content: center; }
+  #ik-fafm97 { width: min(560px, 100vw - 32px, 82svh * 63 / 66); }
+</style>
+</head>
+<body>
+<main>
+<div id="ik-fafm97"></div>
+<script>
+window.IconoKanji = window.IconoKanji || (function () {
+  "use strict";
+  var ICON = [
+    ".........###.........", "........#####........", ".......#######.......", "......#########......",
+    ".....###########.....", "....#############....", "....#############....", "...####.......####...",
+    "...###..#####..###...", "...##..#######..##...", "..##..#########..##..", "..##.###.###.###.##..",
+    ".###.###.###.###.###.", "####.###.###.###.####", "####.###########.####", ".###..#########..###.",
+    "...##..#######..##...", "...###...###...###...", "..######.....######..", ".###################.",
+    "..#################..", "....#############....", "......#########......", ".......#######.......",
+    "........#####........", ".........###........."
+  ];
+  var IW = 21, IH = 26, EYE_CELLS = [[11, 8], [12, 8], [13, 8], [11, 12], [12, 12], [13, 12]];
+  // density ramps, light → dark (kanji ordered by stroke count)
+  var SETS = {
+    kanji: [["一", "丶", "ノ", "二", "人", "入", "八", "十", "小", "夕", "・", "、"],
+            ["日", "木", "心", "目", "田", "生", "光", "糸", "空", "門"],
+            ["電", "夢", "網", "魂", "霊", "龍", "闇", "響", "魔", "驚", "鬱"]],
+    katakana: [["ノ", "ヘ", "ニ", "ト", "ー", "ハ", "ソ", "ン", "・", "、"],
+               ["カ", "サ", "タ", "ナ", "ミ", "ム", "ラ", "ワ", "ホ", "エ"],
+               ["ガ", "ギ", "ズ", "ゼ", "ダ", "ヂ", "ヅ", "ド", "ボ", "ポ", "ヴ"]],
+    hiragana: [["し", "く", "へ", "つ", "ひ", "こ", "い", "・", "、"],
+               ["あ", "お", "か", "た", "な", "む", "ゆ", "わ", "る"],
+               ["ぬ", "ね", "め", "ぼ", "ぎ", "ぶ", "ぽ", "ぜ", "ゑ"]]
+  };
+  var ASCII = [["'", ".", ",", ":", ";"], ["t", "S", "X", "%"], ["8", "#", "@", "%"]];
+  var STRAY = ["'", ".", ",", "o", "・", "、"];
+  var ACCENTS = ["#8f74d8", "#4e9a64", "#c97a3c", "#d9686a", "#5a8fbf"];
+  var FONT_UI = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+  var FONT_JP = '"Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif';
+  var DEFAULTS = {
+    seed: 12345, jp: "kanji", jpMix: 0.7, charScale: 1, changeRate: 1, scramble: true,
+    contrast: 1, density: 0, flow: 1,
+    bg: "#f4f4f1", transparent: false, grid: "#e5e5e1", showGrid: true,
+    tileLo: "#e0e0dc", tileHi: "#353533", text: "#5c5c58", textOnDark: "#eeeeea",
+    accentMode: "multi", accent: "#d9686a", accentRate: 1,
+    padX: 5, padY: 3, gap: 0.12, radius: 0,
+    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true,
+    icon: null, tones: null, useTones: true, colors: null, colorMode: "palette", colorAmt: 1, colorVar: 1
+  };
+  var CHARS = (function () {
+    var all = ASCII.flat().concat(STRAY);
+    Object.keys(SETS).forEach(function (k) { all = all.concat(SETS[k].flat()); });
+    return Array.from(new Set(all)).join("");
+  })();
+
+  function ensureFonts() {
+    if (document.getElementById("ik-fonts")) return;
+    var l = document.createElement("link");
+    l.id = "ik-fonts"; l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@500&text=" + encodeURIComponent(CHARS) + "&display=swap";
+    document.head.appendChild(l);
+  }
+  function hexRgb(h) {
+    h = String(h || "").trim();
+    if (/^#[0-9a-f]{3}$/i.test(h)) h = "#" + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
+    if (!/^#[0-9a-f]{6}$/i.test(h)) return [128, 128, 128];
+    return [1, 3, 5].map(function (k) { return parseInt(h.slice(k, k + 2), 16); });
+  }
+  function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function css(a) { return "rgb(" + (a[0] | 0) + "," + (a[1] | 0) + "," + (a[2] | 0) + ")"; }
+  function isJP(ch) { return ch.charCodeAt(0) > 0x2000; }
+
+  function mount(el, userCfg) {
+    ensureFonts();
+    var cfg = Object.assign({}, DEFAULTS, userCfg || {});
+    var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var cv = document.createElement("canvas");
+    cv.setAttribute("role", "img"); cv.setAttribute("aria-label", "Ícono animado hecho con caracteres");
+    cv.style.cssText = "display:block;width:100%;";
+    el.appendChild(cv);
+    var ctx = cv.getContext("2d"), bgc = document.createElement("canvas"), bctx = bgc.getContext("2d");
+    var G, cells, strays, T, nextBlink, blinkUntil, sweepStart, sweepId, rs = 1, seedN = 1, col, cell = 10, dpr = 1;
+    var raf = 0, visible = true, paused = false, last = 0, ro, io;
+
+    function rand() { rs |= 0; rs = rs + 0x6D2B79F5 | 0; var t = Math.imul(rs ^ rs >>> 15, 1 | rs); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function pick(a) { return a[(rand() * a.length) | 0]; }
+    function hash(x, y, z) { var h = (Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(z, 1440662683) + seedN) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16; return (h >>> 0) / 4294967296; }
+    function vnoise(x, y, z) {
+      var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z), u = x - xi, v = y - yi, w = z - zi;
+      u = u * u * (3 - 2 * u); v = v * v * (3 - 2 * v); w = w * w * (3 - 2 * w);
+      function L(a, b, t) { return a + (b - a) * t; }
+      return L(L(L(hash(xi, yi, zi), hash(xi + 1, yi, zi), u), L(hash(xi, yi + 1, zi), hash(xi + 1, yi + 1, zi), u), v),
+               L(L(hash(xi, yi, zi + 1), hash(xi + 1, yi, zi + 1), u), L(hash(xi, yi + 1, zi + 1), hash(xi + 1, yi + 1, zi + 1), u), v), w);
+    }
+
+    function geometry() {
+      var PX = Math.max(0, cfg.padX | 0), PY = Math.max(0, cfg.padY | 0);
+      var custom = !!(cfg.icon && cfg.icon.length && cfg.icon[0].length);
+      var icon = custom ? cfg.icon : ICON, IW = icon[0].length, IH = icon.length;
+      var tones = custom && cfg.tones && cfg.tones.length === IH ? cfg.tones : null;
+      var cols = custom && cfg.colors && cfg.colors.length === IH ? cfg.colors : null;
+      var rgb = new Array(N).fill(null);
+      var COLS = IW + PX * 2, ROWS = IH + PY * 2, N = COLS * ROWS, r, c, i;
+      var filled = new Uint8Array(N), outside = new Uint8Array(N);
+      var lum = new Float32Array(N).fill(-1);   // image darkness per cell, -1 = none
+      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) {
+        var at = (r + PY) * COLS + c + PX;
+        if (icon[r][c] === "#") filled[at] = 1;
+        if (tones && tones[r][c] >= "0" && tones[r][c] <= "9") lum[at] = Number(tones[r][c]) / 9;
+        if (cols) { var hx = cols[r].substr(c * 6, 6); if (/^[0-9a-f]{6}$/i.test(hx)) rgb[at] = hexRgb("#" + hx); }
+      }
+      var q = [];
+      for (i = 0; i < N; i++) { r = (i / COLS) | 0; c = i % COLS;
+        if ((r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1) && !filled[i]) { outside[i] = 1; q.push(i); } }
+      while (q.length) { i = q.pop(); r = (i / COLS) | 0; c = i % COLS;
+        [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) { var rr = r + d[0], cc = c + d[1];
+          if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) return; var j = rr * COLS + cc;
+          if (!outside[j] && !filled[j]) { outside[j] = 1; q.push(j); } }); }
+      function cheb(src, seedEdge) { var d = new Int16Array(N).fill(99), qq = [];
+        for (var k = 0; k < N; k++) if (src[k]) { d[k] = 0; qq.push(k); }
+        for (var h = 0; h < qq.length; h++) { var a = qq[h], ar = (a / COLS) | 0, ac = a % COLS;
+          for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) { var rr = ar + dr, cc = ac + dc;
+            if (rr < 0 || cc < 0 || rr >= ROWS || cc >= COLS) continue; var b = rr * COLS + cc;
+            if (d[b] > d[a] + 1) { d[b] = d[a] + 1; qq.push(b); } } }
+        if (seedEdge) for (var e = 0; e < N; e++) { var er = (e / COLS) | 0, ec = e % COLS;   // canvas edge counts as outside
+          var de = Math.min(er + 1, ec + 1, ROWS - er, COLS - ec); if (de < d[e]) d[e] = de; }
+        return d; }
+      G = { COLS: COLS, ROWS: ROWS, N: N, filled: filled, outside: outside,
+            depth: cheb(outside, true), away: cheb(filled, false),
+            lum: lum, rgb: rgb, custom: custom,
+            PX: PX, PY: PY,
+            eyes: custom ? [] : EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
+    }
+
+    function reset() {
+      seedN = cfg.seed | 0; rs = seedN; T = 0;
+      nextBlink = 2 + rand() * 3; blinkUntil = -1; sweepStart = 3; sweepId = 0; cells = []; strays = [];
+      for (var i = 0; i < G.N; i++) {
+        var r = (i / G.COLS) | 0, c = i % G.COLS;
+        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1, lum: G.lum[i], rgb: G.rgb[i], nz: 0 });
+        else if (G.outside[i] && G.away[i] <= 2) strays.push({ r: r, c: c, d: G.away[i], on: false, ch: "", next: rand() * 2 });
+      }
+      cells.forEach(rig); strays.forEach(rig);
+      cells.sort(function (a, b) { return (b.side ? 1 : 0) - (a.side ? 1 : 0); });
+      step(0.001);
+    }
+
+    // ── flight rig: wings rotate about the shoulders, body bobs, tail flame flickers ──
+    var FLAP = { period: 1.5, amp: 0.42, bob: 0.9 }, flapT = 0, ang = 0, bob = 0;
+    var SH = { L: [18, 22], R: [31, 20] }; // shoulders, in icon cells
+    function smooth(x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); }
+    function rig(o) {
+      var ic = o.c - G.PX, ir = o.r - G.PY;
+      o.side = 0; o.w = 0; o.tail = ic >= 43 && ir >= 17 && ir <= 31;
+      if (o.tail) return;
+      if (ir <= 29 && (ic < 17 || (ir <= 5 && ic <= 21))) o.side = -1;
+      else if (ir <= 28 && (ic >= 32 || (ir <= 6 && ic >= 31))) o.side = 1;
+      if (!o.side) return;
+      var p = o.side < 0 ? SH.L : SH.R;
+      o.w = smooth((Math.hypot(ic - p[0], ir - p[1]) - 2) / 16);
+    }
+    function place(o) {
+      var x = o.c, y = o.r - bob;
+      if (o.side) {
+        var p = o.side < 0 ? SH.L : SH.R, px = p[0] + G.PX, py = p[1] + G.PY - bob;
+        var a = -o.side * ang * o.w, dx = x - px, dy = y - py, co = Math.cos(a), si = Math.sin(a);
+        x = px + dx * co - dy * si; y = py + dx * si + dy * co;
+      } else if (o.tail) {
+        x += 0.22 * Math.sin(flapT * 9 + o.r * 0.9); y += 0.18 * Math.sin(flapT * 7 + o.c);
+      }
+      return [x, y];
+    }
+    function flap(dt) {
+      flapT += dt;
+      var ph = flapT / FLAP.period * Math.PI * 2, s = Math.sin(ph);
+      ang = FLAP.amp * (s > 0 ? s : s * 0.75);       // wings up (+) and a shorter, quicker sweep down
+      bob = FLAP.bob * Math.sin(ph - Math.PI * 0.6);  // the body lifts on the downstroke
+    }
+
+    function colors() {
+      var bg = hexRgb(cfg.bg), lo = hexRgb(cfg.tileLo), hi = hexRgb(cfg.tileHi), tx = hexRgb(cfg.text);
+      col = { bg: bg, grid: hexRgb(cfg.grid), lo: lo, hi: hi, inkSoft: mix(lo, tx, 0.55), inkStrong: tx, onHi: hexRgb(cfg.textOnDark),
+              ghost: mix(bg, lo, 0.55), ghostInk: mix(bg, tx, 0.32), stray: mix(bg, tx, 0.45),
+              accents: cfg.accentMode === "single" ? [cfg.accent] : ACCENTS };
+      drawBg();
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = el.clientWidth || 300;
+      cell = w / G.COLS;
+      var h = cell * G.ROWS;
+      cv.width = bgc.width = Math.max(1, Math.round(w * dpr));
+      cv.height = bgc.height = Math.max(1, Math.round(h * dpr));
+      cv.style.height = h + "px";
+      drawBg(); draw();
+    }
+
+    function bgTo(c, cs, sc, lw, pxW, pxH) {
+      c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, pxW, pxH);
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var W = cs * G.COLS, H = cs * G.ROWS;
+      if (!cfg.transparent) { c.fillStyle = css(col.bg); c.fillRect(0, 0, W, H); }
+      if (cfg.showGrid) {
+        c.strokeStyle = css(col.grid); c.lineWidth = lw; c.beginPath();
+        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cs * sc) / sc + lw / 2; c.moveTo(px, 0); c.lineTo(px, H); }
+        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cs * sc) / sc + lw / 2; c.moveTo(0, py); c.lineTo(W, py); }
+        c.stroke();
+      }
+    }
+    function drawBg() {
+      if (!col || !G) return;
+      bgTo(bctx, cell, dpr, 1 / dpr, bgc.width, bgc.height);
+    }
+
+    function bucket(t) { return t < 0.4 ? 0 : t < 0.7 ? 1 : 2; }
+    function set() { return SETS[cfg.jp] || SETS.kanji; }
+    function choose(b) { return rand() < cfg.jpMix ? pick(set()[b]) : pick(ASCII[b]); }
+    function anyChar() { return rand() < cfg.jpMix ? pick(set()[(rand() * 3) | 0]) : pick(ASCII[(rand() * 3) | 0]); }
+
+    var SWEEP_DUR = 2.4;
+    function sweepBoost(r, c) {
+      if (!cfg.sweep) return 0;
+      var p = T - sweepStart; if (p < 0 || p > SWEEP_DUR) return 0;
+      var head = -8 + (G.ROWS + 16) * (p / SWEEP_DUR), dist = (r + c * 0.4 - G.COLS * 0.2) - head;
+      return Math.exp(-(dist * dist) / 3);
+    }
+    function toneOf(cl) {
+      var n = 0.65 * vnoise(cl.c / 5, cl.r / 5, T * 0.22) + 0.35 * vnoise(cl.c / 2.2 + 40, cl.r / 2.2, T * 0.55);
+      var base = (cfg.useTones && cl.lum >= 0) ? 0.16 + 0.74 * cl.lum + 0.03 * Math.min(cl.d, 3) : 0.4 + 0.11 * Math.min(cl.d, 4);
+      var t = base + 0.6 * cfg.flow * (n - 0.5);
+      cl.nz = 0.6 * cfg.flow * (n - 0.5) * cfg.contrast;   // animated part only, used to shade image colors
+      t = 0.5 + (t - 0.5) * cfg.contrast + cfg.density;
+      return Math.max(0.03, Math.min(1, t));
+    }
+
+    function step(dt) {
+      T += dt;
+      var scramble = cfg.scramble && !reduced;
+      if (T > sweepStart + SWEEP_DUR + cfg.sweepEvery) { sweepStart = T; sweepId++; }
+      if (cfg.blink && T >= nextBlink) { blinkUntil = T + 0.14; nextBlink = T + 2.5 + rand() * 4.5; if (rand() < 0.2) nextBlink = T + 0.32; }
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], boost = sweepBoost(cl.r, cl.c);
+        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4); cl.nz += boost * 0.4;
+        var b = bucket(cl.tone);
+        if (boost > 0.5 && cl.sweep !== sweepId) { cl.sweep = sweepId; cl.b = b; if (scramble) { cl.scr = 4; cl.scrNext = T; } else cl.ch = choose(b); }
+        if (b !== cl.b || T >= cl.next) {
+          cl.b = b; cl.next = T + (0.8 + rand() * 3.2) / Math.max(0.05, cfg.changeRate);
+          if (scramble && rand() < 0.7) { cl.scr = 2 + ((rand() * 3) | 0); cl.scrNext = T; } else cl.ch = choose(b);
+        }
+        if (cl.scr > 0 && T >= cl.scrNext) { cl.scr--; cl.scrNext = T + 0.055; cl.ch = cl.scr ? anyChar() : choose(cl.b); }
+        if (!cl.ch) cl.ch = choose(cl.b);
+        if (cl.acc !== null && (T > cl.accUntil || cfg.accentMode === "off")) cl.acc = null;
+        if (cfg.accentMode !== "off" && cl.acc === null && rand() < 0.012 * cfg.accentRate * dt) { cl.acc = (rand() * col.accents.length) | 0; cl.accUntil = T + 1.2 + rand() * 3; }
+        if (cfg.erosion && cl.d === 1 && T > cl.ghostUntil && rand() < 0.035 * dt) cl.ghostUntil = T + 0.4 + rand() * 1.6;
+      }
+      for (var s = 0; s < strays.length; s++) { var st = strays[s];
+        if (T >= st.next) { st.on = rand() < (st.d === 1 ? 0.3 : 0.12); st.ch = pick(STRAY); st.next = T + 0.5 + rand() * 2.5; } }
+    }
+
+    function tileRect(c, x, y, w, r) {
+      if (r > 0.3 && c.roundRect) { c.beginPath(); c.roundRect(x, y, w, w, r); c.fill(); }
+      else c.fillRect(x, y, w, w);
+    }
+    function cellStyle(cl) {
+      var t = cl.tone, fill, ink;
+      if (cfg.erosion && T < cl.ghostUntil) return [css(col.ghost), css(col.ghostInk)];
+      if (cfg.colorMode === "image" && cl.rgb) {
+        // original pixel color, breathing lighter/darker with the animation
+        var dv = cl.nz * cfg.colorVar * 1.1, base = cl.rgb;
+        var img = dv > 0 ? mix(base, [0, 0, 0], Math.min(0.7, dv)) : mix(base, [255, 255, 255], Math.min(0.7, -dv));
+        var f = mix(mix(col.lo, col.hi, t), img, cfg.colorAmt);
+        var L = (0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2]) / 255;
+        fill = css(f);
+        ink = css(L < 0.5 ? mix(f, [255, 255, 255], 0.72) : mix(f, [0, 0, 0], 0.62));
+        if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+        return [fill, ink];
+      }
+      fill = css(mix(col.lo, col.hi, t));
+      ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
+      if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+      return [fill, ink];
+    }
+    // draws tiles + characters onto any 2D context; cs = cell size in that context's units
+    function paintCells(c, cs, sc) {
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var inset = cs * cfg.gap / 2, tile = cs - inset * 2, rad = tile * cfg.radius;
+      var fA = "500 " + (cs * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
+      var fJ = "500 " + (cs * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
+      c.textAlign = "center"; c.textBaseline = "middle";
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], pp = place(cl), x = pp[0] * cs, y = pp[1] * cs, st = cellStyle(cl);
+        c.fillStyle = st[0]; tileRect(c, x + inset, y + inset, tile, rad);
+        var jp = isJP(cl.ch);
+        c.fillStyle = st[1]; c.font = jp ? fJ : fA;
+        c.fillText(cl.ch, x + cs / 2, y + cs / 2 + (jp ? 0 : cs * 0.04));
+      }
+      if (T < blinkUntil) {
+        c.fillStyle = css(col.hi);
+        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect(c, (i % G.COLS) * cs + inset, ((i / G.COLS) | 0) * cs + inset, tile, rad); }
+      }
+      if (cfg.strays) {
+        c.fillStyle = css(col.stray);
+        for (var s = 0; s < strays.length; s++) { var sy = strays[s]; if (!sy.on) continue;
+          var sp = place(sy); c.font = isJP(sy.ch) ? fJ : fA; c.fillText(sy.ch, sp[0] * cs + cs / 2, sp[1] * cs + cs / 2); }
+      }
+    }
+    function draw() {
+      if (!col || !G || !cells) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bgc, 0, 0);
+      paintCells(ctx, cell, dpr);
+    }
+
+    // still image of the current frame at a given pixel width
+    function snapshot(width) {
+      var cs = width / G.COLS, w = Math.round(width), h = Math.round(cs * G.ROWS);
+      var c = document.createElement("canvas"); c.width = w; c.height = h;
+      var c2 = c.getContext("2d");
+      bgTo(c2, cs, 1, Math.max(1, cs / 22), w, h);
+      paintCells(c2, cs, 1);
+      return c;
+    }
+    // vector version of the current frame; text stays live (JetBrains Mono / Noto Sans JP)
+    function toSVG() {
+      var U = 24, W = U * G.COLS, H = U * G.ROWS, n = function (v) { return +v.toFixed(2); };
+      var inset = U * cfg.gap / 2, tile = U - inset * 2, rad = n(tile * cfg.radius);
+      var fsA = n(U * 0.66 * cfg.charScale), fsJ = n(U * 0.62 * cfg.charScale);
+      var o = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">'];
+      o.push('<style>@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&amp;family=Noto+Sans+JP:wght@500&amp;display=swap");'
+        + '.a{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:' + fsA + 'px}'
+        + '.j{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-weight:500;font-size:' + fsJ + 'px}</style>');
+      if (!cfg.transparent) o.push('<rect id="fondo" width="' + W + '" height="' + H + '" fill="' + css(col.bg) + '"/>');
+      if (cfg.showGrid) {
+        var d = "";
+        for (var x = 0; x <= G.COLS; x++) d += "M" + x * U + " 0V" + H;
+        for (var y = 0; y <= G.ROWS; y++) d += "M0 " + y * U + "H" + W;
+        o.push('<path id="grilla" d="' + d + '" stroke="' + css(col.grid) + '" stroke-width="1" fill="none"/>');
+      }
+      var rects = [], texts = [], rr = rad > 0.3 ? ' rx="' + rad + '"' : "";
+      function txt(ch, cx, cy, fill) {
+        var jp = isJP(ch), fs = jp ? fsJ : fsA;
+        texts.push('<text class="' + (jp ? "j" : "a") + '" x="' + n(cx) + '" y="' + n(cy + fs * 0.36) + '" text-anchor="middle" fill="' + fill + '">' + ch + '</text>');
+      }
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], st = cellStyle(cl);
+        rects.push('<rect x="' + n(cl.c * U + inset) + '" y="' + n(cl.r * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + st[0] + '"/>');
+        txt(cl.ch, cl.c * U + U / 2, cl.r * U + U / 2, st[1]);
+      }
+      if (T < blinkUntil) for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e];
+        rects.push('<rect x="' + n((i % G.COLS) * U + inset) + '" y="' + n(((i / G.COLS) | 0) * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + css(col.hi) + '"/>'); }
+      if (cfg.strays) for (var s = 0; s < strays.length; s++) if (strays[s].on) txt(strays[s].ch, strays[s].c * U + U / 2, strays[s].r * U + U / 2, css(col.stray));
+      o.push('<g id="celdas">' + rects.join("") + '</g>', '<g id="caracteres">' + texts.join("") + '</g>', '</svg>');
+      return o.join("\n");
+    }
+
+    function loop(now) {
+      var dt = last ? Math.min(0.1, (now - last) / 1000) : 0; last = now;
+      if (visible) {
+        if (!paused && cfg.speed > 0) step(dt * cfg.speed * (reduced ? 0.35 : 1));
+        if (!paused && !reduced) flap(dt);
+        draw();
+      }
+      raf = requestAnimationFrame(loop);
+    }
+
+    geometry(); colors(); reset(); resize();
+    if (window.ResizeObserver) { ro = new ResizeObserver(resize); ro.observe(el); } else window.addEventListener("resize", resize);
+    if (window.IntersectionObserver) { io = new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }); io.observe(cv); }
+    if (document.fonts && document.fonts.load) {
+      Promise.all([document.fonts.load("500 16px " + FONT_JP, CHARS), document.fonts.load("500 16px " + FONT_UI, "S%@")]).then(draw, function () {});
+    }
+    raf = requestAnimationFrame(loop);
+
+    return {
+      set: function (patch) {
+        var prev = cfg; cfg = Object.assign({}, cfg, patch || {});
+        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY || prev.icon !== cfg.icon || prev.tones !== cfg.tones || prev.colors !== cfg.colors) { geometry(); colors(); reset(); resize(); return; }
+        if (prev.accentMode !== cfg.accentMode && cells) cells.forEach(function (c) { c.acc = null; });
+        colors();
+        if (prev.seed !== cfg.seed) reset();
+        else if ((prev.jp !== cfg.jp || prev.jpMix !== cfg.jpMix) && cells) cells.forEach(function (c) { c.next = T + rand() * 0.6; });
+        draw();
+      },
+      get: function () { return Object.assign({}, cfg); },
+      size: function () { return { cols: G.COLS, rows: G.ROWS }; },
+      snapshot: function (width) { return snapshot(width); },
+      toSVG: function () { return toSVG(); },
+      togglePause: function () { paused = !paused; return paused; },
+      destroy: function () { cancelAnimationFrame(raf); if (ro) ro.disconnect(); if (io) io.disconnect(); cv.remove(); }
+    };
+  }
+
+  return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
+})();
+IconoKanji.mount(document.getElementById("ik-fafm97"), {"seed":924517483,"jp":"katakana","jpMix":1,"charScale":0.95,"changeRate":1.87,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#f4f4f1","transparent":false,"grid":"#e5e5e1","showGrid":true,"tileLo":"#e0e0dc","tileHi":"#353533","text":"#5c5c58","textOnDark":"#eeeeea","accentMode":"multi","accent":"#d9686a","accentRate":1,"padX":7,"padY":9,"gap":0.12,"radius":0,"speed":1.44,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true,"icon":["...................##............................","..................###..........###...............","................####............###..............","..............#####..............####............","..........########...............######..........",".......###########...............#######.........",".....############..#..####.......########........",".....###########################..#######........",".....############################.########.......","....###########################...########.......","....########################......#########......","...##########################....##########......","...##########################....##########......","..############################...###########.....","..###############...###########.############.....","..###############....#######################.....",".#################...#######################.....",".##################.#######################......",".##########################################......",".##########################################....#.",".########################.#################....#.","#######.################...################....#.","######...####....########.################..##.#.","#####....##........#################.#####...###.","####......#.........###############...####..#####","####........#.##.....##############...###...#####","####.......######..#################..#####.#####","###........######################################","###.........#####################################",".#...........####################################","................###################....###.######","........############################........#####","....################################........####.","...#################################........###..","..####################################....####...",".############################################....","..##########################################.....","..#########################################......","...#####################################.........","....##################################...........",".....################################............",".......#############################.............","..........############..##.##########............",".............#########......##########...........",".............#########........########...........","............#########...............#............","............########.............................","...............#..#.............................."],"tones":["...................44............................","..................325..........435...............","................5335............335..............","..............44335..............4455............","..........44433345...............555556..........",".......44344454457...............6555555.........",".....422447777755..3..6447.......65566555........",".....325777777775632532343444565..5567655........",".....2477666776643444345443334556.55677655.......","....536765567753222344581334576...55777655.......","....456655556743253333332345......557777656......","...53665555567534543333344557....6567777655......","...45655555567756653644555556....5567777655......","..5465555555677467346667765557...56777777656.....","..446555555677766...76555655557.556777777655.....","..456555555677765....65555555566567777677755.....",".64565555556777655...54455565556677776677656.....",".446555455566667655.64456565555577777667765......",".446554445666666765554564655555577777667765......",".446554455666666776357545754555567766567765....2.",".456544445666666677635557.53455557765667655....3.","5356546.5565567777777766...3455557776777656....3.","535547...6666....77777655.5344555677777765..24.3.","54557....76........77777643344555577.77765...333.","5566......7.........764345334445557...7655..22344","5567........6.43.....44334344445558...765...33344","6558.......446236..55554454554455577..75546.33344","756........53554464345555555555555777776624644234","756.........6554443456655555544445676655435474334",".5...........865555765555554322222577765565653323","................7655555555422222223....777.444323","........4443333353334555422222222226........34534","....54332222222443334554222222222226........4454.","...433322343333533345542222222222236........446..","..543333333566733333552222222222224567....5434...",".75433333333344333334522222222222245555555435....","..554433333335222333452222222222245565555545.....","..54554444445322233355322222222225555655556......","...4345544445322233455522222222245555677.........","....3233444454333445556222222224555557...........",".....53222336544445555622222235555556............",".......43322655555555563223565555556.............","..........655555555555..66.7555555556............",".............545545556......6555564356...........",".............434534557........77666448...........","............425454446...............8............","............25415415.............................","...............1..1.............................."],"useTones":true,"colors":["..................................................................................................................d07440c87326........................................................................................................................................................................","............................................................................................................eeab5cf1b15dc46132............................................................d98c3eeca55bb85716..........................................................................................","................................................................................................cc641defac52efac5ccb693e........................................................................efa44cf89845d56d2a....................................................................................","....................................................................................e67e47e9813df68e3eef924ba55f42....................................................................................eb833ae27a49c65e3dba5224........................................................................","............................................................e47c48e88046eb8345f68e41f89040f68e41e67e47a5573e..........................................................................................c05830d06850d06850d06850c25a34b54d1b............................................................","..........................................e4844dee8644f89040f18943e67e47cf72419a613acf7241da724cd06850703c30..........................................................................................a84000d06850cf674ec96143d06850d06850c35b35......................................................","..............................d78b38f6bc5df8b559ee8a47db734c703c303e3e46204359184c6b1f3849d06850d06850............e29157............b4530ed88d3ad870265c2808..........................................a84000d06850c9614358493e755040c65e3cd06850bf572e................................................","..............................e6a44bf8b85b955c47484147153b501850701850701850701850701850705c3d39d06850894c23f1ae5bf8b559cb6f34e5a249f8c060f1974cdd752bf89040d97127ab8042ab85458f683b7d402fbc5428............c35b35c96143484b4b185070304d5db35c42cc6447................................................","..............................f8b85bbe773821475e1850701a59771c627e185171185070185070204f6a534f47ca7d39e6a44bdd8c3ad97635d67243f8a850cf8e47936150bc8868cf8150f89040f89845f5a551d4774bc75f3ebd552ab04811......be562bc36041404c51185070185070674f45cd6549c05830..........................................","........................c35b15f8954453493d1850701c627e1f748c2078901c66821850701850707a6447ebab50f8c060f8c060f8bd5eef9240e0782fe67e3c5f7564132123e2e2e2e49f71f89040ed8544d0684087390e9a3c01..................bf572ea4573b185070185070185070284e64b05a3dc75f3e..........................................","........................ed8537b86b5327526d1c66822078902078902078902078901b5d7b2c4c5eca7539e79354f8b85bcc641cf89040f89040f89040f89040e7924ac09770f8b37df89040f28a42c0614b....................................c55d3aa4573b185070185070185070185070855340d06850ae460c....................................","..................cc641df48c425558651c65812078902078902078902078902078901b5d7b174965925e35f89040de823bab6530eb893df89040f89040f89040f89040f89040ef8744e17949d16950cb664e572d1c........................a84000d0685090543e185070185070185070185070544e4dcc6447c05830....................................","..................e57d31ae69541c64802078902078902078902078902078902078901b5d7b1850702f45507765588b451ba840008b634ac1a48f864c22de823bf08843cd6544bc5428cd6549d06850d068509e4822........................c05830c75f3e5a4b431850701850701850701850702c4e60b85937c96143....................................","............cc641dea8243665b6220768e207890207890207890207890207890207890185272185070185070849ba966544966321cb7aca4c3835ca43f008b3a078c462c652e10753005b14912d06850d06850cd6549512509..................cb634790543e1c506d185070185070185070185070185070855340cf674eb24a13..............................","............dd752bc5784d1b5d7b2078902078902078902078902078902078901f718b18507018507018507039627990543e..................622a07a4420acc6447d06850bb5e49a34c2bd06850c96143d06850d06850442821......cc6447c96143384c57185070185070185070185070185070185070384c57c96143bf572d..............................","............eb8335bf71501e6e88207890207890207890217d942180972078901c64801850701850701850704b4e51cd6549........................934525dc684ae06848cb6142c65e3cd06850bd552ad06850d068507b4030a75137c56246564f50185070185070185070185070195674185070185070185070bc5428c15931..............................","......a84000ef87448b615c1f718b207890207890217d94248da2248da22078901a5b79185070185070185070424e55cc6447c65e3c..................d56648f06840f06840cd5b30d06850d06850a15039d06850d06850bb5e498c4632544e4d1850701850701850701850701a59771d6884185070185070384c57c96143b24a14..............................","......d87026eb8345385b7020789020789022879c2598ab2490a42490a42078901a5a781c627e1c64801b607c1850706b4e42ce664cc65e3d......ba4c15ed6841f06840dd613ca0503ccb664e8b4839d06850d06850d06850d06850a953381e43571850701850701850701850701f718b195674185070185070855340c96143....................................","......d87026eb8345396175207890217c9327a4b52598ab2598ab23889d1f728c1b5e7c1c627e1c64801c6682195775185070785751cd6549a35d39ea653bf06840c35a269e502add754ba05240c0614bd06850d06850d06850d06850c961438236071747631850701850701850701d6a841c6480185070185070855340c55d3a....................................","......eb8335e27a493b687b2078902490a428a8b828a8b82595a82078901f718b1957751c66821c64801c627e1957751850701850706d5548ef9e629c613060331d9c633eeb8840c86c4465372ccb632ee67e47d06850d06850d06850d06850ad4b1c263c491850701852721d6b852078901b607c185070185070855340c05830........................f0b820......","......ed8537a06d55226781207b9228a5b628a8b82597a5269daf2078901c637f1c637f1d68841d6a841c64801b607c1852721850701c506d725f4ad1a051b17539be6d30c0693f65372c......bf5712f78f40d66e4ed06850d06850d06850b9512135353418507019567420768e1e6d87185171185070354e5cbb5c3cbd552b........................f0b521......","bc5410f890406365601f718b2490a427a0af1d626a......217b8a2283991852721f748c2078901d678018485b18485b184f6c185070185070185070153b50282c32904b3b89442d..................f89040dd754bd06850d06850d06850ce664c602c111850701850701a5977185070185070185070674f45d06850a84000........................f0ab25......","bc5410f89040646c6520768e2699a9184045..................1b607d1b617d1e6c861b5f7c........................163c52174b681850701850701850705d4241cb664ec35b35......c9611bf78f40e57d48e0784ad16950d06850d06850893b11174560185070185070185070185070185070674f45c35b35............f0b820f08634......f0ab25......","ca621bed85445a686f21809718454a........................1850701e6e88................................................1749651850701850701749655c3d39a15039d97127f89040f78f40e67e47e47c48d36b4fd06850d06850c05831253944185070......1850701850701850709a553cc35b35..................f0a627f09d2bf0ab25......","c35b35d0685058636e1d6275....................................185070......................................................184e6d5c625fba7e4df89040de823bbe7034f89040f58d41e47c48e47c48da724cd06850d06850d06850522e17..................185070484b4bc86040ba5224............f0b820f0b820f0b422f08933f06840","c35b35d06850745c60184656................................................825235......c1794cbaa598..............................d5704af18943f89040f89040ee8644f89040e88046e37b48e27a49db734cd06850d06850d068504d230a..................185070674f45c65e3c..................f0b123f0a02af0942ef06840f06840","a15039d0685093605b132530..........................................9f7d67ba744a77492dd0c4bde4a574794a26............c8601ab05945d06850d26a4fdd754bd46c44cc6442dd754bd06850d06850d46c4edb734cd06850d06850c35b35753005722f06............185070ae5839bc5428c37d5383563b......f0992cf09030f0973af07448f06840","703c30d06850904e40................................................7b6560cea598b7644d98583ce77f37eb893d8e4c1de1792df48c3ce77f47d06850d06850cd6549c55d3ad06850d06850d06850d06850d06850d06850d06850d06850c65e3c78320a8f3803793105672b07422d25864533935441e3d0c5858280984911d17228f0863af0bb58f0b049f06e44","402620d068507e4235......................................................884738c5634cd06850d76f4de88046e67e32f89040de823ba66132904b3b904b3bba5836d06850d06850d06850d06850d06850d17255d38560d38560d2805dd068508c46328f3803a84000a84000bc5428d06850d06e57d0a2977c6557ba805c7c381cf06840f0942ef0b422f07e37","......aa5643..................................................................2b1d19854637c0614bd06850d06850c66c40412a1ca05240d06850d06850d06850d06850d06850d06850d17758d8ab75dcc381e3c784e4c884dfc482dac1819159435a27087931058f38039b3c01c96143cf674ea04a26a5603587431fcb5938f0905cf09660f0c24bf0a756","................................................................................................60352b935332b46638c16546d06850d06850d06850d06850d06850d06850d38d64e1c180eecf87f0d088f0d088f0d088f0d088eacc86b69e6b........................5d31246834204f2409......e67a35f06840f08252f08b58f0ce7ff08d44","................................................d08030d08030d38337e89d5aeba35beba35beba35bde9956a25f35f89040f89040f89040e27a49d06850d06850d06850d47456dfb77be9cc86f0d088f0d088f0d088f0d088f0d088f0d088f0d088e8cb85534b35................................................f09d2bf06840e86439f0a63af06840","........................c96920d88a37e8a64defb255f8c060f8c060f8c060f8c060f8c060f8c060f8c060be9049e5853cf89040f89040f68e41e17949d06850d06850d37155e9b97cf0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088e4c884534b35................................................dc8c1df0713cd45827f08136......","..................dc7429f48c3cf89b47f8a850f8b055f8b055e69440dd8535f49c47f8a04bf8a04bf8a04b915f30f89040f89040f89040eb8345d06850d06850d26e53e9b97cf0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088d0a564864931................................................ee8339ec683cc04d15............","............cc6437f28a42f89040f89040f89040f89040f89040f89040f89040d76f259d58258450285d3b20f89040f89040f89040f89040f89040d06850d06850e7b378f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088e4c884c89555c35b35904b3b713b2b........................cc641cf1893bf89040d7762e..................","......753005d06850d76f4df68e41f89040f89040f89040f89040f89040f89040f89040f89040cb7737c47435f89040f89040f89040f89040f89040e17949ca6b48f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088e1c683c57343c96143b4583cd06850cd6549bf572dbb5327cc6447e37b48f89040bb6e33........................","............a55442d06850d46c4eeb8345f78f40f89040f89040f89040f89040f89040f89040ab783cf8c060f8bd5ef8b055f89342f89040f89040e17949c16236ddc482eacc86f0d088f0d088f0d088f0d088f0d088f0d088f0d088f0d088eccd87c89555cc6447d06850904b3bd06850d06850d06850d06850d06850e37b48bb6e33..............................","............7a6145d2835fd06850d06850d66e4ee0784aeb8345e67e47e88046ef8744b86c33cb9c50f8c060f8c060f8c060f8ad54f89040f89040d06850c96143d0ab6bd8c080dcc381e4c884eecf87f0d088f0d088eccd87eccd87f0d088dec482c36d3ed06850d06850c5634c904b3bd06850d06850d06850b05945774925....................................","..................a89163d4996bd17255d06850d06850d9714ce67e47e27a49e27a49a66132f89b47f8b559f8c060f8bb5cf89544f68e41dd754bd06850d06850a45b33d8c080d8c080d8c080d8c080e7ca85e9cc86e3c784e4c884e0c583b5784ace664cd06850d06850d06850814436703c305d332a......................................................","........................bba770d7b67bd7b178d49468d6895fe38851e0784ad46c4ea25c34f28a42f89342f89845f89544ef8744dc744bd06850d06850d06850714b38d8c080d8c080d8c080d8c080d9c080e1c683e4c884dec381a58058c5634cd06850d06850d06850d06850583128..................................................................","..............................8d7e56cdb67ad8c080d8c080d8c080d5a370d5a370904b3bd26a4fe27a49eb8345e67e47d46c4ed06850d06850d06850d06850714b38d8c080d8c080d8c080d8c080d8c080dcc381b6a06b976b4cbb5e49d06850d06850d06850d06850a05240........................................................................","..........................................9a895db7a36dcdb67ad8c080d8c08090503dd06850d06850d06850d06850d06850d06850d06850d06850d0685090502cb7a36dd8c080d8c080bca87089724f764636b05945d06850d06850d06850ce664cb05945783e2d..............................................................................","............................................................5c533b746848947753b95a3dd06850d06850d06850d06850d06850d06850d06850d06850............534b35534b35......703c30d06850d06850d06850d06850d06850c75f3eb05945c96133a84000........................................................................","..............................................................................d06826eb8345d06850d06850d9714cd26a4fd06850d06850a34a25....................................834536bb5e49d06850d06850ce664cb8501fe27a49eba069a66c405f5f5f..................................................................","..............................................................................d57845f68e41da7244cf674ef48c42db7341d06850cb664e532c1d................................................502d2567382da0461aa84000a95333ba7d6b937c761b1b1b..................................................................","........................................................................bf7547e2cbc1c75f29c57a52c35b35d4784dc9845bcc6f51814436..........................................................................................101010........................................................................","........................................................................e1cbbd886956a07961eeeeeea8603ebd836beeeeeea27153..............................................................................................................................................................................","..........................................................................................e7e7e7............e4e4e4...................................................................................................................................................................................."],"colorMode":"image","colorAmt":1,"colorVar":1.27});
+</script>
+</main>
+</body>
+</html>
