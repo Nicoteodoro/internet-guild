@@ -26,8 +26,7 @@
     --fg: #000000;
     --dim: #8e8e8e;
     --edge: 20px;
-    --col: 25.8vw;   /* where the text column starts */
-    --nav: 72.9vw;   /* where the menu starts */
+    --side: max(72px, (100vw - 800px) / 2);   /* the content is 800px at most, centred; the icon sits outside it */
     --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; }
@@ -42,23 +41,23 @@
   .top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; height: 0; }
   .icon { position: absolute; left: var(--edge); top: 36px; width: 34px; aspect-ratio: 23 / 28; }
   .icon .mark { width: 100%; }
-  .id { position: absolute; left: var(--col); top: 34px; }
+  .id { position: absolute; left: var(--side); top: 34px; }
   .id .dim { color: var(--dim); }
-  .menu { position: absolute; left: var(--nav); top: 38px; display: flex; flex-direction: column; }
+  .menu { position: absolute; right: var(--side); top: 38px; display: flex; flex-direction: column; }
   .menu .on { font-weight: 600; }
 
   /* the text column */
-  .col { margin-left: var(--col); max-width: 690px; padding: 320px var(--edge) 120px 0; }
+  .col { margin: 0 var(--side); padding: 320px 0 120px; }
   .gap { height: 18px; }
   .gap-l { height: 54px; }
   .two { display: grid; grid-template-columns: 378px 1fr; }
 
   @media (max-width: 760px) {
-    :root { --edge: 16px; --col: 64px; }
+    :root { --edge: 16px; --side: 64px; }
     .icon { top: 24px; width: 30px; }
     .id { top: 22px; }
-    .menu { left: auto; right: var(--edge); top: 22px; text-align: right; }
-    .col { margin-left: var(--edge); padding-top: 176px; }
+    .menu { right: var(--edge); top: 22px; text-align: right; }
+    .col { margin: 0 var(--edge); padding-top: 176px; }
     .two { grid-template-columns: 1fr 1fr; column-gap: 16px; }
   }
   h1, h2 { margin: 0; font: inherit; }
@@ -68,9 +67,9 @@
   @font-face { font-family: "PP Neue Montreal"; src: url("/neue-montreal-medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
   .stage { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
   .stage > .mark { position: absolute; left: 0; top: 0; z-index: 4; transform-origin: 0 0; will-change: transform; }
-  .hero-text { position: absolute; left: var(--col); top: 320px; padding-right: var(--edge); }
+  .hero-text { position: absolute; left: var(--side); right: var(--side); top: 320px; }
   .fade { will-change: opacity; }
-  @media (max-width: 760px) { .hero-text { left: var(--edge); top: 176px; } }
+  @media (max-width: 760px) { .hero-text { left: var(--edge); right: var(--edge); top: 176px; } }
 
   /* client logos: endless strip along the bottom of the hero, fading out at both ends */
   .logos {
