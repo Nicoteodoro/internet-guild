@@ -43,9 +43,8 @@
     position: relative; aspect-ratio: var(--ar); width: min(100%, 82vh * var(--ar)); margin: 0 auto;
     border-radius: 40px; overflow: hidden; background: #f2f2f2;
   }
-  /* the first piece starts in the middle of the screen, the last one ends there */
+  /* the first piece starts in the middle of the screen; the list never ends */
   .card:first-child { margin-top: calc((100svh - min(82vh, var(--col) / var(--ar))) / 2); }
-  .card:last-child { margin-bottom: calc((100svh - min(82vh, var(--col) / var(--ar))) / 2); }
   .card img, .card video {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
     opacity: 0; transition: opacity .5s ease;
@@ -111,33 +110,42 @@
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   for (var k = PROJECTS.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = PROJECTS[k]; PROJECTS[k] = PROJECTS[j]; PROJECTS[j] = x; }
 
-  PROJECTS.forEach(function (p) {
-    var li = el("li", "card"), m;
-    li.style.setProperty("--ar", (p.w / p.h).toFixed(4));
-    if (p.type === "video") {
-      m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
-      m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); if (p.poster) m.poster = p.poster;
-    } else { m = el("img"); m.alt = p.desc; m.decoding = "async"; }
-    li.appendChild(m); reel.appendChild(li);
-    cards.push({ el: li, p: p, m: m, requested: false, inView: false });
-  });
-
   function load(c) {
     if (c.requested) return; c.requested = true;
     var done = function () { c.m.classList.add("loaded"); if (c.p.type === "video" && c.inView && !reduced) c.m.play().catch(function () {}); };
     if (c.p.type === "video") { c.m.addEventListener("loadeddata", done, { once: true }); c.m.src = c.p.src; c.m.load(); }
     else { c.m.addEventListener("load", done, { once: true }); c.m.src = c.p.src; if (c.m.complete && c.m.naturalWidth) done(); }
   }
-  if ("IntersectionObserver" in window) {
-    var near = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) load(cards[+e.target.dataset.i]); }); }, { rootMargin: "600px 0px" });
-    var view = new IntersectionObserver(function (es) {
+  var io = "IntersectionObserver" in window, near, view, more;
+  if (io) {
+    near = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) load(cards[+e.target.dataset.i]); }); }, { rootMargin: "600px 0px" });
+    view = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         var c = cards[+e.target.dataset.i]; c.inView = e.isIntersecting;
         if (c.p.type === "video" && c.m.classList.contains("loaded") && !reduced) { if (c.inView) c.m.play().catch(function () {}); else c.m.pause(); }
       });
     }, { threshold: 0.2 });
-    cards.forEach(function (c, i) { c.el.dataset.i = i; near.observe(c.el); view.observe(c.el); });
-  } else cards.forEach(load);
+    // endless: when the end of the list gets close, the same list follows again
+    more = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { more.unobserve(e.target); round(); } });
+    }, { rootMargin: "1500px 0px" });
+  }
+
+  function round() {
+    PROJECTS.forEach(function (p) {
+      var li = el("li", "card"), m, c;
+      li.style.setProperty("--ar", (p.w / p.h).toFixed(4));
+      if (p.type === "video") {
+        m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
+        m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); if (p.poster) m.poster = p.poster;
+      } else { m = el("img"); m.alt = p.desc; m.decoding = "async"; }
+      li.appendChild(m); reel.appendChild(li);
+      c = { el: li, p: p, m: m, requested: false, inView: false }; li.dataset.i = cards.length; cards.push(c);
+      if (io) { near.observe(li); view.observe(li); } else load(c);
+    });
+    if (io) more.observe(reel.lastElementChild);
+  }
+  round();
 })();
 </script>
 </body>
