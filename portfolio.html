@@ -55,6 +55,10 @@
     .reel { padding: 16px 0 96px; gap: 40px; }
     .card { border-radius: 24px; }
   }
+  .veil { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  [data-fx="stack"] .card { position: sticky; top: max(16px, (100vh - min(82vh, var(--col) / var(--ar))) / 2); transform-origin: 50% 0; }
+  [data-fx="stack"] .reel { padding-bottom: 40vh; }
+  [data-fx="wipe"] .card img, [data-fx="wipe"] .card video { transition: opacity .5s ease; will-change: transform; }
   @media (prefers-reduced-motion: reduce) { .card { transform: none !important; } }
 </style>
 </head>
@@ -138,23 +142,73 @@
     cards.forEach(function (c, i) { c.el.dataset.i = i; near.observe(c.el); view.observe(c.el); });
   } else cards.forEach(load);
 
-  // bend: cards tilt back as they move away from the middle of the screen, flat at the centre
+  // scroll effects, picked with ?fx=  ·  kanji (default) · stack · focus · wipe · bend
+  var FX = ["kanji", "stack", "focus", "wipe", "bend"];
+  var fx = new URLSearchParams(location.search).get("fx");
+  if (FX.indexOf(fx) < 0) fx = "kanji";
+  document.documentElement.setAttribute("data-fx", fx);
   if (reduced) return;
-  var ticking = false;
-  function bend() {
-    ticking = false;
-    var vh = window.innerHeight, mid = vh / 2;
-    cards.forEach(function (c) {
-      var r = c.el.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > vh + 200) return;
-      var d = Math.max(-1, Math.min(1, (mid - (r.top + r.height / 2)) / vh)); // -1 below … 1 above
-      c.el.style.transform = "perspective(1400px) rotateX(" + (d * 28).toFixed(2) + "deg) scale(" + (1 - Math.abs(d) * 0.06).toFixed(3) + ")";
-    });
+  function clamp(v) { return Math.max(0, Math.min(1, v)); }
+
+  // kanji: a field of kanji covers each piece and dissolves as you scroll it in (and comes back when you scroll it out)
+  var POOL = "一丶ノ二人入八十小夕日木心目田生光糸空門電夢網魂霊龍闇響魔".split("");
+  function veil(c) {
+    var cv = document.createElement("canvas"), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = c.el.clientWidth, h = c.el.clientHeight, CELL = w < 400 ? 16 : 22;
+    var cols = Math.ceil(w / CELL), rows = Math.ceil(h / CELL), n = cols * rows, ch = [], th = new Float32Array(n), max = 0, i;
+    cv.className = "veil"; cv.setAttribute("aria-hidden", "true"); cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    c.el.appendChild(cv);
+    var ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    for (i = 0; i < n; i++) {
+      ch[i] = POOL[(Math.random() * POOL.length) | 0];
+      th[i] = (1 - ((i / cols) | 0) / rows) * 0.55 + Math.random() * 0.45; if (th[i] > max) max = th[i]; // clears from the bottom up
+    }
+    for (i = 0; i < n; i++) th[i] /= max;
+    var font = '500 ' + (CELL * 0.6).toFixed(1) + 'px "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif', last = -1, lastScr = 0;
+    return function (p, t) {
+      if (p === last && t - lastScr < 90) return;
+      if (t - lastScr >= 90) { lastScr = t; for (var k = 0; k < n * 0.08; k++) ch[(Math.random() * n) | 0] = POOL[(Math.random() * POOL.length) | 0]; }
+      last = p; ctx.clearRect(0, 0, w, h);
+      if (p >= 1) return;
+      ctx.font = font; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      for (var j = 0; j < n; j++) {
+        if (th[j] < p - 0.08) continue;
+        var x = (j % cols) * CELL, y = ((j / cols) | 0) * CELL, hot = th[j] < p;
+        ctx.fillStyle = hot ? "#000" : "#0b0b0c"; ctx.fillRect(x, y, CELL + 0.5, CELL + 0.5);
+        ctx.fillStyle = hot ? "#f2f2f2" : "#2c2c2f"; ctx.fillText(ch[j], x + CELL / 2, y + CELL / 2 + 0.5);
+      }
+    };
   }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(bend); } }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  bend();
+
+  function frame(t) {
+    var vh = window.innerHeight, mid = vh / 2;
+    cards.forEach(function (c, i) {
+      var r = c.el.getBoundingClientRect(), s = c.el.style;
+      if (r.bottom < -vh * 0.5 || r.top > vh * 1.5) return;
+      var d = (mid - (r.top + r.height / 2)) / vh, a = Math.min(1, Math.abs(d)); // 0 at the centre, 1 a screen away
+      if (fx === "kanji") {
+        if (!c.veil) c.veil = veil(c);
+        c.veil(clamp((vh * 0.95 - r.top) / (vh * 0.6)), t);
+      } else if (fx === "stack") {
+        // cards pin near the top and the next one slides over, the one underneath sinks back
+        var next = cards[i + 1] && cards[i + 1].el.getBoundingClientRect(), p = next ? clamp(1 - (next.top - r.top) / vh) : 0;
+        s.transform = "scale(" + (1 - p * 0.1).toFixed(3) + ")"; s.filter = "brightness(" + (1 - p * 0.6).toFixed(3) + ")";
+      } else if (fx === "focus") {
+        // only the piece in the middle is sharp and in colour; the rest recede
+        s.transform = "scale(" + (1 - a * 0.14).toFixed(3) + ")"; s.opacity = (1 - a * 0.55).toFixed(3); s.filter = "grayscale(" + Math.min(1, a * 1.6).toFixed(3) + ")";
+      } else if (fx === "wipe") {
+        // the piece opens from the bottom as it enters, the image settles from a slight zoom
+        var q = clamp((vh - r.top) / (vh * 0.7)), rad = vh > 0 && window.innerWidth <= 900 ? 24 : 40;
+        s.clipPath = "inset(" + ((1 - q) * 100).toFixed(2) + "% 0 0 0 round " + rad + "px)";
+        c.m.style.transform = "scale(" + (1 + (1 - q) * 0.25).toFixed(3) + ")";
+      } else {
+        var e = Math.max(-1, Math.min(1, d));
+        s.transform = "perspective(1400px) rotateX(" + (e * 28).toFixed(2) + "deg) scale(" + (1 - Math.abs(e) * 0.06).toFixed(3) + ")";
+      }
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
