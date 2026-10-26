@@ -27,9 +27,6 @@
   :root {
     --bg: #ffffff;
     --fg: #000000;
-    --card: #000000;
-    --card-fg: #ffffff;
-    --card-dim: rgba(255, 255, 255, 0.55);
     --col: min(720px, 100vw - 64px); /* the portfolio column */
     --font: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
@@ -40,30 +37,23 @@
 
   /* the portfolio: one centred column that scrolls */
   .reel { list-style: none; margin: 0 auto; padding: 18vh 0; width: var(--col); display: flex; flex-direction: column; gap: 72px; }
+  /* each card takes its piece's own shape, so the piece fills it edge to edge without cropping;
+     tall pieces narrow down to stay within the screen */
   .card {
-    position: relative; aspect-ratio: 16 / 10; border-radius: 40px; overflow: hidden;
-    background: var(--card); color: var(--card-fg);
+    position: relative; aspect-ratio: var(--ar); width: min(100%, 82vh * var(--ar)); margin: 0 auto;
+    border-radius: 40px; overflow: hidden; background: #f2f2f2;
     transform-origin: 50% 50%; will-change: transform;
   }
-  .stage { position: absolute; inset: 9% 12% 22%; display: flex; align-items: center; justify-content: center; }
-  .stage img, .stage video {
-    max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; border-radius: 14px;
+  .card img, .card video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
     opacity: 0; transition: opacity .5s ease;
   }
-  .stage .loaded { opacity: 1; }
-  .info {
-    position: absolute; left: 0; right: 0; bottom: 7%; text-align: center; padding: 0 24px;
-    font-size: 10px; line-height: 1.4; letter-spacing: 0.06em; text-transform: uppercase;
-  }
-  .info b { display: block; font-weight: 500; }
-  .info span { color: var(--card-dim); }
+  .card .loaded { opacity: 1; }
 
   @media (max-width: 900px) {
     :root { --col: calc(100vw - 32px); }
     .reel { padding: 16px 0 96px; gap: 40px; }
-    .card { border-radius: 24px; aspect-ratio: 4 / 5; }
-    .stage { inset: 8% 8% 22%; }
-    .stage img, .stage video { border-radius: 10px; }
+    .card { border-radius: 24px; }
   }
   @media (prefers-reduced-motion: reduce) { .card { transform: none !important; } }
 </style>
@@ -121,13 +111,13 @@
   for (var k = PROJECTS.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = PROJECTS[k]; PROJECTS[k] = PROJECTS[j]; PROJECTS[j] = x; }
 
   PROJECTS.forEach(function (p) {
-    var li = el("li", "card"), stage = el("div", "stage"), info = el("div", "info"), m;
+    var li = el("li", "card"), m;
+    li.style.setProperty("--ar", (p.w / p.h).toFixed(4));
     if (p.type === "video") {
       m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
       m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); if (p.poster) m.poster = p.poster;
     } else { m = el("img"); m.alt = p.desc; m.decoding = "async"; }
-    stage.appendChild(m); info.appendChild(el("b", null, p.client)); info.appendChild(el("span", null, p.desc.replace(/\.$/, "")));
-    li.appendChild(stage); li.appendChild(info); reel.appendChild(li);
+    li.appendChild(m); reel.appendChild(li);
     cards.push({ el: li, p: p, m: m, requested: false, inView: false });
   });
 
