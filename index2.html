@@ -57,7 +57,7 @@
             mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
   }
   .logos ul { list-style: none; margin: 0; padding: 0; display: flex; width: max-content; animation: drift 60s linear infinite; }
-  .logos li { padding: 0 28px; font-size: 15px; font-weight: 500; line-height: 21px; white-space: nowrap; }
+  .logos li { padding: 0 48px; font-size: 22px; font-weight: 500; line-height: 28px; letter-spacing: -0.01em; white-space: nowrap; }
   @keyframes drift { to { transform: translateX(-50%); } }
 
   @media (max-width: 700px) {
@@ -119,7 +119,7 @@
   var mark = document.getElementById("ik-index2"), slot = document.getElementById("slot"), after = document.getElementById("after");
   var stage = document.getElementById("stage"), logos = document.getElementById("logos"), list = logos.querySelector("ul");
   var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var big = 0, e = reduced ? 1 : 0, from = 0, to = e, t0 = 0, DUR = 700, raf = 0, AUTO = 2600, timer = 0;
+  var big = 0, e = reduced ? 1 : 0, from = 0, to = e, t0 = 0, DUR = 700, raf = 0, AUTO = 1300, timer = 0;
   list.innerHTML += list.innerHTML; // two copies, so the strip loops without a seam
   Array.prototype.slice.call(list.children, list.children.length / 2).forEach(function (li) { li.setAttribute("aria-hidden", "true"); });
   function size() {
