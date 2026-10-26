@@ -133,7 +133,8 @@ window.IconoKanji = window.IconoKanji || (function () {
     tileLo: "#e0e0dc", tileHi: "#353533", text: "#5c5c58", textOnDark: "#eeeeea",
     accentMode: "multi", accent: "#d9686a", accentRate: 1,
     padX: 5, padY: 3, gap: 0.12, radius: 0,
-    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true
+    speed: 1, sweep: true, sweepEvery: 8, blink: true, erosion: true, strays: true,
+    icon: null, tones: null, useTones: true, colors: null, colorMode: "palette", colorAmt: 1, colorVar: 1
   };
   var CHARS = (function () {
     var all = ASCII.flat().concat(STRAY);
@@ -169,7 +170,7 @@ window.IconoKanji = window.IconoKanji || (function () {
     var ctx = cv.getContext("2d"), bgc = document.createElement("canvas"), bctx = bgc.getContext("2d");
     var G, cells, strays, T, nextBlink, blinkUntil, sweepStart, sweepId, rs = 1, seedN = 1, col, cell = 10, dpr = 1;
     var raf = 0, visible = true, paused = false, last = 0, ro, io;
-    var intro = cfg.intro && !reduced ? 0 : 1e9; // real seconds since mount; cells type in top to bottom
+    var intro = reduced ? 1e9 : 0; // real seconds since mount; cells type in top to bottom, as on the home page
 
     function rand() { rs |= 0; rs = rs + 0x6D2B79F5 | 0; var t = Math.imul(rs ^ rs >>> 15, 1 | rs); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
     function pick(a) { return a[(rand() * a.length) | 0]; }
@@ -184,9 +185,20 @@ window.IconoKanji = window.IconoKanji || (function () {
 
     function geometry() {
       var PX = Math.max(0, cfg.padX | 0), PY = Math.max(0, cfg.padY | 0);
+      var custom = !!(cfg.icon && cfg.icon.length && cfg.icon[0].length);
+      var icon = custom ? cfg.icon : ICON, IW = icon[0].length, IH = icon.length;
+      var tones = custom && cfg.tones && cfg.tones.length === IH ? cfg.tones : null;
+      var cols = custom && cfg.colors && cfg.colors.length === IH ? cfg.colors : null;
+      var rgb = new Array(N).fill(null);
       var COLS = IW + PX * 2, ROWS = IH + PY * 2, N = COLS * ROWS, r, c, i;
       var filled = new Uint8Array(N), outside = new Uint8Array(N);
-      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) if (ICON[r][c] === "#") filled[(r + PY) * COLS + c + PX] = 1;
+      var lum = new Float32Array(N).fill(-1);   // image darkness per cell, -1 = none
+      for (r = 0; r < IH; r++) for (c = 0; c < IW; c++) {
+        var at = (r + PY) * COLS + c + PX;
+        if (icon[r][c] === "#") filled[at] = 1;
+        if (tones && tones[r][c] >= "0" && tones[r][c] <= "9") lum[at] = Number(tones[r][c]) / 9;
+        if (cols) { var hx = cols[r].substr(c * 6, 6); if (/^[0-9a-f]{6}$/i.test(hx)) rgb[at] = hexRgb("#" + hx); }
+      }
       var q = [];
       for (i = 0; i < N; i++) { r = (i / COLS) | 0; c = i % COLS;
         if ((r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1) && !filled[i]) { outside[i] = 1; q.push(i); } }
@@ -205,7 +217,8 @@ window.IconoKanji = window.IconoKanji || (function () {
         return d; }
       G = { COLS: COLS, ROWS: ROWS, N: N, filled: filled, outside: outside,
             depth: cheb(outside, true), away: cheb(filled, false),
-            eyes: EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
+            lum: lum, rgb: rgb, custom: custom,
+            eyes: custom ? [] : EYE_CELLS.map(function (p) { return (p[0] + PY) * COLS + p[1] + PX; }) };
     }
 
     function reset() {
@@ -213,8 +226,7 @@ window.IconoKanji = window.IconoKanji || (function () {
       nextBlink = 2 + rand() * 3; blinkUntil = -1; sweepStart = 3; sweepId = 0; cells = []; strays = [];
       for (var i = 0; i < G.N; i++) {
         var r = (i / G.COLS) | 0, c = i % G.COLS;
-        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1,
-                                      at: 0.15 + (r / G.ROWS) * 0.75 + (c / G.COLS) * 0.1 + Math.random() * 0.3, shown: false });
+        if (G.filled[i]) cells.push({ r: r, c: c, d: G.depth[i], b: -1, ch: "", tone: 0.5, next: 0, scr: 0, scrNext: 0, acc: null, accUntil: 0, ghostUntil: 0, sweep: -1, lum: G.lum[i], rgb: G.rgb[i], nz: 0 , at: 0.15 + (r / G.ROWS) * 0.75 + (c / G.COLS) * 0.1 + Math.random() * 0.3, shown: false });
         else if (G.outside[i] && G.away[i] <= 2) strays.push({ r: r, c: c, d: G.away[i], on: false, ch: "", next: rand() * 2 });
       }
       step(0.001);
@@ -239,18 +251,21 @@ window.IconoKanji = window.IconoKanji || (function () {
       drawBg(); draw();
     }
 
+    function bgTo(c, cs, sc, lw, pxW, pxH) {
+      c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, pxW, pxH);
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var W = cs * G.COLS, H = cs * G.ROWS;
+      if (!cfg.transparent) { c.fillStyle = css(col.bg); c.fillRect(0, 0, W, H); }
+      if (cfg.showGrid) {
+        c.strokeStyle = css(col.grid); c.lineWidth = lw; c.beginPath();
+        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cs * sc) / sc + lw / 2; c.moveTo(px, 0); c.lineTo(px, H); }
+        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cs * sc) / sc + lw / 2; c.moveTo(0, py); c.lineTo(W, py); }
+        c.stroke();
+      }
+    }
     function drawBg() {
       if (!col || !G) return;
-      bctx.setTransform(1, 0, 0, 1, 0, 0); bctx.clearRect(0, 0, bgc.width, bgc.height);
-      bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var W = cell * G.COLS, H = cell * G.ROWS;
-      if (!cfg.transparent) { bctx.fillStyle = css(col.bg); bctx.fillRect(0, 0, W, H); }
-      if (cfg.showGrid) {
-        bctx.strokeStyle = css(col.grid); bctx.lineWidth = 1 / dpr; bctx.beginPath();
-        for (var x = 0; x <= G.COLS; x++) { var px = Math.round(x * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(px, 0); bctx.lineTo(px, H); }
-        for (var y = 0; y <= G.ROWS; y++) { var py = Math.round(y * cell * dpr) / dpr + 0.5 / dpr; bctx.moveTo(0, py); bctx.lineTo(W, py); }
-        bctx.stroke();
-      }
+      bgTo(bctx, cell, dpr, 1 / dpr, bgc.width, bgc.height);
     }
 
     function bucket(t) { return t < 0.4 ? 0 : t < 0.7 ? 1 : 2; }
@@ -267,7 +282,9 @@ window.IconoKanji = window.IconoKanji || (function () {
     }
     function toneOf(cl) {
       var n = 0.65 * vnoise(cl.c / 5, cl.r / 5, T * 0.22) + 0.35 * vnoise(cl.c / 2.2 + 40, cl.r / 2.2, T * 0.55);
-      var t = 0.4 + 0.11 * Math.min(cl.d, 4) + 0.6 * cfg.flow * (n - 0.5);
+      var base = (cfg.useTones && cl.lum >= 0) ? 0.16 + 0.74 * cl.lum + 0.03 * Math.min(cl.d, 3) : 0.4 + 0.11 * Math.min(cl.d, 4);
+      var t = base + 0.6 * cfg.flow * (n - 0.5);
+      cl.nz = 0.6 * cfg.flow * (n - 0.5) * cfg.contrast;   // animated part only, used to shade image colors
       t = 0.5 + (t - 0.5) * cfg.contrast + cfg.density;
       return Math.max(0.03, Math.min(1, t));
     }
@@ -279,7 +296,7 @@ window.IconoKanji = window.IconoKanji || (function () {
       if (cfg.blink && T >= nextBlink) { blinkUntil = T + 0.14; nextBlink = T + 2.5 + rand() * 4.5; if (rand() < 0.2) nextBlink = T + 0.32; }
       for (var k = 0; k < cells.length; k++) {
         var cl = cells[k], boost = sweepBoost(cl.r, cl.c);
-        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4);
+        cl.tone = Math.min(1, toneOf(cl) + boost * 0.4); cl.nz += boost * 0.4;
         var b = bucket(cl.tone);
         if (boost > 0.5 && cl.sweep !== sweepId) { cl.sweep = sweepId; cl.b = b; if (scramble) { cl.scr = 4; cl.scrNext = T; } else cl.ch = choose(b); }
         if (b !== cl.b || T >= cl.next) {
@@ -296,43 +313,102 @@ window.IconoKanji = window.IconoKanji || (function () {
         if (T >= st.next) { st.on = rand() < (st.d === 1 ? 0.3 : 0.12); st.ch = pick(STRAY); st.next = T + 0.5 + rand() * 2.5; } }
     }
 
-    function tileRect(x, y, w, r) {
-      if (r > 0.3 && ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, w, r); ctx.fill(); }
-      else ctx.fillRect(x, y, w, w);
+    function tileRect(c, x, y, w, r) {
+      if (r > 0.3 && c.roundRect) { c.beginPath(); c.roundRect(x, y, w, w, r); c.fill(); }
+      else c.fillRect(x, y, w, w);
     }
-
+    function cellStyle(cl) {
+      var t = cl.tone, fill, ink;
+      if (cfg.erosion && T < cl.ghostUntil) return [css(col.ghost), css(col.ghostInk)];
+      if (cfg.colorMode === "image" && cl.rgb) {
+        // original pixel color, breathing lighter/darker with the animation
+        var dv = cl.nz * cfg.colorVar * 1.1, base = cl.rgb;
+        var img = dv > 0 ? mix(base, [0, 0, 0], Math.min(0.7, dv)) : mix(base, [255, 255, 255], Math.min(0.7, -dv));
+        var f = mix(mix(col.lo, col.hi, t), img, cfg.colorAmt);
+        var L = (0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2]) / 255;
+        fill = css(f);
+        ink = css(L < 0.5 ? mix(f, [255, 255, 255], 0.72) : mix(f, [0, 0, 0], 0.62));
+        if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+        return [fill, ink];
+      }
+      fill = css(mix(col.lo, col.hi, t));
+      ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
+      if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
+      return [fill, ink];
+    }
+    // draws tiles + characters onto any 2D context; cs = cell size in that context's units
+    function paintCells(c, cs, sc) {
+      c.setTransform(sc, 0, 0, sc, 0, 0);
+      var inset = cs * cfg.gap / 2, tile = cs - inset * 2, rad = tile * cfg.radius;
+      var fA = "500 " + (cs * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
+      var fJ = "500 " + (cs * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
+      c.textAlign = "center"; c.textBaseline = "middle";
+      for (var k = 0; k < cells.length; k++) {
+        var cl = cells[k], x = cl.c * cs, y = cl.r * cs, st;
+        if (intro < cl.at) continue;
+        if (!cl.shown) { cl.shown = true; if (intro < 1e8) { cl.scr = 5; cl.scrNext = T; cl.ch = anyChar(); } }
+        st = cellStyle(cl);
+        c.fillStyle = st[0]; tileRect(c, x + inset, y + inset, tile, rad);
+        var jp = isJP(cl.ch);
+        c.fillStyle = st[1]; c.font = jp ? fJ : fA;
+        c.fillText(cl.ch, x + cs / 2, y + cs / 2 + (jp ? 0 : cs * 0.04));
+      }
+      if (T < blinkUntil) {
+        c.fillStyle = css(col.hi);
+        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect(c, (i % G.COLS) * cs + inset, ((i / G.COLS) | 0) * cs + inset, tile, rad); }
+      }
+      if (cfg.strays && intro > 1.4) {
+        c.fillStyle = css(col.stray);
+        for (var s = 0; s < strays.length; s++) { var sy = strays[s]; if (!sy.on) continue;
+          c.font = isJP(sy.ch) ? fJ : fA; c.fillText(sy.ch, sy.c * cs + cs / 2, sy.r * cs + cs / 2); }
+      }
+    }
     function draw() {
       if (!col || !G || !cells) return;
       ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bgc, 0, 0);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var inset = cell * cfg.gap / 2, tile = cell - inset * 2, rad = tile * cfg.radius;
-      var fA = "500 " + (cell * 0.66 * cfg.charScale).toFixed(2) + "px " + FONT_UI;
-      var fJ = "500 " + (cell * 0.62 * cfg.charScale).toFixed(2) + "px " + FONT_JP;
-      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      paintCells(ctx, cell, dpr);
+    }
+
+    // still image of the current frame at a given pixel width
+    function snapshot(width) {
+      var cs = width / G.COLS, w = Math.round(width), h = Math.round(cs * G.ROWS);
+      var c = document.createElement("canvas"); c.width = w; c.height = h;
+      var c2 = c.getContext("2d");
+      bgTo(c2, cs, 1, Math.max(1, cs / 22), w, h);
+      paintCells(c2, cs, 1);
+      return c;
+    }
+    // vector version of the current frame; text stays live (JetBrains Mono / Noto Sans JP)
+    function toSVG() {
+      var U = 24, W = U * G.COLS, H = U * G.ROWS, n = function (v) { return +v.toFixed(2); };
+      var inset = U * cfg.gap / 2, tile = U - inset * 2, rad = n(tile * cfg.radius);
+      var fsA = n(U * 0.66 * cfg.charScale), fsJ = n(U * 0.62 * cfg.charScale);
+      var o = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">'];
+      o.push('<style>@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&amp;family=Noto+Sans+JP:wght@500&amp;display=swap");'
+        + '.a{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:' + fsA + 'px}'
+        + '.j{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-weight:500;font-size:' + fsJ + 'px}</style>');
+      if (!cfg.transparent) o.push('<rect id="fondo" width="' + W + '" height="' + H + '" fill="' + css(col.bg) + '"/>');
+      if (cfg.showGrid) {
+        var d = "";
+        for (var x = 0; x <= G.COLS; x++) d += "M" + x * U + " 0V" + H;
+        for (var y = 0; y <= G.ROWS; y++) d += "M0 " + y * U + "H" + W;
+        o.push('<path id="grilla" d="' + d + '" stroke="' + css(col.grid) + '" stroke-width="1" fill="none"/>');
+      }
+      var rects = [], texts = [], rr = rad > 0.3 ? ' rx="' + rad + '"' : "";
+      function txt(ch, cx, cy, fill) {
+        var jp = isJP(ch), fs = jp ? fsJ : fsA;
+        texts.push('<text class="' + (jp ? "j" : "a") + '" x="' + n(cx) + '" y="' + n(cy + fs * 0.36) + '" text-anchor="middle" fill="' + fill + '">' + ch + '</text>');
+      }
       for (var k = 0; k < cells.length; k++) {
-        var cl = cells[k], x = cl.c * cell, y = cl.r * cell, fill, ink, t = cl.tone;
-        if (intro < cl.at) continue;
-        if (!cl.shown) { cl.shown = true; if (intro < 1e8) { cl.scr = 5; cl.scrNext = T; cl.ch = anyChar(); } }
-        if (cfg.erosion && T < cl.ghostUntil) { fill = css(col.ghost); ink = css(col.ghostInk); }
-        else {
-          fill = css(mix(col.lo, col.hi, t));
-          ink = t > 0.6 ? css(mix(col.inkStrong, col.onHi, Math.min(1, (t - 0.6) / 0.15))) : css(mix(col.inkSoft, col.inkStrong, t / 0.6));
-          if (cl.acc !== null && col.accents[cl.acc]) ink = col.accents[cl.acc];
-        }
-        ctx.fillStyle = fill; tileRect(x + inset, y + inset, tile, rad);
-        var jp = isJP(cl.ch);
-        ctx.fillStyle = ink; ctx.font = jp ? fJ : fA;
-        ctx.fillText(cl.ch, x + cell / 2, y + cell / 2 + (jp ? 0 : cell * 0.04));
+        var cl = cells[k], st = cellStyle(cl);
+        rects.push('<rect x="' + n(cl.c * U + inset) + '" y="' + n(cl.r * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + st[0] + '"/>');
+        txt(cl.ch, cl.c * U + U / 2, cl.r * U + U / 2, st[1]);
       }
-      if (T < blinkUntil) {
-        ctx.fillStyle = css(col.hi);
-        for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e]; tileRect((i % G.COLS) * cell + inset, ((i / G.COLS) | 0) * cell + inset, tile, rad); }
-      }
-      if (cfg.strays && intro > 1.4) {
-        ctx.fillStyle = css(col.stray);
-        for (var s = 0; s < strays.length; s++) { var st = strays[s]; if (!st.on) continue;
-          ctx.font = isJP(st.ch) ? fJ : fA; ctx.fillText(st.ch, st.c * cell + cell / 2, st.r * cell + cell / 2); }
-      }
+      if (T < blinkUntil) for (var e = 0; e < G.eyes.length; e++) { var i = G.eyes[e];
+        rects.push('<rect x="' + n((i % G.COLS) * U + inset) + '" y="' + n(((i / G.COLS) | 0) * U + inset) + '" width="' + n(tile) + '" height="' + n(tile) + '"' + rr + ' fill="' + css(col.hi) + '"/>'); }
+      if (cfg.strays) for (var s = 0; s < strays.length; s++) if (strays[s].on) txt(strays[s].ch, strays[s].c * U + U / 2, strays[s].r * U + U / 2, css(col.stray));
+      o.push('<g id="celdas">' + rects.join("") + '</g>', '<g id="caracteres">' + texts.join("") + '</g>', '</svg>');
+      return o.join("\n");
     }
 
     function loop(now) {
@@ -356,7 +432,7 @@ window.IconoKanji = window.IconoKanji || (function () {
     return {
       set: function (patch) {
         var prev = cfg; cfg = Object.assign({}, cfg, patch || {});
-        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY) { geometry(); colors(); reset(); resize(); return; }
+        if (prev.padX !== cfg.padX || prev.padY !== cfg.padY || prev.icon !== cfg.icon || prev.tones !== cfg.tones || prev.colors !== cfg.colors) { geometry(); colors(); reset(); resize(); return; }
         if (prev.accentMode !== cfg.accentMode && cells) cells.forEach(function (c) { c.acc = null; });
         colors();
         if (prev.seed !== cfg.seed) reset();
@@ -365,6 +441,8 @@ window.IconoKanji = window.IconoKanji || (function () {
       },
       get: function () { return Object.assign({}, cfg); },
       size: function () { return { cols: G.COLS, rows: G.ROWS }; },
+      snapshot: function (width) { return snapshot(width); },
+      toSVG: function () { return toSVG(); },
       togglePause: function () { paused = !paused; return paused; },
       destroy: function () { cancelAnimationFrame(raf); if (ro) ro.disconnect(); if (io) io.disconnect(); cv.remove(); }
     };
@@ -372,7 +450,7 @@ window.IconoKanji = window.IconoKanji || (function () {
 
   return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
 })();
-IconoKanji.mount(document.getElementById("ik-index2"), {"seed":1521282005,"jp":"kanji","jpMix":1,"charScale":0.89,"changeRate":2.47,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#ffffff","transparent":true,"grid":"#eeeeee","showGrid":false,"tileLo":"#ffffff","tileHi":"#ffffff","text":"#000000","textOnDark":"#000000","accentMode":"off","accent":"#d9686a","accentRate":1,"padX":5,"padY":3,"gap":0.12,"radius":0,"speed":1,"intro":true,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true});
+IconoKanji.mount(document.getElementById("ik-index2"), {"seed":1357092039,"jp":"katakana","jpMix":1,"charScale":0.91,"changeRate":1.49,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#fbfaf7","transparent":true,"grid":"#efede8","showGrid":false,"tileLo":"#ecebe6","tileHi":"#111111","text":"#2a2a28","textOnDark":"#fbfaf7","accentMode":"multi","accent":"#d9686a","accentRate":2.08,"padX":5,"padY":3,"gap":0.12,"radius":0,"speed":1,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true,"icon":[".............####.............","............######............","...........########...........","..........##########..........",".........############.........","........##############........",".......################.......","......##################......","......##################......","......##################......","....######..........######....","....#####...######...#####....","....####...########...####....","....###...##########...###....","...###...############...###...","...###..##############..###...","...###.#####.####.#####.###...","..####.#####.####.#####.####..","######.#####.####.#####.######","######.#####.####.#####.######","######.################.######",".#####..##############..#####.","..####...############...####..","....###...##########...###....","....####.....####.....####....","....#####....####....#####....","...#########......#########...",".############################.","..##########################..","...########################...","......##################......","........##############........",".........############.........","..........##########..........","...........########...........","............######............",".............####............."],"tones":[".............9999.............","............999999............","...........99999999...........","..........9999999999..........",".........999999999999.........","........99999999999999........",".......9999999999999999.......","......999999999999999999......","......999999999999999999......","......999999999999999999......","....999999..........999999....","....99999...999999...99999....","....9999...99999999...9999....","....999...9999999999...999....","...999...999999999999...999...","...999..99999999999999..999...","...999.99999.9999.99999.999...","..9999.99999.9999.99999.9999..","999999.99999.9999.99999.999999","999999.99999.9999.99999.999999","999999.9999999999999999.999999",".99999..99999999999999..99999.","..9999...999999999999...9999..","....999...9999999999...999....","....9999.....9999.....9999....","....99999....9999....99999....","...999999999......999999999...",".9999999999999999999999999999.","..99999999999999999999999999..","...999999999999999999999999...","......999999999999999999......","........99999999999999........",".........999999999999.........","..........9999999999..........","...........99999999...........","............999999............",".............9999............."],"useTones":true,"colors":["..............................................................................000000000000000000000000..............................................................................","........................................................................000000000000000000000000000000000000........................................................................","..................................................................000000000000000000000000000000000000000000000000..................................................................","............................................................000000000000000000000000000000000000000000000000000000000000............................................................","......................................................000000000000000000000000000000000000000000000000000000000000000000000000......................................................","................................................000000000000000000000000000000000000000000000000000000000000000000000000000000000000................................................","..........................................000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000..........................................","....................................000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000....................................","....................................000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000....................................","....................................000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000....................................","........................000000000000000000000000000000000000............................................................000000000000000000000000000000000000........................","........................000000000000000000000000000000..................000000000000000000000000000000000000..................000000000000000000000000000000........................","........................000000000000000000000000..................000000000000000000000000000000000000000000000000..................000000000000000000000000........................","........................000000000000000000..................000000000000000000000000000000000000000000000000000000000000..................000000000000000000........................","..................000000000000000000..................000000000000000000000000000000000000000000000000000000000000000000000000..................000000000000000000..................","..................000000000000000000............000000000000000000000000000000000000000000000000000000000000000000000000000000000000............000000000000000000..................","..................000000000000000000......000000000000000000000000000000......000000000000000000000000......000000000000000000000000000000......000000000000000000..................","............000000000000000000000000......000000000000000000000000000000......000000000000000000000000......000000000000000000000000000000......000000000000000000000000............","000000000000000000000000000000000000......000000000000000000000000000000......000000000000000000000000......000000000000000000000000000000......000000000000000000000000000000000000","000000000000000000000000000000000000......000000000000000000000000000000......000000000000000000000000......000000000000000000000000000000......000000000000000000000000000000000000","000000000000000000000000000000000000......000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000......000000000000000000000000000000000000","......000000000000000000000000000000............000000000000000000000000000000000000000000000000000000000000000000000000000000000000............000000000000000000000000000000......","............000000000000000000000000..................000000000000000000000000000000000000000000000000000000000000000000000000..................000000000000000000000000............","........................000000000000000000..................000000000000000000000000000000000000000000000000000000000000..................000000000000000000........................","........................000000000000000000000000..............................000000000000000000000000..............................000000000000000000000000........................","........................000000000000000000000000000000........................000000000000000000000000........................000000000000000000000000000000........................","..................000000000000000000000000000000000000000000000000000000....................................000000000000000000000000000000000000000000000000000000..................","......000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000......","............000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000............","..................000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000..................","....................................000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000....................................","................................................000000000000000000000000000000000000000000000000000000000000000000000000000000000000................................................","......................................................000000000000000000000000000000000000000000000000000000000000000000000000......................................................","............................................................000000000000000000000000000000000000000000000000000000000000............................................................","..................................................................000000000000000000000000000000000000000000000000..................................................................","........................................................................000000000000000000000000000000000000........................................................................","..............................................................................000000000000000000000000.............................................................................."],"colorMode":"image","colorAmt":1,"colorVar":1.52});
 </script>
 <script>
 (function () {
