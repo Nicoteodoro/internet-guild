@@ -68,7 +68,7 @@
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   figure, blockquote { margin: 0; }
   /* work: two columns, each piece whole at its own shape */
-  .work { max-width: 1000px; margin: 0 auto; padding: 8px 8px 64px; columns: 2; column-gap: 8px; scroll-margin-top: 0; }
+  .work { padding: 8px 32px 64px; columns: 2; column-gap: 8px; scroll-margin-top: 0; }
   .piece { break-inside: avoid; margin: 0 0 24px; }
   .media { position: relative; aspect-ratio: var(--ar); background: #f4f4f4; overflow: hidden; }
   .media img, .media video {
@@ -78,7 +78,7 @@
   .media .loaded { opacity: 1; }
   .cap { margin-top: 8px; font-size: 14px; line-height: 20px; }
   .cap b { display: block; font-weight: inherit; }
-  @media (max-width: 700px) { .work { columns: 1; } }
+  @media (max-width: 700px) { .work { columns: 1; padding: 8px 16px 64px; } }
   /* hero: the icon starts at full screen, then flies to the corner; the hero drops to 80vh so the work peeks in */
   @font-face { font-family: "PP Neue Montreal"; src: url("/neue-montreal-medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
   .stage { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
