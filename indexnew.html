@@ -37,8 +37,8 @@
   a:focus-visible { outline: 1px solid var(--fg); outline-offset: 3px; }
 
   /* one column, 700px at most; each piece whole at its own shape */
-  .work { padding: 56px 32px 120px 0; display: grid; grid-template-columns: minmax(0, 700px); gap: 4px; align-content: start; }
-  .tile { margin: 0; position: relative; background: var(--tile); }
+  .work { padding: 56px 32px 120px 0; display: grid; grid-template-columns: minmax(0, 700px); gap: 32px; align-content: start; }
+  .tile { margin: 0; position: relative; background: var(--tile); border-radius: 12px; overflow: hidden; }
   .media { position: relative; aspect-ratio: var(--ar); margin: 0; }
   .media img, .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s ease; }
   .media .loaded { opacity: 1; }
