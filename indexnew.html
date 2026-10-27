@@ -36,13 +36,11 @@
   .mail:hover { color: var(--fg); }
   a:focus-visible { outline: 1px solid var(--fg); outline-offset: 3px; }
 
-  .work { padding: 56px 9vw 120px 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-flow: dense; gap: 4px; align-content: start; }
-  .tile { margin: 0; position: relative; background: var(--tile); aspect-ratio: 1; display: flex; flex-direction: column; }
-  .tile.wide { grid-column: span 2; aspect-ratio: 2 / 1; }
-  .tile.tall { grid-row: span 2; aspect-ratio: 1 / 2; }
-  .media { position: relative; flex: 1; min-height: 0; margin: 0; }
+  /* one column, 700px at most; each piece whole at its own shape */
+  .work { padding: 56px 32px 120px 0; display: grid; grid-template-columns: minmax(0, 700px); gap: 4px; align-content: start; }
+  .tile { margin: 0; position: relative; background: var(--tile); }
+  .media { position: relative; aspect-ratio: var(--ar); margin: 0; }
   .media img, .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s ease; }
-  .wide .media img, .wide .media video, .tall .media img, .tall .media video { object-fit: contain; padding: 8%; }
   .media .loaded { opacity: 1; }
   .cap { display: flex; justify-content: space-between; gap: 8px; padding: 8px 8px 7px; font-family: "DM Mono", ui-monospace, Menlo, monospace; font-size: 8px; line-height: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
   .cap span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -50,7 +48,7 @@
   @media (max-width: 900px) {
     .split { display: block; }
     .studio { position: relative; height: auto; padding: 56px 16px 48px; }
-    .work { padding: 0 4px 64px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .work { padding: 0 16px 64px; grid-template-columns: minmax(0, 1fr); }
   }
 </style>
 </head>
@@ -484,11 +482,9 @@ IconoKanji.mount(document.getElementById("ik"), {"seed":1357092039,"jp":"katakan
   for (var k = PROJECTS.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = PROJECTS[k]; PROJECTS[k] = PROJECTS[j]; PROJECTS[j] = x; }
   var LABEL = { web: "Web", product: "Product", ai: "AI", brand: "Brand" };
 
-  // square pieces fill their tile; wide ones take two tiles across, tall ones two tiles down, shown whole on the grey
   PROJECTS.forEach(function (p, i) {
-    var r = p.w / p.h, shape = r > 1.2 ? "wide" : r < 0.85 ? "tall" : "square";
-    var fig = el("figure", "tile " + shape), box = el("div", "media"), cap = el("figcaption", "cap"), m;
-    fig.dataset.i = i;
+    var fig = el("figure", "tile"), box = el("div", "media"), cap = el("figcaption", "cap"), m;
+    box.style.setProperty("--ar", (p.w / p.h).toFixed(4)); fig.dataset.i = i;
     if (p.type === "video") {
       m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
       m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); if (p.poster) m.poster = p.poster;
