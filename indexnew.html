@@ -35,7 +35,7 @@
 
   /* one column, 800px at most; each piece whole at its own shape */
   .work { padding: 56px 32px 120px 0; display: grid; grid-template-columns: minmax(0, 800px); gap: 32px; align-content: start; }
-  .tile { margin: 0; position: relative; background: var(--tile); border-radius: 12px; overflow: hidden; }
+  .tile { margin: 0; position: relative; background: var(--tile); border-radius: 40px; overflow: hidden; transform-origin: 50% 50%; will-change: transform; }
   .media { position: relative; aspect-ratio: var(--ar); margin: 0; }
   .media img, .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s ease; }
   .media .loaded { opacity: 1; }
@@ -504,6 +504,28 @@ IconoKanji.mount(document.getElementById("ik"), {"seed":1357092039,"jp":"katakan
     }, { threshold: 0.2 });
     items.forEach(function (c) { near.observe(c.el); view.observe(c.el); });
   } else items.forEach(load);
+})();
+</script>
+<script>
+// bend: pieces tilt back as they move away from the middle of the screen, flat at the centre
+(function () {
+  "use strict";
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var tiles = document.getElementsByClassName("tile"), ticking = false;
+  function bend() {
+    ticking = false;
+    var vh = window.innerHeight, mid = vh / 2;
+    for (var i = 0; i < tiles.length; i++) {
+      var r = tiles[i].getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) continue;
+      var d = Math.max(-1, Math.min(1, (mid - (r.top + r.height / 2)) / vh)); // -1 below … 1 above
+      tiles[i].style.transform = "perspective(1400px) rotateX(" + (d * 28).toFixed(2) + "deg) scale(" + (1 - Math.abs(d) * 0.06).toFixed(3) + ")";
+    }
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(bend); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  bend();
 })();
 </script>
 </body>
