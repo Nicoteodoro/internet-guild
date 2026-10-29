@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Internet Guild</title>
+<meta name="description" content="Design + development studio. Websites, products and AI for founders who embrace simplicity.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Internet Guild">
+<meta property="og:title" content="Internet Guild">
+<meta property="og:description" content="Design + development studio. Websites, products and AI for founders who embrace simplicity.">
+<meta property="og:url" content="https://internetguild.co/">
+<meta property="og:image" content="https://internetguild.co/og.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://internetguild.co/og.png?v=2">
+<link rel="preload" href="/helvetica-neue-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/helvetica-neue-medium.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family: "Helvetica Neue IG"; src: url("/helvetica-neue-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Helvetica Neue IG"; src: url("/helvetica-neue-medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+  :root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --dim: #8e8e8e;
+    --faint: #b3b3b3;
+    --edge: 12px;
+    --font: "Helvetica Neue IG", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); }
+  body { font-family: var(--font); font-size: 14px; line-height: 18px; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; transition: color .2s ease; }
+  a:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+  p { margin: 0; }
+  h1, h2 { margin: 0; font: inherit; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  /* the wordmark, fixed and centred at the top; drawn white with "difference" so it reads black on light and white on dark */
+  .top { position: fixed; top: 24px; left: 0; right: 0; z-index: 5; display: flex; justify-content: center; mix-blend-mode: difference; pointer-events: none; }
+  .top a { pointer-events: auto; }
+  .logo { display: block; width: 120px; height: auto; }
+
+  /* the studio: four short blocks in a row across the page, in capitals */
+  .studio { display: flex; justify-content: space-between; align-items: flex-start; gap: 48px; padding: 372px 80px 0; text-transform: uppercase; }
+  .studio .name { font-weight: 500; }
+  .studio .contact a { color: var(--dim); }
+  .studio .contact a:hover { color: var(--fg); }
+
+  /* the work: one centred column, 700px at most, each piece whole at its own shape */
+  .work { display: grid; justify-content: center; grid-template-columns: minmax(0, 700px); gap: 56px; padding: 160px var(--edge) 160px; }
+  .piece { margin: 0; position: relative; aspect-ratio: var(--ar); border-radius: 32px; overflow: hidden; background: #ededed; }
+  .piece img, .piece video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s ease; }
+  .piece .loaded { opacity: 1; }
+
+  /* the footer, fixed along the bottom */
+  .foot { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: baseline; padding: 0 var(--edge) 12px; font-size: 12px; line-height: 16px; pointer-events: none; }
+  .foot > * { pointer-events: auto; }
+  .foot .copy { color: var(--faint); font-size: 10px; }
+  .foot nav { display: flex; gap: 30px; }
+  .foot nav a { color: var(--dim); }
+  .foot nav a:hover { color: var(--fg); }
+
+  /* narrower screens: two by two, then one under the other */
+  @media (max-width: 1100px) {
+    .studio { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 24px; padding: 200px 40px 0; }
+    .foot { position: static; }
+  }
+  @media (max-width: 600px) {
+    .studio { grid-template-columns: 1fr; gap: 18px; padding: 120px var(--edge) 0; }
+    .work { gap: 24px; padding-top: 72px; padding-bottom: 96px; }
+    .piece { border-radius: 20px; }
+    .foot { flex-direction: column-reverse; align-items: flex-start; gap: 16px; }
+    .foot nav { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1><a href="/" aria-label="Internet Guild"><svg class="logo" viewBox="0 0 150 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M137.898 0.33667H143.761C144.844 0.33667 145.781 0.521527 146.574 0.891241C147.366 1.26095 148.013 1.76931 148.515 2.41631C149.016 3.05011 149.386 3.79614 149.624 4.6544C149.875 5.51267 150 6.43035 150 7.40745C150 8.38455 149.875 9.30224 149.624 10.1605C149.386 11.0188 149.016 11.7714 148.515 12.4184C148.013 13.0522 147.366 13.5539 146.574 13.9237C145.781 14.2934 144.844 14.4782 143.761 14.4782H137.898V0.33667ZM140.374 12.458H142.81C143.774 12.458 144.56 12.3326 145.167 12.0817C145.788 11.8176 146.27 11.4611 146.613 11.0122C146.97 10.55 147.207 10.0153 147.326 9.40787C147.458 8.78728 147.524 8.12047 147.524 7.40745C147.524 6.69443 147.458 6.03423 147.326 5.42684C147.207 4.80625 146.97 4.27148 146.613 3.82254C146.27 3.3604 145.788 3.00389 145.167 2.75302C144.56 2.48893 143.774 2.35689 142.81 2.35689H140.374V12.458Z" fill="#ffffff"/>
+<path d="M127.318 0.33667H129.793V12.3392H136.983V14.4782H127.318V0.33667Z" fill="#ffffff"/>
+<path d="M122.597 0.33667H125.073V14.4782H122.597V0.33667Z" fill="#ffffff"/>
+<path d="M108.938 0.33667H111.413V8.57601C111.413 9.05136 111.433 9.53331 111.473 10.0219C111.526 10.5104 111.658 10.9527 111.869 11.3489C112.093 11.7318 112.424 12.0487 112.859 12.2996C113.308 12.5504 113.935 12.6759 114.741 12.6759C115.546 12.6759 116.167 12.5504 116.603 12.2996C117.052 12.0487 117.382 11.7318 117.593 11.3489C117.817 10.9527 117.949 10.5104 117.989 10.0219C118.042 9.53331 118.068 9.05136 118.068 8.57601V0.33667H120.544V9.38806C120.544 10.2991 120.405 11.0914 120.128 11.7648C119.851 12.4382 119.455 13.006 118.94 13.4681C118.438 13.9171 117.831 14.2538 117.118 14.4782C116.405 14.7027 115.612 14.8149 114.741 14.8149C113.869 14.8149 113.077 14.7027 112.364 14.4782C111.651 14.2538 111.037 13.9171 110.522 13.4681C110.02 13.006 109.631 12.4382 109.354 11.7648C109.076 11.0914 108.938 10.2991 108.938 9.38806V0.33667Z" fill="#ffffff"/>
+<path d="M107.199 14.4783H105.614L105.238 12.8145C104.578 13.5672 103.918 14.0887 103.257 14.3792C102.597 14.6697 101.838 14.815 100.98 14.815C99.9234 14.815 98.9727 14.6235 98.1277 14.2406C97.2958 13.8445 96.5894 13.3097 96.0084 12.6363C95.4274 11.9629 94.9785 11.1772 94.6616 10.2794C94.3579 9.38149 94.2061 8.4242 94.2061 7.40748C94.2061 6.40397 94.3579 5.45328 94.6616 4.5554C94.9785 3.65753 95.4274 2.87189 96.0084 2.19848C96.5894 1.52507 97.2958 0.990305 98.1277 0.594183C98.9727 0.198061 99.9234 0 100.98 0C101.746 0 102.472 0.105632 103.158 0.316897C103.858 0.514958 104.479 0.818651 105.02 1.22798C105.562 1.6241 106.01 2.12585 106.367 2.73324C106.724 3.34063 106.948 4.04044 107.04 4.83269H104.624C104.558 4.37055 104.413 3.96782 104.188 3.62452C103.977 3.26801 103.706 2.97092 103.376 2.73324C103.046 2.49557 102.676 2.31731 102.267 2.19848C101.858 2.07964 101.429 2.02022 100.98 2.02022C100.227 2.02022 99.5735 2.17207 99.0189 2.47576C98.4776 2.77946 98.0352 3.18878 97.6919 3.70374C97.3486 4.2055 97.0911 4.77987 96.9195 5.42687C96.761 6.07387 96.6818 6.73408 96.6818 7.40748C96.6818 8.08089 96.761 8.74109 96.9195 9.38809C97.0911 10.0351 97.3486 10.6161 97.6919 11.131C98.0352 11.6328 98.4776 12.0355 99.0189 12.3392C99.5735 12.6429 100.227 12.7947 100.98 12.7947C101.614 12.8079 102.175 12.7287 102.663 12.5571C103.152 12.3722 103.561 12.1147 103.891 11.7846C104.235 11.4413 104.492 11.0254 104.664 10.5368C104.835 10.0483 104.928 9.50693 104.941 8.91275H101.178V7.03117H107.199V14.4783Z" fill="#ffffff"/>
+<path d="M77.8444 0.33667H89.2923V2.47573H84.7963V14.4782H82.3205V2.47573H77.8444V0.33667Z" fill="#ffffff"/>
+<path d="M67.5078 0.33667H77.6882V2.47573H69.9836V6.17947H77.1138V8.1997H69.9836V12.3392H77.8268V14.4782H67.5078V0.33667Z" fill="#ffffff"/>
+<path d="M53.9076 0.33667H56.522L62.9788 10.7547H63.0184V0.33667H65.3753V14.4782H62.7609L56.3239 4.08002H56.2645V14.4782H53.9076V0.33667Z" fill="#ffffff"/>
+<path d="M40.8531 0.33667H47.607C49.1651 0.33667 50.3337 0.673373 51.1127 1.34678C51.8918 2.02019 52.2813 2.95768 52.2813 4.15925C52.2813 4.83266 52.1822 5.39383 51.9842 5.84277C51.7861 6.2785 51.5551 6.63501 51.291 6.9123C51.0269 7.17638 50.7628 7.36784 50.4987 7.48668C50.2478 7.60551 50.063 7.68474 49.9442 7.72435V7.76396C50.1554 7.79037 50.3799 7.85639 50.6176 7.96202C50.8684 8.06765 51.0995 8.23931 51.3108 8.47698C51.522 8.70145 51.6937 8.99854 51.8257 9.36825C51.971 9.73797 52.0436 10.2001 52.0436 10.7547C52.0436 11.5865 52.103 12.3458 52.2219 13.0324C52.3539 13.7058 52.552 14.1877 52.816 14.4782H50.162C49.9772 14.1745 49.8649 13.8378 49.8253 13.4681C49.7989 13.0984 49.7857 12.7419 49.7857 12.3986C49.7857 11.7516 49.7461 11.197 49.6669 10.7349C49.5876 10.2595 49.4424 9.87001 49.2311 9.56632C49.0199 9.24942 48.7294 9.01835 48.3597 8.8731C48.0032 8.72786 47.541 8.65524 46.9732 8.65524H43.3289V14.4782H40.8531V0.33667ZM43.3289 6.77365H47.3892C48.1814 6.77365 48.7822 6.5888 49.1915 6.21908C49.6008 5.83617 49.8055 5.26839 49.8055 4.51576C49.8055 4.06682 49.7395 3.70371 49.6075 3.42642C49.4754 3.13593 49.2906 2.91146 49.0529 2.75302C48.8284 2.59457 48.5643 2.48893 48.2606 2.43612C47.9701 2.3833 47.6665 2.35689 47.3496 2.35689H43.3289V6.77365Z" fill="#ffffff"/>
+<path d="M29.1699 0.33667H39.3503V2.47573H31.6457V6.17947H38.7759V8.1997H31.6457V12.3392H39.4889V14.4782H29.1699V0.33667Z" fill="#ffffff"/>
+<path d="M16.8749 0.33667H28.3228V2.47573H23.8268V14.4782H21.3511V2.47573H16.8749V0.33667Z" fill="#ffffff"/>
+<path d="M4.62122 0.33667H7.23562L13.6924 10.7547H13.732V0.33667H16.089V14.4782H13.4745L7.03756 4.08002H6.97814V14.4782H4.62122V0.33667Z" fill="#ffffff"/>
+<path d="M0 0.33667H2.47576V14.4782H0V0.33667Z" fill="#ffffff"/>
+</svg></a></h1>
+</header>
+<section class="studio" aria-label="About">
+  <p class="name">Design + Development<br>Studio</p>
+  <p>Websites, products and AI for<br>founders who embrace simplicity.</p>
+  <p>Eleven years of practice<br>Born to reduce</p>
+  <p class="contact"><a href="mailto:webmaster@internetguild.co">Hire the guild</a><br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+</section>
+<main>
+  <h2 class="sr">Work</h2>
+  <section class="work" id="work"></section>
+</main>
+<footer class="foot">
+  <p class="copy">Copyright 2026 Internet Design Guild</p>
+  <nav aria-label="Social">
+    <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X (twitter)</a>
+    <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+</footer>
+<script>
+(function () {
+  "use strict";
+  var PROJECTS = [
+    {"client": "Towerbank", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-poster.webp", "desc": "Towerbank credit card street poster."},
+    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-cards.mp4", "desc": "Towerbank Visa cards.", "poster": "/projects/poster-towerbank-cards.webp"},
+    {"client": "Towerbank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-app.webp", "desc": "Towerbank investments app on iPhone."},
+    {"client": "Towerbank", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-website-ui.mp4", "desc": "Towerbank website interface.", "poster": "/projects/poster-towerbank-website-ui.webp"},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-icons.webp", "desc": "Numia icon system."},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-poster.webp", "desc": "Numia poster on a concrete wall."},
+    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-laptop.webp", "desc": "Numia website on a MacBook."},
+    {"client": "Numia", "tags": ["web", "product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-mobile.webp", "desc": "Numia website on iPhone."},
+    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-sections.webp", "desc": "Numia website sections."},
+    {"client": "Numia", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/numia-customer-journey.mp4", "desc": "Numia customer journey website on a laptop.", "poster": "/projects/poster-numia-customer-journey.webp"},
+    {"client": "Numia", "tags": ["product", "ai"], "w": 630, "h": 880, "type": "video", "src": "/projects/numia-virtual-assistance.mp4", "desc": "Numia virtual assistance interface.", "poster": "/projects/poster-numia-virtual-assistance.webp"},
+    {"client": "Emi", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-brand.mp4", "desc": "Emi brand identity.", "poster": "/projects/poster-emi-brand.webp"},
+    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website.mp4", "desc": "Emi website.", "poster": "/projects/poster-emi-website.webp"},
+    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website-es.mp4", "desc": "Emi website in Spanish on laptops.", "poster": "/projects/poster-emi-website-es.webp"},
+    {"client": "Emi", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-onboarding.mp4", "desc": "Emi onboarding website on a laptop.", "poster": "/projects/poster-emi-onboarding.webp"},
+    {"client": "Emi", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/emilabs-report.webp", "desc": "Emi report on an iPad."},
+    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-website.webp", "desc": "Great Sky Solar homepage and savings calculator."},
+    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-products.webp", "desc": "Great Sky Solar product cards."},
+    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-team.webp", "desc": "Great Sky Solar team page."},
+    {"client": "Studio", "tags": ["product", "ai"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/agent-activity-panel.webp", "desc": "Agent activity panel on a studio display."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/token-statement.webp", "desc": "Token statement dashboard on a studio display."},
+    {"client": "xrank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/xrank.webp", "desc": "xrank.tech leaderboard on a MacBook."},
+    {"client": "China.Supply", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/china-supply.webp", "desc": "China.Supply landing page on a MacBook."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app.webp", "desc": "Journal app on iPhone resting on concrete blocks."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app-closeup.webp", "desc": "Journal app on iPhone, close-up."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/calm-app-login.webp", "desc": "Calm app login screen on iPhone."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/music-player.webp", "desc": "Music player interface."},
+    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/writing-app.webp", "desc": "Writing app on a MacBook."},
+    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-poster.webp", "desc": "Godzilla Minus One poster."},
+    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-bus-stop.webp", "desc": "Godzilla Minus One poster at a bus stop."},
+    {"client": "Nine2Five", "tags": ["product", "brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/nine2five.webp", "desc": "Nine2Five work glasses spec sheet and stage screen."},
+    {"client": "Internet Guild", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/ids-shopping-bag.webp", "desc": "Internet Guild shopping bag."},
+    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-campaign.mp4", "desc": "Towerbank campaign.", "poster": "/projects/poster-towerbank-campaign.webp"},
+    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-stationery.webp", "desc": "Numia stationery."},
+    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-calculator.webp", "desc": "Great Sky Solar savings calculator."},
+    {"client": "Great Sky Solar", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-monitoring.webp", "desc": "Great Sky Solar monitoring app."}
+  ];
+
+  var work = document.getElementById("work"), items = [];
+  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function el(tag, cls) { var n = document.createElement(tag); if (cls) n.className = cls; return n; }
+  for (var k = PROJECTS.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = PROJECTS[k]; PROJECTS[k] = PROJECTS[j]; PROJECTS[j] = x; }
+
+  PROJECTS.forEach(function (p, i) {
+    var fig = el("figure", "piece"), m;
+    fig.style.setProperty("--ar", (p.w / p.h).toFixed(4)); fig.dataset.i = i;
+    if (p.type === "video") {
+      m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
+      m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); m.setAttribute("aria-label", p.desc); if (p.poster) m.poster = p.poster;
+    } else { m = el("img"); m.alt = p.desc; m.decoding = "async"; }
+    fig.appendChild(m); work.appendChild(fig);
+    items.push({ el: fig, p: p, m: m, requested: false, inView: false });
+  });
+
+  function load(c) {
+    if (c.requested) return; c.requested = true;
+    var done = function () { c.m.classList.add("loaded"); if (c.p.type === "video" && c.inView && !reduced) c.m.play().catch(function () {}); };
+    if (c.p.type === "video") { c.m.addEventListener("loadeddata", done, { once: true }); c.m.src = c.p.src; c.m.load(); }
+    else { c.m.addEventListener("load", done, { once: true }); c.m.src = c.p.src; if (c.m.complete && c.m.naturalWidth) done(); }
+  }
+  // load ahead of the screen; play videos only while they are on it
+  if ("IntersectionObserver" in window) {
+    var near = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) load(items[+e.target.dataset.i]); }); }, { rootMargin: "800px 0px" });
+    var view = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var c = items[+e.target.dataset.i]; c.inView = e.isIntersecting;
+        if (c.p.type === "video" && c.m.classList.contains("loaded") && !reduced) { if (c.inView) c.m.play().catch(function () {}); else c.m.pause(); }
+      });
+    }, { threshold: 0.2 });
+    items.forEach(function (c) { near.observe(c.el); view.observe(c.el); });
+  } else items.forEach(load);
+})();
+</script>
+</body>
+</html>
