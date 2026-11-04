@@ -61,7 +61,7 @@
   .contact a:hover { text-decoration: underline; }
 
   /* the picture: the guild's icon in a turning ring, an arrow, and the box that holds the work */
-  .visual { position: relative; width: 420px; max-width: 100%; }
+  .visual { position: sticky; top: 104px; align-self: start; width: 420px; max-width: 100%; }
   .orb { position: relative; width: 420px; max-width: 100%; aspect-ratio: 1; }
   .ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: turn 60s linear infinite; }
   .ring text { fill: var(--fg); font-family: var(--font); font-size: 10px; letter-spacing: 0.18em; }
@@ -89,7 +89,7 @@
     .top, .page, .foot { padding-left: 24px; padding-right: 24px; }
     .page { grid-template-columns: minmax(0, 1fr); row-gap: 72px; padding-top: 72px; }
     .text { max-width: 520px; }
-    .visual { width: 100%; max-width: 520px; }
+    .visual { position: relative; top: auto; width: 100%; max-width: 520px; }
     .orb { width: 100%; }
   }
   @media (max-width: 480px) {
@@ -107,7 +107,6 @@
   <p>Internet Design Guild<span class="cursor" aria-hidden="true"></span><br>Design + Development Studio<br>2026</p>
   <nav aria-label="Main">
     <a href="mailto:webmaster@internetguild.co">[ Hire the guild ]</a>
-    <a href="#work">[ Work ]</a>
     <a href="#contact">[ Contact ]</a>
   </nav>
 </header>
@@ -173,7 +172,7 @@
     <p class="mark">~*~</p>
   </main>
 
-  <aside class="visual" aria-label="Work">
+  <aside class="visual" aria-hidden="true">
     <div class="orb">
       <svg class="ring" viewBox="0 0 420 420" aria-hidden="true">
         <defs><path id="circle" d="M210,210 m-196,0 a196,196 0 1,1 392,0 a196,196 0 1,1 -392,0"/></defs>
@@ -182,11 +181,6 @@
       <div id="ik" class="mark"></div>
       <span class="tag t1">Your idea is a pixel</span>
     </div>
-    <div class="flow" aria-hidden="true">
-      <svg width="12" height="80" viewBox="0 0 12 80"><circle cx="6" cy="4" r="3.5" fill="none" stroke="#e8e8e6"/><line x1="6" y1="8" x2="6" y2="74" stroke="#e8e8e6" stroke-dasharray="2 3"/><path d="M1 70 L6 76 L11 70" fill="none" stroke="#e8e8e6"/></svg>
-      <span class="tag t2">We design + build it</span>
-    </div>
-    <div class="box" id="work"><div class="in" id="reel"></div></div>
   </aside>
 </div>
 
@@ -547,85 +541,6 @@ window.IconoKanji = window.IconoKanji || (function () {
   return { mount: mount, DEFAULTS: DEFAULTS, CHARS: CHARS };
 })();
 IconoKanji.mount(document.getElementById("ik"), {"seed":1357092039,"jp":"katakana","jpMix":1,"charScale":1.1,"changeRate":3.4,"scramble":true,"contrast":1,"density":0,"flow":1,"bg":"#fbfaf7","transparent":true,"grid":"#efede8","showGrid":false,"tileLo":"#ecebe6","tileHi":"#111111","text":"#2a2a28","textOnDark":"#fbfaf7","accentMode":"off","accent":"#FF360C","accentRate":3,"padX":1,"padY":1,"gap":0.06,"radius":0,"speed":1.6,"sweep":true,"sweepEvery":8,"blink":true,"erosion":true,"strays":true,"icon":[".........###.........","........#####........",".......#######.......","......#########......",".....###########.....","....#############....","....#############....","...####.......####...","...###..#####..###...","...##..#######..##...","..##..#########..##..","..##.###.###.###.##..",".###.###.###.###.###.","####.###.###.###.####","####.###########.####",".###..#########..###.","...##..#######..##...","...###...###...###...","..######.....######..",".###################.","..#################..","....#############....","......#########......",".......#######.......","........#####........",".........###........."],"tones":[".........999.........","........99999........",".......9999999.......","......999999999......",".....99999999999.....","....9999999999999....","....9999999999999....","...9999.......9999...","...999..99999..999...","...99..9999999..99...","..99..999999999..99..","..99.999.999.999.99..",".999.999.999.999.999.","9999.999.999.999.9999","9999.99999999999.9999",".999..999999999..999.","...99..9999999..99...","...999...999...999...","..999999.....999999..",".9999999999999999999.","..99999999999999999..","....9999999999999....","......999999999......",".......9999999.......","........99999........",".........999........."],"useTones":true,"colors":["......................................................ffffffffffffffffff......................................................","................................................ffffffffffffffffffffffffffffff................................................","..........................................ffffffffffffffffffffffffffffffffffffffffff..........................................","....................................ffffffffffffffffffffffffffffffffffffffffffffffffffffff....................................","..............................ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff..............................","........................ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff........................","........................ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff........................","..................ffffffffffffffffffffffff..........................................ffffffffffffffffffffffff..................","..................ffffffffffffffffff............ffffffffffffffffffffffffffffff............ffffffffffffffffff..................","..................ffffffffffff............ffffffffffffffffffffffffffffffffffffffffff............ffffffffffff..................","............ffffffffffff............ffffffffffffffffffffffffffffffffffffffffffffffffffffff............ffffffffffff............","............ffffffffffff......ffffffffffffffffff......ffffffffffffffffff......ffffffffffffffffff......ffffffffffff............","......ffffffffffffffffff......ffffffffffffffffff......ffffffffffffffffff......ffffffffffffffffff......ffffffffffffffffff......","ffffffffffffffffffffffff......ffffffffffffffffff......ffffffffffffffffff......ffffffffffffffffff......ffffffffffffffffffffffff","ffffffffffffffffffffffff......ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff......ffffffffffffffffffffffff","......ffffffffffffffffff............ffffffffffffffffffffffffffffffffffffffffffffffffffffff............ffffffffffffffffff......","..................ffffffffffff............ffffffffffffffffffffffffffffffffffffffffff............ffffffffffff..................","..................ffffffffffffffffff..................ffffffffffffffffff..................ffffffffffffffffff..................","............ffffffffffffffffffffffffffffffffffff..............................ffffffffffffffffffffffffffffffffffff............","......ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff......","............ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff............","........................ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff........................","....................................ffffffffffffffffffffffffffffffffffffffffffffffffffffff....................................","..........................................ffffffffffffffffffffffffffffffffffffffffff..........................................","................................................ffffffffffffffffffffffffffffff................................................","......................................................ffffffffffffffffff......................................................"],"colorMode":"image","colorAmt":1,"colorVar":1.52});
-</script>
-<script>
-(function () {
-  "use strict";
-  var PROJECTS = [
-    {"client": "Towerbank", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-poster.webp", "desc": "Towerbank credit card street poster."},
-    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-cards.mp4", "desc": "Towerbank Visa cards.", "poster": "/projects/poster-towerbank-cards.webp"},
-    {"client": "Towerbank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-app.webp", "desc": "Towerbank investments app on iPhone."},
-    {"client": "Towerbank", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-website-ui.mp4", "desc": "Towerbank website interface.", "poster": "/projects/poster-towerbank-website-ui.webp"},
-    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-icons.webp", "desc": "Numia icon system."},
-    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-poster.webp", "desc": "Numia poster on a concrete wall."},
-    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-laptop.webp", "desc": "Numia website on a MacBook."},
-    {"client": "Numia", "tags": ["web", "product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-mobile.webp", "desc": "Numia website on iPhone."},
-    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-sections.webp", "desc": "Numia website sections."},
-    {"client": "Numia", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/numia-customer-journey.mp4", "desc": "Numia customer journey website on a laptop.", "poster": "/projects/poster-numia-customer-journey.webp"},
-    {"client": "Numia", "tags": ["product", "ai"], "w": 630, "h": 880, "type": "video", "src": "/projects/numia-virtual-assistance.mp4", "desc": "Numia virtual assistance interface.", "poster": "/projects/poster-numia-virtual-assistance.webp"},
-    {"client": "Emi", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-brand.mp4", "desc": "Emi brand identity.", "poster": "/projects/poster-emi-brand.webp"},
-    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website.mp4", "desc": "Emi website.", "poster": "/projects/poster-emi-website.webp"},
-    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website-es.mp4", "desc": "Emi website in Spanish on laptops.", "poster": "/projects/poster-emi-website-es.webp"},
-    {"client": "Emi", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-onboarding.mp4", "desc": "Emi onboarding website on a laptop.", "poster": "/projects/poster-emi-onboarding.webp"},
-    {"client": "Emi", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/emilabs-report.webp", "desc": "Emi report on an iPad."},
-    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-website.webp", "desc": "Great Sky Solar homepage and savings calculator."},
-    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-products.webp", "desc": "Great Sky Solar product cards."},
-    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-team.webp", "desc": "Great Sky Solar team page."},
-    {"client": "Studio", "tags": ["product", "ai"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/agent-activity-panel.webp", "desc": "Agent activity panel on a studio display."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/token-statement.webp", "desc": "Token statement dashboard on a studio display."},
-    {"client": "xrank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/xrank.webp", "desc": "xrank.tech leaderboard on a MacBook."},
-    {"client": "China.Supply", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/china-supply.webp", "desc": "China.Supply landing page on a MacBook."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app.webp", "desc": "Journal app on iPhone resting on concrete blocks."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app-closeup.webp", "desc": "Journal app on iPhone, close-up."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/calm-app-login.webp", "desc": "Calm app login screen on iPhone."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/music-player.webp", "desc": "Music player interface."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/writing-app.webp", "desc": "Writing app on a MacBook."},
-    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-poster.webp", "desc": "Godzilla Minus One poster."},
-    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-bus-stop.webp", "desc": "Godzilla Minus One poster at a bus stop."},
-    {"client": "Nine2Five", "tags": ["product", "brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/nine2five.webp", "desc": "Nine2Five work glasses spec sheet and stage screen."},
-    {"client": "Internet Guild", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/ids-shopping-bag.webp", "desc": "Internet Guild shopping bag."},
-    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-campaign.mp4", "desc": "Towerbank campaign.", "poster": "/projects/poster-towerbank-campaign.webp"},
-    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-stationery.webp", "desc": "Numia stationery."},
-    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-calculator.webp", "desc": "Great Sky Solar savings calculator."},
-    {"client": "Great Sky Solar", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-monitoring.webp", "desc": "Great Sky Solar monitoring app."}
-  ];
-
-  var reel = document.getElementById("reel"), items = [];
-  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var LABEL = { web: "Web", product: "Product", ai: "AI", brand: "Brand" };
-  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
-  for (var k = PROJECTS.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = PROJECTS[k]; PROJECTS[k] = PROJECTS[j]; PROJECTS[j] = x; }
-
-  PROJECTS.forEach(function (p, i) {
-    var fig = el("figure", "piece"), box = el("div", "media"), cap = el("figcaption"), m;
-    box.style.setProperty("--ar", (p.w / p.h).toFixed(4)); fig.dataset.i = i;
-    if (p.type === "video") {
-      m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
-      m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); m.setAttribute("aria-label", p.desc); if (p.poster) m.poster = p.poster;
-    } else { m = el("img"); m.alt = p.desc; m.decoding = "async"; }
-    box.appendChild(m);
-    cap.appendChild(el("span", null, p.client)); cap.appendChild(el("span", null, p.tags.map(function (t) { return LABEL[t] || t; }).join(" / ")));
-    fig.appendChild(box); fig.appendChild(cap); reel.appendChild(fig);
-    items.push({ el: fig, p: p, m: m, requested: false, inView: false });
-  });
-
-  function load(c) {
-    if (c.requested) return; c.requested = true;
-    var done = function () { c.m.classList.add("loaded"); if (c.p.type === "video" && c.inView && !reduced) c.m.play().catch(function () {}); };
-    if (c.p.type === "video") { c.m.addEventListener("loadeddata", done, { once: true }); c.m.src = c.p.src; c.m.load(); }
-    else { c.m.addEventListener("load", done, { once: true }); c.m.src = c.p.src; if (c.m.complete && c.m.naturalWidth) done(); }
-  }
-  if ("IntersectionObserver" in window) {
-    var near = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) load(items[+e.target.dataset.i]); }); }, { rootMargin: "800px 0px" });
-    var view = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        var c = items[+e.target.dataset.i]; c.inView = e.isIntersecting;
-        if (c.p.type === "video" && c.m.classList.contains("loaded") && !reduced) { if (c.inView) c.m.play().catch(function () {}); else c.m.pause(); }
-      });
-    }, { threshold: 0.2 });
-    items.forEach(function (c) { near.observe(c.el); view.observe(c.el); });
-  } else items.forEach(load);
-})();
 </script>
 </body>
 </html>
