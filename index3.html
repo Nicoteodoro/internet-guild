@@ -37,7 +37,8 @@
 
   .top { display: flex; justify-content: space-between; padding: 24px 24px 0; text-transform: uppercase; line-height: 16px; }
 
-  main { max-width: 500px; box-sizing: content-box; padding: 104px 24px 96px; }
+  main { max-width: 500px; box-sizing: content-box; padding: var(--gap) 24px 96px; --gap: 64px; }
+  main .sig + h1 { margin-top: var(--gap); } /* header, signature and title evenly spaced */
   main > * + * { margin-top: 20px; }
   main h2 { margin-top: 44px; }
   .dim { color: var(--dim); }
@@ -70,7 +71,7 @@
   .foot p { margin-top: 8px; color: var(--dim); }
 
   @media (max-width: 560px) {
-    main { padding-top: 72px; }
+    main { --gap: 48px; }
     .d { display: none; }
     .m { display: block; }
   }
@@ -82,10 +83,7 @@
   <p>Internet Guild<br>Design + Code studio<br>2015–2026</p>
 </header>
 <main>
-  <pre class="dim">/**
- * © The Internet Design Guild Company
- * Buenos Aires, Argentina
- */</pre>
+  <p class="dim sig">/// © The Internet Design Guild Company</p>
   <h1><span>#</span> Design &amp; Development Studio</h1>
   <p>Websites, products and AI for founders<br>who embrace simplicity.</p>
   <p>Eleven years of practice<br>Born to reduce</p>
