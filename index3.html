@@ -39,7 +39,7 @@
 
   main { max-width: 500px; box-sizing: content-box; padding: var(--gap) 24px 96px; --gap: 64px; }
   main > * + * { margin-top: 20px; }
-  main h2 { margin-top: 44px; }
+  main h2 { margin-top: 88px; } /* room between sections */
   .dim { color: var(--dim); }
   /* client logos: five in view, sliding to the left without end (placeholders until the logos arrive) */
   .logos { overflow: hidden; }
@@ -71,6 +71,7 @@
 
   @media (max-width: 560px) {
     main { --gap: 48px; }
+    main h2 { margin-top: 64px; }
     .d { display: none; }
     .m { display: block; }
     pre.svc { font-size: 10px; line-height: 18px; } /* the services table fits a phone */
