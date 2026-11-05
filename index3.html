@@ -9,7 +9,7 @@
 <title>Internet Guild — Design + Development Studio, Born to Reduce</title>
 <meta name="description" content="Design and code studio for founders who want less. Websites, products and AI, designed and built by the same hands, from first idea to launch.">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0E0E0D">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Internet Guild">
 <meta property="og:title" content="Internet Guild — Design + Development Studio, Born to Reduce">
@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
   /* one mono for everything, laid out like a text file (after code.storage) */
-  :root { --bg: #ffffff; --fg: #000000; --dim: #7a7a78; --link: #1f5fd6; --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  :root { --bg: #0E0E0D; --fg: #ffffff; --dim: #8a8a87; --link: #FE3911; --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--fg); }
   body { font-family: var(--font); font-size: 12px; line-height: 20px; -webkit-font-smoothing: antialiased; }
@@ -39,7 +39,7 @@
   .cursor { display: inline-block; width: 7px; height: 13px; margin-left: 4px; vertical-align: -2px; background: var(--fg); animation: blink 1.05s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
 
-  main { max-width: 500px; box-sizing: content-box; padding: 104px 24px 96px; }
+  main { max-width: 500px; box-sizing: content-box; padding: 72px 24px 24px; }
   main > * + * { margin-top: 20px; }
   main h2 { margin-top: 44px; }
   .dim { color: var(--dim); }
@@ -65,14 +65,14 @@
   .quotes li + li { margin-top: 12px; }
   .quotes .who { color: var(--dim); }
 
-  .foot { padding: 0 24px 24px; }
+  .foot { padding: 48px 24px 0; } /* links and copyright sit between the header and the title */
   .foot nav { display: flex; flex-wrap: wrap; gap: 0 10px; }
   .foot nav span { color: var(--dim); }
   .foot nav a:hover { color: var(--dim); }
   .foot p { margin-top: 8px; color: var(--dim); }
 
   @media (max-width: 560px) {
-    main { padding-top: 72px; }
+    main { padding-top: 56px; }
     .d { display: none; }
     .m { display: block; }
   }
@@ -83,6 +83,12 @@
 <header class="top">
   <p>Internet Guild<span class="cursor" aria-hidden="true"></span><br>Design + Code studio<br>2026</p>
 </header>
+<footer class="foot">
+  <nav aria-label="Footer">
+    <a href="#services">Services</a><span>|</span><a href="#about">About</a><span>|</span><a href="mailto:webmaster@internetguild.co">Contact</a><span>|</span><a href="https://x.com/internetguild_" target="_blank" rel="noopener">X</a><span>|</span><a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><span>|</span><a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+  </nav>
+  <p>© The Internet Guild. Buenos Aires, Argentina. All rights reserved.</p>
+</footer>
 <main>
   <h1><span>#</span> Design &amp; Development Studio</h1>
   <p>Websites, products and AI for founders<br>who embrace simplicity.</p>
@@ -92,27 +98,14 @@
   </div>
   <p class="dim">~*~</p>
 
-  <h2 id="limits"><span>##</span> Limits</h2>
-  <pre class="d">+-------------------------+-------------------------------------+
-| Pages                   | As few as it takes                  |
-| Features                | Only what matters                   |
-| Handoffs                | Zero (design and code, same hands)  |
-| Meetings                | Short                               |
-| Messages answered       | All of them                         |
-| Years of practice       | 11                                  |
-| Clients                 | 21+                                 |
-| Idea to launch          | Supported                           |
-+-------------------------+-------------------------------------+</pre>
-  <pre class="m">+-------------------+-------------------+
-| Pages             | As few as it takes|
-| Features          | What matters      |
-| Handoffs          | Zero              |
-| Meetings          | Short             |
-| Messages answered | All               |
-| Years of practice | 11                |
-| Clients           | 21+               |
-| Idea to launch    | Supported         |
-+-------------------+-------------------+</pre>
+  <h2 id="services"><span>##</span> Services</h2>
+  <p>Internet Guild is not just a design studio. It’s design and code in the same hands.</p>
+  <ul>
+    <li><b>Websites:</b> design, development and launch, plus migrations from Webflow or Framer to your own code</li>
+    <li><b>Products:</b> web and mobile apps, dashboards and interfaces people understand without a tour</li>
+    <li><b>AI:</b> agents, workflows and MVPs, with interfaces built around how people actually use them</li>
+    <li><b>Brand:</b> visual identity, icon systems, motion and pitch decks</li>
+  </ul>
 
   <h2 id="how"><span>##</span> How it works</h2>
   <p>Internet Guild is a design and development studio built on one rule: keep only what matters. Every page starts full and gets emptied until only the useful parts are left.</p>
@@ -125,15 +118,6 @@ await site.launch();                             <span class="c">// yourcompany.
   <pre class="m">const guild = new Guild({ founder: &#x27;you&#x27; });
 const site  = await guild.reduce(idea).build();
 await site.launch();</pre>
-
-  <h2 id="services"><span>##</span> Services</h2>
-  <p>Internet Guild is not just a design studio. It’s design and code in the same hands.</p>
-  <ul>
-    <li><b>Websites:</b> design, development and launch, plus migrations from Webflow or Framer to your own code</li>
-    <li><b>Products:</b> web and mobile apps, dashboards and interfaces people understand without a tour</li>
-    <li><b>AI:</b> agents, workflows and MVPs, with interfaces built around how people actually use them</li>
-    <li><b>Brand:</b> visual identity, icon systems, motion and pitch decks</li>
-  </ul>
 
   <h2 id="reliability"><span>##</span> Reliability</h2>
   <p>Your launch date should stay a launch date. The guild is built for that:</p>
@@ -185,11 +169,5 @@ Quoted upfront. No surprises.</pre>
   <p id="contact">For new work, write to Nico: <a class="link" href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
   <p class="dim">–––</p>
 </main>
-<footer class="foot">
-  <nav aria-label="Footer">
-    <a href="#services">Services</a><span>|</span><a href="#about">About</a><span>|</span><a href="mailto:webmaster@internetguild.co">Contact</a><span>|</span><a href="https://x.com/internetguild_" target="_blank" rel="noopener">X</a><span>|</span><a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><span>|</span><a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
-  </nav>
-  <p>© The Internet Guild. Buenos Aires, Argentina. All rights reserved.</p>
-</footer>
 </body>
 </html>
