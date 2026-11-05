@@ -6,33 +6,35 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Internet Guild — Design + Development Studio</title>
-<meta name="description" content="Internet Guild designs and builds websites, products and AI for founders who embrace simplicity.">
+<title>Internet Guild — Design + Development Studio, Born to Reduce</title>
+<meta name="description" content="Design and code studio for founders who want less. Websites, products and AI, designed and built by the same hands, from first idea to launch.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Internet Guild">
+<meta property="og:title" content="Internet Guild — Design + Development Studio, Born to Reduce">
+<meta property="og:description" content="Design and code, born to reduce.">
+<meta property="og:image" content="https://internetguild.co/og.png?v=2">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Internet Guild">
+<meta name="twitter:description" content="Design and code, born to reduce.">
+<meta name="twitter:image" content="https://internetguild.co/og.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
-  /* one typeface for everything: a mono, like a terminal */
-  :root {
-    --bg: #ffffff;
-    --fg: #000000;
-    --dim: #7a7a78;
-    --line: #d6d6d4;
-    --link: #1f5fd6;
-    --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
+  /* one mono for everything, laid out like a text file (after code.storage) */
+  :root { --bg: #ffffff; --fg: #000000; --dim: #7a7a78; --link: #1f5fd6; --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--fg); }
   body { font-family: var(--font); font-size: 12px; line-height: 20px; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
   a:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
-  p, h1, h2, ul, pre, figure, blockquote { margin: 0; }
+  p, h1, h2, ul, pre { margin: 0; }
   h1, h2 { font: inherit; font-weight: 700; text-transform: uppercase; }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  h1 span, h2 span { color: var(--dim); font-weight: 400; }
+  b { font-weight: 700; }
 
-  /* top corners */
   .top { display: flex; justify-content: space-between; padding: 24px 24px 0; text-transform: uppercase; line-height: 16px; }
   .cursor { display: inline-block; width: 7px; height: 13px; margin-left: 4px; vertical-align: -2px; background: var(--fg); animation: blink 1.05s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
@@ -40,87 +42,161 @@
   .top nav a { display: block; }
   .top nav a:hover { color: var(--dim); }
 
-  /* text on the left, the picture beside it */
-  .page { max-width: 440px; box-sizing: content-box; padding: 104px 24px 120px; }
-  .text > * + * { margin-top: 20px; }
-  .text .mark { color: var(--dim); }
-  .text .sec { margin-top: 40px; }
+  main { max-width: 560px; box-sizing: content-box; padding: 104px 24px 96px; }
+  main > * + * { margin-top: 20px; }
+  main h2 { margin-top: 44px; }
+  .dim { color: var(--dim); }
   .clients { font-size: 14px; font-weight: 700; line-height: 22px; letter-spacing: -0.01em; }
   .clients span { color: var(--dim); font-weight: 400; padding: 0 6px; }
-  .reads li { list-style: none; position: relative; padding-left: 24px; }
-  .reads li::before { content: "*"; position: absolute; left: 10px; color: var(--dim); }
-  .reads a { color: var(--link); }
-  .reads a:hover { text-decoration: underline; }
+  ul { padding: 0; list-style: none; }
+  li { position: relative; padding-left: 16px; }
+  li + li { margin-top: 4px; }
+  li::before { content: "-"; position: absolute; left: 2px; color: var(--dim); }
+  .reads li { padding-left: 24px; }
+  .reads li::before { content: "*"; left: 10px; }
+  .link { color: var(--link); }
+  .link:hover { text-decoration: underline; }
   pre { font: inherit; white-space: pre; overflow-x: auto; }
-  .tl li { list-style: none; display: grid; grid-template-columns: 112px 1fr; }
-  .tl li + li { margin-top: 10px; }
-  .tl b { font-weight: 700; }
-  blockquote + blockquote { margin-top: 16px; }
-  blockquote p:last-child { color: var(--dim); }
-  .contact a { color: var(--link); }
-  .contact a:hover { text-decoration: underline; }
+  pre .c { color: var(--dim); }
+  .m { display: none; }
+  .quotes li + li { margin-top: 12px; }
+  .quotes .who { color: var(--dim); }
 
-  .foot { padding: 0 24px 24px; color: var(--dim); text-transform: uppercase; }
+  .foot { padding: 0 24px 24px; }
+  .foot nav { display: flex; flex-wrap: wrap; gap: 0 10px; }
+  .foot nav span { color: var(--dim); }
+  .foot nav a:hover { color: var(--dim); }
+  .foot p { margin-top: 8px; color: var(--dim); }
 
-  @media (max-width: 1060px) {
-    .page { padding-top: 72px; }
-  }
-  @media (max-width: 480px) {
-    .tl li { grid-template-columns: 96px 1fr; }
-    pre { font-size: 10px; line-height: 18px; }
+  @media (max-width: 560px) {
+    main { padding-top: 72px; }
+    .d { display: none; }
+    .m { display: block; }
   }
   @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
 </style>
 </head>
 <body>
 <header class="top">
-  <p>Internet Guild<span class="cursor" aria-hidden="true"></span><br>Design + Development Studio<br>2026</p>
+  <p>The Internet Guild<span class="cursor" aria-hidden="true"></span><br>Design + Code<br>2026</p>
   <nav aria-label="Main">
     <a href="mailto:webmaster@internetguild.co">[ Hire the guild ]</a>
+    <a href="#work">[ Work ]</a>
     <a href="#services">[ Services ]</a>
-    <a href="#contact">[ Contact ]</a>
   </nav>
 </header>
+<main>
+  <p class="dim">~*~ © The Internet Guild, Buenos Aires ~*~</p>
+  <h1><span>#</span> Design and code, born to reduce</h1>
+  <p>Internet Guild designs and builds websites, products and AI tools for founders who want less noise and more signal. One studio, from the first sketch to the day it goes live.</p>
+  <p>Towerbank, Numia, Eureka Labs, White Prompt, Great Sky Solar, Aerolab and many others rely on the guild for their websites, apps, brand systems, dashboards, AI interfaces and the code that ships them.</p>
+  <p class="clients">Towerbank<span>·</span>Numia<span>·</span>Eureka Labs<span>·</span>White Prompt<span>·</span>Great Sky Solar</p>
+  <p class="dim">~*~</p>
+  <p id="work">Read more below about…</p>
+  <ul class="reads">
+    <li>How Towerbank launched a website, an investments app and its Visa cards →</li>
+    <li>How Numia got a website, a virtual assistant and an icon system →</li>
+    <li>How Eureka Labs got a site its own team can run →</li>
+  </ul>
 
-<div class="page">
-  <main class="text">
-    <h1># Design + development, born to reduce</h1>
-    <p>Websites, products and AI for founders<br>who embrace simplicity.</p>
-    <p>Eleven years of practice<br>Born to reduce</p>
-    <p class="contact">Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
-    <p class="clients">Numia<span>·</span>Towerbank<span>·</span>Buenbit<span>·</span>Aerolab<span>·</span>Eureka Labs</p>
-    <p class="mark">~*~</p>
+  <h2 id="limits"><span>##</span> Limits</h2>
+  <pre class="d">+-------------------------+-------------------------------------+
+| Pages                   | As few as it takes                  |
+| Features                | Only what matters                   |
+| Handoffs                | Zero (design and code, same hands)  |
+| Meetings                | Short                               |
+| Messages answered       | All of them                         |
+| Years of practice       | 11                                  |
+| Clients                 | 21+                                 |
+| Idea to launch          | Supported                           |
++-------------------------+-------------------------------------+</pre>
+  <pre class="m">+-------------------+-------------------+
+| Pages             | As few as it takes|
+| Features          | What matters      |
+| Handoffs          | Zero              |
+| Meetings          | Short             |
+| Messages answered | All               |
+| Years of practice | 11                |
+| Clients           | 21+               |
+| Idea to launch    | Supported         |
++-------------------+-------------------+</pre>
 
-    <h2 class="sec" id="services">## Services</h2>
-    <pre>+--------------------------+--------------------------+
-| Web Design               | AI Workflows &amp; MVP       |
-| Web Development          | Brand Strategy           |
-| Mobile App Design        | Visual Identity          |
-| Product Design           | Motion &amp; Animation       |
-| Creative Development     | Growth &amp; Optimization    |
-| Website Migrations       | Pitch Decks              |
-+--------------------------+--------------------------+</pre>
+  <h2 id="how"><span>##</span> How it works</h2>
+  <p>Internet Guild is a design and development studio built on one rule: keep only what matters. Every page starts full and gets emptied until only the useful parts are left.</p>
+  <p>Design and code are one process, not two teams passing files. The same hands that draw the interface write the code behind it, so nothing gets lost between the mockup and the live product.</p>
+  <p>Websites, apps, dashboards, brand systems and AI tools. All without agency layers, bloated scopes or handoff meetings. People make the calls. AI helps us move faster.</p>
+  <pre class="d">const guild = new Guild({ founder: &#x27;you&#x27;, idea });
+const draft = await guild.reduce(idea);          <span class="c">// keep only what matters</span>
+const site  = await guild.design(draft).build(); <span class="c">// same hands, one process</span>
+await site.launch();                             <span class="c">// yourcompany.com</span></pre>
+  <pre class="m">const guild = new Guild({ founder: &#x27;you&#x27; });
+const site  = await guild.reduce(idea).build();
+await site.launch();</pre>
 
-    <h2 class="sec" id="process">## How it works</h2>
-    <p>Every detail is there for a reason. Color, type, space, and motion help people know where to go. They also give each product its own look. If something helps, we keep it. If it gets in the way, we take it out.</p>
-    <p>Design and code are one process. We work with you from the first idea to the day it goes live. We care about how it looks and how it works. People make the calls. AI helps us work faster.</p>
+  <h2 id="services"><span>##</span> Services</h2>
+  <p>Internet Guild is not just a design studio. It’s design and code in the same hands.</p>
+  <ul>
+    <li><b>Websites:</b> design, development and launch, plus migrations from Webflow or Framer to your own code</li>
+    <li><b>Products:</b> web and mobile apps, dashboards and interfaces people understand without a tour</li>
+    <li><b>AI:</b> agents, workflows and MVPs, with interfaces built around how people actually use them</li>
+    <li><b>Brand:</b> visual identity, icon systems, motion and pitch decks</li>
+  </ul>
 
-    <p>Founded and led by Nico Teodoro. Born in Argentina. Raised on the internet. Grown in Azeroth.</p>
+  <h2 id="reliability"><span>##</span> Reliability</h2>
+  <p>Your launch date should stay a launch date. The guild is built for that:</p>
+  <ul>
+    <li>One point of contact, from brief to launch</li>
+    <li>Design and code by the same person, nothing lost in handoff</li>
+    <li>Every message answered</li>
+    <li>A site your team can run on its own after launch</li>
+  </ul>
+  <p><a class="link" href="#clients">Read what founders say about the guild →</a></p>
 
-    <h2 class="sec" id="clients">## Clients say</h2>
-    <blockquote><p>“He clearly understood our vision, proposed solutions that truly aligned with our ideas, and took the time to teach us how to maintain the site ourselves.”</p><p>— Karen Brendel, Growth Manager, Eureka Labs</p></blockquote>
-    <blockquote><p>“Really good at turning Figma designs into solid Webflow sites, always keeping the design exactly how it should be. Fast and easy to work with.”</p><p>— Roddy Garcia, Product Design Manager, White Prompt</p></blockquote>
-    <blockquote><p>“Nico helped us throughout the entire process, from brand creation to website design. We would definitely choose them again!”</p><p>— Guido Sasson, CEO, Remmy</p></blockquote>
+  <h2 id="cost"><span>##</span> Cost</h2>
+  <p>Take the whole studio, or just what you need.</p>
+  <ul>
+    <li>Full projects, from first idea to live product</li>
+    <li>Design only, or development only from your Figma</li>
+    <li>Ongoing support for teams that keep shipping</li>
+  </ul>
+  <p><b>Engagements</b></p>
+  <pre class="d">+--------------------+---------------------------------+
+| Full project       | Design + code, idea to launch   |
+| Design             | Websites, products, brand       |
+| Development        | Figma to Webflow, Framer, code  |
+| Ongoing            | Monthly, for teams that ship    |
++--------------------+---------------------------------+
 
-    <h2 class="sec" id="contact">## Contact</h2>
-    <p class="contact">Tell us what you are making. We reply to every message.<br>
-    <a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a><br>
-    <a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a> · <a href="https://x.com/internetguild_" target="_blank" rel="noopener">X</a> · <a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a></p>
-    <p class="mark">~*~</p>
-  </main>
+Quoted upfront. No surprises.</pre>
+  <pre class="m">+--------------+---------------------+
+| Full project | Idea to launch      |
+| Design       | Web, product, brand |
+| Development  | Figma to code       |
+| Ongoing      | Monthly             |
++--------------+---------------------+
 
-</div>
+Quoted upfront. No surprises.</pre>
 
-<footer class="foot">~*~ Copyright 2026 Internet Design Guild. All rights reserved. ~*~</footer>
+  <h2 id="clients"><span>##</span> Clients say</h2>
+  <p>Internet Guild is trusted by startups, banks, funds and other studios in fintech, crypto, AI, energy, sports and health.</p>
+  <ul class="quotes">
+    <li>“He clearly understood our vision and took the time to teach us how to maintain the site ourselves.” <span class="who">— Karen Brendel, Growth Manager, Eureka Labs</span></li>
+    <li>“Really good at turning Figma designs into solid Webflow sites. Fast and easy to work with.” <span class="who">— Roddy Garcia, Product Design Manager, White Prompt</span></li>
+    <li>“He not only implemented the design, he improved it in many UI aspects.” <span class="who">— Juan Ignacio Cidre, CEO, White Prompt</span></li>
+    <li>“From brand creation to website design. We would definitely choose him again.” <span class="who">— Guido Sasson, CEO, Remmy</span></li>
+  </ul>
+
+  <h2 id="about"><span>##</span> About</h2>
+  <p>Internet Guild is founded and led by Nico Teodoro.</p>
+  <p>Eleven years designing and building for startups, banks, funds and studios @ Towerbank, Numia, Buenbit (acquired), Aquicore (acquired), Eureka Labs, White Prompt, Aerolab, Great Sky Solar, and others. First websites at 13, for the game servers of local cybercafés. Born in Argentina, raised on the internet, grown in Azeroth.</p>
+  <p id="contact">For new work, write to Nico: <a class="link" href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+  <p class="dim">–––</p>
+</main>
+<footer class="foot">
+  <nav aria-label="Footer">
+    <a href="#work">Work</a><span>|</span><a href="#services">Services</a><span>|</span><a href="#about">About</a><span>|</span><a href="mailto:webmaster@internetguild.co">Contact</a><span>|</span><a href="https://x.com/internetguild_" target="_blank" rel="noopener">X</a><span>|</span><a href="https://www.instagram.com/internetguild" target="_blank" rel="noopener">Instagram</a><span>|</span><a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">Telegram</a>
+  </nav>
+  <p>© The Internet Guild. Buenos Aires, Argentina. All rights reserved.</p>
+</footer>
 </body>
 </html>
