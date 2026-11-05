@@ -33,7 +33,7 @@
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
   /* top corners */
-  .top { display: flex; justify-content: space-between; padding: 40px 88px 0; text-transform: uppercase; line-height: 16px; }
+  .top { display: flex; justify-content: space-between; padding: 24px 24px 0; text-transform: uppercase; line-height: 16px; }
   .cursor { display: inline-block; width: 7px; height: 13px; margin-left: 4px; vertical-align: -2px; background: var(--fg); animation: blink 1.05s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   .top nav { text-align: right; }
@@ -41,7 +41,7 @@
   .top nav a:hover { color: var(--dim); }
 
   /* text on the left, the picture beside it */
-  .page { max-width: 440px; box-sizing: content-box; padding: 104px 88px 120px; }
+  .page { max-width: 440px; box-sizing: content-box; padding: 104px 24px 120px; }
   .text > * + * { margin-top: 20px; }
   .text .mark { color: var(--dim); }
   .text .sec { margin-top: 40px; }
@@ -60,15 +60,12 @@
   .contact a { color: var(--link); }
   .contact a:hover { text-decoration: underline; }
 
-  .foot { padding: 0 88px 40px; color: var(--dim); text-transform: uppercase; }
+  .foot { padding: 0 24px 24px; color: var(--dim); text-transform: uppercase; }
 
   @media (max-width: 1060px) {
-    .top, .page, .foot { padding-left: 24px; padding-right: 24px; }
     .page { padding-top: 72px; }
   }
   @media (max-width: 480px) {
-    .top, .page, .foot { padding-left: 16px; padding-right: 16px; }
-    .top { padding-top: 24px; }
     .tl li { grid-template-columns: 96px 1fr; }
     pre { font-size: 10px; line-height: 18px; }
   }
