@@ -64,6 +64,10 @@
   .quotes .who { color: var(--dim); }
 
   .foot { padding: 0 24px 24px; }
+  /* the menu under the header, styled like the footer links */
+  .menu { display: flex; flex-wrap: wrap; gap: 0 10px; padding: 64px 24px 0; }
+  .menu span { color: var(--dim); }
+  .menu a:hover { color: var(--dim); }
   .foot nav { display: flex; flex-wrap: wrap; gap: 0 10px; }
   .foot nav span { color: var(--dim); }
   .foot nav a:hover { color: var(--dim); }
@@ -71,6 +75,7 @@
 
   @media (max-width: 560px) {
     main { --gap: 48px; }
+    .menu { padding-top: 48px; }
     main h2 { margin-top: 64px; }
     .d { display: none; }
     .m { display: block; }
@@ -83,6 +88,9 @@
 <header class="top">
   <p>Internet Guild<br>Design + Code studio<br>2015–2026</p>
 </header>
+<nav class="menu" aria-label="Main">
+  <a href="#works">Works</a><span>|</span><a href="#services">Services</a><span>|</span><a href="#clients">Clients</a><span>|</span><a href="mailto:webmaster@internetguild.co">Contact</a>
+</nav>
 <main>
   <h1><span>#</span> Design &amp; Development Studio, born to reduce</h1>
   <p>Built for founders who embrace simplicity.<br>We design, build and ship websites, products and AI-powered experiences every day. Companies of different sizes come to us when they want clear, solid work that feels intentional and ready to use.</p>
