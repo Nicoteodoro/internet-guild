@@ -36,8 +36,6 @@
   b { font-weight: 700; }
 
   .top { display: flex; justify-content: space-between; padding: 24px 24px 0; text-transform: uppercase; line-height: 16px; }
-  .cursor { display: inline-block; width: 7px; height: 13px; margin-left: 4px; vertical-align: -2px; background: var(--fg); animation: blink 1.05s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
 
   main { max-width: 500px; box-sizing: content-box; padding: 104px 24px 96px; }
   main > * + * { margin-top: 20px; }
@@ -76,12 +74,12 @@
     .d { display: none; }
     .m { display: block; }
   }
-  @media (prefers-reduced-motion: reduce) { .cursor, .logos ul { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .logos ul { animation: none; } }
 </style>
 </head>
 <body>
 <header class="top">
-  <p>Internet Guild<span class="cursor" aria-hidden="true"></span><br>Design + Code studio<br>2026</p>
+  <p>Internet Guild<br>Design + Code studio<br>2015–2026</p>
 </header>
 <main>
   <h1><span>#</span> Design &amp; Development Studio</h1>
