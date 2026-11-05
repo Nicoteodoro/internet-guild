@@ -10,12 +10,13 @@
 <meta name="description" content="Internet Guild is a design and development studio for founders who embrace simplicity.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#fcfcfc">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="preload" href="/ioskeley-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/ioskeley-mono-medium.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  @font-face { font-family: "Ioskeley Mono"; src: url("/ioskeley-mono-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Ioskeley Mono"; src: url("/ioskeley-mono-medium.woff2") format("woff2"); font-weight: 500 700; font-style: normal; font-display: swap; }
   /* the short one: a plain text file in one mono (after pierre.computer) */
-  :root { --bg: #fcfcfc; --fg: #000000; --dim: #7a7a78; --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  :root { --bg: #fcfcfc; --fg: #000000; --dim: #7a7a78; --font: "Ioskeley Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--fg); }
   body { font-family: var(--font); font-size: 11px; line-height: 18px; -webkit-font-smoothing: antialiased; }
