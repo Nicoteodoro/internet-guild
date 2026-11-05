@@ -42,7 +42,7 @@
   .top nav a { display: block; }
   .top nav a:hover { color: var(--dim); }
 
-  main { max-width: 560px; box-sizing: content-box; padding: 104px 24px 96px; }
+  main { max-width: 500px; box-sizing: content-box; padding: 104px 24px 96px; }
   main > * + * { margin-top: 20px; }
   main h2 { margin-top: 44px; }
   .dim { color: var(--dim); }
@@ -58,6 +58,7 @@
   .link:hover { text-decoration: underline; }
   pre { font: inherit; white-space: pre; overflow-x: auto; }
   pre .c { color: var(--dim); }
+  pre.code { font-size: 10.5px; } /* the long code lines fit the 500px column */
   .m { display: none; }
   .quotes li + li { margin-top: 12px; }
   .quotes .who { color: var(--dim); }
@@ -125,7 +126,7 @@
   <p>Internet Guild is a design and development studio built on one rule: keep only what matters. Every page starts full and gets emptied until only the useful parts are left.</p>
   <p>Design and code are one process, not two teams passing files. The same hands that draw the interface write the code behind it, so nothing gets lost between the mockup and the live product.</p>
   <p>Websites, apps, dashboards, brand systems and AI tools. All without agency layers, bloated scopes or handoff meetings. People make the calls. AI helps us move faster.</p>
-  <pre class="d">const guild = new Guild({ founder: &#x27;you&#x27;, idea });
+  <pre class="d code">const guild = new Guild({ founder: &#x27;you&#x27;, idea });
 const draft = await guild.reduce(idea);          <span class="c">// keep only what matters</span>
 const site  = await guild.design(draft).build(); <span class="c">// same hands, one process</span>
 await site.launch();                             <span class="c">// yourcompany.com</span></pre>
