@@ -9,13 +9,13 @@
 <title>Internet Guild — Design + Code Studio</title>
 <meta name="description" content="Internet Guild is a design and development studio for founders who embrace simplicity.">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#161616">
+<meta name="theme-color" content="#fcfcfc">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
   /* the short one: a plain text file in one mono (after pierre.computer) */
-  :root { --bg: #161616; --fg: #ffffff; --dim: #8a8a87; --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  :root { --bg: #fcfcfc; --fg: #000000; --dim: #7a7a78; --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--fg); }
   body { font-family: var(--font); font-size: 11px; line-height: 18px; -webkit-font-smoothing: antialiased; }
@@ -27,10 +27,10 @@
   h1 span, h2 span { color: var(--dim); font-weight: 400; }
   .top { padding: 24px 24px 0; text-transform: uppercase; line-height: 16px; }
   main { max-width: 500px; box-sizing: content-box; padding: 96px 24px 64px; }
-  /* the work: two columns, each piece whole at its own shape */
-  .work { padding: 0 24px 96px; columns: 2; column-gap: 12px; }
+  /* the work: three columns, each piece whole at its own shape */
+  .work { padding: 0 24px 96px; columns: 3; column-gap: 12px; }
   .piece { break-inside: avoid; margin: 0 0 24px; }
-  .piece .media { position: relative; aspect-ratio: var(--ar); background: #1f1f1f; overflow: hidden; }
+  .piece .media { position: relative; aspect-ratio: var(--ar); background: #efefee; overflow: hidden; }
   .piece img, .piece video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s ease; }
   .piece .loaded { opacity: 1; }
   .piece figcaption { margin-top: 8px; color: var(--dim); }
@@ -40,6 +40,7 @@
   ul { padding: 0; list-style: none; }
   li { position: relative; padding-left: 14px; }
   li::before { content: "-"; position: absolute; left: 0; }
+  @media (max-width: 900px) { .work { columns: 2; } }
   @media (max-width: 480px) { main { padding-top: 72px; } .work { columns: 1; } }
 </style>
 </head>
