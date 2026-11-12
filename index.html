@@ -23,7 +23,8 @@
 
   /* hero: logo to the end of the text, 80% of the screen */
   .hero { min-height: 80vh; box-sizing: border-box; padding: 110px 16px 64px; }
-  .col { max-width: 500px; margin: 0 auto; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  .col { max-width: 500px; }
   .logo { display: block; width: 83px; height: 83px; }
   .name { margin-top: 10px; font-size: 16px; line-height: 20px; font-weight: 600; }
   h1 { margin-top: 86px; font-size: 20px; line-height: 24px; font-weight: 600; letter-spacing: -0.02em; }
@@ -47,7 +48,7 @@
 <body>
 
 <header class="hero">
-  <div class="col">
+  <div class="wrap"><div class="col">
     <svg class="logo" viewBox="0 0 96 96" role="img" aria-label="Internet Design Guild">
       <rect width="96" height="96" fill="#FE3911"/>
       <path fill="#fff" d="M21 51h20v20H31V61H21zM51 51h40v10H61v10H51zM41 71h20v20H41zM81 71h10v10H81zM71 81h10v10H71z"/>
@@ -63,7 +64,7 @@
       <p>Made by humans. Powered by AI<br>Eleven years of practice.<br>Projects start at 3K USD.</p>
       <p>Hire the guild<br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
     </div>
-  </div>
+  </div></div>
 </header>
 
 <main class="work" id="work" aria-label="Projects"></main>
