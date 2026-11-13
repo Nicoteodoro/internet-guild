@@ -21,15 +21,16 @@
   a { color: inherit; text-decoration: none; }
   a:hover { color: #1d1d1f; }
 
-  /* hero: logo to the end of the text, 80% of the screen */
-  .hero { min-height: 80vh; box-sizing: border-box; padding: 110px 16px 64px; }
-  .wrap { max-width: 1000px; margin: 0 auto; }
-  .col { max-width: 500px; }
+  /* hero: three blocks stepping in from the left */
+  .hero { box-sizing: border-box; padding: 48px 48px 200px; }
   .logo { display: block; width: 60px; height: 60px; }
   .name { margin-top: 10px; font-size: 16px; line-height: 20px; font-weight: 600; letter-spacing: -0.02em; }
-  h1 { margin-top: 86px; font-size: 20px; line-height: 24px; font-weight: 600; letter-spacing: -0.03em; }
-  .text { margin-top: 24px; color: #6e6e73; }
-  .text p + p { margin-top: 16px; }
+  .block { max-width: 500px; color: #6e6e73; }
+  .b2 { margin: 200px 0 0 25%; }
+  .b3 { margin: 200px 0 0 35%; }
+  h1 { font-size: 20px; line-height: 24px; font-weight: 600; letter-spacing: -0.03em; color: #1d1d1f; }
+  h1 + p { margin-top: 24px; }
+  .block p + p { margin-top: 16px; }
   .hire { color: #1d1d1f; font-weight: 500; }
   .hire::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 6px; background: #FE3911; vertical-align: 2px; }
 
@@ -39,9 +40,14 @@
   .piece img, .piece video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s ease; }
   .piece .loaded { opacity: 1; }
 
-  @media (max-width: 600px) {
-    .hero { padding-top: 48px; padding-bottom: 56px; }
-    h1 { margin-top: 56px; }
+  @media (max-width: 900px) {
+    .hero { padding: 32px 16px 120px; }
+    .b2 { margin: 120px 0 0 0; }
+    .b3 { margin: 80px 0 0 16%; }
+  }
+  @media (max-width: 500px) {
+    .b2 { margin-top: 96px; }
+    .b3 { margin: 64px 0 0 0; }
   }
   @media (max-width: 380px) { br.wide { display: none; } }
   @media (prefers-reduced-motion: reduce) { .piece img, .piece video { transition: none; } }
@@ -50,23 +56,25 @@
 <body>
 
 <header class="hero">
-  <div class="wrap"><div class="col">
+  <div class="b1">
     <svg class="logo" viewBox="0 0 96 96" role="img" aria-label="Internet Design Guild">
       <rect width="96" height="96" fill="#FE3911"/>
       <path fill="#fff" d="M21 51h20v20H31V61H21zM51 51h40v10H61v10H51zM41 71h20v20H41zM81 71h10v10H81zM71 81h10v10H71z"/>
     </svg>
     <p class="name">Internet<br>Design Guild</p>
+  </div>
 
+  <div class="block b2">
     <h1>Design and engineering<br>for the new internet</h1>
+    <p>We design, build and ship websites, products<br class="wide">
+    and AI for founders who embrace simplicity.</p>
+    <p>Work with startups, funds, and studios across fintech, crypto, health, energy, real estate, and AI. Clients include Aerolab, Great Sky Solar, Buenbit, Numia, Towerbank, Eureka Labs, White Prompt, and others.</p>
+  </div>
 
-    <div class="text">
-      <p>We design, build and ship websites, products<br class="wide">
-      and AI for founders who embrace simplicity.</p>
-      <p>Work with startups, funds, and studios across fintech, crypto, health, energy, real estate, and AI. Clients include Aerolab, Great Sky Solar, Buenbit, Numia, Towerbank, Eureka Labs, White Prompt, and others.</p>
-      <p>Made by humans. Powered by AI<br>Eleven years of practice.<br>Projects start at 3K USD.</p>
-      <p><span class="hire">Hire the guild</span><br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
-    </div>
-  </div></div>
+  <div class="block b3">
+    <p>Made by humans. Powered by AI<br>Eleven years of practice.<br>Projects start at 3K USD.</p>
+    <p><span class="hire">Hire the guild</span><br><a href="mailto:webmaster@internetguild.co">webmaster@internetguild.co</a></p>
+  </div>
 </header>
 
 <main class="work" id="work" aria-label="Projects"></main>
