@@ -3,196 +3,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Internet Design Guild</title>
-<meta name="description" content="We design, build and ship websites, products and AI for founders who embrace simplicity.">
+<title>Internet Design Studio</title>
+<meta name="description" content="Design and engineering for the new internet. We design, build and ship websites, products and AI for founders who embrace simplicity.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap">
 <style>
   html, body { margin: 0; background: #ffffff; color: #1d1d1f; }
   body {
     font-family: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px; line-height: 20px;
+    font-size: 14px; line-height: 20px; text-align: center;
     -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
   }
-  p, h1, h2, figure { margin: 0; }
-  a { color: inherit; text-decoration: none; }
-  a:hover { color: #1d1d1f; }
+  p, h1 { margin: 0; }
 
-  /* hero: logo to the end of the text, 70% of the screen */
-  .hero { min-height: 70vh; box-sizing: border-box; padding: 110px 16px 64px; }
-  .wrap { max-width: 1000px; margin: 0 auto; }
-  .col { max-width: 500px; }
-  .logo { display: block; width: 60px; height: 60px; }
-  .name { margin-top: 10px; font-size: 16px; line-height: 20px; font-weight: 600; letter-spacing: -0.02em; }
-  h1 { margin-top: 86px; font-size: 20px; line-height: 24px; font-weight: 600; letter-spacing: -0.03em; }
-  .text { margin-top: 24px; color: #6e6e73; }
-  .text p + p { margin-top: 16px; }
-  .text p.hire-p { margin-top: 24px; }
-  .hire { color: #1d1d1f; font-weight: 500; }
-  .hire::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 6px; background: #FE3911; vertical-align: 2px; }
+  /* name, fixed at the top */
+  .top { position: fixed; top: 0; left: 0; right: 0; padding: 24px 16px; background: #ffffff;
+    font-size: 16px; line-height: 20px; font-weight: 600; letter-spacing: -0.02em; }
 
-  /* client logos: endless strip above the projects, faded at both ends */
-  .logos { width: min(1000px, 100% - 32px); margin: 0 auto 32px; overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-            mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
-  .logos .track { display: flex; width: max-content; animation: logos 60s linear infinite; }
-  .logos ul { display: flex; align-items: center; gap: 64px; margin: 0; padding: 0 64px 0 0; list-style: none; }
-  .logos li { display: flex; align-items: center; height: 32px; color: #6e6e73; font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
-  .logos img { display: block; height: 28px; width: auto; }
-  @keyframes logos { to { transform: translateX(-50%); } }
+  /* the two lines, in the middle of the screen */
+  main { min-height: 100vh; min-height: 100svh; box-sizing: border-box; padding: 96px 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  h1 { font-size: 20px; line-height: 24px; font-weight: 600; letter-spacing: -0.03em; text-wrap: balance; }
+  main p { margin-top: 12px; max-width: 500px; color: #6e6e73; }
 
-  /* projects: one under another, all the same width */
-  .work { max-width: 1000px; margin: 0 auto; padding: 0 16px 32px; display: grid; gap: 32px; }
-  .piece { position: relative; aspect-ratio: var(--ar); overflow: hidden; background: #d9d9d9; }
-  .piece img, .piece video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s ease; }
-  .piece .loaded { opacity: 1; }
-
-  @media (max-width: 600px) {
-    .hero { padding-top: 48px; padding-bottom: 56px; }
-    h1 { margin-top: 56px; }
-  }
-  @media (max-width: 540px) { br.lg { display: none; } }
   @media (max-width: 380px) { br.wide { display: none; } }
-  @media (prefers-reduced-motion: reduce) { .piece img, .piece video { transition: none; } .logos .track { animation: none; } }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap"><div class="col">
-    <svg class="logo" viewBox="0 0 96 96" role="img" aria-label="Internet Design Guild">
-      <rect width="96" height="96" fill="#FE3911"/>
-      <path fill="#fff" d="M21 51h20v20H31V61H21zM51 51h40v10H61v10H51zM41 71h20v20H41zM81 71h10v10H81zM71 81h10v10H71z"/>
-    </svg>
-    <p class="name">Internet<br>Design Guild</p>
+<header class="top">Internet Design Studio</header>
 
-    <h1>Design and engineering<br>for the new internet</h1>
+<main>
+  <h1>Design and engineering for the new internet</h1>
+  <p>We design, build and ship websites, products<br class="wide"> and AI for founders who embrace simplicity.</p>
+</main>
 
-    <div class="text">
-      <p>We design, build and ship websites, products<br class="wide">
-      and AI for founders who embrace simplicity.</p>
-      <p>Clients include Aerolab, Great Sky Solar, Buenbit,<br class="lg">
-      Numia, Towerbank, Eureka Labs, White Prompt, and others.</p>
-      <p>Made by humans. Powered by AI<br>Eleven years of practice.<br>Projects start at 3K USD.</p>
-      <p class="hire-p"><span class="hire">Hire the guild</span><br><a href="mailto:webmaster@internetguild.co">→ webmaster@internetguild.co</a><br><a href="https://t.me/nico_teodoro" target="_blank" rel="noopener">→ chat on telegram</a></p>
-    </div>
-  </div></div>
-</header>
-
-<section class="logos" aria-label="Clients">
-  <div class="track">
-    <ul>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-    </ul>
-    <ul aria-hidden="true">
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-      <li>LOGO</li>
-    </ul>
-  </div>
-</section>
-
-<main class="work" id="work" aria-label="Projects"></main>
-
-<script>
-(function () {
-  "use strict";
-  var PROJECTS = [
-    {"client": "Towerbank", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-poster.webp", "desc": "Towerbank credit card street poster."},
-    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-cards.mp4", "desc": "Towerbank Visa cards.", "poster": "/projects/poster-towerbank-cards.webp"},
-    {"client": "Towerbank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/towerbank-app.webp", "desc": "Towerbank investments app on iPhone."},
-    {"client": "Towerbank", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-website-ui.mp4", "desc": "Towerbank website interface.", "poster": "/projects/poster-towerbank-website-ui.webp"},
-    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-icons.webp", "desc": "Numia icon system."},
-    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-poster.webp", "desc": "Numia poster on a concrete wall."},
-    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-laptop.webp", "desc": "Numia website on a MacBook."},
-    {"client": "Numia", "tags": ["web", "product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-mobile.webp", "desc": "Numia website on iPhone."},
-    {"client": "Numia", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-website-sections.webp", "desc": "Numia website sections."},
-    {"client": "Numia", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/numia-customer-journey.mp4", "desc": "Numia customer journey website on a laptop.", "poster": "/projects/poster-numia-customer-journey.webp"},
-    {"client": "Numia", "tags": ["product", "ai"], "w": 630, "h": 880, "type": "video", "src": "/projects/numia-virtual-assistance.mp4", "desc": "Numia virtual assistance interface.", "poster": "/projects/poster-numia-virtual-assistance.webp"},
-    {"client": "Emi", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-brand.mp4", "desc": "Emi brand identity.", "poster": "/projects/poster-emi-brand.webp"},
-    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website.mp4", "desc": "Emi website.", "poster": "/projects/poster-emi-website.webp"},
-    {"client": "Emi", "tags": ["web"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-website-es.mp4", "desc": "Emi website in Spanish on laptops.", "poster": "/projects/poster-emi-website-es.webp"},
-    {"client": "Emi", "tags": ["web", "product"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/emi-onboarding.mp4", "desc": "Emi onboarding website on a laptop.", "poster": "/projects/poster-emi-onboarding.webp"},
-    {"client": "Emi", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/emilabs-report.webp", "desc": "Emi report on an iPad."},
-    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-website.webp", "desc": "Great Sky Solar homepage and savings calculator."},
-    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-products.webp", "desc": "Great Sky Solar product cards."},
-    {"client": "Great Sky Solar", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-team.webp", "desc": "Great Sky Solar team page."},
-    {"client": "Studio", "tags": ["product", "ai"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/agent-activity-panel.webp", "desc": "Agent activity panel on a studio display."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/token-statement.webp", "desc": "Token statement dashboard on a studio display."},
-    {"client": "xrank", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/xrank.webp", "desc": "xrank.tech leaderboard on a MacBook."},
-    {"client": "China.Supply", "tags": ["web"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/china-supply.webp", "desc": "China.Supply landing page on a MacBook."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app.webp", "desc": "Journal app on iPhone resting on concrete blocks."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/journal-app-closeup.webp", "desc": "Journal app on iPhone, close-up."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/calm-app-login.webp", "desc": "Calm app login screen on iPhone."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/music-player.webp", "desc": "Music player interface."},
-    {"client": "Studio", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/writing-app.webp", "desc": "Writing app on a MacBook."},
-    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-poster.webp", "desc": "Godzilla Minus One poster."},
-    {"client": "Godzilla Minus One", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/godzilla-minus-one-bus-stop.webp", "desc": "Godzilla Minus One poster at a bus stop."},
-    {"client": "Nine2Five", "tags": ["product", "brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/nine2five.webp", "desc": "Nine2Five work glasses spec sheet and stage screen."},
-    {"client": "Internet Guild", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/ids-shopping-bag.webp", "desc": "Internet Guild shopping bag."},
-    {"client": "Towerbank", "tags": ["brand"], "w": 1920, "h": 1080, "type": "video", "src": "/projects/towerbank-campaign.mp4", "desc": "Towerbank campaign.", "poster": "/projects/poster-towerbank-campaign.webp"},
-    {"client": "Numia", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/numia-stationery.webp", "desc": "Numia stationery."},
-    {"client": "Great Sky Solar", "tags": ["brand"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-calculator.webp", "desc": "Great Sky Solar savings calculator."},
-    {"client": "Great Sky Solar", "tags": ["product"], "w": 1500, "h": 1500, "type": "image", "src": "/projects/great-sky-solar-monitoring.webp", "desc": "Great Sky Solar monitoring app."}
-  ];
-
-  var work = document.getElementById("work"), items = [];
-  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function el(tag, cls) { var n = document.createElement(tag); if (cls) n.className = cls; return n; }
-  for (var k = PROJECTS.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = PROJECTS[k]; PROJECTS[k] = PROJECTS[j]; PROJECTS[j] = x; }
-
-  PROJECTS.forEach(function (p, i) {
-    var fig = el("figure", "piece"), m;
-    fig.style.setProperty("--ar", (p.w / p.h).toFixed(4)); fig.dataset.i = i;
-    if (p.type === "video") {
-      m = el("video"); m.muted = true; m.loop = true; m.playsInline = true; m.preload = "none";
-      m.setAttribute("muted", ""); m.setAttribute("playsinline", ""); m.setAttribute("aria-label", p.desc); if (p.poster) m.poster = p.poster;
-    } else { m = el("img"); m.alt = p.desc; m.decoding = "async"; }
-    fig.appendChild(m); work.appendChild(fig);
-    items.push({ el: fig, p: p, m: m, requested: false, inView: false });
-  });
-
-  function load(c) {
-    if (c.requested) return; c.requested = true;
-    var done = function () { c.m.classList.add("loaded"); if (c.p.type === "video" && c.inView && !reduced) c.m.play().catch(function () {}); };
-    if (c.p.type === "video") { c.m.addEventListener("loadeddata", done, { once: true }); c.m.src = c.p.src; c.m.load(); }
-    else { c.m.addEventListener("load", done, { once: true }); c.m.src = c.p.src; if (c.m.complete && c.m.naturalWidth) done(); }
-  }
-  // load ahead of the screen; play videos only while they are on it
-  if ("IntersectionObserver" in window) {
-    var near = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) load(items[+e.target.dataset.i]); }); }, { rootMargin: "800px 0px" });
-    var view = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        var c = items[+e.target.dataset.i]; c.inView = e.isIntersecting;
-        if (c.p.type === "video" && c.m.classList.contains("loaded") && !reduced) { if (c.inView) c.m.play().catch(function () {}); else c.m.pause(); }
-      });
-    }, { threshold: 0.2 });
-    items.forEach(function (c) { near.observe(c.el); view.observe(c.el); });
-  } else items.forEach(load);
-})();
-</script>
 </body>
 </html>
