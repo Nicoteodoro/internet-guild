@@ -22,7 +22,7 @@
 
   /* logo, fixed at the top */
   .top { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: center; padding: 24px 16px; }
-  .logo { display: block; width: 52px; height: 52px; border-radius: 7.5px;
+  .logo { display: block; width: 52px; height: 52px; border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 3px 10px rgba(0, 0, 0, 0.05); }
 
   /* the two lines, in the middle of the screen */
@@ -37,7 +37,7 @@
 
 <header class="top">
   <svg class="logo" viewBox="0 0 83 83" fill="none" role="img" aria-label="Internet Design Guild">
-    <path d="M0 12C0 5.37259 5.37258 0 12 0H71C77.6274 0 83 5.37258 83 12V71C83 77.6274 77.6274 83 71 83H12C5.37259 83 0 77.6274 0 71V12Z" fill="white"/>
+    <rect width="83" height="83" rx="6.385" fill="white"/><!-- 4px corners at 52px -->
     <path d="M59.2317 76.3853V67.539H68.078V76.3853H59.2317ZM68.078 67.539V58.6926H76.9243V67.539H68.078ZM41.5391 67.539V41H76.9243V49.8463H50.3854V67.539H41.5391Z" fill="#DDDDDD"/>
     <path d="M32.6926 76.3853V58.6926H41.539V67.539H50.3853V76.3853H32.6926ZM23.8463 58.6926V49.8463H15V41H32.6926V58.6926H23.8463ZM41.539 49.8463V41H50.3853V49.8463H41.539Z" fill="#DDDDDD"/>
   </svg>
